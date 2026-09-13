@@ -1,0 +1,26 @@
+{
+ "schema_version": 2,
+ "verdict": "INPUTS_PENDING",
+ "exit_code": 2,
+ "pending_terms": [
+  "sensor_calibration_on_fixture",
+  "rotor_radial_runout",
+  "thermal_growth_at_speed",
+  "fixture_deflection_under_thrust",
+  "seam_setting_repeatability",
+  "target_mean_clearance",
+  "minimum_effect_of_interest"
+ ],
+ "ineligible_evidence_terms": [],
+ "literature_bounds_excluded_from_combination": [
+  "sensor_accuracy_literature"
+ ],
+ "combined_terms_um": {},
+ "combined_standard_uncertainty_um": null,
+ "coverage_factor_k": 2.0,
+ "expanded_uncertainty_um": null,
+ "minimum_effect_of_interest_um": null,
+ "target_mean_clearance_um": null,
+ "stage_a_rule": "k * u_c < minimum_effect_of_interest, else stop for instrumentation redesign",
+ "note": "Budget verdict only. FEASIBLE authorises no rotor test; the experiment's safety controls and SSY-S08 remain separate gates."
+}

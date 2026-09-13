@@ -1,0 +1,555 @@
+{
+ "register_version": "2026-09-12-r1",
+ "summary": {
+  "d01_sources": 10,
+  "eligible": 6,
+  "not_eligible": 4,
+  "recall": {
+   "day2_historical": {
+    "recovered": 0,
+    "of_eligible": 6,
+    "recovered_ids": [],
+    "missed_ids": [
+     "S1",
+     "S2",
+     "S3",
+     "S4",
+     "S5",
+     "S6"
+    ],
+    "export_retrieved_utc": "2026-09-09T02:32:55Z",
+    "provenance": {
+     "hits": 499,
+     "traceable": 449,
+     "untraceable": 50,
+     "untraceable_ids_sample": [
+      "arxiv:0011012",
+      "arxiv:0609757",
+      "arxiv:0611451",
+      "arxiv:0703014",
+      "arxiv:0912.0640",
+      "arxiv:1107.5228",
+      "arxiv:1208.6396",
+      "arxiv:1210.0037",
+      "arxiv:1305.0762",
+      "arxiv:1401.0211"
+     ],
+     "export_sha256": "4298f5e712c7a9232e2f28cfa794289b84823063b8fd314586e6f0df16360644",
+     "provenance_clean": false,
+     "native_audit": {
+      "unsupported_provenance_routes": 50,
+      "missing_request_provenance": 12,
+      "response_record_mismatches": 0,
+      "query_count_mismatches": 12,
+      "response_hash_mismatches": 0,
+      "rows_without_successful_logged_query": 50
+     },
+     "native_audit_passed": false,
+     "failures": {
+      "unsupported_provenance_routes": 50,
+      "missing_request_provenance": 12,
+      "query_count_mismatches": 12,
+      "rows_without_successful_logged_query": 50
+     }
+    }
+   },
+   "day4_public": {
+    "recovered": 4,
+    "of_eligible": 6,
+    "recovered_ids": [
+     "S1",
+     "S2",
+     "S3",
+     "S5"
+    ],
+    "missed_ids": [
+     "S4",
+     "S6"
+    ],
+    "export_retrieved_utc": "2026-09-11T21:41:14Z",
+    "provenance": {
+     "hits": 450,
+     "traceable": 450,
+     "untraceable": 0,
+     "untraceable_ids_sample": [],
+     "export_sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52",
+     "provenance_clean": true,
+     "native_audit": {
+      "unsupported_provenance_routes": 0,
+      "missing_request_provenance": 0,
+      "response_record_mismatches": 0,
+      "query_count_mismatches": 0,
+      "response_hash_mismatches": 0,
+      "rows_without_successful_logged_query": 0
+     },
+     "native_audit_passed": true,
+     "failures": {}
+    }
+   }
+  },
+  "canonical_export": "day4_public",
+  "rejected_exports": [
+   "day2_historical"
+  ],
+  "novelty_axes": {
+   "guard_validation": {
+    "axis_status": "supported_bounded",
+    "disclosed_by": [],
+    "not_found_in_inspected": [
+     "S1",
+     "S8"
+    ],
+    "unresolved_for": []
+   },
+   "equal_mean_clearance_discrete_seams": {
+    "axis_status": "supported_bounded",
+    "disclosed_by": [],
+    "not_found_in_inspected": [
+     "S1"
+    ],
+    "unresolved_for": [
+     "S3",
+     "S4"
+    ]
+   },
+   "measured_vs_cfd": {
+    "axis_status": "narrowed_by_disclosure",
+    "disclosed_by": [
+     "S1",
+     "S6"
+    ],
+    "not_found_in_inspected": [],
+    "unresolved_for": [
+     "S3",
+     "S4"
+    ]
+   },
+   "equal_mean_seams": {
+    "axis_status": "supported_bounded",
+    "disclosed_by": [],
+    "not_found_in_inspected": [
+     "S1",
+     "S8"
+    ],
+    "unresolved_for": [
+     "S2"
+    ]
+   },
+   "generic_segmentation": {
+    "axis_status": "narrowed_by_disclosure",
+    "disclosed_by": [
+     "S8"
+    ],
+    "not_found_in_inspected": [],
+    "unresolved_for": []
+   },
+   "held_out_prediction": {
+    "axis_status": "supported_bounded",
+    "disclosed_by": [],
+    "not_found_in_inspected": [
+     "S6"
+    ],
+    "unresolved_for": [
+     "S3",
+     "S4",
+     "S5"
+    ]
+   },
+   "deployment_vs_fixed": {
+    "axis_status": "supported_bounded",
+    "disclosed_by": [],
+    "not_found_in_inspected": [
+     "S6"
+    ],
+    "unresolved_for": [
+     "S3",
+     "S4",
+     "S5"
+    ]
+   },
+   "guard_claims": {
+    "axis_status": "supported_bounded",
+    "disclosed_by": [],
+    "not_found_in_inspected": [
+     "S6"
+    ],
+    "unresolved_for": [
+     "S3",
+     "S4",
+     "S5"
+    ]
+   },
+   "matched_controls": {
+    "axis_status": "narrowed_by_disclosure",
+    "disclosed_by": [
+     "S6"
+    ],
+    "not_found_in_inspected": [],
+    "unresolved_for": [
+     "S3",
+     "S4",
+     "S5",
+     "S7"
+    ]
+   }
+  },
+  "previously_reported": {
+   "day2_historical": "1 of 6 (anchor set held S1 only; S2, S3, S5 present but uncredited)",
+   "day4_public": "3 of 3 (denominator was the three resolved anchors, not the six eligible sources)"
+  },
+  "not_eligible_ids": [
+   "S7",
+   "S8",
+   "S9",
+   "S10"
+  ]
+ },
+ "rows": [
+  {
+   "source_id": "S1",
+   "title": "Ryu et al., 2017 (JSASS)",
+   "eligible": true,
+   "eligibility_reason": "eligible: Crossref DOI, OpenAlex-indexed, gold OA",
+   "aliases": [
+    "doi:10.2322/tjsass.60.1"
+   ],
+   "present": {
+    "day2_historical": false,
+    "day4_public": true
+   }
+  },
+  {
+   "source_id": "S2",
+   "title": "Second-harmonic tip clearance distributions (casing ovalization), AST 2024",
+   "eligible": true,
+   "eligibility_reason": "eligible: Crossref DOI 10.1016/j.ast.2023.108866 (title match; note the day-1 URL's PII ends ...7624 while Crossref's alternative-id is ...7629 - the day-1 link may be mistyped, recorded, not corrected)",
+   "aliases": [
+    "doi:10.1016/j.ast.2023.108866"
+   ],
+   "present": {
+    "day2_historical": false,
+    "day4_public": true
+   }
+  },
+  {
+   "source_id": "S3",
+   "title": "Nonuniform clearance layouts, 2026 (AST)",
+   "eligible": true,
+   "eligibility_reason": "eligible: Crossref DOI resolved from PII via alternative-id",
+   "aliases": [
+    "doi:10.1016/j.ast.2026.111933"
+   ],
+   "present": {
+    "day2_historical": false,
+    "day4_public": true
+   }
+  },
+  {
+   "source_id": "S4",
+   "title": "Segmented ducted fan flow/noise, 2026 (MDPI Vehicles)",
+   "eligible": true,
+   "eligibility_reason": "eligible: Crossref DOI",
+   "aliases": [
+    "doi:10.3390/vehicles8070165"
+   ],
+   "present": {
+    "day2_historical": false,
+    "day4_public": false
+   }
+  },
+  {
+   "source_id": "S5",
+   "title": "Optical fiber measurement system, 2017 (Hindawi IJAE)",
+   "eligible": true,
+   "eligibility_reason": "eligible: Crossref DOI, OpenAlex-indexed",
+   "aliases": [
+    "doi:10.1155/2017/4168150"
+   ],
+   "present": {
+    "day2_historical": false,
+    "day4_public": true
+   }
+  },
+  {
+   "source_id": "S6",
+   "title": "Fibre sensor for tip clearance, 2018 (Sensors, PMC6111710)",
+   "eligible": true,
+   "eligibility_reason": "eligible: PMC article with DOI (10.3390/s18082610, from the PMC page header)",
+   "aliases": [
+    "doi:10.3390/s18082610"
+   ],
+   "present": {
+    "day2_historical": false,
+    "day4_public": false
+   }
+  },
+  {
+   "source_id": "S7",
+   "title": "NASA microwave clearance/health measurement, 2008 (NTRS 20080047680)",
+   "eligible": false,
+   "eligibility_reason": "NOT eligible: NASA technical report without a DOI; not indexed by Crossref; OpenAlex shows a same-title 2008 record with no DOI, which none of the DOI/arXiv-keyed exports could return",
+   "aliases": [],
+   "present": {
+    "day2_historical": null,
+    "day4_public": null
+   }
+  },
+  {
+   "source_id": "S8",
+   "title": "US5131603A, 1992",
+   "eligible": false,
+   "eligibility_reason": "NOT eligible: patent; no patent database queried",
+   "aliases": [],
+   "present": {
+    "day2_historical": null,
+    "day4_public": null
+   }
+  },
+  {
+   "source_id": "S9",
+   "title": "JP2023124296A, 2023",
+   "eligible": false,
+   "eligibility_reason": "NOT eligible: patent (day-1 aboutness 0, excluded hit)",
+   "aliases": [],
+   "present": {
+    "day2_historical": null,
+    "day4_public": null
+   }
+  },
+  {
+   "source_id": "S10",
+   "title": "US11634222B2, 2023",
+   "eligible": false,
+   "eligibility_reason": "NOT eligible: patent",
+   "aliases": [],
+   "present": {
+    "day2_historical": null,
+    "day4_public": null
+   }
+  }
+ ],
+ "novelty_axes_detail": {
+  "guard_validation": [
+   {
+    "source_id": "S1",
+    "state": "not_found_in_inspected",
+    "access": "full_text_pdf",
+    "locator": "Publisher PDF /60_T-15-38/_pdf/-char/en; sections 2.1 and 3.1; Table 1; results discussion and conclusions"
+   },
+   {
+    "source_id": "S8",
+    "state": "not_found_in_inspected",
+    "access": "patent_claims",
+    "locator": "Claim 1; description immediately preceding claims"
+   }
+  ],
+  "equal_mean_clearance_discrete_seams": [
+   {
+    "source_id": "S1",
+    "state": "not_found_in_inspected",
+    "access": "full_text_pdf",
+    "locator": "Publisher PDF /60_T-15-38/_pdf/-char/en; sections 2.1 and 3.1; Table 1; results discussion and conclusions"
+   },
+   {
+    "source_id": "S3",
+    "state": "unresolved",
+    "access": "inaccessible_full_text",
+    "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12"
+   },
+   {
+    "source_id": "S4",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall/Crossref metadata"
+   },
+   {
+    "source_id": "S5",
+    "state": "not_applicable",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall metadata"
+   },
+   {
+    "source_id": "S6",
+    "state": "not_applicable",
+    "access": "full_text_html",
+    "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibratio"
+   },
+   {
+    "source_id": "S7",
+    "state": "not_applicable",
+    "access": "not_reinspected",
+    "locator": "Day-1 abstract read stands; ntrs.nasa.gov not reachable from this client on 2026-09-12"
+   }
+  ],
+  "measured_vs_cfd": [
+   {
+    "source_id": "S1",
+    "state": "disclosed_or_addressed",
+    "access": "full_text_pdf",
+    "locator": "Publisher PDF /60_T-15-38/_pdf/-char/en; sections 2.1 and 3.1; Table 1; results discussion and conclusions"
+   },
+   {
+    "source_id": "S3",
+    "state": "unresolved",
+    "access": "inaccessible_full_text",
+    "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12"
+   },
+   {
+    "source_id": "S4",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall/Crossref metadata"
+   },
+   {
+    "source_id": "S5",
+    "state": "not_applicable",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall metadata"
+   },
+   {
+    "source_id": "S6",
+    "state": "disclosed_or_addressed",
+    "access": "full_text_html",
+    "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibratio"
+   }
+  ],
+  "equal_mean_seams": [
+   {
+    "source_id": "S1",
+    "state": "not_found_in_inspected",
+    "access": "full_text_pdf",
+    "locator": "Publisher PDF /60_T-15-38/_pdf/-char/en; sections 2.1 and 3.1; Table 1; results discussion and conclusions"
+   },
+   {
+    "source_id": "S2",
+    "state": "unresolved",
+    "access": "publisher_indexed_abstract",
+    "locator": "Publisher-indexed abstract; direct full-text retrieval failed"
+   },
+   {
+    "source_id": "S8",
+    "state": "not_found_in_inspected",
+    "access": "patent_claims",
+    "locator": "Claim 1; description immediately preceding claims"
+   }
+  ],
+  "generic_segmentation": [
+   {
+    "source_id": "S8",
+    "state": "disclosed_or_addressed",
+    "access": "patent_claims",
+    "locator": "Claim 1; description immediately preceding claims"
+   }
+  ],
+  "held_out_prediction": [
+   {
+    "source_id": "S3",
+    "state": "unresolved",
+    "access": "inaccessible_full_text",
+    "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12"
+   },
+   {
+    "source_id": "S4",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall/Crossref metadata"
+   },
+   {
+    "source_id": "S5",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall metadata"
+   },
+   {
+    "source_id": "S6",
+    "state": "not_found_in_inspected",
+    "access": "full_text_html",
+    "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibratio"
+   }
+  ],
+  "deployment_vs_fixed": [
+   {
+    "source_id": "S3",
+    "state": "unresolved",
+    "access": "inaccessible_full_text",
+    "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12"
+   },
+   {
+    "source_id": "S4",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall/Crossref metadata"
+   },
+   {
+    "source_id": "S5",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall metadata"
+   },
+   {
+    "source_id": "S6",
+    "state": "not_found_in_inspected",
+    "access": "full_text_html",
+    "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibratio"
+   }
+  ],
+  "guard_claims": [
+   {
+    "source_id": "S3",
+    "state": "unresolved",
+    "access": "inaccessible_full_text",
+    "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12"
+   },
+   {
+    "source_id": "S4",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall/Crossref metadata"
+   },
+   {
+    "source_id": "S5",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall metadata"
+   },
+   {
+    "source_id": "S6",
+    "state": "not_found_in_inspected",
+    "access": "full_text_html",
+    "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibratio"
+   }
+  ],
+  "matched_controls": [
+   {
+    "source_id": "S3",
+    "state": "unresolved",
+    "access": "inaccessible_full_text",
+    "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12"
+   },
+   {
+    "source_id": "S4",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall/Crossref metadata"
+   },
+   {
+    "source_id": "S5",
+    "state": "unresolved",
+    "access": "publisher_abstract_full",
+    "locator": "Complete abstract via Unpaywall metadata"
+   },
+   {
+    "source_id": "S6",
+    "state": "disclosed_or_addressed",
+    "access": "full_text_html",
+    "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibratio"
+   },
+   {
+    "source_id": "S7",
+    "state": "unresolved",
+    "access": "not_reinspected",
+    "locator": "Day-1 abstract read stands; ntrs.nasa.gov not reachable from this client on 2026-09-12"
+   }
+  ]
+ }
+}

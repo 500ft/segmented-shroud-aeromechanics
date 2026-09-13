@@ -1855,7 +1855,11 @@
           "axes": {
             "equal_mean_seams": "unresolved_full_text_needed"
           },
-          "retrieved_on": "2026-09-09"
+          "retrieved_on": "2026-09-09",
+          "axis_states": {
+            "equal_mean_seams": "unresolved"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
         }
       ],
       "acquisitions": [
@@ -1992,8 +1996,46 @@
     {
       "identifier": "doi:10.1016/j.ast.2026.111933",
       "title": "Effects of different non-uniform tip clearance layouts on compressor performance and flowfield characteristics",
-      "screening_status": "unscreened",
-      "assessments": [],
+      "screening_status": "day3_assessment_available",
+      "assessments": [
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S3",
+          "title": "Effects of different non-uniform tip clearance layouts on compressor performance and flowfield, AST 2026",
+          "url": "https://doi.org/10.1016/j.ast.2026.111933",
+          "access": "inaccessible_full_text",
+          "version": "Crossref record, issued 2026-07",
+          "locator": "Title and Crossref metadata only; landing page requires publisher access; Unpaywall/S2/PMC/Crossref-TDM returned no OA copy on 2026-09-12",
+          "aboutness": 3,
+          "evidence_grade": "inaccessible",
+          "finding": "Title places it squarely on the smooth/nonuniform-clearance side of axis 1 (compressor, not ducted fan). Whether it compares layouts at equal MEAN clearance, and whether any layout is discrete/stepped rather than continuous, cannot be established from metadata. Per rubric, an inaccessible competitor keeps the axis unresolved.",
+          "axes": {
+            "equal_mean_clearance_discrete_seams": "inaccessible",
+            "measured_vs_cfd": "inaccessible",
+            "deployment_vs_fixed": "inaccessible",
+            "matched_controls": "inaccessible",
+            "held_out_prediction": "inaccessible",
+            "guard_claims": "inaccessible"
+          },
+          "failed_routes": [
+            "fetch via Unpaywall",
+            "Semantic Scholar",
+            "Crossref TDM",
+            "doi.org landing (paywalled)"
+          ],
+          "retrieved_on": "2026-09-12",
+          "axis_states": {
+            "equal_mean_clearance_discrete_seams": "unresolved",
+            "measured_vs_cfd": "unresolved",
+            "deployment_vs_fixed": "unresolved",
+            "matched_controls": "unresolved",
+            "held_out_prediction": "unresolved",
+            "guard_claims": "unresolved"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
+        }
+      ],
       "acquisitions": [
         {
           "route": "day2_native_reported",
@@ -2010,6 +2052,14 @@
               "query_log_supported": true
             }
           ]
+        },
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-12",
+          "url": "https://doi.org/10.1016/j.ast.2026.111933",
+          "access": "inaccessible_full_text",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
@@ -6096,8 +6146,40 @@
     {
       "identifier": "doi:10.1155/2017/4168150",
       "title": "An Optical Fiber Measurement System for Blade Tip Clearance of Engine",
-      "screening_status": "unscreened",
-      "assessments": [],
+      "screening_status": "day3_assessment_available",
+      "assessments": [
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S5",
+          "title": "An optical fiber measurement system for blade tip clearance of engine, IJAE 2017",
+          "url": "https://doi.org/10.1155/2017/4168150",
+          "access": "publisher_abstract_full",
+          "version": "gold OA; PDF host (downloads.hindawi.com, http-only) not reachable from this client",
+          "locator": "Complete abstract via Unpaywall metadata",
+          "aboutness": 1,
+          "evidence_grade": "C",
+          "finding": "Metrology only: reflective intensity-modulated fibre bundle, accuracy 25 um or better, ~5 mm range, sensitivity 0.0733/mm, tested on a rotor rig. Relevant to the measurement route (a per-seam clearance sensor is feasible at this resolution), not to the aerodynamic question.",
+          "axes": {
+            "equal_mean_clearance_discrete_seams": "not_applicable_metrology",
+            "measured_vs_cfd": "measurement instrument, no aerodynamic result",
+            "deployment_vs_fixed": "not_established_in_inspected_material",
+            "matched_controls": "not_established_in_inspected_material",
+            "held_out_prediction": "not_established_in_inspected_material",
+            "guard_claims": "not_established_in_inspected_material"
+          },
+          "retrieved_on": "2026-09-12",
+          "axis_states": {
+            "equal_mean_clearance_discrete_seams": "not_applicable",
+            "measured_vs_cfd": "not_applicable",
+            "deployment_vs_fixed": "unresolved",
+            "matched_controls": "unresolved",
+            "held_out_prediction": "unresolved",
+            "guard_claims": "unresolved"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
+        }
+      ],
       "acquisitions": [
         {
           "route": "day2_native_reported",
@@ -6114,6 +6196,14 @@
               "query_log_supported": true
             }
           ]
+        },
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-12",
+          "url": "https://doi.org/10.1155/2017/4168150",
+          "access": "publisher_abstract_full",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
@@ -7430,16 +7520,29 @@
           "source_id": "S1",
           "title": "Ryu et al. 2017 counter-rotating ducted fan",
           "url": "https://doi.org/10.2322/tjsass.60.1",
-          "access": "full_text_sections",
+          "access": "full_text_pdf",
           "locator": "Publisher PDF /60_T-15-38/_pdf/-char/en; sections 2.1 and 3.1; Table 1; results discussion and conclusions",
           "aboutness": 2,
           "evidence_grade": "B for experimental apparatus; clearance sweep scope checked separately",
           "finding": "150 mm counter-rotating fan apparatus and baseline uniform tip clearance are documented; shaft power uses electrical input with motor efficiency. These sections do not establish an equal-mean seam comparison.",
           "axes": {
             "equal_mean_seams": "not_established_in_inspected_sections",
-            "guard_validation": "not_established_in_inspected_sections"
+            "guard_validation": "not_established_in_inspected_sections",
+            "equal_mean_clearance_discrete_seams": "not_established: uniform t/h sweep only",
+            "measured_vs_cfd": "measured baseline only; clearance sweep is CFD"
           },
-          "retrieved_on": "2026-09-09"
+          "retrieved_on": "2026-09-09",
+          "reinspected_on": "2026-09-12",
+          "text_sha256_prefix": "dcddfba3f1853a2e",
+          "locator_2026_09_12": "Abstract; Sec. 2 (baseline t/h = 1.80% both rotors; duct ID 150 mm, tip 148 mm, 1 mm clearance); Sec. 3 wind tunnel (Hanyang, baseline verification of CFD); Figs. 10-12 (t/h 1.80/3.67/5.61/7.62% front and rear); Fig. 14 tip mass-flow",
+          "finding_2026_09_12": "All clearance cases are UNIFORM axisymmetric t/h values swept independently for front and rear rotors; measurement is wind-tunnel verification of the BASELINE only, the clearance sweep is CFD. No nonuniform or seamed case appears anywhere in the text.",
+          "axis_states": {
+            "equal_mean_seams": "not_found_in_inspected",
+            "guard_validation": "not_found_in_inspected",
+            "equal_mean_clearance_discrete_seams": "not_found_in_inspected",
+            "measured_vs_cfd": "disclosed_or_addressed"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
         }
       ],
       "acquisitions": [
@@ -7471,7 +7574,7 @@
           "route": "day3_targeted_primary_open",
           "retrieved_on": "2026-09-09",
           "url": "https://doi.org/10.2322/tjsass.60.1",
-          "access": "full_text_sections",
+          "access": "full_text_pdf",
           "query": null,
           "artifact": "docs/day3-reading-records.json"
         }
@@ -9974,6 +10077,55 @@
       ]
     },
     {
+      "identifier": "doi:10.3390/s18082610",
+      "title": "High-sensitive fibre sensor for tip clearance measurements in a turbine rig, Sensors 2018",
+      "screening_status": "day3_assessment_available",
+      "assessments": [
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S6",
+          "title": "High-sensitive fibre sensor for tip clearance measurements in a turbine rig, Sensors 2018",
+          "url": "https://doi.org/10.3390/s18082610",
+          "access": "full_text_html",
+          "version": "PMC6111710",
+          "text_sha256_prefix": "d22f8f860bffd897",
+          "locator": "Abstract; Introduction (TC typically <3 mm, resolution better than 25 um required; capacitive/eddy-current/microwave alternatives); sensor design and calibration sections",
+          "aboutness": 1,
+          "evidence_grade": "B for the instrument; not an aerodynamic study",
+          "finding": "Fibre-bundle reflective sensor, ~2 mm range about 3.2 mm standoff, sensitivity 61.73 mm^-1, operated in a turbine rig. Confirms that sub-25 um per-location clearance measurement is an established capability, i.e. measuring the mean clearance and the per-seam deviation independently is feasible with existing sensors; this bears on the matched-control axis (mean clearance can be verified, not assumed equal).",
+          "axes": {
+            "equal_mean_clearance_discrete_seams": "not_applicable_metrology",
+            "measured_vs_cfd": "instrument only",
+            "deployment_vs_fixed": "not_established_in_inspected_material",
+            "matched_controls": "supports: mean clearance is measurable to <25 um so 'equal mean' can be verified",
+            "held_out_prediction": "not_established_in_inspected_material",
+            "guard_claims": "not_established_in_inspected_material"
+          },
+          "retrieved_on": "2026-09-12",
+          "axis_states": {
+            "equal_mean_clearance_discrete_seams": "not_applicable",
+            "measured_vs_cfd": "disclosed_or_addressed",
+            "deployment_vs_fixed": "not_found_in_inspected",
+            "matched_controls": "disclosed_or_addressed",
+            "held_out_prediction": "not_found_in_inspected",
+            "guard_claims": "not_found_in_inspected"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
+        }
+      ],
+      "acquisitions": [
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-12",
+          "url": "https://doi.org/10.3390/s18082610",
+          "access": "full_text_html",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
+        }
+      ]
+    },
+    {
       "identifier": "doi:10.3390/s18103318",
       "title": "Design of Amphibious Vehicle for Unmanned Mission in Water Quality Monitoring Using Internet of Things",
       "screening_status": "unscreened",
@@ -10210,6 +10362,61 @@
               "query_log_supported": true
             }
           ]
+        }
+      ]
+    },
+    {
+      "identifier": "doi:10.3390/vehicles8070165",
+      "title": "Simulation study on flow field and total noise of a segmented ducted fan for small UAVs, Vehicles 2026",
+      "screening_status": "day3_assessment_available",
+      "assessments": [
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S4",
+          "title": "Simulation study on flow field and total noise of a segmented ducted fan for small UAVs, Vehicles 2026",
+          "url": "https://doi.org/10.3390/vehicles8070165",
+          "access": "publisher_abstract_full",
+          "version": "Vehicles 8(7):165, gold OA; full text HTTP 403 from mdpi.com to this client on 2026-09-12 (bot protection; not circumvented)",
+          "locator": "Complete abstract via Unpaywall/Crossref metadata",
+          "aboutness": 3,
+          "evidence_grade": "C (CFD-only per its own abstract; abstract cannot establish detailed negatives)",
+          "finding": "The closest competitor by name. 'Segmented' here means AXIAL duct spacing (0-20 mm gaps between duct sections along the axis) studied by CFD (k-omega SST + broadband noise model) at 20,000-40,000 rpm; the paper reports acoustic power rising with spacing and recommends <=10 mm. It is not circumferential seams at equal mean radial clearance, it is simulation only with no measurement, the geometry is fixed (no deployment), and the abstract states it cannot resolve transients. It must be cited and distinguished explicitly: same word, different geometry.",
+          "axes": {
+            "equal_mean_clearance_discrete_seams": "discussed: axial segmentation gaps, not circumferential seams at equal mean clearance",
+            "measured_vs_cfd": "CFD only (stated in abstract)",
+            "deployment_vs_fixed": "fixed geometry",
+            "matched_controls": "integral duct as comparator, per abstract",
+            "held_out_prediction": "not_established_in_inspected_material",
+            "guard_claims": "not_established_in_inspected_material"
+          },
+          "retrieved_on": "2026-09-12",
+          "supersedes_day3_record": {
+            "access": "inaccessible",
+            "finding": "No new reading achieved; retain the existing day-1 provisional assessment separately.",
+            "axes": {
+              "equal_mean_seams": "unresolved_full_text_needed"
+            }
+          },
+          "axis_states": {
+            "equal_mean_clearance_discrete_seams": "unresolved",
+            "measured_vs_cfd": "unresolved",
+            "deployment_vs_fixed": "unresolved",
+            "matched_controls": "unresolved",
+            "held_out_prediction": "unresolved",
+            "guard_claims": "unresolved"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
+        }
+      ],
+      "acquisitions": [
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-12",
+          "url": "https://doi.org/10.3390/vehicles8070165",
+          "access": "publisher_abstract_full",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
@@ -11104,13 +11311,39 @@
     {
       "identifier": "https://ntrs.nasa.gov/citations/20080047680",
       "title": "NASA microwave clearance/health measurement, 2008",
-      "screening_status": "day1_assessment_available",
+      "screening_status": "day3_assessment_available",
       "assessments": [
         {
           "route": "day1",
           "source_id": "S7",
           "reported_assessment": "2; official technical-report abstract, preliminary apparatus evidence",
           "artifact": "docs/prior-art-search-2026-09-08.md"
+        },
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S7",
+          "title": "NASA microwave blade tip clearance / structural health, NTRS 20080047680",
+          "url": "https://ntrs.nasa.gov/citations/20080047680",
+          "access": "not_reinspected",
+          "version": "n/a",
+          "locator": "Day-1 abstract read stands; ntrs.nasa.gov not reachable from this client on 2026-09-12",
+          "aboutness": 1,
+          "evidence_grade": "n/a",
+          "finding": "Metrology (microwave). Same bearing as S5/S6 on measurability; no aerodynamic content expected from the day-1 abstract.",
+          "axes": {
+            "matched_controls": "see S6",
+            "equal_mean_clearance_discrete_seams": "not_applicable_metrology"
+          },
+          "failed_routes": [
+            "ntrs.nasa.gov blocked"
+          ],
+          "retrieved_on": "2026-09-08",
+          "axis_states": {
+            "matched_controls": "unresolved",
+            "equal_mean_clearance_discrete_seams": "not_applicable"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
         }
       ],
       "acquisitions": [
@@ -11121,6 +11354,14 @@
           "query": null,
           "query_reason": "Report lists a query set, not a per-source mapping",
           "artifact": "docs/prior-art-search-2026-09-08.md"
+        },
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-08",
+          "url": "https://ntrs.nasa.gov/citations/20080047680",
+          "access": "not_reinspected",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
@@ -12110,13 +12351,30 @@
     {
       "identifier": "https://patents.google.com/patent/jp2023124296a/en",
       "title": "JP2023124296A, 2023",
-      "screening_status": "day1_assessment_available",
+      "screening_status": "day3_assessment_available",
       "assessments": [
         {
           "route": "day1",
           "source_id": "S9",
           "reported_assessment": "0; excluded patent hit, abstract",
           "artifact": "docs/prior-art-search-2026-09-08.md"
+        },
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S9",
+          "title": "JP2023124296A",
+          "url": "https://patents.google.com/patent/JP2023124296A/en",
+          "access": "not_reinspected",
+          "version": "n/a",
+          "locator": "Day-1 abstract read stands (aboutness 0, excluded hit); patents.google.com not re-read",
+          "aboutness": 0,
+          "evidence_grade": "n/a",
+          "finding": "Excluded on day 1 as off-topic; nothing here changes that. Public patent text is not legal clearance.",
+          "axes": {},
+          "retrieved_on": "2026-09-08",
+          "axis_states": {},
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
         }
       ],
       "acquisitions": [
@@ -12127,19 +12385,44 @@
           "query": null,
           "query_reason": "Report lists a query set, not a per-source mapping",
           "artifact": "docs/prior-art-search-2026-09-08.md"
+        },
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-08",
+          "url": "https://patents.google.com/patent/JP2023124296A/en",
+          "access": "not_reinspected",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
     {
       "identifier": "https://patents.google.com/patent/us11634222b2/en",
       "title": "US11634222B2, 2023",
-      "screening_status": "day1_assessment_available",
+      "screening_status": "day3_assessment_available",
       "assessments": [
         {
           "route": "day1",
           "source_id": "S10",
           "reported_assessment": "1; patent abstract/description search extract",
           "artifact": "docs/prior-art-search-2026-09-08.md"
+        },
+        {
+          "route": "day3",
+          "artifact": "docs/day3-reading-records.json",
+          "source_id": "S10",
+          "title": "US11634222B2",
+          "url": "https://patents.google.com/patent/US11634222B2/en",
+          "access": "not_reinspected",
+          "version": "n/a",
+          "locator": "Day-1 abstract/description read stands; not re-read",
+          "aboutness": 1,
+          "evidence_grade": "n/a",
+          "finding": "Day-1 assessment stands. Public patent text is not legal clearance; qualified review remains external.",
+          "axes": {},
+          "retrieved_on": "2026-09-08",
+          "axis_states": {},
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
         }
       ],
       "acquisitions": [
@@ -12150,6 +12433,14 @@
           "query": null,
           "query_reason": "Report lists a query set, not a per-source mapping",
           "artifact": "docs/prior-art-search-2026-09-08.md"
+        },
+        {
+          "route": "day3_targeted_primary_open",
+          "retrieved_on": "2026-09-08",
+          "url": "https://patents.google.com/patent/US11634222B2/en",
+          "access": "not_reinspected",
+          "query": null,
+          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
@@ -12180,7 +12471,13 @@
             "equal_mean_seams": "not_established_by_inspected_claim",
             "guard_validation": "not_established_by_inspected_claim"
           },
-          "retrieved_on": "2026-09-09"
+          "retrieved_on": "2026-09-09",
+          "axis_states": {
+            "generic_segmentation": "disclosed_or_addressed",
+            "equal_mean_seams": "not_found_in_inspected",
+            "guard_validation": "not_found_in_inspected"
+          },
+          "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
         }
       ],
       "acquisitions": [
@@ -12235,22 +12532,6 @@
           "source_id": "S4",
           "reported_assessment": "2; C; publisher-indexed abstract/conclusions, direct fetch rate-limited",
           "artifact": "docs/prior-art-search-2026-09-08.md"
-        },
-        {
-          "route": "day3",
-          "artifact": "docs/day3-reading-records.json",
-          "source_id": "S4",
-          "title": "Segmented duct flow/noise study",
-          "url": "https://www.mdpi.com/2624-8921/8/7/165",
-          "access": "inaccessible",
-          "locator": "Direct publisher open returned Internal Error",
-          "aboutness": null,
-          "evidence_grade": null,
-          "finding": "No new reading achieved; retain the existing day-1 provisional assessment separately.",
-          "axes": {
-            "equal_mean_seams": "unresolved_full_text_needed"
-          },
-          "retrieved_on": "2026-09-09"
         }
       ],
       "acquisitions": [
@@ -12261,14 +12542,6 @@
           "query": null,
           "query_reason": "Report lists a query set, not a per-source mapping",
           "artifact": "docs/prior-art-search-2026-09-08.md"
-        },
-        {
-          "route": "day3_targeted_primary_open",
-          "retrieved_on": "2026-09-09",
-          "url": "https://www.mdpi.com/2624-8921/8/7/165",
-          "access": "inaccessible",
-          "query": null,
-          "artifact": "docs/day3-reading-records.json"
         }
       ]
     },
@@ -12299,6 +12572,6 @@
   "inputs": {
     "docs/prior-art-search-2026-09-08.md": "f0c762f09893893f8529473e7ad50096ee1946157a83b5f3b9731e59ea0c57c1",
     "evidence/task-2026-09-09/database-export.json": "4298f5e712c7a9232e2f28cfa794289b84823063b8fd314586e6f0df16360644",
-    "docs/day3-reading-records.json": "97c402a0902c24904c65af081316b18e3055d1d88709e318eb4a3143c7bcce8f"
+    "docs/day3-reading-records.json": "477e256e15e81824ae88836e308f0a28633ab92db2c3b2ffd8fb9fff77e1257f"
   }
 }

@@ -1,5 +1,10 @@
 # SSY-D02 — database export integrity review, 2026-09-09
 
+> **2026-09-11 update — SSY-D04.** The provenance defect described below is corrected by a
+> separately dated, provenance-clean acquisition: [evidence/task-2026-09-11](../evidence/task-2026-09-11/README.md)
+> (451 records, 0 unlogged rows, 3 of 3 known anchors present).
+> This export is retained unchanged as the historical record; it is not repaired or merged.
+
 **Partial evidence; D02 acceptance is blocked.** The historical export is retained,
 but its claimed recall and complete per-query provenance do not survive an offline
 review. This revision supersedes the original day-2 interpretation; it does not

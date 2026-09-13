@@ -18,7 +18,14 @@
   "reinspected_on": "2026-09-12",
   "text_sha256_prefix": "dcddfba3f1853a2e",
   "locator_2026_09_12": "Abstract; Sec. 2 (baseline t/h = 1.80% both rotors; duct ID 150 mm, tip 148 mm, 1 mm clearance); Sec. 3 wind tunnel (Hanyang, baseline verification of CFD); Figs. 10-12 (t/h 1.80/3.67/5.61/7.62% front and rear); Fig. 14 tip mass-flow",
-  "finding_2026_09_12": "All clearance cases are UNIFORM axisymmetric t/h values swept independently for front and rear rotors; measurement is wind-tunnel verification of the BASELINE only, the clearance sweep is CFD. No nonuniform or seamed case appears anywhere in the text."
+  "finding_2026_09_12": "All clearance cases are UNIFORM axisymmetric t/h values swept independently for front and rear rotors; measurement is wind-tunnel verification of the BASELINE only, the clearance sweep is CFD. No nonuniform or seamed case appears anywhere in the text.",
+  "axis_states": {
+   "equal_mean_seams": "not_found_in_inspected",
+   "guard_validation": "not_found_in_inspected",
+   "equal_mean_clearance_discrete_seams": "not_found_in_inspected",
+   "measured_vs_cfd": "disclosed_or_addressed"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S2",
@@ -32,7 +39,11 @@
   "axes": {
    "equal_mean_seams": "unresolved_full_text_needed"
   },
-  "retrieved_on": "2026-09-09"
+  "retrieved_on": "2026-09-09",
+  "axis_states": {
+   "equal_mean_seams": "unresolved"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S8",
@@ -48,7 +59,13 @@
    "equal_mean_seams": "not_established_by_inspected_claim",
    "guard_validation": "not_established_by_inspected_claim"
   },
-  "retrieved_on": "2026-09-09"
+  "retrieved_on": "2026-09-09",
+  "axis_states": {
+   "generic_segmentation": "disclosed_or_addressed",
+   "equal_mean_seams": "not_found_in_inspected",
+   "guard_validation": "not_found_in_inspected"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S3",
@@ -74,7 +91,16 @@
    "Crossref TDM",
    "doi.org landing (paywalled)"
   ],
-  "retrieved_on": "2026-09-12"
+  "retrieved_on": "2026-09-12",
+  "axis_states": {
+   "equal_mean_clearance_discrete_seams": "unresolved",
+   "measured_vs_cfd": "unresolved",
+   "deployment_vs_fixed": "unresolved",
+   "matched_controls": "unresolved",
+   "held_out_prediction": "unresolved",
+   "guard_claims": "unresolved"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S4",
@@ -101,7 +127,16 @@
    "axes": {
     "equal_mean_seams": "unresolved_full_text_needed"
    }
-  }
+  },
+  "axis_states": {
+   "equal_mean_clearance_discrete_seams": "unresolved",
+   "measured_vs_cfd": "unresolved",
+   "deployment_vs_fixed": "unresolved",
+   "matched_controls": "unresolved",
+   "held_out_prediction": "unresolved",
+   "guard_claims": "unresolved"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S5",
@@ -121,7 +156,16 @@
    "held_out_prediction": "not_established_in_inspected_material",
    "guard_claims": "not_established_in_inspected_material"
   },
-  "retrieved_on": "2026-09-12"
+  "retrieved_on": "2026-09-12",
+  "axis_states": {
+   "equal_mean_clearance_discrete_seams": "not_applicable",
+   "measured_vs_cfd": "not_applicable",
+   "deployment_vs_fixed": "unresolved",
+   "matched_controls": "unresolved",
+   "held_out_prediction": "unresolved",
+   "guard_claims": "unresolved"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S6",
@@ -142,7 +186,16 @@
    "held_out_prediction": "not_established_in_inspected_material",
    "guard_claims": "not_established_in_inspected_material"
   },
-  "retrieved_on": "2026-09-12"
+  "retrieved_on": "2026-09-12",
+  "axis_states": {
+   "equal_mean_clearance_discrete_seams": "not_applicable",
+   "measured_vs_cfd": "disclosed_or_addressed",
+   "deployment_vs_fixed": "not_found_in_inspected",
+   "matched_controls": "disclosed_or_addressed",
+   "held_out_prediction": "not_found_in_inspected",
+   "guard_claims": "not_found_in_inspected"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S7",
@@ -161,7 +214,12 @@
   "failed_routes": [
    "ntrs.nasa.gov blocked"
   ],
-  "retrieved_on": "2026-09-08"
+  "retrieved_on": "2026-09-08",
+  "axis_states": {
+   "matched_controls": "unresolved",
+   "equal_mean_clearance_discrete_seams": "not_applicable"
+  },
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S9",
@@ -174,7 +232,9 @@
   "evidence_grade": "n/a",
   "finding": "Excluded on day 1 as off-topic; nothing here changes that. Public patent text is not legal clearance.",
   "axes": {},
-  "retrieved_on": "2026-09-08"
+  "retrieved_on": "2026-09-08",
+  "axis_states": {},
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  },
  {
   "source_id": "S10",
@@ -187,6 +247,8 @@
   "evidence_grade": "n/a",
   "finding": "Day-1 assessment stands. Public patent text is not legal clearance; qualified review remains external.",
   "axes": {},
-  "retrieved_on": "2026-09-08"
+  "retrieved_on": "2026-09-08",
+  "axis_states": {},
+  "axis_states_note": "Explicit reviewed assessment per axis: disclosed_or_addressed | not_found_in_inspected | not_applicable | unresolved. Derived 2026-09-13 from the free-text axes by rule and reviewed; the coverage checker reads ONLY this field."
  }
 ]

@@ -61,3 +61,26 @@ Neither can be read from this environment; both need institutional access. Until
 - S3 full text; S2 full text; S4 full text (mdpi.com returns 403 to this client — not circumvented; the abstract is complete).
 - Patent claims S8–S10 were read as public text on day 1; not legal clearance.
 - Day-4 public export flagged `10.1016/j.ast.2023.108866` as an anchor; that is S2, now recorded under its DOI.
+
+
+## Review repair (SSY-R02b, same day) — one provenance-bound record, axes tied to inspection
+
+**Provenance.** Coverage now credits an export only for hits traceable to a logged successful query. The 2026-09-09 export has 50 of 499 rows with no such line (all arXiv, from the throttled re-run); they are excluded from credit and the export is marked **rejected** and retained. The 2026-09-11 public export is provenance-clean (450/450) and is the **canonical** record. Recall is unchanged by the exclusion — none of the anchor hits was among the untraceable rows — but the number is now bound to what the export can show it searched. `SSY-D02` is closed against this record; no successor task was created.
+
+**Novelty axes, by inspection status.** `narrowed_by_disclosure` = an inspected source discloses the axis; `supported_bounded` = no inspected source discloses it, with the unresolved sources named; nothing is "supported" by an abstract.
+
+| axis | status | disclosed by | not found in inspected sections of | unresolved for |
+|---|---|---|---|---|
+| `equal_mean_seams` | **supported_bounded** | — | S1, S8 | S2 |
+| `guard_validation` | **supported_bounded** | — | S1, S8 | — |
+| `equal_mean_clearance_discrete_seams` | **supported_bounded** | — | S1, S6 | S3, S4, S5, S7 |
+| `measured_vs_cfd` | **supported_bounded** | — | S1, S6 | S3, S4, S5 |
+| `generic_segmentation` | **narrowed_by_disclosure** | S8 | — | — |
+| `deployment_vs_fixed` | **supported_bounded** | — | S6 | S3, S4, S5 |
+| `matched_controls` | **supported_bounded** | — | S6 | S3, S4, S5, S7 |
+| `held_out_prediction` | **supported_bounded** | — | S6 | S3, S4, S5 |
+| `guard_claims` | **supported_bounded** | — | S6 | S3, S4, S5 |
+
+What this measures: overlap with a small known-reference set and disclosure in the sections inspected. It is not exhaustive literature recall and not established novelty.
+
+**Matched-clearance feasibility (Stage A as a computation).** `scripts/clearance_uncertainty_budget.py` evaluates the experiment's own stop rule — k·u_c < minimum effect of interest — over `docs/clearance-measurement-budget.csv`. The S5/S6 sensor accuracy (≤ 25 µm) is carried as a `literature_bound` and **never enters the combination**: a published sensor class does not establish achievable uncertainty on this rotor and fixture. Five project terms (in-situ sensor calibration, dynamic runout, thermal growth, fixture deflection under thrust, seam-setting repeatability) plus the target mean clearance and the minimum effect of interest are `pending`, so the verdict is `INPUTS_PENDING`; the SSY-S08 sitting fills them. Nothing is estimated in their place. `FEASIBLE`, when reached, is a budget verdict and authorises no rotor test.

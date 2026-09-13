@@ -1,0 +1,10 @@
+term,value,unit,evidence_state,source,note
+sensor_accuracy_literature,25,um,literature_bound,S5 doi:10.1155/2017/4168150 (reflective fibre bundle; accuracy 25 um or better on a rotor rig),"Published bound for a sensor CLASS. Not the uncertainty achievable on this rotor and fixture; a project term (sensor_calibration_on_fixture) must replace it before the budget can close."
+sensor_calibration_on_fixture,,um,pending,,"Bias + repeatability of the chosen sensor calibrated in situ against a gauge block on THIS duct. Stage A item."
+rotor_radial_runout,,um,pending,,"Blade-tip radius variation at speed (dynamic), measured, not catalogue."
+thermal_growth_at_speed,,um,pending,,"Tip-radius and duct-radius change between cold static measurement and the operating condition."
+fixture_deflection_under_thrust,,um,pending,,"Duct-to-rotor relative displacement under peak thrust load; from a stiffness measurement, not FEA alone."
+seam_setting_repeatability,,um,pending,,"Repeatability of re-establishing a seam opening / two-lobe distortion at equal mean clearance."
+target_mean_clearance,,um,pending,,"The equal mean clearance every condition is set to."
+minimum_effect_of_interest,,um,pending,,"Smallest clearance-equivalent difference the experiment must resolve (H1). Written down BEFORE Stage A as an owner_decision or protocol value; a measurement cannot supply it."
+coverage_factor_k,2,-,protocol,docs/experiment-01-rigid-defect-duct.md Stage A,"Stop rule: combined standard uncertainty x k must be below the minimum effect of interest."

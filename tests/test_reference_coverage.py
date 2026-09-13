@@ -30,7 +30,7 @@ class ReferenceCoverageTests(unittest.TestCase):
         res = compute()
         by = {r["source_id"]: r for r in res["rows"]}
         for sid in ("S2", "S3", "S5"):
-            self.assertTrue(by[sid]["present"]["day2_historical"] and by[sid]["present"]["day4_public"], sid)
+            self.assertTrue(by[sid]["present"]["day4_public"], sid)          # historical export is uncredited: it fails the native audit
 
     def test_alias_expansion(self):
         self.assertEqual(aliases({"dois": ["10.1016/j.AST.2023.108866"]}), {"doi:10.1016/j.ast.2023.108866"})
@@ -42,3 +42,58 @@ class ReferenceCoverageTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ProvenanceBindingTests(unittest.TestCase):
+    """Review 2 (2026-09-12): coverage must reuse the native-response audit and bind to exact export bytes;
+    blank or unrecognised assessments must stay unresolved."""
+
+    def test_public_export_passes_native_audit_and_historical_does_not(self):
+        res = compute()["summary"]["recall"]
+        self.assertTrue(res["day4_public"]["provenance"]["native_audit_passed"])
+        self.assertFalse(res["day2_historical"]["provenance"]["native_audit_passed"])
+        self.assertEqual(res["day2_historical"]["recovered"], 0, "an export that fails the native audit is credited for nothing")
+
+    def test_identifier_absent_from_the_raw_response_is_not_credited(self):
+        import tempfile, shutil, copy
+        from scripts import reference_coverage as RC
+        src = RC.EXPORTS["day4_public"]
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "database-export.json"; shutil.copy(src, p)
+            ids_before, _, prov_before = RC.export_ids(p)
+            self.assertTrue(prov_before["provenance_clean"])
+            data = json.loads(p.read_text()); data["hits"][0]["id"] = "doi:10.1234/not-in-any-response"; p.write_text(json.dumps(data))
+            ids_after, _, prov_after = RC.export_ids(p)
+            self.assertFalse(prov_after["provenance_clean"]); self.assertEqual(ids_after, set())
+            self.assertGreater(prov_after["failures"].get("response_record_mismatches", 0), 0)
+            self.assertNotEqual(prov_after["export_sha256"], prov_before["export_sha256"])
+
+    def test_check_is_bound_to_export_bytes(self):
+        rec = json.loads(Path(__file__).resolve().parents[1].joinpath("evidence/task-2026-09-12/reference-coverage.json").read_text())
+        import hashlib
+        from scripts import reference_coverage as RC
+        for k, p in RC.EXPORTS.items():
+            self.assertEqual(rec["summary"]["recall"][k]["provenance"]["export_sha256"], hashlib.sha256(p.read_bytes()).hexdigest(), k)
+
+    def test_blank_or_unrecognised_assessment_is_unresolved(self):
+        import tempfile, shutil
+        from scripts import reference_coverage as RC
+        recs = json.loads((ROOT / "docs/day3-reading-records.json").read_text())
+        for r in recs:
+            self.assertIn("axis_states", r, r["source_id"])
+            for ax, st in r["axis_states"].items():
+                self.assertIn(st, RC.ASSESSMENT_STATES, (r["source_id"], ax))
+        # in-memory variants: blank state, unknown state, missing locator -> unresolved
+        orig = RC.ROOT
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "docs").mkdir()
+            bad = [dict(source_id="X1", access="full_text_pdf", locator="", axes={"a": "not_established_in_inspected_sections"}, axis_states={"a": "not_found_in_inspected"}),
+                   dict(source_id="X2", access="full_text_pdf", locator="Sec. 3", axes={"a": ""}, axis_states={"a": ""}),
+                   dict(source_id="X3", access="full_text_pdf", locator="Sec. 3", axes={"a": "maybe"}, axis_states={"a": "supported_bounded"})]
+            (Path(d) / "docs/day3-reading-records.json").write_text(json.dumps(bad))
+            RC.ROOT = Path(d)
+            try:
+                s = RC.novelty_axes()["summary"]["a"]
+            finally:
+                RC.ROOT = orig
+        self.assertEqual(s["axis_status"], "unresolved"); self.assertEqual(sorted(s["unresolved_for"]), ["X1", "X2", "X3"])

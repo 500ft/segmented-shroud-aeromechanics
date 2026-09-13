@@ -6,5 +6,5 @@ thermal_growth_at_speed,,um,pending,,"Tip-radius and duct-radius change between 
 fixture_deflection_under_thrust,,um,pending,,"Duct-to-rotor relative displacement under peak thrust load; from a stiffness measurement, not FEA alone."
 seam_setting_repeatability,,um,pending,,"Repeatability of re-establishing a seam opening / two-lobe distortion at equal mean clearance."
 target_mean_clearance,,um,pending,,"The equal mean clearance every condition is set to."
-minimum_effect_of_interest,,um,pending,,"Smallest clearance-equivalent difference the experiment must resolve (H1). Written down BEFORE Stage A."
+minimum_effect_of_interest,,um,pending,,"Smallest clearance-equivalent difference the experiment must resolve (H1). Written down BEFORE Stage A as an owner_decision or protocol value; a measurement cannot supply it."
 coverage_factor_k,2,-,protocol,docs/experiment-01-rigid-defect-duct.md Stage A,"Stop rule: combined standard uncertainty x k must be below the minimum effect of interest."

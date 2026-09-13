@@ -22,7 +22,8 @@ def _fill(rows, sensor="10", runout="15", thermal="8", deflect="12", seam="10", 
                 target_mean_clearance=target, minimum_effect_of_interest=mei)
     for r in rows:
         if r["term"] in vals:
-            r["value"], r["evidence_state"], r["source"] = vals[r["term"]], "measured", "synthetic test value"
+            state = "owner_decision" if r["term"] == "minimum_effect_of_interest" else "measured"
+            r["value"], r["evidence_state"], r["source"] = vals[r["term"]], state, "synthetic test value"
 
 
 class BudgetTests(unittest.TestCase):
@@ -69,6 +70,40 @@ class BudgetTests(unittest.TestCase):
             for r in rows:
                 if r["term"] == "rotor_radial_runout": r["source"] = ""
         with self.assertRaises(B.BudgetInputError): B.load(_reg(nosrc))
+
+    # ── review 2 (2026-09-12): four completed-input cases returned FEASIBLE ──
+    def _over(self, term, **fields):
+        def m(rows):
+            _fill(rows)
+            for r in rows:
+                if r["term"] == term: r.update(fields)
+        return _reg(m)
+
+    def test_nan_and_non_finite_values_are_refused(self):
+        for bad in ("nan", "inf", "-inf"):
+            with self.assertRaises(B.BudgetInputError): B.load(self._over("sensor_calibration_on_fixture", value=bad))
+
+    def test_wrong_unit_is_refused_not_silently_read_as_micrometres(self):
+        with self.assertRaises(B.BudgetInputError): B.load(self._over("sensor_calibration_on_fixture", value="0.010", unit="mm"))
+
+    def test_coverage_factor_must_be_positive_and_in_the_governed_range(self):
+        for k in ("0", "-2", "0.5", "10"):
+            with self.assertRaises(B.BudgetInputError): B.load(self._over("coverage_factor_k", value=k))
+
+    def test_required_term_relabelled_literature_bound_keeps_the_budget_unresolved(self):
+        res = B.compute(B.load(self._over("sensor_calibration_on_fixture", evidence_state="literature_bound")))
+        self.assertEqual(res["verdict"], "INPUTS_PENDING")
+        self.assertEqual(res["ineligible_evidence_terms"], ["sensor_calibration_on_fixture"])
+        self.assertIsNone(res["combined_standard_uncertainty_um"], "excluding a required term must not shrink u_c")
+
+    def test_minimum_effect_of_interest_must_be_a_decision_not_a_measurement(self):
+        res = B.compute(B.load(self._over("minimum_effect_of_interest", evidence_state="measured")))
+        self.assertEqual(res["verdict"], "INPUTS_PENDING"); self.assertIn("minimum_effect_of_interest", res["ineligible_evidence_terms"])
+        with self.assertRaises(B.BudgetInputError): B.load(self._over("minimum_effect_of_interest", value="0"))
+
+    def test_duplicate_term_rows_are_refused(self):
+        def dup(rows): _fill(rows); rows.append(dict(rows[1]))
+        with self.assertRaises(B.BudgetInputError): B.load(_reg(dup))
 
     def test_cli_exit_codes(self):
         import subprocess

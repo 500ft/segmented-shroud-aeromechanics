@@ -1,5 +1,5 @@
 {
- "schema_version": 1,
+ "schema_version": 2,
  "verdict": "INPUTS_PENDING",
  "exit_code": 2,
  "pending_terms": [
@@ -11,6 +11,7 @@
   "target_mean_clearance",
   "minimum_effect_of_interest"
  ],
+ "ineligible_evidence_terms": [],
  "literature_bounds_excluded_from_combination": [
   "sensor_accuracy_literature"
  ],

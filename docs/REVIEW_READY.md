@@ -1,5 +1,14 @@
 # 2026-09-09 — latest review correction
 
+## 2026-09-11 — SSY-D04 provenance-clean re-acquisition
+
+The D02 provenance defect is corrected by one clean run of `rerun_search.py` from a
+non-throttled network: 451 identifier records, 18/18 query legs ok,
+**0** rows without a successful logged query (historical export: 50). Known D01 anchors
+present: 3 of 3 comparable — a bounded overlap, not recall. 25 candidates, all UNSCREENED.
+The 09-09 export and the day-3 acquisition ledger are unchanged; the new export is not merged into
+either. No novelty, patent or owner gate is closed. [Evidence](../evidence/task-2026-09-11/README.md).
+
 ## Day-3 preparation — 2026-09-09
 
 Six new ledger tests preserve acquisition routes, unavailable query mappings, zero-result semantics, unscreened status, all raw rows and deterministic regeneration. 21 tests and repository contract pass. All 499 raw rows retained; 50 provenance holes remain. Public JSASS PDF and a patent claim were accessed; other full-text and disclosure gates remain unresolved.

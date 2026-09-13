@@ -6,6 +6,15 @@ The [current correction](ACQUISITION_CORRECTION_2026-09-11.md) supersedes any in
 
 Each omitted or incomplete recommendation is accounted for separately in the current correction and existing task ledgers. No owner signature, measurement, PI conversation, imagery judgment, disclosure approval or independent review was fabricated. Exact tests, scope and next inputs are linked from the correction record; actual delivery state is established by its PR.
 
+## 2026-09-11 — SSY-D04 provenance-clean re-acquisition
+
+The D02 provenance defect is corrected by one clean run of `rerun_search.py` from a
+non-throttled network: 451 identifier records, 18/18 query legs ok,
+**0** rows without a successful logged query (historical export: 50). Known D01 anchors
+present: 3 of 3 comparable — a bounded overlap, not recall. 25 candidates, all UNSCREENED.
+The 09-09 export and the day-3 acquisition ledger are unchanged; the new export is not merged into
+either. No novelty, patent or owner gate is closed. [Evidence](../evidence/task-2026-09-11/README.md).
+
 ## Day-3 work — 2026-09-09
 
 Delivery update: the preparation was committed as 500ft and pushed; [day-3 PR](https://github.com/500ft/Segmented-Shroud-Yield/pull/5) is open against main. Initial implementation source: `e5e69c002f71b3ea088da90a1e2205c8d1ee4314` (later review/documentation commits are visible in the PR). This supersedes the pre-push stopping state below. Original day-1/day-2 PRs are merged; this new PR is not merged. Resume from the named unresolved project gates in [DAY3_PLAN.md](DAY3_PLAN.md), not from the already completed push step.

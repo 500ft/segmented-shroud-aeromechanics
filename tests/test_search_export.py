@@ -1,10 +1,11 @@
 """Offline regressions for retrieval integrity; synthetic cases are not literature evidence."""
+import csv
 import importlib.util
 import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "evidence/task-2026-09-09/rerun_search.py"
@@ -15,7 +16,6 @@ spec.loader.exec_module(search)
 
 class SearchExportTests(unittest.TestCase):
     def test_derived_csv_is_lf_normalized_without_changing_json(self):
-        import csv
         result = self.native_fixture()
         result["hits"][0]["abstract"] = " alpha \n beta  "
         with tempfile.TemporaryDirectory() as tmp:
@@ -69,7 +69,6 @@ class SearchExportTests(unittest.TestCase):
                 list(search.arxiv("synthetic"))
 
     def test_requests_retain_timestamp_route_response_and_hash(self):
-        from unittest.mock import MagicMock
         response = MagicMock()
         response.__enter__.return_value = response
         response.read.return_value = b'{"message": "synthetic"}'

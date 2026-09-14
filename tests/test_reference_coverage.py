@@ -40,10 +40,6 @@ class ReferenceCoverageTests(unittest.TestCase):
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ProvenanceBindingTests(unittest.TestCase):
     """Review 2 (2026-09-12): coverage must reuse the native-response audit and bind to exact export bytes;
     blank or unrecognised assessments must stay unresolved."""
@@ -97,3 +93,6 @@ class ProvenanceBindingTests(unittest.TestCase):
             finally:
                 RC.ROOT = orig
         self.assertEqual(s["axis_status"], "unresolved"); self.assertEqual(sorted(s["unresolved_for"]), ["X1", "X2", "X3"])
+
+if __name__ == "__main__":
+    unittest.main()

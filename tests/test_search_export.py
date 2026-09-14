@@ -170,10 +170,6 @@ class SearchExportTests(unittest.TestCase):
                          [(row["db"], row["query"]) for row in raw["query_log"]])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ProvenanceCleanAcquisitionTests(unittest.TestCase):
     """The 2026-09-11 re-acquisition must keep every retained row traceable to its own run."""
 
@@ -187,3 +183,6 @@ class ProvenanceCleanAcquisitionTests(unittest.TestCase):
         self.assertEqual([q["status"] for q in data["query_log"]], ["ok"] * len(data["query_log"]))
         self.assertIsNone(data["recall"], "recall stays unavailable until the anchor register is reviewed")
         self.assertTrue(all(h["screening_status"] == "UNSCREENED" for h in data["hits"]))
+
+if __name__ == "__main__":
+    unittest.main()

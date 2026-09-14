@@ -1,7 +1,6 @@
 """Developer provenance checks; these do not screen literature."""
 import json
 import unittest
-from pathlib import Path
 from scripts.acquisition_ledger import build, canonical, day1_rows, render, ROOT
 
 

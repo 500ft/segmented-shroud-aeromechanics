@@ -1,5 +1,5 @@
 """Reference coverage must account for every day-1 source and match the committed result."""
-import copy, hashlib, json, re, shutil, subprocess, sys, tempfile, unittest
+import hashlib, json, re, shutil, subprocess, sys, tempfile, unittest
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))

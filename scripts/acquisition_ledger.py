@@ -1,5 +1,5 @@
 """Reconcile existing source routes offline; never manufacture search provenance."""
-import argparse, hashlib, json, re
+import hashlib, json, re, sys
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -73,12 +73,10 @@ def render():
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true")
     text = render()
-    if parser.parse_args().check:
+    if "--check" in sys.argv:
         if not OUTPUT.is_file() or OUTPUT.read_text() != text:
-            parser.exit(1, "Acquisition ledger missing or stale\n")
+            sys.exit("Acquisition ledger missing or stale")
     else:
         OUTPUT.parent.mkdir(parents=True, exist_ok=True)
         OUTPUT.write_text(text, encoding="utf-8")

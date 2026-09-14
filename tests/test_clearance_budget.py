@@ -1,6 +1,6 @@
 """The Stage A stop rule as a computation: pending stays pending, literature bounds never combine,
 and a budget that cannot resolve the effect of interest stops the experiment."""
-import csv, json, sys, tempfile, unittest
+import csv, json, subprocess, sys, tempfile, unittest
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -106,7 +106,6 @@ class BudgetTests(unittest.TestCase):
         with self.assertRaises(B.BudgetInputError): B.load(_reg(dup))
 
     def test_cli_exit_codes(self):
-        import subprocess
         p = subprocess.run([sys.executable, str(ROOT / "scripts/clearance_uncertainty_budget.py"), "--check"], capture_output=True, text=True)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         p = subprocess.run([sys.executable, str(ROOT / "scripts/clearance_uncertainty_budget.py"), "--register", str(_reg(lambda rows: _fill(rows, mei="40")))], capture_output=True, text=True)

@@ -12,7 +12,7 @@ SHA-256 is recorded, so --check is bound to exact bytes.
 usage: python scripts/reference_coverage.py            # print + write evidence JSON
        python scripts/reference_coverage.py --check    # exit 1 if committed JSON is stale
 """
-import argparse, hashlib, importlib.util, json, sys
+import hashlib, importlib.util, json, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -108,23 +108,15 @@ def compute():
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--check", action="store_true"); a = ap.parse_args()
-    res = compute(); s = res["summary"]
-    if a.check:
+    res = compute()
+    recall = json.dumps({k: f"{v['recovered']}/{v['of_eligible']}" for k, v in res["summary"]["recall"].items()})
+    if "--check" in sys.argv:
         old = json.loads(OUT.read_text()) if OUT.exists() else {}
         if any(old.get(k) != res[k] for k in ("summary", "rows", "novelty_axes_detail")):
-            print("STALE: committed reference-coverage.json missing or differs from recomputation"); sys.exit(1)
-        print("reference coverage OK:", json.dumps({k: f"{v['recovered']}/{v['of_eligible']}" for k, v in s["recall"].items()}))
-        return
+            sys.exit("STALE: committed reference-coverage.json missing or differs from recomputation")
+        print("reference coverage OK:", recall); return
     OUT.parent.mkdir(parents=True, exist_ok=True); OUT.write_text(json.dumps(res, indent=1) + "\n")
-    print(f"D01 sources {s['d01_sources']}: eligible {s['eligible']}, not eligible {s['not_eligible']} ({', '.join(s['not_eligible_ids'])})")
-    for k, v in s["recall"].items():
-        print(f"  {k:16s} recall {v['recovered']}/{v['of_eligible']}  recovered={v['recovered_ids']} missed={v['missed_ids']}"
-              f"  provenance: {v['provenance']['traceable']}/{v['provenance']['hits']} traceable")
-    print(f"  canonical export: {s['canonical_export']}  rejected: {s['rejected_exports']}")
-    for ax, v in s["novelty_axes"].items():
-        print(f"  axis {ax}: {v['axis_status']} | disclosed_by={v['disclosed_by']} not_found_in={v['not_found_in_inspected']} unresolved={v['unresolved_for']}")
-    print("wrote", OUT.relative_to(ROOT))
+    print("wrote", OUT.relative_to(ROOT), recall)
 
 
 if __name__ == "__main__":

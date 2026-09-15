@@ -26,6 +26,8 @@ Before collecting hypothesis-test data:
 
 If measurement uncertainty is not smaller than the minimum effect of interest, the experiment stops for instrumentation redesign.
 
+The [measurement-system requirements draft](measurement-system-spec.md) states these requirements channel by channel with every unresolved input assigned; it is a draft with open inputs, not an installed qualification result.
+
 ## Stage B — Pilot conditions
 
 Use interchangeable rigid inserts to create:

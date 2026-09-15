@@ -1,6 +1,6 @@
 # Candidate screening and measurement requirements — revised implementation plan
 
-Status: proposed replacement for [PR #15](https://github.com/500ft/segmented-shroud-aeromechanics/pull/15); implementation has not started.
+Status: merged plan (PR #16); implemented 2026-09-15 on `task/day-2026-09-14`, see [evidence](../../../evidence/task-2026-09-14/README.md). Checkboxes below record the build.
 Reviewed: 2026-09-15. The directory retains the original work-order date; subsequent evidence must record its actual execution date.
 Base: `main` at `bfde78cc07310e5da40f09e3ff86a0b352a40087`.
 Replaces the plan at PR #15 commit `8f6da7f84adebaebc20cd8c313cdc9df330f9178`.
@@ -176,76 +176,76 @@ The repository contract checker crawls all Markdown files for local target exist
 
 T00–T21 are ordered work units. Each unit targets one reviewable concern, normally 2–5 minutes; repeat T05 per candidate and T12 per channel rather than compressing 25 inspections or 12 channel decisions into a fictional five-minute task. Retrieval latency and resolving a scientific decision are not included in those estimates. Record actual progress and remaining work instead of promising completion within one calendar day.
 
-### [ ] T00 — Establish the build baseline
+### [x] T00 — Establish the build baseline
 
 - Files: `evidence/task-2026-09-14/README.md` and gate logs (new).
 - Do: verify the merged plan revision, clean worktree, interpreter/dependency, and all baseline commands above.
 - Done when: logs retain each command, exit code, suite count and pending budget verdict; unexpected failures are resolved or explicitly stop dependent work.
 
-### [ ] T01 — Freeze the corpus and procedure before candidate inspection
+### [x] T01 — Freeze the corpus and procedure before candidate inspection
 
 - Files: evidence README (modify).
 - Depends on: T00.
 - Do: record input hashes, native audit, actual ordered IDs, 450/136/25/111 counts, D1–D3, and unchanged historical files; commit this procedure before new screening.
 - Done when: the commit exists and the recorded selection reproduces from retained JSON. A changed corpus requires a dated amendment before affected decisions, never a backdated freeze.
 
-### [ ] T02 — Initialize the screening record
+### [x] T02 — Initialize the screening record
 
 - Files: screening JSON (new); evidence README (modify).
 - Depends on: T01.
 - Do: generate metadata and one skeleton per selected ID using a recorded inline standard-library snippet; record T01's actual commit. Initialize decision/aboutness to null and attempts/related IDs to empty lists.
 - Done when: 25 records, 25 unique IDs, exact ordered equality to the selection, and copied source fields match. No skeleton is counted as screened.
 
-### [ ] T03 — Add screening completeness and provenance checks
+### [x] T03 — Add screening completeness and provenance checks
 
 - Files: `tests/test_candidate_screening.py` (new).
 - Depends on: T02.
 - Do: implement D4 checks using existing acquisition-audit logic and local input-accepting helpers.
 - Done when: targeted discovery loads tests and fails on unfinished decisions with named IDs; captured failure is an assertion, not an import error.
 
-### [ ] T04 — Prove the screening checks reject misleading records
+### [x] T04 — Prove the screening checks reject misleading records
 
 - Files: screening test (modify).
 - Depends on: T03.
 - Do: add D4's focused counterexamples using copied records/temporary paths; keep incomplete live records separate from these synthetic controls.
 - Done when: negative controls reject their intended defects and title-based inclusion/deferred access are accepted; the live corpus completeness check remains red until disposition is complete.
 
-### [ ] T05 — Disposition each selected identifier
+### [x] T05 — Disposition each selected identifier
 
 - Files: screening JSON (modify); source evidence only when newly retrieved.
 - Depends on: T04.
 - Do: repeat for each of the 25 IDs, in the frozen order. Inspect available evidence, apply D2/D3, and record the actual basis, rationale, locator, timestamp and possible related versions. One writer updates the JSON sequentially.
 - Done when: each ID has a supported disposition. Checkpoint after every five IDs and on interruption; at completion targeted screening discovery passes. Do not expect missing-abstract cases to occupy a particular batch.
 
-### [ ] T06 — Review all exclusions and deferrals
+### [x] T06 — Review all exclusions and deferrals
 
 - Files: screening JSON and evidence README (modify only if needed).
 - Depends on: T05.
 - Do: re-read the cited basis for every exclusion/deferral; check that missing access was not converted into irrelevance. Check inclusion rationales for title/excerpt overclaims and possible duplicate-study counting.
 - Done when: a per-ID review disposition is recorded for exclusions/deferrals, unresolved cases are queued, and the targeted suite remains green. Label this as a self-review unless a separate reviewer actually performs it.
 
-### [ ] T07 — Produce the screening summary
+### [x] T07 — Produce the screening summary
 
 - Files: screening report (new).
 - Depends on: T06.
 - Do: render the 25-row table from JSON with a recorded inline snippet; include access/basis, decision, rationale/locator and aboutness. Report counts from the data and explicit corpus limits.
 - Done when: decision counts sum to 25, every ID appears once, and the report states that triage is not close reading, novelty clearance, a patent search, or a census of 450 studies. No minimum include-count target.
 
-### [ ] T08 — Hand off the unresolved source work
+### [x] T08 — Hand off the unresolved source work
 
 - Files: screening report (modify).
 - Depends on: T07.
 - Do: derive queues for every include and defer, with priority/reason and next source needed; name the 111 unselected qualifying records and existing S2/S3 reading gaps separately. Prioritize likely direct competitors, then instrument feasibility, then background; preserve the full queue.
 - Done when: queue-ID sets exactly match the JSON and no deferred item disappears. The remaining export population and broader search remain unreviewed, not excluded.
 
-### [ ] T09 — Update the prior-art boundary without inventing closure
+### [x] T09 — Update the prior-art boundary without inventing closure
 
 - Files: `docs/prior-art.md`, `docs/TASKS.md` (modify).
 - Depends on: T08.
 - Do: add the actual execution date, source-report link, frozen query-log reference, selection caps and inclusion rules. State which SSY-01 criteria are still unfulfilled, including patent search and close reading.
 - Done when: wording preserves any earlier bounded “supported candidate gap” or “prior art found” assessment with its original source scope. Screening alone supplies no new per-axis verdict and does not earn those phrases merely by inserting them into a paragraph.
 
-### [ ] T10 — Create the specification structure and open-input register
+### [x] T10 — Create the specification structure and open-input register
 
 - Files: `docs/measurement-system-spec.md` (new).
 - Depends on: T01.
@@ -253,77 +253,77 @@ T00–T21 are ordered work units. Each unit targets one reviewable concern, norm
 - Do: add D6's five sections, draft/evidence labels, the ownership table's input IDs and exit evidence.
 - Done when: draft acceptance, SSY-02 requirements freeze and SSY-12 physical qualification are explicitly separate; every unknown has an accountable role rather than a fabricated number.
 
-### [ ] T11 — Define the measurands and admissible observations
+### [x] T11 — Define the measurands and admissible observations
 
 - Files: measurement spec (modify).
 - Depends on: T10.
 - Do: write D6 part 1 and preserve matched-thrust comparison, actual averaging domain, minimum-clearance coverage, missing-wall semantics, sample hierarchy, and contact/dropout dispositions.
 - Done when: a reviewer can distinguish physical geometry, measured values, systematic corrections, measurement uncertainty, and unobserved regions. Unmade design choices are in the input register.
 
-### [ ] T12 — Specify each channel's requirements
+### [x] T12 — Specify each channel's requirements
 
 - Files: measurement spec (modify).
 - Depends on: T11.
 - Do: repeat D6 part 2 for each of the 12 named channels; assign unresolved range/limit/method/timing decisions to input IDs.
 - Done when: each row has units, a method and acceptance structure, or a named unresolved decision for every required field. Literature sensors are candidates, not selected hardware or installed accuracy.
 
-### [ ] T13 — Bind the budget mapping to its source register
+### [x] T13 — Bind the budget mapping to its source register
 
 - Files: measurement spec (modify).
 - Depends on: T12.
 - Do: build D6's delimited nine-row budget table from the current CSV; describe the five uncertainty terms and pending verdict.
 - Done when: values/units/states/sources agree with the register, literature accuracy is excluded from the combination, and the limits of the current clearance calculator are explicit.
 
-### [ ] T14 — Define qualification and endpoint-uncertainty procedures
+### [x] T14 — Define qualification and endpoint-uncertainty procedures
 
 - Files: measurement spec (modify).
 - Depends on: T13.
 - Do: write D6 part 4 using the symbolic clearance/power contracts and dimensionally consistent channel criteria; split into one procedure per work unit if necessary.
 - Done when: each procedure names observations, pass/stop/pending conditions and unresolved parameters; difference uncertainty, synchronization and repeated-reference handling are addressed. No planned input or passing software check can be called installed qualification.
 
-### [ ] T15 — Test the specification/register contract
+### [x] T15 — Test the specification/register contract
 
 - Files: `tests/test_measurement_spec.py` (new).
 - Depends on: T13.
 - Do: implement the bounded table comparison and D6's negative controls; include wrong value/unit/state/source, duplicate/missing term, and pending-to-numeric substitution cases in memory.
 - Done when: targeted discovery passes for the draft table, every counterexample is rejected, and tests leave the CSV/committed budget untouched.
 
-### [ ] T16 — Review the requirements as an experiment contract
+### [x] T16 — Review the requirements as an experiment contract
 
 - Files: measurement spec and evidence README (modify).
 - Depends on: T14, T15.
 - Do: review every D6 requirement and SSY-02 done-condition, including performance effect, channel limits, calibration references, drift, synchronization, sample unit, and qualifying actual installed behavior. Record satisfied-as-draft / unresolved with an input ID and next action.
 - Done when: no acceptance criterion is represented only by a mentioned keyword; neither SSY-02 freeze nor Stage A PASS is claimed. Recheck targeted tests after any table correction.
 
-### [ ] T17 — Add the Experiment 01 reading route
+### [x] T17 — Add the Experiment 01 reading route
 
 - Files: `docs/experiment-01-rigid-defect-duct.md` (modify).
 - Depends on: T16.
 - Do: add a link under Stage A describing the spec as a draft of requirements with open inputs.
 - Done when: the link resolves and its caption cannot be read as an installed qualification result; the budget CSV remains unchanged.
 
-### [ ] T18 — Reconcile bounded task status
+### [x] T18 — Reconcile bounded task status
 
 - Files: `docs/SPRINT_TASKS.csv`, `docs/TASKS.md` (modify).
 - Depends on: T09, T17.
 - Do: add unique rows SSY-R03 and SSY-R04 with their D5 scopes, owner Agent, P1, dependency SSY-R02, actual execution date, deliverable/verification/evidence fields and estimates clearly labeled as estimates. Use `done` only after their artifact checks pass; list parent residuals explicitly.
 - Done when: CSV parses, IDs are unique, verification commands use discovery, and no prior done row is reclassified. SSY-01/SSY-02/SSY-S08/XC-02 retain their own unmet conditions; ledger and dated backlog notes agree.
 
-### [ ] T19 — Update the handoff
+### [x] T19 — Update the handoff
 
 - Files: `docs/SPRINT_PROGRESS.md`, `docs/REVIEW_READY.md` (modify).
 - Depends on: T18.
 - Do: add a dated current section with actual decision counts, draft-spec outcome, remaining work by responsible role and links to the new evidence.
 - Done when: both summaries agree with JSON and ledger and explicitly distinguish completed top-25 triage from unfinished scholarly review, and delivered requirements draft from unfrozen requirements/physical qualification.
 
-### [ ] T20 — Run integration and preservation checks
+### [x] T20 — Run integration and preservation checks
 
 - Files: evidence README/logs and plan checkboxes (modify).
 - Depends on: T19.
 - Do: run the full command set, check new/changed documentation links, and compare historical inputs against T00's build base. Record actual suite totals and all acceptance decisions.
 - Done when: commands pass and no diffs exist in historical acquisition folders, `docs/day3-reading-records.json`, `docs/source-eligibility-register.json`, `docs/clearance-measurement-budget.csv`, or their prior derived evidence. Expected unresolved research inputs remain reported as unresolved. No new measurement/novelty result is inferred from green checks.
 
-### [ ] T21 — Deliver the implementation PR
+### [x] T21 — Deliver the implementation PR
 
 - Files: no additional product files; PR body and evidence links.
 - Depends on: T20.

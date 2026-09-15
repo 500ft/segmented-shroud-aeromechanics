@@ -1,0 +1,508 @@
+{
+ "metadata": {
+  "schema_version": 1,
+  "candidate_csv_path": "evidence/task-2026-09-11-public/candidates-unscreened.csv",
+  "candidate_csv_sha256": "184c3fb682af669e8e00c994809174e63d6b4c1d4b8aced43bc3c914180eacd1",
+  "export_path": "evidence/task-2026-09-11-public/database-export.json",
+  "export_sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52",
+  "rule_commit": "d69cd98596081bf2c137f445c954fd74a85d450d",
+  "candidate_ids": [
+   "doi:10.1115/gt2020-15403",
+   "doi:10.1016/j.heliyon.2024.e25296",
+   "doi:10.1016/j.measurement.2024.115777",
+   "doi:10.1063/1.4964858",
+   "doi:10.1115/1.3230742",
+   "doi:10.1115/2000-gt-0416",
+   "doi:10.1115/78-gt-164",
+   "doi:10.1115/91-gt-164",
+   "doi:10.1115/gt2022-82750",
+   "doi:10.2139/ssrn.4820937",
+   "doi:10.1088/0957-0233/11/7/303",
+   "doi:10.1109/imtc.2002.1007093",
+   "doi:10.1115/1.4023468",
+   "doi:10.1115/96-ta-001",
+   "doi:10.1115/97-gt-406",
+   "doi:10.1115/gt2004-53563",
+   "doi:10.1115/gt2011-46356",
+   "doi:10.1243/jmes_jour_1974_016_070_02",
+   "doi:10.1088/1361-6501/ad915f",
+   "doi:10.1088/1742-6596/2428/1/012032",
+   "doi:10.1088/1742-6596/2820/1/012030",
+   "doi:10.1115/1.2777187",
+   "doi:10.1115/1.2814098",
+   "doi:10.1115/1.4023469",
+   "doi:10.1115/89-gt-82"
+  ],
+  "screening_scope": "ranked_top_25",
+  "rule": "plan docs/specs/day-2026-09-14/plan.md D1-D3 at the merged revision; procedure text in evidence/task-2026-09-14/README.md"
+ },
+ "records": [
+  {
+   "source_id": "doi:10.1115/gt2020-15403",
+   "title": "Blade Tip Clearance Measurement Systems for High Speed Turbomachinery Applications and the Potential for Blade Tip Timing Applications",
+   "year": "2020",
+   "triage_score": 10,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: capacitive tip-clearance systems measuring individual blade clearances to 90,000 rpm; compares passive and active probe approaches with stated bandwidth and uncertainty. Direct candidate method for the dynamic-clearance channel; no defect comparison.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/gt2020-15403].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:27:56Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1016/j.heliyon.2024.e25296",
+   "title": "Numerical investigation on the influence of nonuniform tip clearance on rotor tip-clearance flow field structure",
+   "year": "2024",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Title names nonuniform tip clearance and its effect on rotor tip-clearance flow structure (numerical). Plausible competitor for the nonuniform-versus-mean question; abstract not retained, so relevance is queued for close reading rather than graded.",
+   "aboutness": null,
+   "basis": "title",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1016/j.heliyon.2024.e25296].title",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:27:57Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1016/j.measurement.2024.115777",
+   "title": "Improving the blade tip clearance measurement method based on blade tip timing: Accounting for rotor speed variations and non-uniform blade-by-blade tip clearance",
+   "year": "2025",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Title names a blade-tip-timing clearance method that accounts for rotor speed variation and non-uniform blade-by-blade tip clearance. Directly relevant metrology for per-blade dynamic clearance; abstract not retained. Same title as the SSRN record below.",
+   "aboutness": null,
+   "basis": "title",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1016/j.measurement.2024.115777].title",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:27:58Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.2139/ssrn.4820937"
+   ]
+  },
+  {
+   "source_id": "doi:10.1063/1.4964858",
+   "title": "On the development of a magnetoresistive sensor for blade tip timing and blade tip clearance measurement systems",
+   "year": "2016",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: simultaneous blade tip timing and tip clearance with a magnetoresistive sensor; reviews optical, capacitive, eddy-current and microwave probe options and their processing dependence. Candidate method class and a source on method-to-method disagreement.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1063/1.4964858].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:27:59Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/1.3230742",
+   "title": "Laser-Optical Blade Tip Clearance Measurement System",
+   "year": "1981",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: laser-optical system measuring single-blade and average tip clearance in rotating rigs and engines, with bench and environmental tests. Historical (1981) but a direct optical-method reference for the clearance channel.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/1.3230742].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:00Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/2000-gt-0416",
+   "title": "Non-Uniform Flow in a Compressor due to Asymmetric Tip Clearance",
+   "year": "2000",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Aerodynamics: analytical actuator-disc model of flow redistribution from asymmetric tip clearance, mean plus perturbation. Adjacent evidence on how circumferentially non-uniform clearance changes the flow at a given mean; analytical, compressor, no measurement.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/2000-gt-0416].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:01Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.1115/97-gt-406"
+   ]
+  },
+  {
+   "source_id": "doi:10.1115/78-gt-164",
+   "title": "Turbine Blade Tip Clearance Measurement Utilizing Borescope Photography",
+   "year": "1978",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology background: rub pins in turbine shrouds photographed by borescope to determine running clearance in an engine. A contact-witness approach; informs the contact-detection option in the requirements draft, not a dynamic sensor.",
+   "aboutness": 1,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/78-gt-164].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:02Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/91-gt-164",
+   "title": "Turbine Blade Tip Clearance Improvement",
+   "year": "1991",
+   "triage_score": 9,
+   "decision": "exclude_off_topic",
+   "reason": "Turbine hot-section structural design (diaphragm attachment, thermal matching) to reduce clearance without rubs. The measurement technique is unnamed and incidental; the abstract positively describes engine structural design, not a clearance-defect comparison or a measurement method usable here.",
+   "aboutness": 0,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/91-gt-164].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:03Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/gt2022-82750",
+   "title": "Analytical Methods for Transonic Compressor Rotor Blade Tip Clearance Measurements Using Capacitive Probes",
+   "year": "2022",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: post-processing and calibration method for capacitive tip-clearance probes on a transonic fan under transient loading; once-per-revolution resampling into the spatial domain to improve SNR. Directly relevant to per-revolution clearance processing and synchronization requirements.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/gt2022-82750].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:04Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.2139/ssrn.4820937",
+   "title": "Improving the Blade Tip Clearance Measurement Method Based on Blade Tip Timing: Accounting for Rotor Speed Variations and Non-Uniform Blade-by-Blade Tip Clearance",
+   "year": "2024",
+   "triage_score": 9,
+   "decision": "include_for_close_reading",
+   "reason": "SSRN preprint carrying the same title as the Measurement 2025 record; queued with it so the two versions are read together and counted once. Abstract not retained.",
+   "aboutness": null,
+   "basis": "title",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.2139/ssrn.4820937].title",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:05Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.1016/j.measurement.2024.115777"
+   ]
+  },
+  {
+   "source_id": "doi:10.1088/0957-0233/11/7/303",
+   "title": "Techniques for blade tip clearance measurements with capacitive probes",
+   "year": "2000",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Title names techniques for blade tip clearance measurement with capacitive probes (Meas. Sci. Technol., 2000). Relevant method reference for the clearance channel; abstract not retained.",
+   "aboutness": null,
+   "basis": "title",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1088/0957-0233/11/7/303].title",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:06Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1109/imtc.2002.1007093",
+   "title": "Capacitive blade tip clearance measurements for a micro gas turbine",
+   "year": "",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Title names capacitive blade tip clearance measurement for a micro gas turbine, the closest scale to a small-UAV rotor among the metrology hits. Abstract and year not retained; queued on title.",
+   "aboutness": null,
+   "basis": "title",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1109/imtc.2002.1007093].title",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:07Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/1.4023468",
+   "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL Unmanned Aerial Vehicles—Part I: Baseline Experiments and Computational Validation",
+   "year": "2013",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Ducted-fan VTOL UAV tip-clearance study (559 mm rig): experiments with Kiel probes and six-component force/torque plus RANS CFD, baseline and validation. Adjacent evidence on tip-leakage loss versus clearance in exactly this class of machine; whether clearance is varied non-uniformly or at equal mean is not stated in the excerpt. Journal version of the 2011 conference paper; Part II is a separate record.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/1.4023468].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:08Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.1115/gt2011-46356",
+    "doi:10.1115/1.4023469"
+   ]
+  },
+  {
+   "source_id": "doi:10.1115/96-ta-001",
+   "title": "Review of Progress in the Development of Capacitive Sensors for Blade Tip Clearance Measurement",
+   "year": "1996",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology review: capacitive sensor designs (composite and integral) and electronics for compressor and turbine tip clearance. Method-class reference for the clearance channel.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/96-ta-001].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:09Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/97-gt-406",
+   "title": "Effects of Non-Axisymmetric Tip Clearance on Axial Compressor Performance and Stability",
+   "year": "1997",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Experimental and analytical study of circumferentially non-uniform tip clearance on a four-stage low-speed compressor; excerpt states stall-margin loss was more severe than an average-clearance estimate and that the circumferential length scale of the asymmetry mattered. This is the closest retained evidence for the 'beyond mean clearance' question; abstract does not say whether mean clearance was held equal across cases. Highest close-reading priority.",
+   "aboutness": 3,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/97-gt-406].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:10Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.1115/2000-gt-0416"
+   ]
+  },
+  {
+   "source_id": "doi:10.1115/gt2004-53563",
+   "title": "The Measurement of Turbomachinery Blade Vibration Through Tip Timing With Capacitance Tip Clearance Probes",
+   "year": "2004",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology background: dual use of a commercial capacitance clearance probe for blade tip timing (vibration). Informs whether one probe class can serve clearance and timing; the excerpt is about vibration detection, so low priority.",
+   "aboutness": 1,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/gt2004-53563].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:11Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/gt2011-46356",
+   "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL UAVS: Part 1—Baseline Experiments and Computational Validation",
+   "year": "2011",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Conference version (22-inch rig) of the ducted-fan VTOL UAV tip-clearance baseline study; same authors and structure as the 2013 journal Part I. Queued with it; counted as one study unless the texts differ.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/gt2011-46356].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:12Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.1115/1.4023468",
+    "doi:10.1115/1.4023469"
+   ]
+  },
+  {
+   "source_id": "doi:10.1243/jmes_jour_1974_016_070_02",
+   "title": "Theoretical Studies of Tip Clearance and Radial Variation of Blade Loading on the Operation of Ducted Fans and Propellers",
+   "year": "1974",
+   "triage_score": 8,
+   "decision": "include_for_close_reading",
+   "reason": "Theory: actuator-disc and surface-singularity treatment of radial tip clearance and blade-loading distribution for ducted fans and propellers. Background on clearance effects in ducted propellers; no defects, no measurement.",
+   "aboutness": 1,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1243/jmes_jour_1974_016_070_02].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:13Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1088/1361-6501/ad915f",
+   "title": "Blade tip clearance measurement method based on blade tip timing without the once per revolution sensor",
+   "year": "2024",
+   "triage_score": 7,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: laser-triangulation blade-tip-timing clearance measurement without a once-per-revolution sensor; two processing methods. Relevant to the timing/synchronization requirements and to the dynamic-clearance method shortlist.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1088/1361-6501/ad915f].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:14Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1088/1742-6596/2428/1/012032",
+   "title": "Research on Tip Clearance Measurement Technology of Aero-engine Blade Based on Optical Fiber Sensing System",
+   "year": "2023",
+   "triage_score": 7,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: three-coil coaxial optical fibre bundle sensor for dynamic radial-gap detection, designed to reject reflectivity and angle variation. Same sensor class as day-1 source S5; candidate for the clearance channel.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1088/1742-6596/2428/1/012032].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:15Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1088/1742-6596/2820/1/012030",
+   "title": "Feasibility verification of a vertically foldable propeller",
+   "year": "2024",
+   "triage_score": 7,
+   "decision": "exclude_off_topic",
+   "reason": "A vertically folding propeller blade for a multi-rotor vehicle; the excerpt is about folding the blade to reduce lateral size and testing blade efficiency. No duct, shroud, clearance or clearance metrology; the retrieval query matched 'foldable' and 'propeller' only.",
+   "aboutness": 0,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1088/1742-6596/2820/1/012030].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:16Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/1.2777187",
+   "title": "Optimized Shroud Design for Axial Turbine Aerodynamic Performance",
+   "year": "2008",
+   "triage_score": 7,
+   "decision": "include_for_close_reading",
+   "reason": "Axial-turbine blade-tip shroud study: full, non-axisymmetric partial and optimized partial shrouds at identical clearance, measured and simulated. 'Shroud' here is the blade-mounted tip shroud, a different object from a duct; retained as an analogue of geometry change at fixed clearance, low priority.",
+   "aboutness": 1,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/1.2777187].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:17Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/1.2814098",
+   "title": "A Blade-by-Blade Tip Clearance Measurement System for Gas Turbine Applications",
+   "year": "1995",
+   "triage_score": 7,
+   "decision": "include_for_close_reading",
+   "reason": "Metrology: blade-by-blade tip clearance measurement system commissioned on a compressor facility, with a performance analysis. Direct reference for per-blade measurement and commissioning practice.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/1.2814098].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:18Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  },
+  {
+   "source_id": "doi:10.1115/1.4023469",
+   "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL Unmanned Aerial Vehicles—Part II: Novel Treatments Via Computational Design and Their Experimental Verification",
+   "year": "2013",
+   "triage_score": 7,
+   "decision": "include_for_close_reading",
+   "reason": "Ducted-fan VTOL UAV Part II: CFD-designed tip treatments varied in chordwise location and circumferential width, with experimental verification. Adjacent evidence on circumferentially varying tip geometry in this machine class; not an equal-mean clearance comparison as far as the excerpt shows.",
+   "aboutness": 2,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/1.4023469].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:19Z",
+   "access_attempts": [],
+   "possible_related_ids": [
+    "doi:10.1115/1.4023468",
+    "doi:10.1115/gt2011-46356"
+   ]
+  },
+  {
+   "source_id": "doi:10.1115/89-gt-82",
+   "title": "Effects of Tip Clearance of Nozzle Vanes on Performance of Radial Turbine Rotor",
+   "year": "1989",
+   "triage_score": 7,
+   "decision": "exclude_off_topic",
+   "reason": "Radial turbine with variable nozzle vanes: effect of nozzle-vane tip-clearance leakage on rotor-inlet flow distortion and rotor performance. The clearance is at the stator vanes, not the rotor tip, and the machine is a radial turbine; the excerpt positively places it outside both the rotor-tip defect question and the metrology need.",
+   "aboutness": 0,
+   "basis": "abstract_excerpt",
+   "locator": {
+    "path_or_url": "evidence/task-2026-09-11-public/database-export.json",
+    "section": "hits[id=doi:10.1115/89-gt-82].abstract",
+    "sha256": "d7ca70193a82f67eea761b5dec3becfd9a71f2919d922f7801e4e836da5bad52"
+   },
+   "screened_utc": "2026-09-15T18:28:20Z",
+   "access_attempts": [],
+   "possible_related_ids": []
+  }
+ ]
+}

@@ -54,6 +54,12 @@ positive result is not secured cannot be Tier 0, however visually impressive it 
 is complete. Full close-competitor texts and the stated broader-search shortfalls
 remain. SSY-01, SSY-02/03 and XC-02 are not automatically closed by this artifact.
 
+2026-09-15: [top-25 database-candidate triage](prior-art-search-2026-09-14-screening.md)
+is complete (ledger row SSY-R03): 22 included for close reading, 3 excluded, 0 deferred, under a
+rule frozen before reading. SSY-01 stays open on close reading, the 111 qualifying unselected
+records, the S2/S3 full texts, instrument constraints, and a dated patent search, which was not
+performed.
+
 `hygiene` · executable now
 
 **Why it matters.** The current source map establishes clearance sensitivity, non-axisymmetric
@@ -72,6 +78,11 @@ gap” or “prior art found”—never “no one has done this.”
 ### SSY-02 · Freeze the measurement-system requirements and uncertainty budget
 
 `preregister` · executable now · after SSY-01
+
+2026-09-15: a [measurement-requirements draft](measurement-system-spec.md) exists (ledger row
+SSY-R04) with every channel, the budget-register mapping, qualification procedures and an
+open-input register IN-01 to IN-12. It is a draft: requirements are not frozen, no numerical
+target or sensor is chosen, and installed qualification (SSY-12) has not been performed.
 
 **Why it matters.** If clearance, thrust, power, RPM, temperature, or alignment uncertainty is
 as large as the smallest effect of interest, no later model can recover the experiment.

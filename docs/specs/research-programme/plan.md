@@ -1,6 +1,6 @@
 # Work order — Study A0 entry and the systematic prior-art closeout
 
-Status: proposed, for owner review; build starts only from the merged revision, on `task/phd-programme-a0`. Date: 2026-09-16. Design: [proposal.md](proposal.md); tiers: [scope.md](scope.md). Status of research tasks lives only in the [sprint ledger](../../SPRINT_TASKS.csv); checkboxes here track implementation.
+Status: proposed, for owner review; build starts only from the merged revision, on `task/research-programme-a0`. Date: 2026-09-16. Design: [proposal.md](proposal.md); tiers: [scope.md](scope.md). Status of research tasks lives only in the [sprint ledger](../../SPRINT_TASKS.csv); checkboxes here track implementation.
 
 ## Decisions to confirm or change before the build
 
@@ -19,7 +19,7 @@ IN-01, IN-02, IN-03 (decisions after Study A), IN-04 (resources), IN-07 (XC-02).
 ## Tasks
 
 ### [ ] T00 — Baseline and toolchain check
-- Files: `evidence/task-phd-a0/README.md` (new).
+- Files: `evidence/task-a0-validation/README.md` (new).
 - Do: run the repository gate; record interpreter, commit, hardware (cores, memory); pull the OpenFOAM arm64 container and run its tutorial cavity case; record versions and wall time.
 - Done when: gate exit codes logged; the container solves the tutorial; versions recorded. Failure to run the container stops T04 and triggers the SU2 alternative in D1.
 
@@ -34,7 +34,7 @@ IN-01, IN-02, IN-03 (decisions after Study A), IN-04 (resources), IN-07 (XC-02).
 - Done when: the table exists, or the access failure is recorded with routes and dates.
 
 ### [ ] T03 — Choose the A0 baseline (owner confirms)
-- Files: `docs/specs/phd-programme/plan.md` D2 (modify).
+- Files: `docs/specs/research-programme/plan.md` D2 (modify).
 - Depends on: T01, T02.
 - Do: rank the candidates by geometry completeness and measured-data quality; record the choice and what remains to be derived or assumed, each assumption labelled conservative or optimistic.
 - Done when: D2 names one dataset and the assumption list is in the evidence README.
@@ -70,7 +70,7 @@ IN-01, IN-02, IN-03 (decisions after Study A), IN-04 (resources), IN-07 (XC-02).
 - Done when: the test discovers, passes on the A0 records, and rejects both controls.
 
 ### [ ] T09 — Preregister Study A
-- Files: `docs/specs/phd-programme/study-a-preregistration.md` (new).
+- Files: `docs/specs/research-programme/study-a-preregistration.md` (new).
 - Depends on: T07 (verdict positive).
 - Do: fix the screening design (factor levels, run list), the matched-thrust procedure, the uncertainty band, both averaging rules, the held-out configuration, and the kill criterion; commit before any variant geometry is generated.
 - Done when: the file exists in a commit that predates every Study A case manifest; A's evidence README cites that commit.

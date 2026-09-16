@@ -1,6 +1,6 @@
-# Segmented-shroud aeromechanics — PhD-scope research programme
+# Segmented-shroud aeromechanics — research programme
 
-Status: proposal for owner review, 2026-09-16. Nothing here is a result. Evidence state of the repository: research design; no CAD, CFD, FEA or measured results.
+Status: proposal for owner review, 2026-09-16. Three-year, gate-driven; one publishable unit per phase. Nothing here is a result. Evidence state of the repository: research design; no CAD, CFD, FEA or measured results.
 
 Scope of this document: the owner's four-study outline (A CFD parametric, B budget feed, C pilot, D decisive) stress-tested, revised where it does not survive, and turned into studies with a first experiment, a kill criterion and an honest claim boundary each. Companion files: [scope.md](scope.md) (what is built when, with triggers) and [plan.md](plan.md) (the first work order). Repository rules that bind every study: [research plan](../../research-plan.md), [claim ledger](../../claim-ledger.md), [measurement-requirements draft](../../measurement-system-spec.md), [prior-art boundary](../../prior-art.md), and the [disclosure boundary](../../../CONTRIBUTING.md#public-disclosure-boundary) (XC-02 open: no closure-mechanism detail).
 
@@ -129,15 +129,15 @@ These numbers are assumptions until A0 records actual timings; if the gap cannot
 - It can claim, after D: a held-out prediction result within the registered descriptor support.
 - It cannot claim global novelty (the axis table is bounded to inspected sources; S2/S3 unread; 111 records unscreened; no patent search yet), a performance-duct or protective-guard result, or anything about a closure mechanism while XC-02 is open.
 
-## 8. PhD shape (36 months, gate-driven, not calendar-driven)
+## 8. Programme shape (36 months, gate-driven, not calendar-driven)
 
 | phase | studies | exit gate | publishable unit |
 | --- | --- | --- | --- |
 | 1 (months 1–6) | systematic prior-art closeout (close-read the 22 includes, second frozen batch for the 111, dated patent search), A0, A, B | A's uncertainty-bounded result and the budget with owner numbers | Paper 1: CFD-bounded parametric study of equal-mean seam defects with a validated toolchain |
 | 2 (months 6–18) | Stage 1 qualification, C | Stage A `FEASIBLE`; pilot result | Paper 2: measurement-system qualification and pilot |
-| 3 (months 18–36) | D; mechanism work only if Stage 2 passes and XC-02 is closed | roadmap Stage 2 gate; Stage 3 conditional | Paper 3: held-out prediction; thesis |
+| 3 (months 18–36) | D; mechanism work only if Stage 2 passes and XC-02 is closed | roadmap Stage 2 gate; Stage 3 conditional | Paper 3: held-out prediction; the three papers together are the programme's written record |
 
-A null at any gate is written up at that gate; the roadmap's failure branches are the thesis's alternative chapters, not its failure.
+A null at any gate is written up at that gate; the roadmap's failure branches are alternative outcomes of the programme, not its failure.
 
 ## 9. Risks and honest limits
 

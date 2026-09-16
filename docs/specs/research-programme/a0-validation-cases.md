@@ -29,7 +29,7 @@ Source of record: NASA Langley Turbulence Modeling Resource, "2D NACA 0012 Airfo
 | grid family | TMR structured C-grids, at least three levels | | TMR grid page |
 | turbulence models | Spalart–Allmaras; k-ω SST | | plan D4 |
 
-Acceptance, fixed in T03 before running: lift coefficient within a stated percentage of the experimental value at 0° and 10° (15° is near stall and is reported, not gated); drag coefficient within a stated count band; GCI on lift on the finest grid at or below a stated percentage; results plotted against the TMR's own published CFD as a second check. Solver: incompressible at M 0.15 is defensible; the compressibility neglect is recorded as an assumption, optimistic on drag by a known small amount.
+Acceptance, fixed in T03 before running, per plan D9: comparison error E on lift and drag at 0° and 10° against the validation uncertainty U_val (15° is near stall and is reported, not gated); GCI on the finest grid by the Celik et al. 2008 procedure; the TMR's published CFD results plotted alongside as the field's spread. Validated at the U_val level when |E| ≤ U_val; U_val is reported so a reader can judge how strong that statement is. Solver: incompressible at M 0.15 is defensible; the compressibility neglect is recorded as an assumption, optimistic on drag by a known small amount.
 
 ## 3. A0.2 — Caradonna–Tung hover rotor
 
@@ -45,7 +45,7 @@ Source of record: F. X. Caradonna and C. Tung, "Experimental and Analytical Stud
 | rotor speed | 1250 rpm (subsonic tip) and 2500 rpm (transonic tip) | | TM 81232 test matrix |
 | measured quantities | sectional pressure coefficient at several r/R stations; thrust coefficient; tip-vortex trajectory | | TM 81232 |
 
-Only the subsonic-tip condition is in scope for an incompressible solver; the transonic condition is out. Domain: one blade with 180° periodic boundaries in a rotating frame (MRF), far-field distance and boundary treatment for hover recorded as assumptions. Acceptance, fixed in T03: thrust coefficient within a stated percentage of the measured value; sectional pressure distributions at three stations compared with an RMS error stated per station; GCI on thrust at or below a stated percentage; two turbulence models.
+Only the subsonic-tip condition is in scope for an incompressible solver; the transonic condition is out. Domain: one blade with 180° periodic boundaries in a rotating frame (MRF), far-field distance and boundary treatment for hover recorded as assumptions. Acceptance, fixed in T03, per plan D9: comparison error on thrust coefficient against U_val; sectional pressure distributions at the stations most commonly used in published reproductions of this rotor (nominally r/R = 0.50, 0.68, 0.80, 0.89, 0.96, to verify against the report) with an RMS error per station; GCI on thrust by the Celik et al. 2008 procedure; two turbulence models; published CFD reproductions of this rotor tabulated as the field's spread.
 
 ## 4. Claim boundary after the ladder
 
@@ -55,4 +55,4 @@ Only the subsonic-tip condition is in scope for an incompressible solver; the tr
 
 ## 5. Study A rotor after this decision
 
-Study A's rotor is built from the same blade family as A0.2 (two untwisted NACA 0012 blades) so the validation transfers as far as it can, placed inside a generic duct with the seam parameters (n, g, s). Rotor scale is decision D3 in the plan; the default is provisional and is replaced by the owner's resource envelope when it exists.
+Study A's rotor is the A0.2 rotor unchanged (two untwisted NACA 0012 blades, R = 1.143 m, c = 0.1905 m, 8° collective, 1250 rpm), placed inside a generic duct with the seam parameters (n, g, s). This is plan decision D3 under the owner's rule of taking the most-used baseline: the open-rotor half of every Study A comparison then has the largest published comparator set of any rotor. The chord Reynolds number is higher than a small UAV's; scale transfer is a later study and the Reynolds number is reported on every case.

@@ -15,7 +15,7 @@ The project advances only when the preceding measurement or model gate closes.
 
 ## Stage 1 — Measurement-system qualification
 
-**Status:** not started.
+**Status:** not started. A [measurement-requirements draft](docs/measurement-system-spec.md) exists with its inputs open; no channel has been calibrated or qualified.
 
 - Establish clearance resolution and repeatability.
 - Calibrate thrust, voltage, current, RPM, and temperature channels.

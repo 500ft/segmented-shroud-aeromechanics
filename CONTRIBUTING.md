@@ -15,6 +15,9 @@ Contributions should make the proposed research easier to audit, reproduce, or f
 
 ```bash
 python scripts/check_repo_contract.py
+python scripts/acquisition_ledger.py --check
+python scripts/reference_coverage.py --check
+python scripts/clearance_uncertainty_budget.py --check
 python -m unittest discover -s tests -v
 ```
 

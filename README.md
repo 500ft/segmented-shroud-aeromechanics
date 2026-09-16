@@ -38,11 +38,15 @@ The executable deliverable today is research-integrity tooling, not a rotor mode
 | --- | --- | --- |
 | Specimen schema and negative tests | Required run metadata and invalid-input rejection | [Schema](protocols/specimen-manifest.schema.json), [tests](tests/) |
 | Source-review rubric and reading records | Access scope and evidence for a narrowed candidate experiment | [Rubric](docs/day3-reading-rubric.md), [source review](docs/day3-source-review.md) |
+| Provenance-bound coverage record | 4 of 6 eligible day-1 sources recovered by the canonical export; an export that fails its native audit is credited for nothing | [Coverage record](evidence/task-2026-09-12/reference-coverage.json), [generator](scripts/reference_coverage.py) |
+| Candidate triage under a frozen rule | 25 database candidates dispositioned: 22 queued for close reading, 3 excluded, 0 deferred; none read yet | [Screening record](docs/candidate-screening-2026-09-14.json), [report](docs/prior-art-search-2026-09-14-screening.md) |
 | Reproducible acquisition ledger | Preserved routes, identifiers, access scope, and explicit provenance gaps | [Ledger](evidence/task-day3-2026-09-09/acquisition-ledger.json), [generator](scripts/acquisition_ledger.py) |
 | Measurement-first experiment contract | Controls, comparison basis, identifiability, and stop conditions | [Experiment 01](docs/experiment-01-rigid-defect-duct.md) |
-| Recorded software checks | Documentation/schema/provenance checks—not aerodynamic validation | [Verification record](evidence/task-day3-2026-09-09/README.md) |
+| Stage A uncertainty budget and requirements draft | Fail-closed stop rule, verdict `INPUTS_PENDING`; the draft names every open input and who closes it | [Budget register](docs/clearance-measurement-budget.csv), [calculator](scripts/clearance_uncertainty_budget.py), [requirements draft](docs/measurement-system-spec.md) |
+| Research programme | Validated CFD before hardware, a budget fed by owner decisions, a pilot only if the budget can see the effect | [Proposal](docs/specs/research-programme/proposal.md), [tiers and triggers](docs/specs/research-programme/scope.md), [work order](docs/specs/research-programme/plan.md) |
+| Recorded software checks | Documentation/schema/provenance checks—not aerodynamic validation | [2026-09-14 record](evidence/task-2026-09-14/README.md), [day-3 record](evidence/task-day3-2026-09-09/README.md) |
 
-The 2026-09-09 reconciliation retains **499 raw database rows**, with **50 lacking successful query-log support**. These are acquisition records, not 499 reviewed studies. Recall remains unavailable. The public JSASS PDF was accessed, but two competing treatments and the full novelty closeout remain unresolved; see the [source review](docs/day3-source-review.md).
+Two acquisitions are retained. The historical 2026-09-09 export keeps **499 raw rows, 50 without successful query-log support**, and is credited for nothing. The canonical 2026-09-11 public export has **450 rows, all traceable to a logged query**, and recovers 4 of the 6 eligible day-1 sources. Identifiers are acquisition records, not reviewed studies. Two competing full texts (S2, S3) remain unread and the 22 queued candidates are unread, so every novelty statement is bounded to inspected sources; see the [source review](docs/day3-source-review.md) and the [triage report](docs/prior-art-search-2026-09-14-screening.md).
 
 ## Quick start
 
@@ -56,12 +60,14 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 python scripts/check_repo_contract.py
 python scripts/acquisition_ledger.py --check
+python scripts/reference_coverage.py --check
+python scripts/clearance_uncertainty_budget.py --check
 python -m unittest discover -s tests -v
 ```
 
 On Windows, activate with `.venv\Scripts\Activate.ps1` in PowerShell instead of `source`.
 
-Expected: the repository contract passes, the committed ledger is consistent, and the test suite ends with `OK`. Passing checks do not establish aerodynamic benefit, close the source-review gate, or authorize fabrication.
+Expected: the repository contract passes, the committed ledger, coverage record and budget record are consistent (the budget verdict is `INPUTS_PENDING`), and the test suite ends with `OK`. Passing checks do not establish aerodynamic benefit, close the source-review gate, or authorize fabrication.
 
 To rebuild **only the derived literature ledger** from committed inputs:
 
@@ -97,7 +103,8 @@ The [full protocol](docs/experiment-01-rigid-defect-duct.md) owns the provisiona
 | Understand the project in five minutes | [Reviewer guide](docs/START_HERE.md) |
 | Challenge the proposed contribution | [Current source review](docs/day3-source-review.md), then [prior-art boundary](docs/prior-art.md) |
 | Inspect variables and statistical claims | [Research plan](docs/research-plan.md) and [claim ledger](docs/claim-ledger.md) |
-| Assess measurement feasibility | [Experiment 01](docs/experiment-01-rigid-defect-duct.md) |
+| Assess measurement feasibility | [Experiment 01](docs/experiment-01-rigid-defect-duct.md), [measurement-requirements draft](docs/measurement-system-spec.md) |
+| See what is planned next and why | [Research programme](docs/specs/research-programme/proposal.md) |
 | Trace work and alternative outcomes | [Review index](docs/REVIEW_READY.md), [dependency audit](docs/research-dependency-audit.md), [decision log](docs/decision-log.md) |
 
 ## Contributing and license

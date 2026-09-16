@@ -1,4 +1,6 @@
-# 2026-09-09 — latest review correction
+# Review index
+
+Newest section first. Each dated section is the handoff written at that time; later sections supersede earlier claims but do not rewrite them.
 
 ## 2026-09-15 — top-25 candidate triage and measurement-requirements draft (work order 2026-09-14)
 

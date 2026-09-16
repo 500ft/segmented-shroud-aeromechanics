@@ -1,4 +1,6 @@
-# 2026-09-09 — review correction
+# Sprint progress
+
+Newest section first; historical entries keep their original dates and wording.
 
 ## 2026-09-15 — top-25 candidate triage and measurement-requirements draft (work order 2026-09-14)
 

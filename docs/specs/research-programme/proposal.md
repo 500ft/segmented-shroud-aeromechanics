@@ -47,23 +47,24 @@ Position: *run steady RANS with a rotating frame now, use its predicted effect a
 
 Every study below has the six-field first-experiment spec and a kill criterion. Evidence-state words follow the [claim ledger](../../claim-ledger.md): what these studies produce is **CFD** evidence, then **measured** evidence; neither is novelty.
 
-### Study A0 — CFD credibility on a measured ducted fan (must-have, first)
+### Study A0 — CFD credibility ladder on standard wing cases (must-have, first)
 
-*Why:* no seam prediction is worth a number until the same toolchain reproduces a published ducted-fan baseline with a stated uncertainty.
+*Why:* no seam prediction is worth a number until the toolchain reproduces public measured data with a stated uncertainty. The owner's decision of 2026-09-16 sets the baseline to standard aircraft wings, which have public geometry and public data, at the cost of a narrower validation claim. Case definitions, sources and the claim boundary are in [a0-validation-cases.md](a0-validation-cases.md).
 
-- **Hypothesis.** The chosen toolchain reproduces the published thrust coefficient of a documented ducted fan at its baseline tip clearance within 5 %, and the published sign and order of magnitude of the clearance sensitivity dT/dc̄, with a grid-convergence uncertainty below 2 % on thrust.
-- **Setup.** OpenFOAM (arm64 container) or SU2, gmsh or snappyHexMesh, one workstation-class laptop. Baseline dataset candidates, in order of preference, each with a check task in [plan.md](plan.md) because geometry availability is unverified: S1 Ryu et al. 2017 (150 mm counter-rotating ducted fan; measured baseline with a CFD clearance sweep; full text on file), the Akturk–Camci ducted fan (559 mm, force/torque and Kiel-probe data; in the close-reading queue), or, if neither publishes blade geometry, a fully open rotor geometry with the baseline measured later on the project's own stand (weakest: validation deferred to Study C).
-- **Variables.** Varied: mesh (three levels, refinement ratio ≥ 1.3), turbulence model (k-ω SST and Spalart–Allmaras). Measured: thrust, torque, shaft power, tip-gap mass flow. Held constant: geometry, operating point, boundary conditions as published.
-- **Success criterion.** Thrust within 5 % of the published value on the finest mesh; GCI (Roache, Fs = 1.25) on thrust ≤ 2 %; model-to-model difference reported; clearance sensitivity sign correct and magnitude within the published experiment-to-CFD spread.
-- **Timebox.** Two weeks for one baseline; the first week is geometry and mesh.
-- **Kill criterion.** Thrust off by more than 10 % after mesh and model checks, or GCI that will not fall below 5 % within the laptop's memory: the CFD route is not credible on this toolchain and hardware, and the programme reverts to a measurement-first path with Study C's budget set from literature bounds only.
+- **Hypothesis.** The toolchain reproduces (A0.1) the lift and drag of the NACA 0012 airfoil at the NASA TMR conditions, and (A0.2) the thrust coefficient and sectional pressures of the Caradonna–Tung hover rotor at its subsonic-tip condition, within bands fixed before running, with grid-convergence uncertainty at or below a stated percentage.
+- **Setup.** OpenFOAM in its arm64 container (or a named alternative), TMR grids or a scripted C-grid family for A0.1, a scripted single-blade periodic rotating domain for A0.2, one laptop.
+- **Variables.** Varied: grid level (three, ratio ≥ 1.3), turbulence model (Spalart–Allmaras, k-ω SST), angle of attack for A0.1. Measured: lift, drag, surface pressure; thrust, torque, sectional pressure. Held constant: geometry and conditions as published.
+- **Success criterion.** Per plan D9, the ASME V&V 20 rule: comparison error |E| ≤ validation uncertainty U_val, with U_num from the three-grid Celik et al. 2008 GCI procedure and U_D from the source; U_val reported; the published spread of other codes on the same case tabulated as context; model-to-model differences reported.
+- **Timebox.** One week for A0.1, two for A0.2; the rotor's periodic domain is the long pole.
+- **Kill criterion.** A0.1 outside its bands after grid and model checks: the workflow is not credible and is fixed before anything else. A0.2 outside its bands: rotating-frame loading is not reproduced; Study A does not start.
+- **Claim boundary.** A0.2 validates an open rotor with wing-section blades. It does not validate tip-gap flow in a duct or small-UAV Reynolds numbers; every Study A result carries "rotor-validated, gap-unvalidated" until a ducted-fan rung (A0.3) exists.
 
 ### Study A — CFD parametric seam study with an uncertainty band (must-have)
 
 *Why:* the cheapest test of whether seams can matter at equal mean clearance, and the only place both averaging rules can be evaluated on identical geometry.
 
 - **Hypothesis (H1-CFD).** At equal wall-region mean clearance and matched thrust, at least one (n, g, s) configuration changes shaft power by more than the combined uncertainty band U = √(GCI² + clocking² + model²).
-- **Setup.** The validated A0 toolchain and rotor; a continuous duct control; slotted-duct variants parameterised only by seam count n, gap g, and radial step s; no joint geometry. Full-360° domain, MRF steady runs for screening, unsteady sliding-mesh (AMI) runs for two confirmation cases.
+- **Setup.** The validated A0 toolchain and the Caradonna–Tung rotor unchanged (plan D3: the most-used baseline, so the open-rotor half of every comparison has the largest published comparator set); a continuous duct control; slotted-duct variants parameterised only by seam count n, gap g, and radial step s; no joint geometry. Full-360° domain, MRF steady runs for screening, unsteady sliding-mesh (AMI) runs for two confirmation cases.
 - **Variables.** Factors: n ∈ {2, 3, 4}, g/c̄ ∈ {0.5, 1, 2}, s/c̄ ∈ {0, 0.5, 1} in a resolution-IV fractional factorial plus centre (≈ 10–12 screening runs), control at three meshes, two extreme cases at three meshes and four clocking positions each, turbulence-model swap on the same two. Measured: thrust, torque, shaft power, tip-gap flow, circumferential loading. Held constant: operating point (matched thrust by iteration on rotor speed), inlet/outlet conditions, mesh topology across variants.
 - **Both averaging rules.** Every case is post-processed under the wall-only rule and the fixed-grid-with-occlusion rule; the study reports whether the two rank conditions the same. If they do not, the spec's IN-08 is decided by this result before any hardware.
 - **Success criterion.** Effect sizes on ΔP and ΔT with U attached for every screening case; at least one main effect with |ΔP| > U; a descriptor model fitted on the screening set predicting a held-out seam count within its stated interval (a within-support test only, per the [identifiability gate](../../research-plan.md#model-identifiability-gate-before-family-holdout)).
@@ -118,7 +119,7 @@ Order-of-magnitude estimates, to be replaced by A0's observations:
 | steady MRF case, 8 cores | 1–4 h | typical simpleFoam throughput at this size |
 | screening study, ≈ 15 cases + 6 mesh-study cases + 8 clocking cases | 1–2 weeks of wall time | serial on one machine |
 | unsteady sliding-mesh case | 1–3 days each | 10–20× steady |
-| A0 + A total | ≈ 8 weeks | includes geometry, meshing, two reports |
+| A0.1 + A0.2 + A total | ≈ 9 weeks | includes grids, the periodic rotor domain, three reports |
 
 These numbers are assumptions until A0 records actual timings; if the gap cannot be resolved within memory, the rotor scale or the gap ratio changes before any variant is run, and the change is recorded.
 
@@ -141,7 +142,7 @@ A null at any gate is written up at that gate; the roadmap's failure branches ar
 
 ## 9. Risks and honest limits
 
-- **Geometry availability** for A0 is unverified; if no published rotor has usable blade geometry, validation slips to Study C and every CFD number before that carries an "unvalidated" label.
+- **Validation scope.** The wing-based ladder validates the workflow and open-rotor loading, not tip-gap flow; Study A carries a "gap-unvalidated" label until a ducted-fan rung with public geometry exists.
 - **RANS on tip-leakage flow** may under-predict unsteady effects; the unsteady confirmation is limited to three cases by compute.
 - **The owner's inputs** IN-01 to IN-04 are decisions; Study B prepares them but cannot make them.
 - **Funding** for Study D is not assumed; the programme's floor is the CFD-bounded result plus the qualified measurement system.

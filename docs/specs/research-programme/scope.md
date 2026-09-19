@@ -2,10 +2,10 @@
 Date: 2026-09-16. Companion to [proposal.md](proposal.md). Status lives in the sprint ledger; this file says what earns a build and when.
 
 ## Must-have (v1 = the programme's floor: a CFD-bounded answer and a budget with numbers)
-- Study A0, CFD credibility on a measured ducted fan — without it no seam prediction is evidence under the claim ledger.
+- Study A0 validation ladder on standard wing cases (NACA 0012 airfoil, then the Caradonna–Tung NACA 0012 rotor), acceptance bands fixed before running — without it no seam prediction is evidence under the claim ledger; the ducted-fan rung waits for a public geometry.
 - Study A, steady screening with GCI ⊕ clocking ⊕ model uncertainty band, both averaging rules — the cheapest test of H1 and the only way to decide IN-08 before hardware.
 - Preregistration of A's design, uncertainty definition and held-out configuration in the repository before the first variant runs.
-- Study B, owner decisions IN-01 to IN-03 recorded as `owner_decision` rows with CFD-cited rationale; budget re-run — turns the stop rule into an instrumentation requirement.
+- Study B, owner decisions IN-01 to IN-03 recorded as `owner_decision` rows with CFD-cited rationale; budget re-run — turns the stop rule into an instrumentation requirement. Deferred by owner decision 2026-09-16 until Study A has a range; not in the current work order.
 - Prior-art closeout to a systematic standard: close-read the 22 includes into a new dated reading record; second frozen batch for the 111 qualifying unselected records; dated patent search with routes and dates recorded — without these the novelty table cannot leave "bounded to accessible prior work".
 
 ## Nice-to-have (post-v1 queue, by value/effort)

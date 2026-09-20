@@ -1,0 +1,68 @@
+{
+ "case_id": "g3_SST_a10.12",
+ "study": "A0.1",
+ "rung": "A0.1",
+ "source_document_sha256": "84d6272066795c91f1923bf51c8b031f1abfa0bc4333a484f4d6a31f9b9cf305",
+ "source_locator": "Internet Archive snapshot 2025-12-19T20:23:26Z of turbmodels.larc.nasa.gov NACA0012_grids/n0012_449-129.p2dfmt",
+ "geometry_revision": "TMR modified NACA 0012, sharp trailing edge, scale factor 1.008930411365",
+ "mesh_input_sha256": "84d6272066795c91f1923bf51c8b031f1abfa0bc4333a484f4d6a31f9b9cf305",
+ "mesh_sha256": "851e63ada6efcf68475e8293f3c68c84417e7c0fdbe58a2045df1b2c4197115e",
+ "cell_count": 57344,
+ "solver_image_digest": "sha256:33fb575aa9980d2bc42fd58c75ae698c489293ba30c991380fe3f899c622f319",
+ "solver_version": "OpenFOAM v2512 (API 2512), linuxARM64GccDPInt32Opt",
+ "turbulence_model": "kOmegaSST",
+ "boundary_conditions": {
+  "airfoil": "noSlip wall, nutLowReWallFunction",
+  "farfield": "freestream / freestreamPressure",
+  "outlet": "freestream / freestreamPressure",
+  "front_back": "empty (two-dimensional)"
+ },
+ "operating_point": {
+  "mach": 0.15,
+  "reynolds_chord": 6000000.0,
+  "alpha_deg": 10.12,
+  "U_inf": 1.0,
+  "chord": 1.0,
+  "nu": 1.6666666666666668e-07,
+  "regime": "incompressible; Prandtl-Glauert factor 1.011 recorded as a declared bias"
+ },
+ "convergence_rule": "Cl flat to 1e-4 relative over the last 500 iterations",
+ "convergence_observed": {
+  "iterations": 117,
+  "plateau_relative_variation": 11.94655874275011,
+  "walltime_s": null,
+  "runinfo": "",
+  "external_termination": "Stopped at iteration 116 of the 6000 requested. The host had 63 MB of free memory and had swapped heavily; the container itself was using only 97 MB of its 3 GB limit and one core at full load, so this is host resource exhaustion, not a solver or setup failure. The case ran at roughly 0.15 iterations per second against 4.6 for the same mesh under Spalart-Allmaras, which is a thrashing signature rather than the cost of two extra transport equations. Retained as UNCONVERGED and excluded from every reported quantity."
+ },
+ "outputs": {
+  "Cl": 0.80483164522,
+  "Cd": 0.017816308352,
+  "units": "dimensionless"
+ },
+ "status": "UNCONVERGED",
+ "git_commit": "ddab59d2fda41bbdba94884315e986b8aec93398",
+ "uncommitted_artifacts": {
+  "note": "Mesh and solver output are outside version control per work-order decision D11.",
+  "logs": {
+   "log.simpleFoam": {
+    "sha256": "4280b6f7cb3b9fa23cc5e0ef9e83b820da5e2bd7ce0296c6be8bbedd827319f8",
+    "bytes": 124875,
+    "committed": false,
+    "tail": "idual = 5.339459423e-09, No Iterations 63\ntime step continuity errors : sum local = 5.43454079e-12, global = 4.460270615e-15, cumulative = 4.631166149e-13\nDILUPBiCGStab:  Solving for omega, Initial residual = 4.078342463e-09, Final residual = 5.029623982e-11, No Iterations 1\nbounding omega, min: -0.1016028586 max: 18573687.52 average: 93469.90929\nDILUPBiCGStab:  Solving for k, Initial residual = 1.213824605e-05, Final residual = 1.915081157e-08, No Iterations 1\nbounding k, min: -4.476762468e-05 max: 0.08099679568 average: 0.001148861235\nExecutionTime = 107.74 s  ClockTime = 108 s\n\nTime = 118\n\n"
+   },
+   "log.checkMesh": {
+    "sha256": "8522fe7d39c2239164f8718450045f6875c74fc3e0a0ffef5f2d0c13465e1756",
+    "bytes": 3845,
+    "committed": false,
+    "tail": ".\n ***High aspect ratio cells found, Max aspect ratio: 29899837.32, number of cells 7320\n  <<Writing 7320 cells with high aspect ratio to set highAspectRatioCells\n    Minimum face area = 5.182071999e-10. Maximum face area = 3181.85093.  Face area magnitudes OK.\n    Min volume = 5.182071999e-10. Max volume = 3181.85093.  Total volume = 875554.9749.  Cell volumes OK.\n    Mesh non-orthogonality Max: 52.3838078 average: 5.034027878\n    Non-orthogonality check OK.\n    Face pyramids OK.\n    Max skewness = 0.3414130819 OK.\n    Coupled point location match (average 0) OK.\n\nFailed 1 mesh checks.\n\nEnd\n\n"
+   },
+   "log.gmshToFoam": {
+    "sha256": "c3e487068ea346043d1af32a652f71e4b083431fb992ab01cc21e679bcc312cb",
+    "bytes": 2680,
+    "committed": false,
+    "tail": "Warning : \n    From Foam::polyMesh::polyMesh(const Foam::IOobject&, Foam::pointField&&, const Foam::cellShapeList&, const Foam::faceListList&, const Foam::wordList&, const Foam::wordList&, const Foam::word&, const Foam::word&, const Foam::wordList&, bool)\n    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 635\n    Found 115648 undefined faces in mesh; adding to default patch defaultFaces\nFinding faces of patch 0\nFinding faces of patch 1\nFinding faces of patch 2\nFinding faces of patch 3\nFinding faces of patch 4\n\nFaceZones:\nZone\tSize\n\nWriting zone 0 to cellZone internal and cellSet\nEnd\n\n"
+   }
+  },
+  "regenerate": "python scripts/p2d_to_gmsh.py <grid>.p2dfmt <mesh>.msh && python scripts/make_case.py <case> <mesh>.msh --model kOmegaSST --alpha 10.12 && docker run --rm --platform linux/arm64 -v <dir>:/w sha256 ... gmshToFoam && simpleFoam"
+ }
+}

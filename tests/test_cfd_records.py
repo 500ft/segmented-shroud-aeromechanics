@@ -145,6 +145,31 @@ class CfdNegativeControlTests(unittest.TestCase):
         self.assertEqual(uncertainty_problems(doc), [])
 
 
+class CfdRecordsAreTrackedTests(unittest.TestCase):
+    """CFD records on disk must actually be in the repository.
+
+    The repository ignores results/generated/* by default, which silently swallowed every
+    manifest and uncertainty record the first time they were written: the local checks passed
+    because the files were on disk, and CI failed because they had never been committed. This
+    test fails locally for the same condition instead.
+    """
+
+    def test_committed_cfd_records_are_not_gitignored(self):
+        import subprocess
+        if not CFD_ROOT.exists():
+            self.skipTest("no CFD records yet")
+        files = [p for p in CFD_ROOT.rglob("*")
+                 if p.is_file() and ".local" not in p.relative_to(CFD_ROOT).parts]
+        if not files:
+            self.skipTest("no CFD records yet")
+        rel = [str(p.relative_to(ROOT)) for p in files]
+        done = subprocess.run(["git", "check-ignore", "--stdin"], cwd=ROOT, input="\n".join(rel),
+                              capture_output=True, text=True)
+        ignored = [line for line in done.stdout.splitlines() if line.strip()]
+        self.assertEqual(ignored, [], "these CFD records are gitignored and would never reach CI:\n"
+                                      + "\n".join(ignored))
+
+
 class HistoricalPreservationTests(unittest.TestCase):
     def test_immutable_evidence_is_byte_identical(self):
         for rel, digest in IMMUTABLE.items():

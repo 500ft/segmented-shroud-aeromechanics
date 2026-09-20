@@ -1,0 +1,61 @@
+{
+ "case_id": "g1_SA_a10.12",
+ "study": "A0.1",
+ "rung": "A0.1",
+ "source_document_sha256": "bdac0e619de8f8fe47358e1b490094167aed915c6382d3a6b1b038e55f1baffc",
+ "source_locator": "Internet Archive snapshot 2025-12-19T20:23:26Z of turbmodels.larc.nasa.gov NACA0012_grids/n0012_113-33.p2dfmt",
+ "geometry_revision": "TMR modified NACA 0012, sharp trailing edge, scale factor 1.008930411365",
+ "mesh_input_sha256": "bdac0e619de8f8fe47358e1b490094167aed915c6382d3a6b1b038e55f1baffc",
+ "mesh_sha256": "eb1260dee8c128d356b7e30039c80df6df0e2cd22fb2185551cbdb5664f5276b",
+ "cell_count": 3584,
+ "solver_image_digest": "sha256:33fb575aa9980d2bc42fd58c75ae698c489293ba30c991380fe3f899c622f319",
+ "solver_version": "OpenFOAM v2512 (API 2512), linuxARM64GccDPInt32Opt",
+ "turbulence_model": "SpalartAllmaras",
+ "boundary_conditions": {
+  "airfoil": "noSlip wall, nutLowReWallFunction",
+  "farfield": "freestream / freestreamPressure",
+  "outlet": "freestream / freestreamPressure",
+  "front_back": "empty (two-dimensional)"
+ },
+ "operating_point": {
+  "mach": 0.15,
+  "reynolds_chord": 6000000.0,
+  "alpha_deg": 10.12,
+  "U_inf": 1.0,
+  "chord": 1.0,
+  "nu": 1.6666666666666668e-07,
+  "regime": "incompressible; Prandtl-Glauert factor 1.011 recorded as a declared bias"
+ },
+ "convergence_rule": "Cl flat to 1e-4 relative over the last 500 iterations",
+ "convergence_observed": {
+  "iterations": 4000,
+  "plateau_relative_variation": 2.2561400229343712e-05,
+  "walltime_s": null,
+  "runinfo": ""
+ },
+ "outputs": {
+  "Cl": 1.0456225279,
+  "Cd": 0.016192222613,
+  "units": "dimensionless"
+ },
+ "status": "PASS",
+ "git_commit": "c5b92e222c5d0594ba122b71e1f41ab3788bebd9",
+ "uncommitted_artifacts": {
+  "note": "Mesh and solver output are outside version control per work-order decision D11.",
+  "logs": {
+   "log.simpleFoam": {
+    "sha256": "480e9bdbe47e1736112586befc7e0a9efcc8ddda9eb395bb4f60452972438dd3",
+    "bytes": 3421375,
+    "committed": false,
+    "tail": "ing for p, Initial residual = 2.330515098e-07, Final residual = 2.053897656e-09, No Iterations 12\nGAMG:  Solving for p, Initial residual = 1.082446799e-07, Final residual = 9.663115955e-10, No Iterations 12\nGAMG:  Solving for p, Initial residual = 5.200284557e-08, Final residual = 9.676309504e-10, No Iterations 8\ntime step continuity errors : sum local = 1.265784293e-12, global = 9.644676881e-16, cumulative = 2.396258393e-12\nDILUPBiCGStab:  Solving for nuTilda, Initial residual = 2.203896393e-07, Final residual = 1.260536435e-09, No Iterations 1\nExecutionTime = 75.11 s  ClockTime = 77 s\n\nEnd\n\n"
+   },
+   "log.gmshToFoam": {
+    "sha256": "1c552199fca8d284470100f42f4d9595565214f4dbb31b3f74499f4f51741c0a",
+    "bytes": 2666,
+    "committed": false,
+    "tail": "M Warning : \n    From Foam::polyMesh::polyMesh(const Foam::IOobject&, Foam::pointField&&, const Foam::cellShapeList&, const Foam::faceListList&, const Foam::wordList&, const Foam::wordList&, const Foam::word&, const Foam::word&, const Foam::wordList&, bool)\n    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 635\n    Found 7408 undefined faces in mesh; adding to default patch defaultFaces\nFinding faces of patch 0\nFinding faces of patch 1\nFinding faces of patch 2\nFinding faces of patch 3\nFinding faces of patch 4\n\nFaceZones:\nZone\tSize\n\nWriting zone 0 to cellZone internal and cellSet\nEnd\n\n"
+   }
+  },
+  "regenerate": "python scripts/p2d_to_gmsh.py <grid>.p2dfmt <mesh>.msh && python scripts/make_case.py <case> <mesh>.msh --model SpalartAllmaras --alpha 10.12 && docker run --rm --platform linux/arm64 -v <dir>:/w sha256 ... gmshToFoam && simpleFoam"
+ }
+}

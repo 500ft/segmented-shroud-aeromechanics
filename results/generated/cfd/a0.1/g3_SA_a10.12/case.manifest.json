@@ -1,0 +1,68 @@
+{
+ "case_id": "g3_SA_a10.12",
+ "study": "A0.1",
+ "rung": "A0.1",
+ "source_document_sha256": "84d6272066795c91f1923bf51c8b031f1abfa0bc4333a484f4d6a31f9b9cf305",
+ "source_locator": "Internet Archive snapshot 2025-12-19T20:23:26Z of turbmodels.larc.nasa.gov NACA0012_grids/n0012_449-129.p2dfmt",
+ "geometry_revision": "TMR modified NACA 0012, sharp trailing edge, scale factor 1.008930411365",
+ "mesh_input_sha256": "84d6272066795c91f1923bf51c8b031f1abfa0bc4333a484f4d6a31f9b9cf305",
+ "mesh_sha256": "851e63ada6efcf68475e8293f3c68c84417e7c0fdbe58a2045df1b2c4197115e",
+ "cell_count": 57344,
+ "solver_image_digest": "sha256:33fb575aa9980d2bc42fd58c75ae698c489293ba30c991380fe3f899c622f319",
+ "solver_version": "OpenFOAM v2512 (API 2512), linuxARM64GccDPInt32Opt",
+ "turbulence_model": "SpalartAllmaras",
+ "boundary_conditions": {
+  "airfoil": "noSlip wall, nutLowReWallFunction",
+  "farfield": "freestream / freestreamPressure",
+  "outlet": "freestream / freestreamPressure",
+  "front_back": "empty (two-dimensional)"
+ },
+ "operating_point": {
+  "mach": 0.15,
+  "reynolds_chord": 6000000.0,
+  "alpha_deg": 10.12,
+  "U_inf": 1.0,
+  "chord": 1.0,
+  "nu": 1.6666666666666668e-07,
+  "regime": "incompressible; Prandtl-Glauert factor 1.011 recorded as a declared bias"
+ },
+ "convergence_rule": "Cl flat to 1e-4 relative over the last 500 iterations",
+ "convergence_observed": {
+  "iterations": 6888,
+  "plateau_relative_variation": 2.5299825658950884e-05,
+  "walltime_s": null,
+  "runinfo": "",
+  "external_termination": "The run was terminated by the host at iteration 6888 of the 8000 requested, because the background job was killed for system memory pressure. It is retained and used because it satisfies the committed convergence rule: Cl first met the plateau criterion at iteration 4163 and stayed flat to 2.53e-05 relative over the final 500 iterations. The requested iteration count was a ceiling, not the convergence criterion."
+ },
+ "outputs": {
+  "Cl": 1.0988325057,
+  "Cd": 0.012030806624,
+  "units": "dimensionless"
+ },
+ "status": "PASS",
+ "git_commit": "c5b92e222c5d0594ba122b71e1f41ab3788bebd9",
+ "uncommitted_artifacts": {
+  "note": "Mesh and solver output are outside version control per work-order decision D11.",
+  "logs": {
+   "log.simpleFoam": {
+    "sha256": "76e39436d7049a3a7bab3721193001dab1abd3ab6594d1d30adc3d8134880246",
+    "bytes": 5924758,
+    "committed": false,
+    "tail": " 8.617402558e-13, global = 2.082946594e-16, cumulative = -7.444152212e-13\nDILUPBiCGStab:  Solving for nuTilda, Initial residual = 8.46204933e-08, Final residual = 7.886608681e-10, No Iterations 1\nExecutionTime = 1996.11 s  ClockTime = 2004 s\n\nTime = 6889\n\nDILUPBiCGStab:  Solving for Ux, Initial residual = 4.389297175e-09, Final residual = 9.203077273e-11, No Iterations 1\nDILUPBiCGStab:  Solving for Uy, Initial residual = 1.277371213e-08, Final residual = 6.098814266e-11, No Iterations 1\nGAMG:  Solving for p, Initial residual = 2.064749017e-08, Final residual = 9.941213078e-10, No Iterations 4\n"
+   },
+   "log.checkMesh": {
+    "sha256": "eea7dfab2b74202ce6d5da79d53e845a07318a204b89ee0f3da66d0ded79d59f",
+    "bytes": 3844,
+    "committed": false,
+    "tail": ".\n ***High aspect ratio cells found, Max aspect ratio: 29899837.32, number of cells 7320\n  <<Writing 7320 cells with high aspect ratio to set highAspectRatioCells\n    Minimum face area = 5.182071999e-10. Maximum face area = 3181.85093.  Face area magnitudes OK.\n    Min volume = 5.182071999e-10. Max volume = 3181.85093.  Total volume = 875554.9749.  Cell volumes OK.\n    Mesh non-orthogonality Max: 52.3838078 average: 5.034027878\n    Non-orthogonality check OK.\n    Face pyramids OK.\n    Max skewness = 0.3414130819 OK.\n    Coupled point location match (average 0) OK.\n\nFailed 1 mesh checks.\n\nEnd\n\n"
+   },
+   "log.gmshToFoam": {
+    "sha256": "764dba1043c89058505ce03f6a1aa70f046d072ce1c25c90c9d3d48c2b76ec80",
+    "bytes": 2679,
+    "committed": false,
+    "tail": "Warning : \n    From Foam::polyMesh::polyMesh(const Foam::IOobject&, Foam::pointField&&, const Foam::cellShapeList&, const Foam::faceListList&, const Foam::wordList&, const Foam::wordList&, const Foam::word&, const Foam::word&, const Foam::wordList&, bool)\n    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 635\n    Found 115648 undefined faces in mesh; adding to default patch defaultFaces\nFinding faces of patch 0\nFinding faces of patch 1\nFinding faces of patch 2\nFinding faces of patch 3\nFinding faces of patch 4\n\nFaceZones:\nZone\tSize\n\nWriting zone 0 to cellZone internal and cellSet\nEnd\n\n"
+   }
+  },
+  "regenerate": "python scripts/p2d_to_gmsh.py <grid>.p2dfmt <mesh>.msh && python scripts/make_case.py <case> <mesh>.msh --model SpalartAllmaras --alpha 10.12 && docker run --rm --platform linux/arm64 -v <dir>:/w sha256 ... gmshToFoam && simpleFoam"
+ }
+}

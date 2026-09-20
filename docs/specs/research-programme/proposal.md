@@ -115,7 +115,7 @@ Order-of-magnitude estimates, to be replaced by A0's observations:
 
 | item | estimate | basis |
 | --- | --- | --- |
-| cell count, 360° ducted rotor with ≥ 10 cells across a ~1 mm gap, wall functions | 4–8 M | 16 GB allows roughly 6–8 M cells for a steady incompressible solver |
+| cell count, 360° ducted rotor with ≥ 10 cells across a ~1 mm gap, wall functions | **2–4 M (revised 2026-09-19)** | The Docker VM is allocated **7.75 GiB**, not the host's 16 GiB ([measured](../../../evidence/task-a0-validation/container-smoke.json)). The original 6–8 M figure assumed the full host memory and is optimistic by about a factor of two. Either raise the VM allocation or size the screening design to this ceiling. |
 | steady MRF case, 8 cores | 1–4 h | typical simpleFoam throughput at this size |
 | screening study, ≈ 15 cases + 6 mesh-study cases + 8 clocking cases | 1–2 weeks of wall time | serial on one machine |
 | unsteady sliding-mesh case | 1–3 days each | 10–20× steady |

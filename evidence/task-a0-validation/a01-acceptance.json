@@ -1,0 +1,110 @@
+{
+ "schema_version": 1,
+ "purpose": "Work-order task T03: freeze the A0.1 acceptance criteria BEFORE any A0.1 solution exists.",
+ "frozen_utc": "2026-09-20T00:02:30Z",
+ "case": "TMR 2DN00, 2D NACA 0012 airfoil",
+ "binding_rule": "This file is frozen. Gated quantities, angles and data sources may not be changed after any A0.1 result is inspected. A change requires a dated amendment recording what was already seen at the time of the change.",
+ "geometry": {
+  "section": "modified NACA 0012 with sharp trailing edge",
+  "formula": "y = +/- 0.594689181*[0.298222773*sqrt(x) - 0.127125232*x - 0.357907906*x^2 + 0.291984971*x^3 - 0.105174606*x^4]",
+  "chord": 1.0,
+  "max_thickness_pct_chord": 11.894,
+  "source": "VERIFIED_FROM_ARCHIVE, TMR 2DN00 case page",
+  "warning": "The standard blunt-trailing-edge NACA 0012 is NOT this geometry and must not be substituted."
+ },
+ "flow_conditions": {
+  "mach": 0.15,
+  "reynolds_chord": 6000000.0,
+  "transition": "fully turbulent",
+  "farfield_chords": 500,
+  "farfield_alternative": "If farfield is nearer than ~500 chords, the point-vortex correction of Thomas and Salas (AIAA J 24(7):1074-1080, 1986) is mandatory and must be recorded in the manifest."
+ },
+ "solver_regime": {
+  "choice": "incompressible",
+  "justification": "M = 0.15; the source itself calls the case 'essentially incompressible'.",
+  "declared_assumption": "Compressibility is neglected. At M = 0.15 the Prandtl-Glauert factor is 1.011, so the expected influence on Cp is about 1 percent, largest at the suction peak. Recorded as a bias, not folded into any uncertainty band."
+ },
+ "gated": [
+  {
+   "quantity": "CL",
+   "angles_deg": [
+    0,
+    10
+   ],
+   "data_source_of_record": "Ladson, C. L., NASA TM 4074, October 1988 (tripped), NTRS 19880019495",
+   "why": "The TMR page states the Ladson tripped data are the most appropriate for comparison with fully turbulent CFD forces at Re = 6 million.",
+   "acceptance": "|E| <= U_val per the uncertainty decision record, with U_num from the three-grid GCI and U_D from the source if reported.",
+   "if_U_D_unavailable": "Verdict ceiling becomes NUMERICALLY_BOUNDED; no VALIDATED_AT_U_VAL claim is permitted."
+  }
+ ],
+ "reported_not_gated": [
+  {
+   "quantity": "CD",
+   "angles_deg": [
+    0,
+    10
+   ],
+   "why_not_gated": "Fully-turbulent CFD drag is strongly sensitive to the experimental tripping state. The source states that untripped data (Abbott and von Doenhoff) are inappropriate for this comparison, and that tripped CD,0 at Re=3e6 is about 10 percent above tripped CD,0 at Re=6e6. Gating drag before that systematic is quantified would manufacture a pass or a fail from a known data artefact rather than from solver behaviour.",
+   "reporting_requirement": "Report CD with the dataset named, its tripping state, its Reynolds number, and the 10 percent Reynolds sensitivity quoted from the source.",
+   "promotion_condition": "CD may become gated in a dated amendment once U_D for the Ladson tripped set at Re=6e6 is extracted and recorded."
+  },
+  {
+   "quantity": "CL and Cp",
+   "angles_deg": [
+    15
+   ],
+   "why_not_gated": "The source states that near stall the experiments are 'no doubt very far from being two-dimensional any more'. A 2D steady RANS comparison against a non-2D experiment is not a solver test."
+  },
+  {
+   "quantity": "Cp vs x/c",
+   "angles_deg": [
+    0,
+    10,
+    15
+   ],
+   "data_source_of_record": "Gregory, N. and O'Reilly, C. L., R&M 3726, January 1970 (tripped, Re = 3 million)",
+   "why": "The source states these Cp data are better resolved at the leading-edge suction peak than Ladson TM 100526.",
+   "stated_bias": "Re mismatch 3e6 vs 6e6 is carried explicitly and is not removed or corrected.",
+   "why_not_gated": "The only well-resolved pressure dataset the source endorses is Gregory and O'Reilly at Re = 3 million, while the case is specified at Re = 6 million. Gating a pass/fail on a comparison with a declared Reynolds mismatch would test the mismatch as much as the solver. Cp is compared and the mismatch is reported per station."
+  },
+  {
+   "quantity": "Cf vs x/c",
+   "angles_deg": [
+    0,
+    10,
+    15
+   ],
+   "why_not_gated": "The source states no experimental skin-friction data exist for this case. Cf is computed for interest only and can never be validated here."
+  }
+ ],
+ "grid_study": {
+  "levels_min": 3,
+  "refinement_ratio_min": 1.3,
+  "family": "scripted C-grid, generated in-repo",
+  "why_not_TMR_grids": "The TMR grid archives are behind the dead live domain and were not retrieved (source inventory: MISSING). Consequence: per-grid comparison against TMR's published CFD values is NOT available, and any agreement with other codes is weaker evidence than it would have been on the shared grid family.",
+  "procedure": "Celik et al., ASME J. Fluids Eng. 130(7), 2008. Observed order computed, not assumed. Fs = 1.25 where observed order is close to formal.",
+  "non_monotonic_rule": "If convergence is oscillatory or the observed order is unusable, report INCONCLUSIVE and state it. Do not select a subset of grids to manufacture a clean order."
+ },
+ "turbulence_models": [
+  "SpalartAllmaras",
+  "kOmegaSST"
+ ],
+ "model_reporting": "Per model, separately. Never averaged. The range between them is R_model in the decision record and is not an uncertainty.",
+ "convergence_rule": {
+  "required": "Residual history AND the gated quantity's own history must both be recorded. A run is converged only when CL has plateaued under a stated tolerance over a stated window.",
+  "explicit": "A low residual alone is not convergence of the engineering quantity.",
+  "failed_runs": "Runs that do not converge are retained with status UNCONVERGED and are excluded from GCI and from any comparison. They are not deleted and not silently rerun."
+ },
+ "still_required_before_first_run": [
+  "Extract the numeric CL (and CD) comparison values from Ladson NASA TM 4074 at Re=6e6, recording page/table/figure locator; if taken from a plot, record the digitization method and its uncertainty.",
+  "Extract Gregory and O'Reilly Cp values at the gated angles with the same provenance discipline.",
+  "Record U_D from each source if the source reports it; if not, record MISSING."
+ ],
+ "kill_criteria": [
+  "The Ladson comparison values cannot be obtained from any accessible route: A0.1 cannot be gated; record BLOCKED and stop the rung.",
+  "The solver cannot reach a stated CL plateau on the finest grid: stop and repair the workflow.",
+  "GCI on CL is non-convergent, or remains larger than the observed |E| by a margin that makes the comparison uninformative: report INCONCLUSIVE.",
+  "|E| > U_val on CL after the prescribed grid and model checks: A0.1 is NOT_VALIDATED. Do not widen the band after the fact; record the failure, the likely cause and the next diagnostic."
+ ],
+ "claim_boundary": "A0.1 validates a 2D airfoil workflow only. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps."
+}

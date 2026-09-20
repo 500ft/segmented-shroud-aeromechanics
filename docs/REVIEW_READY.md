@@ -1,5 +1,15 @@
 # Review index
 
+## 2026-09-19 — A0 validation ladder: entry tasks and source verification
+
+Executed on `task/research-programme-a0` from the merged work order (PR #20), base `c12ee80`. Ledger row SSY-R05. [Execution record](../evidence/task-a0-validation/README.md).
+
+Delivered: a pinned, digest-recorded solver container proven to run a steady incompressible RANS tutorial natively on ARM64 in 10 seconds; a [source inventory](../evidence/task-a0-validation/source-inventory.json) giving every A0.1 and A0.2 parameter an evidence label and a locator; a [frozen A0.1 acceptance record](../evidence/task-a0-validation/a01-acceptance.json) committed before any A0.1 solution exists; an [uncertainty decision record](specs/research-programme/uncertainty-decision-record.md) that supersedes the work order's D4; and a test that enforces CFD manifest identity, rejects a two-mesh grid-convergence claim, and pins the historical acquisition evidence by hash. 79 tests pass.
+
+Four verification findings changed the plan. The **NASA TMR live site is gone** — every path redirects to a content-free landing page — so A0.1's specification was recovered from a dated archive snapshot and a fifth evidence label, `VERIFIED_FROM_ARCHIVE`, was added. The **TMR grid family is MISSING**, so a scripted grid must be generated and results will not be directly comparable to TMR's published per-grid CFD. The **A0.1 airfoil is a modified sharp-trailing-edge section**, not the standard NACA 0012 the earlier case file implied. And the **A0.2 baseline is not incompressible**: at 1250 rpm the tip Mach number is 0.437, implying roughly an 11% compressibility influence on outboard sectional pressure, which is physics rather than solver error and is now an open solver-regime decision instead of a hidden assumption.
+
+Not done: no mesh exists, no A0 case has been solved, and nothing is validated. Study A remains blocked at its release gate. Open by role — **agent**: extract the Ladson and Gregory/O'Reilly comparison values, generate the scripted grid family, confirm the A0.2 rotor dimensions against figure 1, close the six-competitor close reading and the patent search; **owner**: decide D10 (A0.2 solver regime), and whether to raise the Docker VM allocation above 7.75 GiB or size the design to it. The clearance budget is untouched and remains `INPUTS_PENDING`.
+
 Newest section first. Each dated section is the handoff written at that time; later sections supersede earlier claims but do not rewrite them.
 
 ## 2026-09-15 — top-25 candidate triage and measurement-requirements draft (work order 2026-09-14)

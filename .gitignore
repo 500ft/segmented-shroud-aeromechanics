@@ -20,3 +20,6 @@ results/generated/
 *.f3d
 *.FCStd
 graphify-out/
+
+# CFD artefacts kept outside version control (work-order decision D11)
+results/generated/cfd/.local/

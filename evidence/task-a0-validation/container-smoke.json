@@ -1,0 +1,60 @@
+{
+ "schema_version": 1,
+ "purpose": "Work-order task T02: prove the selected solver container runs on this machine before any mesh work.",
+ "executed_utc": "2026-09-20T00:01:47Z",
+ "result": "PASS",
+ "image": {
+  "reference": "opencfd/openfoam-default:2512",
+  "digest": "sha256:33fb575aa9980d2bc42fd58c75ae698c489293ba30c991380fe3f899c622f319",
+  "pinned": true,
+  "why_pinned": "The plan requires an exact digest. The 'latest' tag moves and would break reproducibility.",
+  "platform_requested": "linux/arm64",
+  "architecture_reported": "arm64",
+  "os_reported": "linux",
+  "size_bytes": 385516343,
+  "publisher": "OpenCFD / ESI (openfoam.com)"
+ },
+ "solver": {
+  "WM_PROJECT_VERSION": "v2512",
+  "FOAM_API": "2512",
+  "build_platform": "linuxARM64GccDPInt32Opt",
+  "native_arm64": true,
+  "note": "Native ARM64 build, not x86 emulation. Emulated builds would have made the wall-time estimates in the programme proposal meaningless.",
+  "base_os": "Ubuntu 24.04.3 LTS",
+  "binaries_present": [
+   "simpleFoam",
+   "blockMesh",
+   "checkMesh"
+  ],
+  "cores_visible_in_container": 10
+ },
+ "tutorial": {
+  "case": "incompressible/simpleFoam/pitzDaily",
+  "why_this_case": "Steady incompressible RANS with a turbulence model: the same solver class A0.1 and A0.2 will use. A laminar cavity case would not have exercised it.",
+  "blockMesh": "completed",
+  "checkMesh": "Mesh OK",
+  "cells": 12225,
+  "simpleFoam": "converged",
+  "iterations": 282,
+  "wall_time_s": 10,
+  "volume_mount_write": "confirmed: the container wrote case output to a host-mounted directory"
+ },
+ "host": {
+  "machine": "Apple M1 Pro",
+  "cores": 10,
+  "memory_bytes": 17179869184,
+  "macos": "14.7.3",
+  "docker_version": "29.5.3",
+  "docker_vm_memory_bytes": 8321515520
+ },
+ "findings": [
+  "The Docker VM is allocated 7.75 GiB, not the host's 16 GiB. Every mesh-size estimate in the programme proposal was written against 16 GB and is therefore optimistic by roughly a factor of two. Revised working ceiling for a steady incompressible case: order 3-4 million cells, not 6-8 million. The proposal's feasibility table must be corrected or the Docker VM memory raised before A0.2 meshing.",
+  "docker manifest inspect returned no manifest for all four candidate images, which initially looked like 'no arm64 build exists'. The Docker Hub registry API showed arm64 manifests for opencfd/openfoam-default tags 2306 and newer. The manifest-inspect failure was a registry/auth artefact, not an absence of arm64. Recorded so the next person does not repeat the false conclusion."
+ ],
+ "reproduce": [
+  "docker pull --platform linux/arm64 opencfd/openfoam-default:2512",
+  "docker image inspect opencfd/openfoam-default:2512 --format '{{index .RepoDigests 0}} {{.Architecture}}'",
+  "docker run --rm --platform linux/arm64 -v \"$PWD\":/work -w /work opencfd/openfoam-default:2512 bash -lc 'cp -r $FOAM_TUTORIALS/incompressible/simpleFoam/pitzDaily ./case && cd case && blockMesh && checkMesh && simpleFoam'"
+ ],
+ "claim_boundary": "A completed tutorial proves the toolchain executes and writes output on this hardware. It proves nothing about mesh adequacy, solution accuracy, or validation for any A0 rung."
+}

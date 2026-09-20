@@ -1,5 +1,17 @@
 # Review index
 
+## 2026-09-20 — A0.1 validation: verdict NOT_VALIDATED, workflow verified against the reference
+
+Ledger row SSY-R06. [Validation report](cfd-validation-a01.md) · [execution record](../evidence/task-a0-validation/README.md) · [uncertainty record](../results/generated/cfd/a0.1/uncertainty.json).
+
+Two items recorded MISSING the day before were recovered from the same archive route: the full TMR grid family (refinement ratio exactly 2) and TMR's curated experimental data, whose header states the exact case condition. Experimental uncertainty moved from MISSING to 0.00441 in lift coefficient, derived from the three trip conditions in the dataset, and recorded as a lower bound because it captures trip repeatability and nothing else.
+
+Spalart-Allmaras, three converged levels: apparent order 2.670, monotonic, asymptotic-range ratio 1.007, grid-convergence index 0.153 percent. Comparison error against the experiment is +0.023813, which is 5.04 times the validation uncertainty, so the verdict is **NOT_VALIDATED** at the band committed before any case ran. The same computation sits 0.38 percent below the published CFL3D result on the same grid family, and every published code misses this experiment in the same direction by 1.4 to 3.3 percent. The workflow is therefore verified against the field while the experiment comparison fails, and those are stated as two separate claims. The likeliest cause is that the band is too narrow; widening it after seeing the result is what the acceptance record forbids, so the verdict stands and the reason is recorded.
+
+Carried forward for Study A: steady RANS on this canonical case carries 1.4 to 3.3 percent model-form error in lift and the turbulence model alone moves lift by about 1.2 percent, so a seam effect below roughly 2 percent cannot be separated from model-form error by this class of simulation, at any mesh density.
+
+Not done: the k-omega SST arm is incomplete at two of three levels, its fine grid stopped by host memory exhaustion and retained as UNCONVERGED, so it carries no index and no verdict and the model-form sensitivity for this work is unmeasured. **A0.1 does not pass its gate as written, so A0.2 does not start**; the owner decides whether to re-derive the experimental uncertainty or restate the gate as code-to-code verification. Decision D10 on the A0.2 solver regime is still open. No prior-art close reading or patent search was performed in this session.
+
 ## 2026-09-19 — A0 validation ladder: entry tasks and source verification
 
 Executed on `task/research-programme-a0` from the merged work order (PR #20), base `c12ee80`. Ledger row SSY-R05. [Execution record](../evidence/task-a0-validation/README.md).

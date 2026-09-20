@@ -76,6 +76,24 @@ This work sits **0.38 percent below CFL3D** on the finest grid and 0.26 percent 
 
 The code-to-code spread between the two reference Spalart–Allmaras results is 0.0074, itself 1.6 times `U_val`.
 
+## 5a. k-ω SST arm: incomplete, no verdict
+
+Two of three levels completed. The fine grid was stopped at iteration 117 of 6,000 because the host had 63 MB of free memory and was swapping; the container was using 97 MB of its 3 GB limit on one saturated core, and the case was running at roughly 0.15 iterations per second against 4.6 for the same mesh under Spalart–Allmaras. That is a thrashing signature, not the cost of two extra transport equations, so it is recorded as host resource exhaustion rather than a solver or setup failure. It is retained with status `UNCONVERGED` and excluded from every reported quantity.
+
+| grid | cells | iterations | Cl | Cd | status |
+| --- | ---: | ---: | ---: | ---: | --- |
+| coarse | 3,584 | 3,000 | 1.133621 | 0.003532 | PASS |
+| medium | 14,336 | 4,000 | 1.105396 | 0.009416 | PASS |
+| fine | 57,344 | 117 | — | — | UNCONVERGED, excluded |
+
+**No grid-convergence index and no verdict are issued for SST**, because the procedure needs three converged levels and there are two.
+
+The two that exist are still informative. On the coarse grid SST gives a drag of 0.003532 against Spalart–Allmaras's 0.016192 on the identical mesh, a factor of 4.6, where the published values for the two models agree to within 0.4 percent. The medium grid moves most of the way back, to 0.009416. That is the signature of a grid outside the asymptotic range rather than a broken setup: the two-equation model needs more resolution than the one-equation model before its wall treatment behaves, and the coarsest TMR level does not provide it. The solver log confirms `kOmegaSST` was selected with standard coefficients and no warnings, and the eddy-viscosity ratio reaches 1,376 against 1,988 for Spalart–Allmaras, so turbulence is developing.
+
+Adjusted to 10.12°, the published CFL3D SST value is 1.0899; the medium grid here gives 1.105396, 1.4 percent high, which is the direction and magnitude an under-resolved two-equation model would give. Nothing further should be read into it.
+
+This arm is the first item for the next working session.
+
 ## 6. What the verdict means
 
 Two things are true at once and must not be collapsed.
@@ -97,7 +115,7 @@ Steady RANS on a canonical, heavily studied two-dimensional case carries a model
 - Skin friction was computed but cannot be validated: the source states no experimental data exist.
 - `U_input` is unquantified.
 - `U_D` covers trip repeatability only and is a lower bound on experimental uncertainty.
-- The k-ω SST arm is not included in this report. Until it is, the model-form sensitivity for this work is unmeasured and only the published reference spread is available.
+- The k-ω SST arm is incomplete (two of three levels), so it carries no index and no verdict. The model-form sensitivity **for this work** is therefore unmeasured; only the published reference spread is available, and the SST numbers above must not be quoted as a result.
 
 ## 9. Next gate
 

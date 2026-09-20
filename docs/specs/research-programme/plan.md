@@ -51,19 +51,19 @@ T00–T18 are ordered work units, one concern each. Retrieval, container pulls a
 - **Outcome 2026-09-20:** the TMR family was recovered from the archive, so no scripted grid was needed. Levels 113×33, 225×65 and 449×129 (3,584 / 14,336 / 57,344 cells), refinement ratio exactly 2 in each direction. Converted by `scripts/p2d_to_gmsh.py`, which merges the wake-cut branch and the sharp trailing edge into internal faces; without the trailing-edge merge two stray boundary faces appear behind the airfoil. `checkMesh` reports every face assigned to a named patch and flags only high aspect ratio, which is inherent to this grid's wall clustering and the two-dimensional extrusion.
 - Done when: three grids pass the mesh check with ratio ≥ 1.3 and manifests exist.
 
-### [ ] T05 — A0.1 runs — **in progress 2026-09-20**
+### [x] T05 — A0.1 runs — **in progress 2026-09-20** — **done 2026-09-20: SA complete on three levels; SST incomplete at two**
 - Files: case folders and manifests.
 - Depends on: T04.
 - Do: steady incompressible runs at the three angles on all three grids with Spalart–Allmaras; repeat the finest grid with k-ω SST; monitor lift, drag and residuals; stop on a stated plateau rule.
 - Done when: every case has a convergence history and wall time in its manifest; no unconverged case is reported.
 
-### [ ] T06 — A0.1 uncertainty and verdict
+### [x] T06 — A0.1 uncertainty and verdict — **done 2026-09-20: NOT_VALIDATED for SA; no SST verdict**
 - Files: `docs/cfd-validation-a0.md` (new, section A0.1); `results/generated/cfd/a0-1/uncertainty.json`.
 - Depends on: T05.
 - Do: observed order, Richardson estimate, GCI on lift and drag; model difference; comparison with experiment and with TMR's published CFD; verdict against T03's bands in one sentence with the numbers.
 - Done when: the verdict is stated; every assumption (incompressible, transition-free, far-field distance) is listed as conservative or optimistic.
 
-### [ ] T07 — Check for CFD case records
+### [x] T07 — Check for CFD case records — **done 2026-09-19, exercised against real manifests 2026-09-20**
 - Files: `tests/test_cfd_records.py` (new).
 - Depends on: T06.
 - Do: one test: every manifest under `results/generated/cfd/` names source revision, mesh hash, solver version and commit; every validation or effect number in the JSON cites a GCI from at least three grids. Negative controls: a manifest missing a field; a result citing a two-grid GCI.

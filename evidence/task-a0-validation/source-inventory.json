@@ -1,0 +1,349 @@
+{
+ "schema_version": 1,
+ "purpose": "Source verification for the A0 validation ladder (work-order task T01). No value here has been used to build geometry yet.",
+ "generated_utc": "2026-09-20T00:01:00Z",
+ "evidence_labels": {
+  "VERIFIED_FROM_SOURCE": "read directly from the authoritative document retrieved and hashed below",
+  "VERIFIED_FROM_ARCHIVE": "read from a timestamped Internet Archive snapshot because the authoritative live URL no longer serves the page; weaker than VERIFIED_FROM_SOURCE because the snapshot may not match the current authoritative version",
+  "DERIVED_FROM_SOURCE": "computed from verified values; the derivation is stated",
+  "ASSUMED_FOR_MESH_ONLY": "not in the source; chosen to allow meshing and declared as an assumption",
+  "MISSING": "required and not obtained; blocks the dependent step"
+ },
+ "sources": [
+  {
+   "source_id": "A0.2-PRIMARY",
+   "title": "Experimental and Analytical Studies of a Model Helicopter Rotor in Hover",
+   "authors": "Caradonna, F. X.; Tung, C.",
+   "report_numbers": [
+    "NASA-TM-81232",
+    "USAAVRADCOM-TR-81-A-23",
+    "A-8332"
+   ],
+   "published": "1981-09",
+   "route": "https://ntrs.nasa.gov/api/citations/19820004169/downloads/19820004169.pdf",
+   "ntrs_id": "19820004169",
+   "access_status": "RETRIEVED",
+   "retrieved_utc": "2026-09-20T00:01:00Z",
+   "bytes": 2334139,
+   "pages": 60,
+   "sha256": "16c14789a5f65892b4ffb4e3628872723195c930f96680068ead7375e57208d2",
+   "retained_path": "NOT COMMITTED (see data policy); regenerate with the route above and verify the sha256",
+   "note": "Report identity confirmed on page 1. The plan's reference to 'NASA TM 81232' is correct."
+  },
+  {
+   "source_id": "A0.1-PRIMARY",
+   "title": "2D NACA 0012 Airfoil Validation Case, NASA Langley Turbulence Modeling Resource",
+   "canonical_url": "https://turbmodels.larc.nasa.gov/naca0012_val.html",
+   "access_status": "LIVE URL DEAD; ARCHIVE SNAPSHOT RETRIEVED",
+   "live_url_behaviour": "HTTP 301 to https://www.nasa.gov/nasa-turbulence-modeling-resource/ for every path under turbmodels.larc.nasa.gov, including the case pages and the grid pages. The redirect target is a NASA news landing page containing none of the case content. Verified 2026-09-19 by curl with a browser user agent.",
+   "archive_url": "https://web.archive.org/web/20251219202326/https://turbmodels.larc.nasa.gov/naca0012_val.html",
+   "archive_timestamp": "2025-12-19T20:23:26Z",
+   "retrieved_utc": "2026-09-20T00:01:00Z",
+   "bytes": 24524,
+   "sha256": "cad658504057305b0e2bd02a7f95014fd4bb736658e8307280518248d6654a3a",
+   "retained_path": "NOT COMMITTED (see data policy); regenerate from the archive URL and verify the sha256",
+   "note": "Every A0.1 parameter below is therefore VERIFIED_FROM_ARCHIVE, not VERIFIED_FROM_SOURCE."
+  }
+ ],
+ "a0_1_parameters": [
+  {
+   "parameter": "mach_number",
+   "value": 0.15,
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00 case page: 'essentially incompressible conditions (the recommendation here is to run M = 0.15 in compressible CFD codes)'",
+   "note": ""
+  },
+  {
+   "parameter": "reynolds_number_chord",
+   "value": 6000000.0,
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00: 'The Reynolds number per chord is Re = 6 million.'",
+   "note": ""
+  },
+  {
+   "parameter": "transition_state",
+   "value": "fully turbulent",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00: 'Boundary layers should be fully turbulent over most of the airfoil.'",
+   "note": ""
+  },
+  {
+   "parameter": "angles_of_attack_cp_cf",
+   "value": [
+    0,
+    10,
+    15
+   ],
+   "unit": "deg",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00 quantities of interest: 'Surface pressure coefficient (Cp) vs. x/c (for alpha = 0, 10, 15)'",
+   "note": ""
+  },
+  {
+   "parameter": "comparison_quantities",
+   "value": [
+    "CL vs alpha",
+    "CD vs CL",
+    "Cp vs x/c",
+    "Cf vs x/c"
+   ],
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00 'quantities of interest for comparison'",
+   "note": "No experimental skin-friction data exist for this case; Cf is computed but cannot be validated."
+  },
+  {
+   "parameter": "farfield_distance",
+   "value": 500,
+   "unit": "chords",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00: farfield in the provided grids is 'almost 500 chords away'",
+   "note": "If a nearer farfield is used, the point-vortex correction of Thomas and Salas (AIAA J 24(7):1074-1080, 1986) is required."
+  },
+  {
+   "parameter": "airfoil_definition",
+   "value": "modified NACA 0012, sharp trailing edge",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00 revised formula: y = +/- 0.594689181*[0.298222773*sqrt(x) - 0.127125232*x - 0.357907906*x^2 + 0.291984971*x^3 - 0.105174606*x^4]",
+   "note": "NOT the standard blunt-trailing-edge NACA 0012. Built by extending the exact formula to x=1.008930411365 (sharp TE) then scaling by that factor. Max thickness 11.894 percent of the scaled chord. The prior case file said only 'NACA 0012 (analytic section)', which would have produced the wrong geometry."
+  },
+  {
+   "parameter": "airfoil_points_file",
+   "value": "n0012points_superbig_clust_fix.dat",
+   "unit": "-",
+   "evidence_label": "MISSING",
+   "locator": "Linked from the TMR case page; the link target is behind the dead live domain and was not retrieved",
+   "note": "Not required: the revised analytic formula above is sufficient to generate the section."
+  },
+  {
+   "parameter": "grid_family_files",
+   "value": null,
+   "unit": "-",
+   "evidence_label": "MISSING",
+   "locator": "TMR grid page redirects like every other TMR path; multi-megabyte grid archives are not in the retrieved snapshot",
+   "note": "Consequence: the TMR grid family cannot be used. A scripted C-grid family must be generated instead, and results are therefore NOT directly comparable to TMR's published per-grid CFD values. This changes work-order task T04."
+  },
+  {
+   "parameter": "force_data_of_record",
+   "value": "Ladson, C. L., NASA TM 4074, October 1988 (tripped)",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00: the Ladson tripped data 'appear to be the most appropriate of these data sets for comparison with fully turbulent CFD forces at Re=6 million'; NTRS 19880019495",
+   "note": "Use for CL and CD comparison."
+  },
+  {
+   "parameter": "pressure_data_of_record",
+   "value": "Gregory, N. and O'Reilly, C. L., R&M 3726, January 1970 (tripped, Re = 3 million)",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00: Gregory and O'Reilly Cp data 'appear to be better resolved' than Ladson TM 100526",
+   "note": "Re mismatch (3e6 vs 6e6) must be carried as a stated bias when comparing Cp."
+  },
+  {
+   "parameter": "untripped_data_caution",
+   "value": "Abbott and von Doenhoff (1959) were not tripped",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00: 'experimental drag coefficient levels are greatly affected by tripping the boundary layer at Reynolds numbers in this range. For comparing with fully turbulent CFD drag results, tripped experimental data are more appropriate than untripped.'",
+   "note": "Gating drag against untripped data would be a source-contradicted comparison."
+  },
+  {
+   "parameter": "drag_reynolds_sensitivity",
+   "value": 10,
+   "unit": "percent",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
+   "locator": "TMR 2DN00, citing McCroskey: 'tripped CD,0 at Re=3 million is about 10% higher than tripped CD,0 at Re=6 million'",
+   "note": "Bounds the penalty for using a Re=3e6 dataset for drag."
+  }
+ ],
+ "a0_2_parameters": [
+  {
+   "parameter": "blade_count",
+   "value": 2,
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 p.2: 'The rotor employed two cantilever-mounted, manually adjustable blades'",
+   "note": ""
+  },
+  {
+   "parameter": "airfoil",
+   "value": "NACA 0012",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 p.2: 'These blades used an NACA 0012 profile and were untwisted and untapered.'",
+   "note": ""
+  },
+  {
+   "parameter": "twist",
+   "value": 0,
+   "unit": "deg",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 p.2: 'untwisted and untapered'",
+   "note": ""
+  },
+  {
+   "parameter": "aspect_ratio",
+   "value": 6,
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 p.2: 'An aspect ratio of 6 was chosen in order to maximize Reynolds Number and available instrumentation space.'",
+   "note": ""
+  },
+  {
+   "parameter": "precone",
+   "value": 0.5,
+   "unit": "deg",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 p.2: 'two cantilever-mounted, manually adjustable blades with half degree precone'",
+   "note": "Omitted from the earlier plan; it is a real geometric feature of the test article."
+  },
+  {
+   "parameter": "radius",
+   "value": 1.143,
+   "unit": "m",
+   "evidence_label": "DERIVED_FROM_SOURCE",
+   "locator": "Figure 1 dimension text in the scanned report is OCR-ambiguous ('C\\ 7.5ft'); 1.143 m = 3.75 ft is the value consistent with aspect ratio 6 and a 7.5 in chord",
+   "note": "MUST be confirmed visually against figure 1 of the PDF before meshing. Nondimensional comparisons (CT, Cp) do not depend on it; blade Reynolds number does."
+  },
+  {
+   "parameter": "chord",
+   "value": 0.1905,
+   "unit": "m",
+   "evidence_label": "DERIVED_FROM_SOURCE",
+   "locator": "Derived: chord = radius / aspect ratio = 1.143 / 6 = 0.1905 m (7.5 in)",
+   "note": "Same confirmation requirement as radius."
+  },
+  {
+   "parameter": "collective_pitch_settings",
+   "value": [
+    5,
+    8,
+    12
+   ],
+   "unit": "deg",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 figures 3, 4, 5: 'collective pitch 5 deg / 8 deg / 12 deg'",
+   "note": ""
+  },
+  {
+   "parameter": "baseline_collective",
+   "value": 8,
+   "unit": "deg",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 figure 4 and the CT series at 8 deg collective",
+   "note": "Selected baseline for A0.2."
+  },
+  {
+   "parameter": "baseline_rotor_speed",
+   "value": 1250,
+   "unit": "rpm",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232: 'Omega = 1250 rpm, CT = 0.00460'",
+   "note": ""
+  },
+  {
+   "parameter": "baseline_thrust_coefficient",
+   "value": 0.0046,
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232: 'Omega = 1250 rpm, CT = 0.00460'",
+   "note": "This is the A0.2 force comparison datum."
+  },
+  {
+   "parameter": "other_reported_conditions",
+   "value": [
+    {
+     "rpm": 2050,
+     "CT": 0.00461
+    },
+    {
+     "rpm": 2500,
+     "CT": 0.00464
+    }
+   ],
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232, same figure series",
+   "note": "Not in scope for an incompressible solver."
+  },
+  {
+   "parameter": "tip_mach_reported",
+   "value": [
+    {
+     "rpm": 1750,
+     "Mtip": 0.612
+    },
+    {
+     "rpm": 2250,
+     "Mtip": 0.794
+    },
+    {
+     "rpm": 2500,
+     "Mtip": 0.877
+    }
+   ],
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 figure annotations",
+   "note": ""
+  },
+  {
+   "parameter": "baseline_tip_mach",
+   "value": 0.437,
+   "unit": "-",
+   "evidence_label": "DERIVED_FROM_SOURCE",
+   "locator": "Derived from the reported pair (1750 rpm, Mtip 0.612): Mtip scales linearly with rpm, so Mtip(1250) = 0.612 * 1250/1750 = 0.437",
+   "note": "CONSEQUENCE: the A0.2 baseline is NOT incompressible. A Prandtl-Glauert factor 1/sqrt(1-0.437^2) = 1.11 implies roughly an 11 percent compressibility influence on outboard sectional Cp. Declared before running; see the acceptance record."
+  },
+  {
+   "parameter": "pressure_stations",
+   "value": [
+    0.5,
+    0.68,
+    0.8,
+    0.96
+   ],
+   "unit": "r/R",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 figure annotations 'r/R = 0.50', '0.68', '0.80', '0.96' (one figure also reports 0.966)",
+   "note": "Three radial locations per blade, five measurement locations total (TM-81232 p.2)."
+  },
+  {
+   "parameter": "instrumentation",
+   "value": "60 pressure tubes per blade into three 4888 Scanivalves with Statham PA 856-15 transducers",
+   "unit": "-",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232 p.2",
+   "note": ""
+  },
+  {
+   "parameter": "reported_measurement_uncertainty",
+   "value": null,
+   "unit": "-",
+   "evidence_label": "MISSING",
+   "locator": "Not located in the retrieved text during T01",
+   "note": "Needed for the validation uncertainty U_D of A0.2. Until found, U_D is unquantified and the A0.2 verdict can only be reported at a stated-numerical-uncertainty level, not a full ASME V&V 20 validation level."
+  },
+  {
+   "parameter": "transonic_conditions",
+   "value": [
+    2250,
+    2500
+   ],
+   "unit": "rpm",
+   "evidence_label": "VERIFIED_FROM_SOURCE",
+   "locator": "TM-81232: Mtip 0.794 and 0.877",
+   "note": "Explicitly OUT OF SCOPE for the selected incompressible solver."
+  }
+ ],
+ "blocking_items": [
+  "A0.1 TMR grid family: MISSING. Scripted C-grid generation required; cross-comparison with TMR per-grid published CFD is weakened.",
+  "A0.1 airfoil points file: MISSING but not blocking; the revised analytic formula is sufficient.",
+  "A0.2 absolute radius and chord: DERIVED and OCR-ambiguous; confirm against figure 1 before meshing.",
+  "A0.2 experimental uncertainty: MISSING; blocks a full ASME V&V 20 validation statement for A0.2."
+ ]
+}

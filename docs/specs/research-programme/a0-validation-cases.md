@@ -1,6 +1,6 @@
 # Study A0 — validation ladder case definitions
 
-Status: draft for owner review, 2026-09-16. Every number in the "nominal" columns is transcribed from memory of the public source and is **to be verified against the cited document in T01/T02 before any run**; the "verified" column stays blank until then. No case has been run.
+Status: **source verification complete, 2026-09-19** (work-order task T01). The nominal values below have been checked against the documents; the verified column now carries the outcome and the locator. Full parameter table with evidence labels: [source-inventory.json](../../../evidence/task-a0-validation/source-inventory.json). Findings and access problems: [execution record](../../../evidence/task-a0-validation/README.md). No mesh exists and no case has been run.
 
 Owner decision 2026-09-16: the validation baseline is a standard aircraft wing, not a ducted fan. This trades the ducted-fan geometry-availability risk for a narrower validation claim, stated in §4.
 
@@ -18,34 +18,49 @@ A0.3 stays deferred until a source with usable geometry is confirmed; Study A ma
 
 ## 2. A0.1 — NACA 0012, 2D
 
-Source of record: NASA Langley Turbulence Modeling Resource, "2D NACA 0012 Airfoil Validation Case", and the experimental references it lists. The TMR page also publishes a family of structured grids; using them removes mesh generation from the critical path and makes the grid-convergence study comparable to published results.
+Source of record: NASA Langley Turbulence Modeling Resource, "2D NACA 0012 Airfoil Validation Case". **The live site is gone.** Every path under `turbmodels.larc.nasa.gov` now returns HTTP 301 to a NASA landing page with none of the case content. The specification below was recovered from an Internet Archive snapshot of **2025-12-19T20:23:26Z** and every A0.1 row therefore carries the evidence label `VERIFIED_FROM_ARCHIVE`, which is weaker than reading the authoritative page.
 
-| item | nominal (verify) | verified | locator |
+| item | nominal (as planned) | verified outcome | locator |
 | --- | --- | --- | --- |
-| Mach | 0.15 | | TMR case page |
-| Reynolds number, chord-based | 6 × 10⁶ | | TMR case page |
-| angles of attack | 0°, 10°, 15° | | TMR case page |
-| reference quantities | lift and drag coefficients; surface pressure coefficient | | TMR page and cited wind-tunnel data |
-| grid family | TMR structured C-grids, at least three levels | | TMR grid page |
-| turbulence models | Spalart–Allmaras; k-ω SST | | plan D4 |
+| Mach | 0.15 | **confirmed** 0.15 | "the recommendation here is to run M = 0.15 in compressible CFD codes" |
+| Reynolds number, chord-based | 6 × 10⁶ | **confirmed** 6 × 10⁶ | "The Reynolds number per chord is Re = 6 million." |
+| angles of attack | 0°, 10°, 15° | **confirmed** for Cp and Cf; CL is compared over a range | "Surface pressure coefficient (Cp) vs. x/c (for alpha = 0, 10, 15)" |
+| transition state | not stated in the plan | **fully turbulent** | "Boundary layers should be fully turbulent over most of the airfoil." |
+| airfoil section | "NACA 0012 (analytic section)" | **WRONG AS PLANNED**: a modified **sharp-trailing-edge** section, max thickness 11.894% of chord | revised formula on the case page; extend the exact formula to x = 1.008930411365 then scale by that factor |
+| farfield | not stated in the plan | ~500 chords in the provided grids, else the point-vortex correction is mandatory | Thomas and Salas, AIAA J 24(7):1074–1080, 1986 |
+| force data of record | "the TMR's cited experimental data" | **Ladson, NASA TM 4074, 1988 (tripped)** | "the most appropriate of these data sets for comparison with fully turbulent CFD forces at Re=6 million"; NTRS 19880019495 |
+| pressure data of record | not stated in the plan | **Gregory and O'Reilly, R&M 3726, 1970** (tripped, Re = 3 × 10⁶) | better resolved at the leading-edge suction peak than Ladson TM 100526 |
+| grid family | "TMR structured C-grids, at least three levels" | **MISSING**: the grid archives are behind the dead domain | a scripted C-grid family must be generated instead |
+| turbulence models | Spalart–Allmaras; k-ω SST | unchanged | reported per model, never averaged |
 
-Acceptance, fixed in T03 before running, per plan D9: comparison error E on lift and drag at 0° and 10° against the validation uncertainty U_val (15° is near stall and is reported, not gated); GCI on the finest grid by the Celik et al. 2008 procedure; the TMR's published CFD results plotted alongside as the field's spread. Validated at the U_val level when |E| ≤ U_val; U_val is reported so a reader can judge how strong that statement is. Solver: incompressible at M 0.15 is defensible; the compressibility neglect is recorded as an assumption, optimistic on drag by a known small amount.
+Two consequences of the verification. The **grid family is gone**, so a scripted C-grid must be generated and results are not directly comparable to TMR's published per-grid CFD values; agreement with other codes is therefore weaker evidence than it would have been on the shared family. The **airfoil as previously written was wrong**: substituting the standard blunt-trailing-edge NACA 0012 would have produced a wrong answer that looked like a solver failure.
+
+Acceptance is frozen in [a01-acceptance.json](../../../evidence/task-a0-validation/a01-acceptance.json). **Lift at 0° and 10° is the only gated quantity**, against the Ladson tripped dataset, judged by |E| ≤ U_val per the [uncertainty decision record](uncertainty-decision-record.md). **Drag is reported, not gated**: the source states untripped data are inappropriate for fully-turbulent CFD drag comparison and that tripped drag at Re = 3 × 10⁶ runs about 10% above tripped drag at Re = 6 × 10⁶, so gating drag before that systematic is quantified would manufacture a pass or a fail from a data artefact. The earlier "drag within 15%" default is withdrawn. **15° is reported, not gated**, because the source states the experiments there are "no doubt very far from being two-dimensional any more". **Skin friction can never be validated here**: the source states no experimental data exist. Solver: incompressible at M 0.15, Prandtl–Glauert factor 1.011, so about 1% influence on Cp, recorded as a declared bias and not folded into any uncertainty band.
 
 ## 3. A0.2 — Caradonna–Tung hover rotor
 
 Source of record: F. X. Caradonna and C. Tung, "Experimental and Analytical Studies of a Model Helicopter Rotor in Hover", NASA TM 81232, 1981.
 
-| item | nominal (verify) | verified | locator |
-| --- | --- | --- | --- |
-| blades | 2, untwisted, rectangular planform | | TM 81232 |
-| section | NACA 0012 | | TM 81232 |
-| radius R | 1.143 m | | TM 81232 |
-| chord c | 0.1905 m (aspect ratio 6) | | TM 81232 |
-| collective pitch | 8° | | TM 81232 test matrix |
-| rotor speed | 1250 rpm (subsonic tip) and 2500 rpm (transonic tip) | | TM 81232 test matrix |
-| measured quantities | sectional pressure coefficient at several r/R stations; thrust coefficient; tip-vortex trajectory | | TM 81232 |
+Retrieved from NTRS as accession 19820004169: 60 pages, 2,334,139 bytes, sha256 `16c14789…57208d2`. Report identity confirmed on page 1, including the number **NASA-TM-81232** the plan cited.
 
-Only the subsonic-tip condition is in scope for an incompressible solver; the transonic condition is out. Domain: one blade with 180° periodic boundaries in a rotating frame (MRF), far-field distance and boundary treatment for hover recorded as assumptions. Acceptance, fixed in T03, per plan D9: comparison error on thrust coefficient against U_val; sectional pressure distributions at the stations most commonly used in published reproductions of this rotor (nominally r/R = 0.50, 0.68, 0.80, 0.89, 0.96, to verify against the report) with an RMS error per station; GCI on thrust by the Celik et al. 2008 procedure; two turbulence models; published CFD reproductions of this rotor tabulated as the field's spread.
+| item | nominal (as planned) | verified outcome | locator |
+| --- | --- | --- | --- |
+| blades | 2, untwisted, rectangular planform | **confirmed**, and they carry **half degree precone** the plan omitted | "two cantilever-mounted, manually adjustable blades with half degree precone" |
+| section | NACA 0012 | **confirmed**, untwisted and untapered | "These blades used an NACA 0012 profile and were untwisted and untapered." |
+| aspect ratio | implied 6 | **confirmed** 6 | "An aspect ratio of 6 was chosen in order to maximize Reynolds Number and available instrumentation space." |
+| radius R | 1.143 m | **DERIVED, not verified**: the figure-1 dimension text is OCR-ambiguous | must be confirmed visually against figure 1 before meshing |
+| chord c | 0.1905 m | **DERIVED** as R / 6 | same confirmation requirement |
+| collective pitch | 8° | **confirmed** as one of 5°, 8°, 12° | figures 3, 4, 5 |
+| rotor speed | 1250 rpm subsonic, 2500 rpm transonic | **confirmed**; 2500 rpm is Mtip 0.877 and is out of scope | figure annotations |
+| baseline datum | not stated in the plan | **CT = 0.00460** at 8° collective, 1250 rpm | "Omega = 1250 rpm, CT = 0.00460" |
+| pressure stations | "several r/R stations" | **r/R = 0.50, 0.68, 0.80, 0.96** | figure annotations; three radial locations per blade |
+| experimental uncertainty | assumed available | **MISSING** in the retrieved text | caps the A0.2 verdict at `NUMERICALLY_BOUNDED` |
+
+### The baseline condition is not incompressible
+
+The report gives Mtip at 1750, 2250 and 2500 rpm as 0.612, 0.794 and 0.877. Linear scaling puts the **1250 rpm baseline at Mtip = 0.437**. The Prandtl–Glauert factor is 1.11, so an incompressible solver will show roughly an 11% systematic discrepancy in outboard sectional Cp. **That is physics, not solver error.** Discovered after the runs it would read as a validation failure; it is declared here before any A0.2 mesh exists, and it forces the solver-regime decision now open as **D10** in the [work order](plan.md).
+
+The transonic conditions are out of scope. Domain: one blade with 180° periodic boundaries in a rotating frame, far-field distance and boundary treatment for hover recorded as assumptions. Acceptance will be frozen the same way A0.1's was, before any A0.2 solution exists, and cannot be written until D10 settles the solver regime: **CT = 0.00460 is the force datum**, sectional Cp is compared at the verified stations r/R = 0.50, 0.68, 0.80 and 0.96 with the Mtip 0.437 compressibility bias stated per station, numerical uncertainty by the Celik et al. 2008 procedure, both turbulence models reported separately. Because the source's own measurement uncertainty was not located, the best achievable A0.2 verdict is `NUMERICALLY_BOUNDED` rather than a full validation statement.
 
 ## 4. Claim boundary after the ladder
 

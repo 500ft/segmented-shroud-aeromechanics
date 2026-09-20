@@ -7,35 +7,38 @@ Owner decisions taken 2026-09-16: the validation baseline is a standard aircraft
 ## Decisions to confirm or change before the build
 
 - **D1. CFD toolchain.** Default: OpenFOAM, current ESI release, official arm64 container via Docker. Alternative: a licensed solver available at NYU; name it and T00 changes.
+- **D2a. Evidence labels.** The four labels the handoff defined are extended by a fifth, `VERIFIED_FROM_ARCHIVE`, for a value read from a timestamped Internet Archive snapshot because the authoritative live page no longer serves it. It ranks below `VERIFIED_FROM_SOURCE` because the snapshot may not match whatever is now authoritative. Introduced because the entire NASA TMR domain now redirects to a content-free landing page.
 - **D2. Validation ladder.** A0.1 NACA 0012 2D (NASA TMR case and grids) → A0.2 Caradonna–Tung hover rotor (NASA TM 81232) → A0.3 ducted fan, deferred until a source with usable geometry is confirmed. Study A may start after A0.2 with the label "rotor-validated, gap-unvalidated".
 - **D3. Study A rotor and scale.** Default (owner rule 2026-09-16: take the most-used baseline so there is the most published data to compare against): the Caradonna–Tung rotor **unchanged**, two untwisted NACA 0012 blades, radius 1.143 m, chord 0.1905 m, collective 8°, 1250 rpm, inside a generic duct. It is the most widely reproduced hover-rotor validation case, so every open-rotor quantity in Study A has published CFD and measured comparators. Cost: its chord Reynolds number is well above a small UAV's; scale transfer is a separate, later study, and the Reynolds number is reported on every case. Alternative if a small-scale comparator is wanted later: a propeller from the UIUC propeller database, which has the most public small-rotor performance data but not fully public blade geometry.
-- **D4. Uncertainty band.** U = √(GCI² + clocking² + model²): GCI from three grid levels (ratio ≥ 1.3, Fs = 1.25), clocking from four rotor positions on seamed cases, model from Spalart–Allmaras vs k-ω SST.
+- **D4. Uncertainty band. SUPERSEDED 2026-09-19** by the [uncertainty decision record](uncertainty-decision-record.md). The single band `U = √(GCI² + clocking² + model²)` is withdrawn: a grid-convergence index is an uncertainty, while turbulence-model spread and rotor clocking spread are deterministic sensitivities with no distribution, so adding all three in quadrature and calling the result a confidence interval overstates what is known. Two bands replace it — `U_val = √(U_num² + U_input² + U_D²)` for comparison against measured data, and a linear worst-case envelope `E_dec = U_num(Δ) + R_clock + R_model` for Study A decisions, where no data exist.
 - **D5. Equal-mean rule in CFD.** Post-process every Study A case under both admissible averaging rules (wall-only; fixed grid with occlusion) and report agreement.
-- **D6. Compute.** This laptop (10 cores, 16 GB). Cluster or cloud only when A0.2 timings or memory trigger it.
+- **D6. Compute.** This laptop (10 cores, 16 GiB host) — but the **Docker VM is allocated 7.75 GiB**, measured 2026-09-19, and that is the real ceiling for meshing. Cluster or cloud only when A0.2 timings or memory trigger it.
 - **D7. Case records.** One folder per case under `results/generated/cfd/<study>/<case>/` with a JSON manifest (source revision, mesh hash, solver version, settings, commit); raw case data outside git above a stated size; one test, no schema tooling.
-- **D8. Solver regime.** Incompressible for A0.1 at M 0.15 and for A0.2 at the subsonic-tip condition; the transonic A0.2 condition is out of scope. Compressibility neglect recorded as an assumption on every case.
+- **D8. Solver regime.** Incompressible for A0.1 at M 0.15 and for A0.2 at the subsonic-tip condition; the transonic A0.2 condition is out of scope. Compressibility neglect recorded as an assumption on every case. **Amended 2026-09-19:** the A0.2 baseline is not actually incompressible (Mtip 0.437); see D10.
 - **D9. Acceptance rule.** Default (same owner rule): the most-used validation procedure, not project-specific percentages. Pass rule per ASME V&V 20: comparison error E = S − D (simulation minus data) is compared with the validation uncertainty U_val = √(U_num² + U_input² + U_D²); the case is validated at the U_val level when |E| ≤ U_val, and the size of U_val is itself reported. Numerical uncertainty U_num by the three-grid GCI procedure of Celik et al. (ASME J. Fluids Eng. 2008), Fs = 1.25, refinement ratio ≥ 1.3, the most-cited grid-convergence method. Experimental uncertainty U_D from the source of record where given. The published experiment-to-CFD spread for each case (the TMR's own model comparisons for A0.1; the many Caradonna–Tung CFD reproductions for A0.2) is recorded alongside as the reporting context, so the reader sees where this toolchain sits in the field, and it is not the pass rule. Percentages appear only as reported numbers.
+- **D10. A0.2 solver regime — OPEN, decide before A0.2 meshing.** Source verification established that the 1250 rpm baseline sits at **Mtip = 0.437**, not an incompressible condition, implying roughly an 11% compressibility influence on outboard sectional Cp. Options: (a) a compressible solver for A0.2, more setup but no bias; (b) incompressible, gate only on integrated thrust coefficient, and report sectional Cp with a declared per-station compressibility bias; (c) incompressible, comparing Cp only at inboard stations. Default **(b)**, because thrust is the quantity Study A depends on and the bias is then stated rather than hidden. Open because it determines the A0.2 acceptance file, which cannot be frozen until it is settled.
+- **D11. Repository data policy for CFD artefacts.** Committed: case *inputs* (dictionaries, boundary conditions, generator scripts), JSON manifests, uncertainty JSONs, extracted result tables, and solver log tails with their hashes. Not committed: mesh files, time directories, reconstructed fields, retrieved source PDFs and archive HTML. Uncommitted artefacts live under `results/generated/cfd/.local/` (git-ignored) and every manifest records their path, SHA-256 and regeneration command. Any single committed file above 1 MB needs explicit justification in its pull request. Sources are referenced by URL plus hash, never vendored.
 
 ## Tasks
 
 T00–T18 are ordered work units, one concern each. Retrieval, container pulls and solver wall time are not inside the 2–5 minute estimates. Record actual progress; do not promise calendar completion.
 
-### [ ] T00 — Baseline, toolchain, container
+### [x] T00 — Baseline, toolchain, container — **done 2026-09-19**
 - Files: `evidence/task-a0-validation/README.md` (new).
 - Do: run the repository gate and log exit codes; record interpreter, commit, cores, memory; pull the OpenFOAM arm64 container; run its lid-driven-cavity tutorial; record image digest, solver version, wall time.
 - Done when: gate logged; tutorial solves; versions recorded. A container failure stops T04 and switches D1 to the alternative.
 
-### [ ] T01 — Transcribe A0.1 from the source of record
+### [x] T01 — Transcribe A0.1 from the source of record — **done 2026-09-19**
 - Files: `docs/specs/research-programme/a0-validation-cases.md` (modify, "verified" column).
 - Do: open the NASA TMR NACA 0012 case page through a public route; verify Mach, Reynolds number, angles, reference data source, grid family; fill the verified column with locators; record any difference from the nominal values.
 - Done when: every A0.1 row has a verified value and locator, or a recorded reason it could not be verified.
 
-### [ ] T02 — Transcribe A0.2 from NASA TM 81232
+### [x] T02 — Transcribe A0.2 from NASA TM 81232 — **done 2026-09-19, PASS**
 - Files: case definitions (modify).
 - Do: same for the Caradonna–Tung rotor: blade count, section, radius, chord, collective, speeds, measured stations and quantities; note the report's own stated uncertainties if given.
 - Done when: every A0.2 row verified with page or figure locators.
 
-### [ ] T03 — Freeze acceptance bands before any run
+### [x] T03 — Freeze acceptance bands before any run — **done 2026-09-19, frozen**
 - Files: case definitions (modify, §2 and §3 acceptance); evidence README.
 - Depends on: T01, T02.
 - Do: for each gated quantity, set the band from the published experiment-to-CFD spread (TMR's published model comparisons for A0.1; literature CFD of the Caradonna–Tung rotor for A0.2), or the D9 default when no spread is found; commit.

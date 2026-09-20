@@ -38,11 +38,12 @@ Celik et al. (ASME J. Fluids Eng. 130(7), 2008), three grids, factor of safety 1
 | --- | --- |
 | apparent order *p* | 2.670 |
 | convergence | monotonic |
+| asymptotic-range ratio | 1.007 (expected near 1) |
 | Richardson extrapolated Cl | 1.100180 |
 | grid-convergence index, fine | 0.153 % |
 | `U_num` | 0.001684 |
 
-The apparent order sits slightly above the formal second order of the schemes, which is ordinary on a systematically refined structured family, and the convergence is monotonic, so the index is meaningful rather than a formality.
+The apparent order sits slightly above the formal second order of the schemes, which is ordinary on a systematically refined structured family, and the convergence is monotonic. The asymptotic-range ratio compares the two grid triplets and should be near 1; at 1.007 it says all three grids are in the asymptotic range, so the index is meaningful rather than a formality. This check was added to the analysis after the SST arm showed what a grid outside that range looks like.
 
 ## 4. Validation comparison
 
@@ -73,7 +74,7 @@ Values compared at 10.0°, this work adjusted with the same lift-curve slope.
 
 This work sits **0.38 percent below CFL3D** on the finest grid and 0.26 percent below it after Richardson extrapolation. Two declared differences account for part of that gap and both raise lift slightly in the reference: CFL3D ran the 897×257 grid, one level finer than the finest used here, and it applied the point-vortex farfield correction, which this work did not. Neither was adopted here after the fact.
 
-The code-to-code spread between the two reference Spalart–Allmaras results is 0.0074, itself 1.7 times `U_val`.
+The code-to-code spread between the two reference Spalart–Allmaras results is 0.0074, itself 1.6 times `U_val`.
 
 ## 6. What the verdict means
 

@@ -75,7 +75,18 @@ def gci(phi1, phi2, phi3, h1, h2, h3):
     e_a21 = abs((phi1 - phi2) / phi1)
     e_ext21 = abs((phi_ext21 - phi1) / phi_ext21)
     gci21 = FS * e_a21 / (r21 ** p - 1)
+    # Asymptotic-range check (Celik et al. sec. 4): the two grid-triplet indices should be
+    # consistent, i.e. GCI_32 / (r21^p * GCI_21) ~ 1. A value far from 1 means at least one grid
+    # is outside the asymptotic range and the index understates the real numerical uncertainty.
+    e_a32 = abs((phi2 - phi3) / phi2)
+    gci32 = FS * e_a32 / (r32 ** p - 1)
+    asymptotic_ratio = gci32 / (r21 ** p * gci21) if gci21 else None
+    in_asymptotic_range = (asymptotic_ratio is not None
+                           and 0.85 <= asymptotic_ratio <= 1.15)
     return dict(apparent_order=p, sign=s, note=note, r21=r21, r32=r32,
+                gci_coarse_triplet_fraction=gci32,
+                asymptotic_ratio=asymptotic_ratio,
+                in_asymptotic_range=in_asymptotic_range,
                 phi_fine=phi1, phi_medium=phi2, phi_coarse=phi3,
                 richardson_extrapolated=phi_ext21,
                 approx_rel_error=e_a21, extrap_rel_error=e_ext21,
@@ -150,8 +161,16 @@ def main():
                  "Per the uncertainty decision record this is NOT combined into U_val.")
         verdicts = {m: ("VALIDATED_AT_U_VAL" if comp[m]["abs_E_le_U_val"] else "NOT_VALIDATED")
                     for m in ok}
-        if any("oscillatory" in (models[m].get("note") or "") for m in ok):
-            verdicts = {m: "INCONCLUSIVE" for m in ok}
+        for m in ok:
+            if "oscillatory" in (models[m].get("note") or ""):
+                verdicts[m] = "INCONCLUSIVE"
+            elif not models[m].get("in_asymptotic_range", True):
+                verdicts[m] = "INCONCLUSIVE"
+                models[m]["note"] = ((models[m].get("note") or "") +
+                    " Grids are not in the asymptotic range (ratio "
+                    f"{models[m].get('asymptotic_ratio'):.3f}, expected near 1), so the "
+                    "grid-convergence index understates the numerical uncertainty and no "
+                    "validation verdict is issued.").strip()
         out["verdict_per_model"] = verdicts
         out["claim_boundary"] = ("A0.1 validates a two-dimensional airfoil workflow at this condition only. "
                                  "It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. "

@@ -74,8 +74,15 @@ def uncertainty_problems(doc):
     levels = doc.get("grid_levels")
     if not isinstance(levels, list) or len(levels) < MIN_GRID_LEVELS:
         out.append(f"a reported GCI needs at least {MIN_GRID_LEVELS} grid levels, got {levels!r}")
-    if doc.get("observed_order") is None:
+    order = doc.get("observed_order")
+    if order is None:
         out.append("observed order of convergence must be computed and reported, not assumed")
+    elif isinstance(order, dict):
+        bad = [k for k, v in order.items() if not isinstance(v, (int, float)) or v != v]
+        if not order or bad:
+            out.append(f"observed order missing or not numeric for: {bad or 'every model'}")
+    elif not isinstance(order, (int, float)):
+        out.append("observed order must be a number or a per-model mapping of numbers")
     verdict = str(doc.get("verdict", ""))
     if verdict.upper().startswith("VALIDATED") and not str(doc.get("claim_boundary", "")).strip():
         out.append("a validated verdict requires an explicit rung-scoped claim_boundary")

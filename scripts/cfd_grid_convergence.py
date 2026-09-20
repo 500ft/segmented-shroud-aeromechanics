@@ -123,6 +123,11 @@ def main():
 
     out = dict(schema_version=1, quantity=a.quantity, alpha_deg=a.alpha,
                grid_levels=[g for g, _ in levels], cases=cases, per_model=models,
+               # Only models whose order was actually computed appear here. A model that
+               # could not be evaluated is recorded with its reason in per_model instead;
+               # writing a null order would look like a reported result.
+               observed_order={m: models[m]["apparent_order"] for m in models
+                               if models[m].get("apparent_order") is not None},
                reference=dict(value=a.reference, U_D_k1=a.u_d))
 
     ok = [m for m in models if "error" not in models[m]]

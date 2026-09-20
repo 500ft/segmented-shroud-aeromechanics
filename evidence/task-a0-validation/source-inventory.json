@@ -43,6 +43,23 @@
    "sha256": "cad658504057305b0e2bd02a7f95014fd4bb736658e8307280518248d6654a3a",
    "retained_path": "NOT COMMITTED (see data policy); regenerate from the archive URL and verify the sha256",
    "note": "Every A0.1 parameter below is therefore VERIFIED_FROM_ARCHIVE, not VERIFIED_FROM_SOURCE."
+  },
+  {
+   "source_id": "A0.1-LADSON",
+   "title": "Effects of Independent Variation of Mach and Reynolds Numbers on the Low-Speed Aerodynamic Characteristics of the NACA 0012 Airfoil Section",
+   "authors": "Ladson, C. L.",
+   "report_numbers": [
+    "NASA-TM-4074",
+    "L-16472"
+   ],
+   "published": "1988-10",
+   "ntrs_id": "19880019495",
+   "route": "https://ntrs.nasa.gov/api/citations/19880019495/downloads/19880019495.pdf",
+   "access_status": "RETRIEVED",
+   "bytes": 11348135,
+   "sha256": "8e466706cbdf54b3c778ea2b089c4f52d87686bf7f6b1bd10d224b42c2d06902",
+   "retained_path": "NOT COMMITTED (11 MB, exceeds the data policy threshold); regenerate from the route and verify the sha256",
+   "note": "The primary report behind TMR's curated CLCD_Ladson_expdata.dat. Retrieved so the comparison values trace to the measurement, not only to TMR's digitisation."
   }
  ],
  "a0_1_parameters": [
@@ -117,15 +134,17 @@
    "unit": "-",
    "evidence_label": "MISSING",
    "locator": "Linked from the TMR case page; the link target is behind the dead live domain and was not retrieved",
-   "note": "Not required: the revised analytic formula above is sufficient to generate the section."
+   "note": "Not required: the revised analytic formula above is sufficient to generate the section.",
+   "superseded_by": "amendments[0]"
   },
   {
    "parameter": "grid_family_files",
    "value": null,
    "unit": "-",
-   "evidence_label": "MISSING",
+   "evidence_label": "VERIFIED_FROM_ARCHIVE",
    "locator": "TMR grid page redirects like every other TMR path; multi-megabyte grid archives are not in the retrieved snapshot",
-   "note": "Consequence: the TMR grid family cannot be used. A scripted C-grid family must be generated instead, and results are therefore NOT directly comparable to TMR's published per-grid CFD values. This changes work-order task T04."
+   "note": "Consequence: the TMR grid family cannot be used. A scripted C-grid family must be generated instead, and results are therefore NOT directly comparable to TMR's published per-grid CFD values. This changes work-order task T04.",
+   "superseded_by": "amendments[0]"
   },
   {
    "parameter": "force_data_of_record",
@@ -341,9 +360,82 @@
   }
  ],
  "blocking_items": [
-  "A0.1 TMR grid family: MISSING. Scripted C-grid generation required; cross-comparison with TMR per-grid published CFD is weakened.",
+  "A0.1 TMR grid family: RESOLVED 2026-09-20, recovered from the archive (see amendments).",
   "A0.1 airfoil points file: MISSING but not blocking; the revised analytic formula is sufficient.",
   "A0.2 absolute radius and chord: DERIVED and OCR-ambiguous; confirm against figure 1 before meshing.",
   "A0.2 experimental uncertainty: MISSING; blocks a full ASME V&V 20 validation statement for A0.2."
+ ],
+ "amendments": [
+  {
+   "date": "2026-09-20T19:54:25Z",
+   "task": "T01 amendment during Day 2",
+   "what_changed": "Two parameters recorded as MISSING on 2026-09-19 were recovered, and the experimental uncertainty recorded as MISSING for A0.1 is now quantified.",
+   "how": "The archived TMR grids page lists the grid and data file paths under NACA0012_grids/ and NACA0012_validation/. Those paths were fetched through the same Internet Archive snapshot route used for the case page. The live domain is still dead; nothing was recovered from it.",
+   "items": [
+    {
+     "parameter": "grid_family_files",
+     "was": "MISSING",
+     "now": "VERIFIED_FROM_ARCHIVE",
+     "detail": "The full nested C-grid family was recovered. Levels 113x33, 225x65 and 449x129 give a systematic refinement ratio of exactly 2 in each direction, which is what the grid-convergence procedure needs.",
+     "files": [
+      {
+       "path": "evidence/task-a0-validation/tmr-grids/n0012_113-33.p2dfmt.gz",
+       "sha256": "bdac0e619de8f8fe47358e1b490094167aed915c6382d3a6b1b038e55f1baffc"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-grids/n0012_225-65.p2dfmt.gz",
+       "sha256": "dee343c109181a9a02d575da5de4f697ae8afaa2f1ff4650d2efecdfc56158bf"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-grids/n0012_449-129.p2dfmt.gz",
+       "sha256": "84d6272066795c91f1923bf51c8b031f1abfa0bc4333a484f4d6a31f9b9cf305"
+      }
+     ],
+     "consequence": "The 2026-09-19 statement that results would not be comparable to TMR's published per-grid CFD is WITHDRAWN. The study now runs on the same grid family as the published results."
+    },
+    {
+     "parameter": "force_data_of_record",
+     "was": "named but not obtained",
+     "now": "VERIFIED_FROM_ARCHIVE",
+     "detail": "TMR's own curated digitisation of Ladson NASA TM 4074 was recovered: header states Re = 6 million, transition tripped, M = 0.15, which is exactly the case condition. It carries three trip conditions (80, 120 and 180 grit).",
+     "files": [
+      {
+       "path": "evidence/task-a0-validation/tmr-validation-data/0012.abbottdata.cl.dat",
+       "sha256": "3ee6a0c198f6402c9fc5fd8affc1115c1e87ff943b8b02775df86a7cfa3c55f3"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-validation-data/0012.mccroskeydata.cl.dat",
+       "sha256": "bf5848c235cedffef4e307f5cb52be1e7146bd5e480c202824a59d6d9754924e"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-validation-data/CLCD_Ladson_expdata.dat",
+       "sha256": "78cd2f6aa4968e80f44cbf6c96f699bd9c6e45681d958ec528a10cf72ed23357"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-validation-data/CL_Gregory_expdata.dat",
+       "sha256": "0b7381a45412de50fcf0e0dddf67f1e8e35ba1a278bd4734fb7f16ad08df1f74"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-validation-data/CP_Gregory_expdata.dat",
+       "sha256": "38d8474bc67661c3cef5e4cd9eeddb95d4a436d06abc1f58a8518066f510647c"
+      },
+      {
+       "path": "evidence/task-a0-validation/tmr-validation-data/CP_Ladson.dat",
+       "sha256": "547e022634a360cd7697813543348cd447ee0038cdbc8f00a5296c7822ec7af8"
+      }
+     ],
+     "note": "These are TMR's curated data files, not an independent digitisation of the Ladson report by this project. The primary report itself was separately retrieved and hashed (see sources A0.1-LADSON below) so the chain back to the measurement is traceable."
+    },
+    {
+     "parameter": "reported_measurement_uncertainty (A0.1)",
+     "was": "MISSING",
+     "now": "DERIVED_FROM_SOURCE",
+     "detail": "The three trip conditions are repeat measurements of the same nominal condition, so their spread is a usable experimental uncertainty. Adjusted to a common angle of 10.12 degrees using the local lift-curve slope of 0.10077 per degree measured from the same dataset: 80 grit 1.07070, 120 grit 1.07952, 180 grit 1.07485. Mean 1.07502, sample standard deviation 0.00441 (0.41 percent).",
+     "U_D_k1": 0.00441,
+     "reference_cl": 1.07502,
+     "limitation": "This captures trip-condition repeatability only. It does not include wall interference, angle-of-attack calibration or any other systematic tunnel effect, so it is a LOWER BOUND on the true experimental uncertainty and the validation statement it supports is correspondingly weak."
+    }
+   ]
+  }
  ]
 }

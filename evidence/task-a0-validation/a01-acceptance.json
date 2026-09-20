@@ -106,5 +106,45 @@
   "GCI on CL is non-convergent, or remains larger than the observed |E| by a margin that makes the comparison uninformative: report INCONCLUSIVE.",
   "|E| > U_val on CL after the prescribed grid and model checks: A0.1 is NOT_VALIDATED. Do not widen the band after the fact; record the failure, the likely cause and the next diagnostic."
  ],
- "claim_boundary": "A0.1 validates a 2D airfoil workflow only. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps."
+ "claim_boundary": "A0.1 validates a 2D airfoil workflow only. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps.",
+ "amendments": [
+  {
+   "date": "2026-09-20T19:54:25Z",
+   "what_was_already_seen_at_the_time_of_this_amendment": "The decisions below were determined by the recovered experimental data file alone and were fixed BEFORE any case was run. By the time this amendment was written to disk, one case had completed: coarse grid (113x33), Spalart-Allmaras, alpha 10.12, Cl = 1.045623. It is recorded here because the binding rule requires stating what had been seen, not because it influenced the criteria.",
+   "changes": [
+    {
+     "item": "gated angle",
+     "from": "lift at 0 and 10 degrees",
+     "to": "lift at 10.12 degrees only",
+     "why": "The recovered dataset reports at measured angles (10.12, 10.10, 10.18), not at exactly 10. Running at the measured angle removes interpolation of the experiment from the gated comparison entirely. 10.12 is the 80-grit point."
+    },
+    {
+     "item": "lift at 0 degrees",
+     "from": "gated",
+     "to": "dropped from gating, still reported",
+     "why": "The section is symmetric, so a converged symmetric computation gives lift identically zero at zero incidence. The measured values there (about -0.012) are tunnel and instrument offset. Gating on it would test nothing about the solver."
+    },
+    {
+     "item": "U_D for lift",
+     "from": "unquantified; verdict capped at NUMERICALLY_BOUNDED",
+     "to": "0.00441 at k=1, from the spread of the three trip conditions adjusted to a common angle",
+     "why": "The three grit conditions are repeat measurements of the same nominal state. Their spread is a legitimate, source-internal estimate.",
+     "limitation": "Trip repeatability only; excludes wall interference and angle calibration. A lower bound on true experimental uncertainty, so VALIDATED_AT_U_VAL here means validated against a deliberately narrow band."
+    },
+    {
+     "item": "grid family",
+     "from": "scripted C-grid, because the TMR family was MISSING",
+     "to": "the recovered TMR family at 113x33, 225x65 and 449x129",
+     "why": "The grids were recovered from the archive on 2026-09-20. Refinement ratio is exactly 2 in each direction."
+    }
+   ],
+   "reference_value": {
+    "quantity": "Cl",
+    "alpha_deg": 10.12,
+    "value": 1.07502,
+    "U_D_k1": 0.00441,
+    "source": "TMR curated Ladson NASA TM 4074 data, Re 6e6, tripped, M 0.15; three grit zones adjusted to 10.12 deg with the dataset's own local lift-curve slope 0.10077 per deg"
+   }
+  }
+ ]
 }

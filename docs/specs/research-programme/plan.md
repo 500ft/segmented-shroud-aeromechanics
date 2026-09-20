@@ -44,13 +44,14 @@ T00–T18 are ordered work units, one concern each. Retrieval, container pulls a
 - Do: for each gated quantity, set the band from the published experiment-to-CFD spread (TMR's published model comparisons for A0.1; literature CFD of the Caradonna–Tung rotor for A0.2), or the D9 default when no spread is found; commit.
 - Done when: bands are in a commit that predates every case manifest; the evidence README cites that commit.
 
-### [ ] T04 — A0.1 grids
+### [x] T04 — A0.1 grids — **done 2026-09-20: TMR grid family recovered from the archive and imported, not scripted**
 - Files: `results/generated/cfd/a0-1/` case folders and manifests (new).
 - Depends on: T00, T03.
 - Do: obtain three TMR grid levels and convert to the solver's format, or generate an equivalent C-grid family with a scripted generator; run the solver's mesh check; record cells, y⁺ target, refinement ratio.
+- **Outcome 2026-09-20:** the TMR family was recovered from the archive, so no scripted grid was needed. Levels 113×33, 225×65 and 449×129 (3,584 / 14,336 / 57,344 cells), refinement ratio exactly 2 in each direction. Converted by `scripts/p2d_to_gmsh.py`, which merges the wake-cut branch and the sharp trailing edge into internal faces; without the trailing-edge merge two stray boundary faces appear behind the airfoil. `checkMesh` reports every face assigned to a named patch and flags only high aspect ratio, which is inherent to this grid's wall clustering and the two-dimensional extrusion.
 - Done when: three grids pass the mesh check with ratio ≥ 1.3 and manifests exist.
 
-### [ ] T05 — A0.1 runs
+### [ ] T05 — A0.1 runs — **in progress 2026-09-20**
 - Files: case folders and manifests.
 - Depends on: T04.
 - Do: steady incompressible runs at the three angles on all three grids with Spalart–Allmaras; repeat the finest grid with k-ω SST; monitor lift, drag and residuals; stop on a stated plateau rule.

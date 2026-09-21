@@ -8,6 +8,24 @@ Amended 2026-09-06 after source review. Planning only: no CAD, fixture, fabricat
 
 [CAD_TASKS.csv](CAD_TASKS.csv) is the sole CAD status ledger. [SPRINT_TASKS.csv](SPRINT_TASKS.csv) is the research-task ledger and carries no CAD status. [Scope tiers](specs/cad-development/scope.md) and [reproduction checks](CAD_PLAN_CHECKS.md) describe this amendment, not physical validation.
 
+## 2026-09-21 — shared CAD tooling incorporated; tasks stay deferred
+
+A cross-project CAD briefing was reviewed and folded into planning. **Nothing is promoted.** Every SSY-CAD task remains `deferred` in [CAD_TASKS.csv](CAD_TASKS.csv), which is still the sole CAD status ledger, and the entry conditions SSY-01, SSY-02, SSY-03 and XC-02 are unchanged. The briefing supplies capability information, not closure of those dependencies.
+
+**Shared tooling, pinned.** `500ft/engineering-audit`, reviewed at commit `cf56cdff50b09c9a266292006cbf5b2a0f2e8ac6` (2026-09-21): [`docs/cad_agent_briefing.md`](https://github.com/500ft/engineering-audit/blob/cf56cdff50b09c9a266292006cbf5b2a0f2e8ac6/docs/cad_agent_briefing.md), with `docs/host_setup.md` and `docs/solidworks_api_findings.md` alongside and reusable machinery under `cadloop/`. The revision is pinned here rather than tracked on a branch so a later reader sees what was actually reviewed. Its reported results are demonstrations on other geometry, chiefly a racing-mast example, and are **not** shroud results; its dimensions and acceptance numbers never become shroud inputs.
+
+**Tool choice is unchanged.** The selection above stands: CadQuery for parameterized families with neutral STEP verification, Onshape for hand-modeled fixtures subject to access. Native SOLIDWORKS authoring is an optional route only when a deliverable requires it and a recorded plan amendment establishes the host, access and artifact ownership. A Windows host is not a prerequisite for the CadQuery path.
+
+**Planning requirements to apply when a work order is activated.** Six items map onto the existing tasks rather than forming a parallel backlog: tool-to-work-order mapping (SSY-CAD-01/02, 10, 03/04/05, 06, 07); a geometry acceptance contract fixing axis, origin, angular zero, units, sampling and every metric with its tolerance and failure behavior; independent checks with deliberate negative cases, where reusing the same construction helper on both sides is not independence and volume agreement alone cannot accept geometry; evidence that parameters actually drive the saved and exported part, including seam azimuth and step position that a volume check cannot see; host execution requirements if and only if the native route is selected; and provenance carried through release, distinguishing a nominal design review from a geometrically verified artifact from a fabrication release.
+
+Still unestablished in the shared tooling at the pinned revision: native assembly and mates, assembly STEP, modal analysis, a dimensioned drawing and tolerance set, complete position-parameter control, and independent FEA verification. None may be presented as available acceptance evidence. A solver completion message validates nothing, and a static solve establishes neither fatigue, nor blade containment, nor aerodynamic performance, nor dynamic tip clearance.
+
+### Two integration points this repository has to own
+
+**The equal-mean convention is one decision, not two.** The [measurement-requirements draft](measurement-system-spec.md#13-averaging-domain-and-the-missing-wall-rule) already defines the missing-wall problem and its three admissible treatments, and assigns the choice to open input **IN-08**. The CAD geometry contract needs the same convention. If CAD registers one treatment and the measurement system another, "equal mean clearance" means different things in the model and on the rig, and the experiment's control is broken before anything is built. IN-08 governs both; the CAD contract cites it rather than choosing independently.
+
+**The geometric tolerance has a floor set by what the physics study can resolve.** [A0.1](cfd-validation-a01.md) established that steady RANS on a canonical case carries 1.4 to 3.3 percent model-form error in lift, and that turbulence model choice alone moves lift by about 1.2 percent. A seam effect below roughly 2 percent cannot be separated from model-form error by that class of simulation. Geometry tolerances must therefore be tight enough that geometric error is negligible against the smallest effect the study intends to claim, and the acceptance contract should state that relationship rather than picking a tolerance by habit. Numerical geometry tolerance, fabrication tolerance and measurement uncertainty stay three separate quantities.
+
 ## Verified source context
 
 SSY-04 already requests CAD as one large item. It needs separate reference, defect, metrology and release tasks; expensive closure mechanisms must stay behind Experiment 01 rather than being modeled first.

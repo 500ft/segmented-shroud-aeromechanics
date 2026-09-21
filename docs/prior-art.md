@@ -53,6 +53,20 @@ The frozen top-25 candidates of the canonical 2026-09-11 public database export 
 
 What this does and does not close for SSY-01: the dated scholarly database search and its inclusion rules are now recorded and linked; the evidence table for equal-mean-clearance defects and dynamic tip-clearance methods is still the day-3 table plus this triage, not a close-read table; instrument constraints are captured only as a metrology reading queue feeding the [measurement-requirements draft](measurement-system-spec.md). Still unfulfilled: close reading of the 22 includes; the 111 qualifying unselected records and the broader search boundary; the S2 and S3 full texts; and a dated patent search, which was not performed. The bounded "candidate distinctiveness claim" above keeps its original 2026-09-08 scope and is neither strengthened nor withdrawn by this triage.
 
+## 2026-09-21 close reading of the first-tier competitors
+
+Six queued competitors were taken from the [triage report](prior-art-search-2026-09-14-screening.md). One was read in full; five could not be obtained. Records, access attempts and per-axis states: [reading-records-2026-09-21.json](reading-records-2026-09-21.json). The day-3 reading file is unchanged.
+
+**Read in full: `doi:10.1016/j.heliyon.2024.e25296`.** A transonic axial compressor study (NASA Stage 35), steady RANS with the Spalart–Allmaras model, grid-independent at 2.25 million cells, with the uniform baseline validated against published experimental efficiency and pressure ratio. Three nonuniform clearance schemes run at max 0.612 mm and min 0.204 mm against a uniform 0.408 mm prototype.
+
+This read changes the claim boundary, and the change is a narrowing. The paper states that it designed its schemes "to control the circumferential leakage area of the tip gap to be the same as that of uniform type", and its three schemes share one maximum and minimum whose arithmetic mean equals the uniform value. **The idea of holding an equivalent clearance measure fixed while redistributing the gap is therefore disclosed in the literature, and this project may not present it as new.** The triage screen could not have found this: the abstract says "nonuniform tip clearance" and only the full text reveals both the equal-area constraint and the axis of variation.
+
+What it does not disclose is equally specific. The variation is **axial**, along the blade chord, and the paper classifies its own subject as "axial nonlinear nonuniform blade tip clearance". There are no discrete circumferential seams, no duct, no small-UAV rotor, no deployment-induced defect, and no measurement of any nonuniform geometry. A circumferential seam at equal mean clearance remains outside what this source establishes.
+
+**Not obtained: five ASME papers** (`97-gt-406`, `2000-gt-0416`, `1.4023468`, `gt2011-46356`, `1.4023469`). The publisher route returns HTTP 403 and the ASME Digital Collection presents a bot interstitial to an automated client, which was not worked around. One of the five is recorded as open access by an index, yet the host still refused automated retrieval, so open-access status did not translate into an obtainable copy. Every axis for all five stays **unresolved**; an abstract cannot establish what a full paper does or does not contain. An institutional subscription through a browser is the ordinary route and is available to the owner.
+
+The consequence for SSY-01 is that the scholarly leg is still not closed: four of the first-tier competitors remain unread, the 111 qualifying unselected records are unreviewed, and the S2 and S3 full texts are still outstanding.
+
 ## Search questions still open
 
 - Has a small-UAV experiment already isolated equal-mean-clearance seam, step, and harmonic defects?

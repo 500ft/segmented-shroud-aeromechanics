@@ -1,5 +1,17 @@
 # Review index
 
+## 2026-09-21 — first-tier close reading narrows the claim; CAD tooling incorporated as planning only
+
+Ledger row SSY-R07. [Reading records](reading-records-2026-09-21.json) · [prior-art boundary](prior-art.md) · [CAD plan](CAD_PLAN.md).
+
+Six queued first-tier competitors were attempted. One was read in full and **it narrowed the claim**: a 2024 transonic-compressor study designs its schemes "to control the circumferential leakage area of the tip gap to be the same as that of uniform type", so the idea of holding an equivalent clearance measure fixed while redistributing the gap is already in the literature. The claim ledger now prohibits presenting the equal-mean comparison method as a contribution. The triage screen could not have found this, because only the full text reveals the constraint. What the source does not disclose is equally specific: its variation is axial along the chord, with no discrete circumferential seams, no duct, no small-UAV rotor and no measurement of any nonuniform geometry, so distinctiveness now rests on the seam geometry, the machine, and measurement rather than simulation.
+
+Five ASME papers were not obtainable. The publisher route returns HTTP 403 behind a bot interstitial, which was not worked around; one is indexed as open access and the host still refused automated retrieval. Every axis for those five stays unresolved, because an abstract cannot establish what a full paper contains. An institutional subscription through a browser is the ordinary route and is available to the owner.
+
+A cross-project CAD briefing was folded into [CAD_PLAN.md](CAD_PLAN.md) with the shared-tool revision pinned. **No CAD task is promoted**; all remain deferred behind SSY-01, SSY-02, SSY-03 and XC-02. Two integration points are now recorded: the equal-mean convention is a single decision (IN-08) governing both the geometry contract and the measurement system, because two independent choices would make "equal mean clearance" mean different things in the model and on the rig; and the geometric tolerance has a floor set by A0.1's finding that steady RANS carries 1.4 to 3.3 percent model-form error.
+
+Not done: four first-tier competitors unread, the 111 qualifying unselected records unreviewed, S2 and S3 outstanding, and no patent search performed. The committed 2026-09-12 coverage record still reflects the day-1 source set; re-pointing the coverage script at the new reading file is a separate reviewed change and has not been made.
+
 ## 2026-09-20 — A0.1 validation: verdict NOT_VALIDATED, workflow verified against the reference
 
 Ledger row SSY-R06. [Validation report](cfd-validation-a01.md) · [execution record](../evidence/task-a0-validation/README.md) · [uncertainty record](../results/generated/cfd/a0.1/uncertainty.json).

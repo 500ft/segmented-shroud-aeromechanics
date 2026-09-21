@@ -1,0 +1,67 @@
+{
+ "case_id": "g2_SST_a10.12",
+ "study": "A0.1",
+ "rung": "A0.1",
+ "source_document_sha256": "dee343c109181a9a02d575da5de4f697ae8afaa2f1ff4650d2efecdfc56158bf",
+ "source_locator": "Internet Archive snapshot 2025-12-19T20:23:26Z of turbmodels.larc.nasa.gov NACA0012_grids/n0012_225-65.p2dfmt",
+ "geometry_revision": "TMR modified NACA 0012, sharp trailing edge, scale factor 1.008930411365",
+ "mesh_input_sha256": "dee343c109181a9a02d575da5de4f697ae8afaa2f1ff4650d2efecdfc56158bf",
+ "mesh_sha256": "2d17abcdc49389d95f46be4af3e955d374b5756e05537a271a2b0967d7c0febb",
+ "cell_count": 14336,
+ "solver_image_digest": "sha256:33fb575aa9980d2bc42fd58c75ae698c489293ba30c991380fe3f899c622f319",
+ "solver_version": "OpenFOAM v2512 (API 2512), linuxARM64GccDPInt32Opt",
+ "turbulence_model": "kOmegaSST",
+ "boundary_conditions": {
+  "airfoil": "noSlip wall, nutLowReWallFunction",
+  "farfield": "freestream / freestreamPressure",
+  "outlet": "freestream / freestreamPressure",
+  "front_back": "empty (two-dimensional)"
+ },
+ "operating_point": {
+  "mach": 0.15,
+  "reynolds_chord": 6000000.0,
+  "alpha_deg": 10.12,
+  "U_inf": 1.0,
+  "chord": 1.0,
+  "nu": 1.6666666666666668e-07,
+  "regime": "incompressible; Prandtl-Glauert factor 1.011 recorded as a declared bias"
+ },
+ "convergence_rule": "Cl flat to 1e-4 relative over the last 500 iterations",
+ "convergence_observed": {
+  "iterations": 4000,
+  "plateau_relative_variation": 2.119834845475703e-05,
+  "walltime_s": 248,
+  "runinfo": "exit=0 walltime=248s iters=4000"
+ },
+ "outputs": {
+  "Cl": 1.105396028,
+  "Cd": 0.0094156009166,
+  "units": "dimensionless"
+ },
+ "status": "PASS",
+ "git_commit": "ddab59d2fda41bbdba94884315e986b8aec93398",
+ "uncommitted_artifacts": {
+  "note": "Mesh and solver output are outside version control per work-order decision D11.",
+  "logs": {
+   "log.simpleFoam": {
+    "sha256": "8c595058102220cedae02450732daf0b254a1901ef81defef1cf40372d9e4723",
+    "bytes": 4213521,
+    "committed": false,
+    "tail": "terations 5\nGAMG:  Solving for p, Initial residual = 1.765087506e-08, Final residual = 7.700502586e-10, No Iterations 4\ntime step continuity errors : sum local = 1.047383203e-12, global = 3.827787728e-15, cumulative = 5.517589593e-12\nDILUPBiCGStab:  Solving for omega, Initial residual = 9.914606494e-11, Final residual = 9.914606494e-11, No Iterations 0\nDILUPBiCGStab:  Solving for k, Initial residual = 5.011547041e-08, Final residual = 9.039648665e-11, No Iterations 1\nbounding k, min: -1.132526141e-07 max: 0.04300963069 average: 0.0008256904078\nExecutionTime = 245.24 s  ClockTime = 248 s\n\nEnd\n\n"
+   },
+   "log.checkMesh": {
+    "sha256": "63de64e3ab400c5e271ebc600ac28de43c5f104cc48d8f574d946833fd2fc5c9",
+    "bytes": 3968,
+    "committed": false,
+    "tail": "ect ratio to set highAspectRatioCells\n    Minimum face area = 3.307039218e-09. Maximum face area = 11322.65272.  Face area magnitudes OK.\n    Min volume = 3.307039218e-09. Max volume = 11322.65272.  Total volume = 875541.0439.  Cell volumes OK.\n    Mesh non-orthogonality Max: 77.44174218 average: 10.2023267\n   *Number of severely non-orthogonal (> 70 degrees) faces: 170.\n    Non-orthogonality check OK.\n  <<Writing 170 non-orthogonal faces to set nonOrthoFaces\n    Face pyramids OK.\n    Max skewness = 0.4848516812 OK.\n    Coupled point location match (average 0) OK.\n\nFailed 1 mesh checks.\n\nEnd\n\n"
+   },
+   "log.gmshToFoam": {
+    "sha256": "db9a4cc8dbb158dab072c2b854205db14d4ecf3b8a51d62a44d77de9a3394651",
+    "bytes": 2674,
+    "committed": false,
+    "tail": " Warning : \n    From Foam::polyMesh::polyMesh(const Foam::IOobject&, Foam::pointField&&, const Foam::cellShapeList&, const Foam::faceListList&, const Foam::wordList&, const Foam::wordList&, const Foam::word&, const Foam::word&, const Foam::wordList&, bool)\n    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 635\n    Found 29152 undefined faces in mesh; adding to default patch defaultFaces\nFinding faces of patch 0\nFinding faces of patch 1\nFinding faces of patch 2\nFinding faces of patch 3\nFinding faces of patch 4\n\nFaceZones:\nZone\tSize\n\nWriting zone 0 to cellZone internal and cellSet\nEnd\n\n"
+   }
+  },
+  "regenerate": "python scripts/p2d_to_gmsh.py <grid>.p2dfmt <mesh>.msh && python scripts/make_case.py <case> <mesh>.msh --model kOmegaSST --alpha 10.12 && docker run --rm --platform linux/arm64 -v <dir>:/w sha256 ... gmshToFoam && simpleFoam"
+ }
+}

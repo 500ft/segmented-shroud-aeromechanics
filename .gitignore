@@ -13,7 +13,7 @@ dist/
 # Future raw measurements and generated outputs are external by default.
 data/raw/
 data/processed/
-results/generated/
+results/generated/*
 *.stl
 *.step
 *.stp
@@ -21,5 +21,10 @@ results/generated/
 *.FCStd
 graphify-out/
 
-# CFD artefacts kept outside version control (work-order decision D11)
+# CFD records ARE committed (work-order decision D11): manifests, uncertainty records and
+# extracted result tables. The rule above is written as results/generated/* rather than
+# results/generated/ precisely so this re-inclusion works: git will not descend into an excluded
+# directory, so a negation under one has no effect and the records vanish silently.
+!results/generated/cfd/
 results/generated/cfd/.local/
+

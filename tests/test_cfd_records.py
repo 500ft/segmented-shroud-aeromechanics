@@ -74,8 +74,15 @@ def uncertainty_problems(doc):
     levels = doc.get("grid_levels")
     if not isinstance(levels, list) or len(levels) < MIN_GRID_LEVELS:
         out.append(f"a reported GCI needs at least {MIN_GRID_LEVELS} grid levels, got {levels!r}")
-    if doc.get("observed_order") is None:
+    order = doc.get("observed_order")
+    if order is None:
         out.append("observed order of convergence must be computed and reported, not assumed")
+    elif isinstance(order, dict):
+        bad = [k for k, v in order.items() if not isinstance(v, (int, float)) or v != v]
+        if not order or bad:
+            out.append(f"observed order missing or not numeric for: {bad or 'every model'}")
+    elif not isinstance(order, (int, float)):
+        out.append("observed order must be a number or a per-model mapping of numbers")
     verdict = str(doc.get("verdict", ""))
     if verdict.upper().startswith("VALIDATED") and not str(doc.get("claim_boundary", "")).strip():
         out.append("a validated verdict requires an explicit rung-scoped claim_boundary")
@@ -136,6 +143,31 @@ class CfdNegativeControlTests(unittest.TestCase):
         self.assertTrue(any("claim_boundary" in p for p in uncertainty_problems(doc)))
         doc["claim_boundary"] = "2D airfoil workflow only; says nothing about rotors, ducts or tip gaps."
         self.assertEqual(uncertainty_problems(doc), [])
+
+
+class CfdRecordsAreTrackedTests(unittest.TestCase):
+    """CFD records on disk must actually be in the repository.
+
+    The repository ignores results/generated/* by default, which silently swallowed every
+    manifest and uncertainty record the first time they were written: the local checks passed
+    because the files were on disk, and CI failed because they had never been committed. This
+    test fails locally for the same condition instead.
+    """
+
+    def test_committed_cfd_records_are_not_gitignored(self):
+        import subprocess
+        if not CFD_ROOT.exists():
+            self.skipTest("no CFD records yet")
+        files = [p for p in CFD_ROOT.rglob("*")
+                 if p.is_file() and ".local" not in p.relative_to(CFD_ROOT).parts]
+        if not files:
+            self.skipTest("no CFD records yet")
+        rel = [str(p.relative_to(ROOT)) for p in files]
+        done = subprocess.run(["git", "check-ignore", "--stdin"], cwd=ROOT, input="\n".join(rel),
+                              capture_output=True, text=True)
+        ignored = [line for line in done.stdout.splitlines() if line.strip()]
+        self.assertEqual(ignored, [], "these CFD records are gitignored and would never reach CI:\n"
+                                      + "\n".join(ignored))
 
 
 class HistoricalPreservationTests(unittest.TestCase):

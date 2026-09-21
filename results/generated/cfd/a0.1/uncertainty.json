@@ -1,0 +1,136 @@
+{
+ "schema_version": 1,
+ "quantity": "Cl",
+ "alpha_deg": 10.12,
+ "grid_levels": [
+  "g3",
+  "g2",
+  "g1"
+ ],
+ "cases": {
+  "SA": {
+   "g3": {
+    "status": "PASS",
+    "cells": 57344,
+    "iterations": 6888,
+    "value": 1.0988325057,
+    "cd": 0.012030806624,
+    "plateau_relative_variation": 2.5299825658950884e-05,
+    "plateau_tolerance": 0.0001,
+    "h": 0.004175956904881631
+   },
+   "g2": {
+    "status": "PASS",
+    "cells": 14336,
+    "iterations": 6000,
+    "value": 1.0916058745,
+    "cd": 0.012823048925,
+    "plateau_relative_variation": 5.116310284458664e-06,
+    "plateau_tolerance": 0.0001,
+    "h": 0.008351913809763262
+   },
+   "g1": {
+    "status": "PASS",
+    "cells": 3584,
+    "iterations": 4000,
+    "value": 1.0456225279,
+    "cd": 0.016192222613,
+    "plateau_relative_variation": 2.2561400229343712e-05,
+    "plateau_tolerance": 0.0001,
+    "h": 0.016703827619526525
+   }
+  },
+  "SST": {
+   "g3": {
+    "status": "UNCONVERGED",
+    "cells": 57344,
+    "iterations": 117,
+    "value": 0.80483164522,
+    "cd": 0.017816308352,
+    "plateau_relative_variation": 11.94655874275011,
+    "plateau_tolerance": 0.0001,
+    "h": 0.004175956904881631
+   },
+   "g2": {
+    "status": "PASS",
+    "cells": 14336,
+    "iterations": 4000,
+    "value": 1.105396028,
+    "cd": 0.0094156009166,
+    "plateau_relative_variation": 2.119834845475703e-05,
+    "plateau_tolerance": 0.0001,
+    "h": 0.008351913809763262
+   },
+   "g1": {
+    "status": "PASS",
+    "cells": 3584,
+    "iterations": 3000,
+    "value": 1.1336205229,
+    "cd": 0.0035317712576,
+    "plateau_relative_variation": 1.234981109795651e-07,
+    "plateau_tolerance": 0.0001,
+    "h": 0.016703827619526525
+   }
+  }
+ },
+ "per_model": {
+  "SA": {
+   "apparent_order": 2.6697162915217536,
+   "sign": 1.0,
+   "note": null,
+   "r21": 2.0,
+   "r32": 2.0,
+   "gci_coarse_triplet_fraction": 0.009818240185666875,
+   "asymptotic_ratio": 1.0066201835010369,
+   "in_asymptotic_range": true,
+   "phi_fine": 1.0988325057,
+   "phi_medium": 1.0916058745,
+   "phi_coarse": 1.0456225279,
+   "richardson_extrapolated": 1.1001799934311405,
+   "approx_rel_error": 0.006576644904945135,
+   "extrap_rel_error": 0.0012247884338799436,
+   "gci_fine_fraction": 0.0015328629751928634,
+   "gci_fine_percent": 0.15328629751928635,
+   "U_num_absolute": 0.0016843596639259308,
+   "factor_of_safety": 1.25,
+   "monotonic": true
+  },
+  "SST": {
+   "error": "need three converged levels, have ['g2', 'g1']"
+  }
+ },
+ "observed_order": {
+  "SA": 2.6697162915217536
+ },
+ "reference": {
+  "value": 1.07502,
+  "U_D_k1": 0.00441
+ },
+ "validation": {
+  "SA": {
+   "S": 1.0988325057,
+   "D": 1.07502,
+   "comparison_error_E": 0.02381250569999982,
+   "U_num": 0.0016843596639259308,
+   "U_D": 0.00441,
+   "U_input": "unquantified",
+   "U_val": 0.004720716839364618,
+   "abs_E_le_U_val": false,
+   "E_percent_of_D": 2.2150755985934976
+  }
+ },
+ "model_form_sensitivity": {
+  "models": [
+   "SA"
+  ],
+  "values": {
+   "SA": 1.0988325057
+  },
+  "range": 0.0,
+  "note": "Reported as a sensitivity range between discrete model choices. Per the uncertainty decision record this is NOT combined into U_val."
+ },
+ "verdict_per_model": {
+  "SA": "NOT_VALIDATED"
+ },
+ "claim_boundary": "A0.1 validates a two-dimensional airfoil workflow at this condition only. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. U_D covers trip repeatability only and excludes tunnel systematics, so it is a lower bound and the validation statement is correspondingly narrow."
+}

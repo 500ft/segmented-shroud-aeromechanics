@@ -99,6 +99,13 @@ PASS/FAIL measurement-system analysis that precedes performance runs.
 
 `preregister` · executable now · after SSY-01, SSY-02
 
+2026-09-22: a [design contract](design-contract-experiment-01.md) exists (ledger row SSY-R09) with
+datums, defect equations whose equal-mean construction is verified by test, tolerance classes,
+comparison conditions and invalid-condition rules. It is a **draft, not the freeze this task asks
+for**: twelve inputs are open, four of them the owner's. It also records that the Study A
+computational rotor and the Experiment 01 physical rotor are different machines, so a computed
+effect size is not a prediction for the rig.
+
 **Why it matters.** Uniform gap, ovality, seam, and radial step are presently words rather than
 manufacturable treatments. Comparing at matched RPM instead of matched thrust could also turn a
 changed operating point into a false duct benefit.

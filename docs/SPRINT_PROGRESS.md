@@ -1,5 +1,17 @@
 # Sprint progress
 
+## 2026-09-22 — SSY-03 design contract drafted
+
+Ledger row SSY-R09. [Design contract](design-contract-experiment-01.md).
+
+Uniform gap, ovality, seam and radial step are no longer words. The contract fixes datums and an angular zero, four reference conditions including a **zero-seam segmented control** that separates "assembled from segments" from "has a defect" and an installation re-fit that gives the repeatability every difference is judged against, defect families as equations parametric in the rotor tip radius, three tolerance classes kept separate, matched-thrust primary with matched-RPM secondary, randomised order with a recorded seed, and invalid-condition rules that exclude by rule before the response is inspected.
+
+The equal-mean construction is **verified rather than asserted**: a test integrates the two-lobe family and confirms it is equal-mean for any amplitude and phase, confirms that an alternating segment offset preserves the wall mean exactly for an even seam count, and confirms that it does **not** for an odd count, which is why odd counts need solved offsets that are unequal in magnitude. That is a manufacturing consequence now recorded rather than discovered at assembly.
+
+The contract also records something that would otherwise become a wrong claim: **the Study A computational rotor and the Experiment 01 physical rotor are different machines.** Study A uses the Caradonna–Tung rotor because A0.2 validation transfers to it; the project's distinctiveness rests on small-UAV ducted rotors. They differ by one to two orders of magnitude in tip Reynolds number, so a computed effect size is not a prediction for the rig and may not be carried across without a stated scaling argument.
+
+**SSY-03 is not closed.** This is a draft with twelve open inputs, four of them the owner's, and amplitude levels cannot be set until Study A supplies an expected effect to compare against the 2 percent steady-RANS floor and the rig's pending budget. No fabrication is authorised and the CAD branch remains deferred.
+
 ## 2026-09-22 — literature catalogue and thematic review
 
 Ledger row SSY-R08. [Review](literature/README.md) · [catalogue](literature/register.json) · [search evidence](../evidence/task-literature-2026-09-22/README.md).

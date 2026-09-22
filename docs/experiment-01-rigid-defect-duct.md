@@ -30,6 +30,10 @@ The [measurement-system requirements draft](measurement-system-spec.md) states t
 
 ## Stage B — Pilot conditions
 
+The geometry, datums, defect equations, tolerances and invalid-condition rules for these
+conditions are in the [design contract](design-contract-experiment-01.md), which is a draft with
+twelve open inputs. No insert may be manufactured from it in that state.
+
 Use interchangeable rigid inserts to create:
 
 1. Uniform reference clearance

@@ -1,5 +1,17 @@
 # Review index
 
+## 2026-09-22 — literature catalogue and thematic review
+
+Ledger row SSY-R08. [Review](literature/README.md) · [catalogue](literature/register.json) · [search evidence](../evidence/task-literature-2026-09-22/README.md).
+
+A thematic search extended the corpus into eight areas the frozen 2026-09-09 query set never reached, reusing the existing search machinery so every record carries raw-response provenance; its audit is clean on all six keys. The merged catalogue holds **1,736 distinct records: 11 close-read, 24 triaged from abstracts, 1,701 merely identified.** The review is organised by the decision each theme informs and states the read state of every record it names.
+
+Three findings worth carrying. The frozen query set **never reached the Vertical Flight Society literature**, where small-scale shrouded-rotor work lives, including hover performance at this project's Reynolds number. The extension surfaced **casing-treatment literature** — single circumferential grooves and their location and depth — which is geometrically close to a seam and was absent from the prior-art map; the project must decide explicitly whether to address it. And the highest-priority unread record in the corpus is now `doi:10.1016/j.ast.2023.108162`, on **circumferentially** non-uniform clearance, which is closer to the question than the source that already narrowed the claim; that judgement rests on its title, because no abstract was retained.
+
+Two extension themes failed honestly: deployable mechanisms and guards returned drone-application and ship-landing papers rather than mechanism repeatability or containment, and one guard query leg returned HTTP 429. Neither is presented as coverage. Citation counts could not be retrieved at all, because both APIs were rate-limiting during the run, so nothing is ranked by impact.
+
+Nothing here closes SSY-01, and the binding constraint has changed: it is now **access rather than search coverage**. The top four items in the reading queue are paywalled or block automated retrieval and need the owner's institutional route. 111 qualifying records from the frozen set remain unscreened, 314 more sit outside its filter, and no patent search has been performed.
+
 ## 2026-09-21 — first-tier close reading narrows the claim; CAD tooling incorporated as planning only
 
 Ledger row SSY-R07. [Reading records](reading-records-2026-09-21.json) · [prior-art boundary](prior-art.md) · [CAD plan](CAD_PLAN.md).

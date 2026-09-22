@@ -77,6 +77,7 @@ The [directed dependency audit](research-dependency-audit.md) explains the separ
 
 - [Research programme](specs/research-programme/proposal.md), [tiers and triggers](specs/research-programme/scope.md), [first work order](specs/research-programme/plan.md): Study A0 validation, Study A CFD parametric with an uncertainty band, Study B budget feed, then a gated pilot.
 - [Gate-driven roadmap](../ROADMAP.md): measurement-first sequence and conditional expansion.
+- [Literature review and catalogue](literature/README.md): 1,736 identified records by theme, with the read state of each and a prioritised reading queue.
 - [Research task definitions](TASKS.md): exact-gap, metrology, defect-basis, and disclosure prerequisites.
 - [Sprint task ledger](SPRINT_TASKS.csv): authoritative status of bounded sprint work; this guide does not duplicate task status.
 - [CAD inventory](CAD_ITEMS.md): categories only; parked tasks do not imply modeling or fabrication is authorized.

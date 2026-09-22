@@ -102,6 +102,7 @@ The [full protocol](docs/experiment-01-rigid-defect-duct.md) owns the provisiona
 | --- | --- |
 | Understand the project in five minutes | [Reviewer guide](docs/START_HERE.md) |
 | Challenge the proposed contribution | [Current source review](docs/day3-source-review.md), then [prior-art boundary](docs/prior-art.md) |
+| See every source identified so far, and what is actually read | [Literature review and catalogue](docs/literature/README.md) |
 | Inspect variables and statistical claims | [Research plan](docs/research-plan.md) and [claim ledger](docs/claim-ledger.md) |
 | Assess measurement feasibility | [Experiment 01](docs/experiment-01-rigid-defect-duct.md), [measurement-requirements draft](docs/measurement-system-spec.md) |
 | See what is planned next and why | [Research programme](docs/specs/research-programme/proposal.md) |

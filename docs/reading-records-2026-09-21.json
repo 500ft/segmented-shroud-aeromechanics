@@ -1,0 +1,224 @@
+{
+ "schema_version": 1,
+ "purpose": "Close reading of the first-tier competitors from the 2026-09-14 triage queue, under the day-3 rubric.",
+ "created_utc": "2026-09-21T19:53:50Z",
+ "relationship_to_day3": "This is a NEW record. docs/day3-reading-records.json is unchanged and must stay unchanged: it is the input to the committed 2026-09-12 coverage record, which is bound to exact bytes. Re-pointing the coverage script at this file is a separate reviewed change and has not been made, so the committed novelty-axis table still reflects the day-1 source set only.",
+ "rubric": "docs/day3-reading-rubric.md",
+ "queue": "docs/prior-art-search-2026-09-14-screening.md",
+ "access_policy": "Publisher route plus at most one legitimate open alternative per identifier. No access control was bypassed, no paywall circumvented, no credentials used.",
+ "records": [
+  {
+   "source_id": "doi:10.1016/j.heliyon.2024.e25296",
+   "title": "Numerical investigation on the influence of nonuniform tip clearance on rotor tip-clearance flow field structure",
+   "url": "https://doi.org/10.1016/j.heliyon.2024.e25296",
+   "access": "full_text_xml",
+   "read_utc": "2026-09-21T19:53:50Z",
+   "locator": "Europe PMC full text of PMC10850596, sha256 0386eae28b94ee5e; abstract; sec. 2.2 design scheme; sec. 2.3 numerical method validation; notation list",
+   "access_attempts": [
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "doi.org -> linkinghub.elsevier.com",
+     "outcome": "302 to a JavaScript redirect shell with no article content"
+    },
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "Europe PMC REST fullTextXML for PMC10850596",
+     "outcome": "HTTP 200, 105,748 bytes, complete article"
+    }
+   ],
+   "aboutness": 3,
+   "evidence_grade": "A for what it reports: full text, stated method, baseline validated against published experiment",
+   "finding": "Transonic axial compressor (NASA Stage 35), steady RANS in NUMECA with the Spalart-Allmaras model, grid-independent at 2.25 million cells, baseline validated against published experimental efficiency and pressure ratio. Three nonuniform clearance schemes (sine, hump, concave) all run max 0.612 mm / min 0.204 mm against a uniform 0.408 mm prototype. THE VARIATION IS AXIAL, along the blade chord from leading to trailing edge, not circumferential: the paper classifies its own subject as 'axial nonlinear nonuniform blade tip clearance'. It reports stall-margin improvements of 3.102, 2.672 and 0.645 percent. The nonuniform geometries themselves are never measured; only the uniform baseline is compared with experiment.",
+   "key_quote": "'To control the circumferential leakage area of the tip gap to be the same as that of uniform type and to study its influence on blade tip leakage, three types of nonuniform clearances were designed.'",
+   "axis_states": {
+    "equal_mean_seams": "not_found_in_inspected",
+    "equal_mean_clearance_discrete_seams": "not_found_in_inspected",
+    "measured_vs_cfd": "not_found_in_inspected",
+    "deployment_vs_fixed": "not_applicable",
+    "matched_controls": "disclosed_or_addressed",
+    "held_out_prediction": "not_found_in_inspected",
+    "generic_segmentation": "not_applicable",
+    "guard_validation": "not_applicable",
+    "guard_claims": "not_applicable"
+   },
+   "why_matched_controls_is_disclosed": "The paper holds the circumferential leakage area equal to the uniform case by construction, and the three schemes share one maximum and minimum so their arithmetic mean equals the uniform 0.408 mm. That is a matched-control comparison of a nonuniform clearance distribution against a uniform one. The IDEA of holding an equivalent clearance measure fixed while redistributing the gap is therefore disclosed in the literature and this project may not claim it as new.",
+   "what_it_does_not_disclose": "It does not address discrete circumferential seams, a ducted fan or small-UAV rotor, deployment-induced defects, or any measured comparison of a nonuniform geometry. The axis of variation is chordwise, so a circumferential seam at equal mean clearance remains outside what this source establishes.",
+   "limitations": "Read in full, but the figures were not inspected as images; geometric claims rest on the text and the stated numeric values."
+  },
+  {
+   "source_id": "doi:10.1115/97-gt-406",
+   "title": "Effects of Non-Axisymmetric Tip Clearance on Axial Compressor Performance and Stability",
+   "url": "https://doi.org/10.1115/97-gt-406",
+   "access": "inaccessible",
+   "read_utc": "2026-09-21T19:53:50Z",
+   "locator": "",
+   "access_attempts": [
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "doi.org publisher route",
+     "outcome": "HTTP 403 from ASME Digital Collection"
+    },
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "OpenAlex-reported open-access PDF at asmedigitalcollection.asme.org",
+     "outcome": "HTTP 403 with a Cloudflare interstitial despite the record marking it open access"
+    }
+   ],
+   "aboutness": null,
+   "evidence_grade": "not gradeable: no text inspected beyond the retained export abstract",
+   "finding": "Not read. ASME Digital Collection returns HTTP 403 with a Cloudflare bot interstitial to an automated client. No attempt was made to work around it. An institutional subscription through a browser is the ordinary route and is available to the owner; it was not used here. OpenAlex marks this record open access, but the host still refused automated retrieval, so open-access status did not translate into an obtainable copy.",
+   "axis_states": {
+    "equal_mean_seams": "unresolved",
+    "equal_mean_clearance_discrete_seams": "unresolved",
+    "measured_vs_cfd": "unresolved",
+    "deployment_vs_fixed": "unresolved",
+    "matched_controls": "unresolved",
+    "held_out_prediction": "unresolved",
+    "generic_segmentation": "unresolved",
+    "guard_validation": "unresolved",
+    "guard_claims": "unresolved"
+   },
+   "limitations": "An abstract cannot establish what a full paper does or does not contain. Every axis stays unresolved."
+  },
+  {
+   "source_id": "doi:10.1115/2000-gt-0416",
+   "title": "Non-Uniform Flow in a Compressor due to Asymmetric Tip Clearance",
+   "url": "https://doi.org/10.1115/2000-gt-0416",
+   "access": "inaccessible",
+   "read_utc": "2026-09-21T19:53:50Z",
+   "locator": "",
+   "access_attempts": [
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "doi.org publisher route",
+     "outcome": "HTTP 403 from ASME Digital Collection"
+    },
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "OpenAlex location search for an open copy",
+     "outcome": "no open-access location recorded; no legitimate open copy found"
+    }
+   ],
+   "aboutness": null,
+   "evidence_grade": "not gradeable: no text inspected beyond the retained export abstract",
+   "finding": "Not read. ASME Digital Collection returns HTTP 403 with a Cloudflare bot interstitial to an automated client. No attempt was made to work around it. An institutional subscription through a browser is the ordinary route and is available to the owner; it was not used here.",
+   "axis_states": {
+    "equal_mean_seams": "unresolved",
+    "equal_mean_clearance_discrete_seams": "unresolved",
+    "measured_vs_cfd": "unresolved",
+    "deployment_vs_fixed": "unresolved",
+    "matched_controls": "unresolved",
+    "held_out_prediction": "unresolved",
+    "generic_segmentation": "unresolved",
+    "guard_validation": "unresolved",
+    "guard_claims": "unresolved"
+   },
+   "limitations": "An abstract cannot establish what a full paper does or does not contain. Every axis stays unresolved."
+  },
+  {
+   "source_id": "doi:10.1115/1.4023468",
+   "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL UAVs, Part I",
+   "url": "https://doi.org/10.1115/1.4023468",
+   "access": "inaccessible",
+   "read_utc": "2026-09-21T19:53:50Z",
+   "locator": "",
+   "access_attempts": [
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "doi.org publisher route",
+     "outcome": "HTTP 403 from ASME Digital Collection"
+    },
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "OpenAlex location search for an open copy",
+     "outcome": "no open-access location recorded; no legitimate open copy found"
+    }
+   ],
+   "aboutness": null,
+   "evidence_grade": "not gradeable: no text inspected beyond the retained export abstract",
+   "finding": "Not read. ASME Digital Collection returns HTTP 403 with a Cloudflare bot interstitial to an automated client. No attempt was made to work around it. An institutional subscription through a browser is the ordinary route and is available to the owner; it was not used here.",
+   "axis_states": {
+    "equal_mean_seams": "unresolved",
+    "equal_mean_clearance_discrete_seams": "unresolved",
+    "measured_vs_cfd": "unresolved",
+    "deployment_vs_fixed": "unresolved",
+    "matched_controls": "unresolved",
+    "held_out_prediction": "unresolved",
+    "generic_segmentation": "unresolved",
+    "guard_validation": "unresolved",
+    "guard_claims": "unresolved"
+   },
+   "limitations": "An abstract cannot establish what a full paper does or does not contain. Every axis stays unresolved."
+  },
+  {
+   "source_id": "doi:10.1115/gt2011-46356",
+   "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL UAVs, Part 1 (conference)",
+   "url": "https://doi.org/10.1115/gt2011-46356",
+   "access": "inaccessible",
+   "read_utc": "2026-09-21T19:53:50Z",
+   "locator": "",
+   "access_attempts": [
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "doi.org publisher route",
+     "outcome": "HTTP 403 from ASME Digital Collection"
+    },
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "OpenAlex location search for an open copy",
+     "outcome": "no open-access location recorded; no legitimate open copy found"
+    }
+   ],
+   "aboutness": null,
+   "evidence_grade": "not gradeable: no text inspected beyond the retained export abstract",
+   "finding": "Not read. ASME Digital Collection returns HTTP 403 with a Cloudflare bot interstitial to an automated client. No attempt was made to work around it. An institutional subscription through a browser is the ordinary route and is available to the owner; it was not used here.",
+   "axis_states": {
+    "equal_mean_seams": "unresolved",
+    "equal_mean_clearance_discrete_seams": "unresolved",
+    "measured_vs_cfd": "unresolved",
+    "deployment_vs_fixed": "unresolved",
+    "matched_controls": "unresolved",
+    "held_out_prediction": "unresolved",
+    "generic_segmentation": "unresolved",
+    "guard_validation": "unresolved",
+    "guard_claims": "unresolved"
+   },
+   "limitations": "An abstract cannot establish what a full paper does or does not contain. Every axis stays unresolved."
+  },
+  {
+   "source_id": "doi:10.1115/1.4023469",
+   "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL UAVs, Part II",
+   "url": "https://doi.org/10.1115/1.4023469",
+   "access": "inaccessible",
+   "read_utc": "2026-09-21T19:53:50Z",
+   "locator": "",
+   "access_attempts": [
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "doi.org publisher route",
+     "outcome": "HTTP 403 from ASME Digital Collection"
+    },
+    {
+     "utc": "2026-09-21T19:53:50Z",
+     "route": "OpenAlex location search for an open copy",
+     "outcome": "no open-access location recorded; no legitimate open copy found"
+    }
+   ],
+   "aboutness": null,
+   "evidence_grade": "not gradeable: no text inspected beyond the retained export abstract",
+   "finding": "Not read. ASME Digital Collection returns HTTP 403 with a Cloudflare bot interstitial to an automated client. No attempt was made to work around it. An institutional subscription through a browser is the ordinary route and is available to the owner; it was not used here.",
+   "axis_states": {
+    "equal_mean_seams": "unresolved",
+    "equal_mean_clearance_discrete_seams": "unresolved",
+    "measured_vs_cfd": "unresolved",
+    "deployment_vs_fixed": "unresolved",
+    "matched_controls": "unresolved",
+    "held_out_prediction": "unresolved",
+    "generic_segmentation": "unresolved",
+    "guard_validation": "unresolved",
+    "guard_claims": "unresolved"
+   },
+   "limitations": "An abstract cannot establish what a full paper does or does not contain. Every axis stays unresolved."
+  }
+ ]
+}

@@ -42,7 +42,7 @@ Queue membership is derived from the record; the sets below equal the record's i
 
 ### Close-reading queue (includes), by priority
 
-1. **Likely direct competitors for the nonuniform-versus-mean question** — read first, under the day-3 rubric, with axis states recorded in a new dated reading record (not in the day-3 file):
+1. **Likely direct competitors for the nonuniform-versus-mean question** — read first, under the day-3 rubric, with axis states recorded in a new dated reading record (not in the day-3 file). **Status 2026-09-21:** all six attempted; one read in full, five not obtainable by an open route. See [reading-records-2026-09-21.json](reading-records-2026-09-21.json).
    - `doi:10.1115/97-gt-406` — Experimental and analytical study of circumferentially non-uniform tip clearance on a four-stage low-speed compressor; excerpt states stall-margin loss was more severe than an average-clearance estimate and that the circumferential length scale of the asymmetry mattered.
    - `doi:10.1016/j.heliyon.2024.e25296` — Title names nonuniform tip clearance and its effect on rotor tip-clearance flow structure (numerical).
    - `doi:10.1115/2000-gt-0416` — Aerodynamics: analytical actuator-disc model of flow redistribution from asymmetric tip clearance, mean plus perturbation.

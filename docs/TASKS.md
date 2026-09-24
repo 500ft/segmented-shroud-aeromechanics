@@ -138,6 +138,22 @@ inspection points; exported files are labeled **CAD, fabrication pending**.
 
 `build` · executable now · after SSY-02, SSY-03
 
+2026-09-24: revised after external review (see the correction record). The wall-domain mean is
+now an angle-weighted integral reported separately from the harmonic intercept, because on a
+masked domain those are different quantities; the baseline falls back to intercept-only when mean
+clearance does not vary, which is the design this project actually proposes; scoring is
+specimen-first; and an effect inside its own uncertainty is reported INCONCLUSIVE rather than as a
+null.
+
+2026-09-23: implemented (ledger row SSY-R10) as
+[`scripts/analysis_pipeline.py`](../scripts/analysis_pipeline.py) with
+[synthetic fixtures](../data/fixtures/synthetic/README.md) and 21 tests. It refuses a wrong unit,
+a clearance inside a seam, a walled sample with no value, extrapolation past the measured thrust
+range, and a descriptor that is constant or collinear in training. The verdict is judged against
+the roadmap's registered 20 percent improvement and 10 percent error gate, not against whether the
+number happens to be positive. **Still open:** real channel formats are unknown until instruments
+exist, so the ingestion schema is provisional.
+
 **Why it matters.** Writing the analysis after seeing physical results invites silent choices in
 matched-thrust interpolation, harmonic extraction, repeated-measure handling, and held-out
 selection.

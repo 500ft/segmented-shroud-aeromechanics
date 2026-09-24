@@ -56,6 +56,12 @@ The primary aerodynamic comparison is electrical power required at matched thrus
 
 ## Analysis
 
+The analysis is implemented and tested before any data exists:
+[`scripts/analysis_pipeline.py`](../scripts/analysis_pipeline.py), against
+[synthetic fixtures](../data/fixtures/synthetic/README.md) that are explicitly not evidence.
+Writing it now fixes the matched-thrust interpolation, harmonic extraction, repeated-measure
+handling and held-out selection before results can influence them.
+
 - Fit a mean-clearance baseline model using training conditions.
 - Fit a defect-aware model using mean clearance plus registered seam and harmonic descriptors.
 - Before family holdout, close the model-identifiability gate in docs/research-plan.md: fitted descriptors need training support; an unseen mechanism requires a specified physical extrapolation model. Otherwise restrict the claim to supported conditions.

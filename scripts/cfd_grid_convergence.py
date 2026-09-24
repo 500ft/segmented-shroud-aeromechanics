@@ -75,17 +75,22 @@ def gci(phi1, phi2, phi3, h1, h2, h3):
     e_a21 = abs((phi1 - phi2) / phi1)
     e_ext21 = abs((phi_ext21 - phi1) / phi_ext21)
     gci21 = FS * e_a21 / (r21 ** p - 1)
-    # Asymptotic-range check (Celik et al. sec. 4): the two grid-triplet indices should be
-    # consistent, i.e. GCI_32 / (r21^p * GCI_21) ~ 1. A value far from 1 means at least one grid
-    # is outside the asymptotic range and the index understates the real numerical uncertainty.
+    # DIAGNOSTIC ONLY, not a check. With equal refinement ratios and the order fitted from the
+    # same three values, r^p = |(phi3-phi2)/(phi2-phi1)| identically, and this ratio then reduces
+    # algebraically to |phi1/phi2|. It therefore confirms nothing about the asymptotic range: one
+    # three-grid set gives two ADJACENT pairs, not two independent triplets. It is retained
+    # because it is cheap and its value is still worth seeing, and tests/test_cfd_records.py
+    # demonstrates the identity so nobody reads it as evidence again.
     e_a32 = abs((phi2 - phi3) / phi2)
     gci32 = FS * e_a32 / (r32 ** p - 1)
     asymptotic_ratio = gci32 / (r21 ** p * gci21) if gci21 else None
-    in_asymptotic_range = (asymptotic_ratio is not None
-                           and 0.85 <= asymptotic_ratio <= 1.15)
+    # Deliberately NOT used to gate a verdict: see the note above.
+    in_asymptotic_range = None
     return dict(apparent_order=p, sign=s, note=note, r21=r21, r32=r32,
                 gci_coarse_triplet_fraction=gci32,
                 asymptotic_ratio=asymptotic_ratio,
+                asymptotic_ratio_is_diagnostic_only=True,
+                asymptotic_ratio_identity="equals |phi_fine/phi_medium| for equal r with a fitted order",
                 in_asymptotic_range=in_asymptotic_range,
                 phi_fine=phi1, phi_medium=phi2, phi_coarse=phi3,
                 richardson_extrapolated=phi_ext21,
@@ -102,7 +107,8 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--quantity", default="Cl")
     ap.add_argument("--reference", type=float, required=True)
-    ap.add_argument("--u-d", type=float, required=True, dest="u_d")
+    ap.add_argument("--u-d", type=float, default=None, dest="u_d")
+    ap.add_argument("--u-input", type=float, default=None, dest="u_input")
     ap.add_argument("--alpha", type=float, required=True)
     a = ap.parse_args()
 
@@ -139,7 +145,10 @@ def main():
                # writing a null order would look like a reported result.
                observed_order={m: models[m]["apparent_order"] for m in models
                                if models[m].get("apparent_order") is not None},
-               reference=dict(value=a.reference, U_D_k1=a.u_d))
+               reference=dict(value=a.reference, U_D_k1=a.u_d, U_input=a.u_input,
+                              U_D_interpretation="spread across trip treatments is TREATMENT SENSITIVITY, "
+                                                 "not repeatability: the grit sizes are different "
+                                                 "experimental conditions, not repeats of one"))
 
     ok = [m for m in models if "error" not in models[m]]
     if ok:
@@ -147,10 +156,21 @@ def main():
         for m in ok:
             S = models[m]["phi_fine"]; U_num = models[m]["U_num_absolute"]
             E = S - a.reference
-            U_val = math.sqrt(U_num ** 2 + a.u_d ** 2)          # U_input unquantified, see note
+            # An unquantified component cannot be silently dropped: combining only the known
+            # terms and calling the result U_val treats the unknown as zero, which is the one
+            # thing it is not. Where a required component is missing, U_val is null and the
+            # missing components are named; a partial combination is reported under its own name
+            # so it can never be mistaken for a complete validation uncertainty.
+            missing = [n for n, v in (("U_input", a.u_input), ("U_D", a.u_d)) if v is None]
+            partial = math.sqrt(U_num ** 2 + sum(v ** 2 for v in (a.u_input, a.u_d) if v is not None))
+            complete = None if missing else partial
             comp[m] = dict(S=S, D=a.reference, comparison_error_E=E,
-                           U_num=U_num, U_D=a.u_d, U_input="unquantified",
-                           U_val=U_val, abs_E_le_U_val=abs(E) <= U_val,
+                           U_num=U_num, U_D=a.u_d, U_input=a.u_input,
+                           missing_components=missing,
+                           partial_combination_of_known_terms=partial,
+                           U_val=complete,
+                           abs_E_le_U_val=(abs(E) <= complete) if complete is not None else None,
+                           screen="consistency screen for this project, not a universal pass/fail rule",
                            E_percent_of_D=100 * E / a.reference)
         out["validation"] = comp
         vals = [models[m]["phi_fine"] for m in ok]
@@ -159,18 +179,19 @@ def main():
             range=max(vals) - min(vals) if len(vals) > 1 else 0.0,
             note="Reported as a sensitivity range between discrete model choices. "
                  "Per the uncertainty decision record this is NOT combined into U_val.")
-        verdicts = {m: ("VALIDATED_AT_U_VAL" if comp[m]["abs_E_le_U_val"] else "NOT_VALIDATED")
-                    for m in ok}
+        verdicts = {}
+        for m in ok:
+            c = comp[m]
+            if c["U_val"] is None:
+                verdicts[m] = "INCOMPLETE_UNCERTAINTY"
+            elif c["abs_E_le_U_val"]:
+                verdicts[m] = "CONSISTENT_AT_U_VAL"
+            else:
+                verdicts[m] = "INCONSISTENT_AT_U_VAL"
         for m in ok:
             if "oscillatory" in (models[m].get("note") or ""):
                 verdicts[m] = "INCONCLUSIVE"
-            elif not models[m].get("in_asymptotic_range", True):
-                verdicts[m] = "INCONCLUSIVE"
-                models[m]["note"] = ((models[m].get("note") or "") +
-                    " Grids are not in the asymptotic range (ratio "
-                    f"{models[m].get('asymptotic_ratio'):.3f}, expected near 1), so the "
-                    "grid-convergence index understates the numerical uncertainty and no "
-                    "validation verdict is issued.").strip()
+
         out["verdict_per_model"] = verdicts
         out["claim_boundary"] = ("A0.1 validates a two-dimensional airfoil workflow at this condition only. "
                                  "It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. "

@@ -97,7 +97,7 @@ There is a coherent body of *Aerospace Science and Technology* papers on non-uni
 | `doi:10.2514/6.2009-332` | 2009 | PIV measurements **and** computation of a 5-inch ducted fan — measurement plus simulation at this project's scale. | identified |
 | `doi:10.1115/gt2022-80456` | 2022 | A data-driven modification to Spalart–Allmaras because the standard model over-predicts compressor blockage and under-predicts stall margin. Independent evidence that SA has a known directional bias near the tip. | identified |
 
-*Already settled by our own work:* A0.1 showed every published code misses the canonical 2D experiment by 1.4–3.3 %, and turbulence-model choice alone moves lift by about 1.2 %. **A seam effect below roughly 2 % cannot be separated from model-form error by steady RANS at any mesh density.**
+*From our own work, corrected 2026-09-24:* A0.1 shows disagreement with its chosen experimental comparator and agreement with the published reference computations. It does **not** establish a detection threshold for seam-induced power differences. The earlier claim that "a seam effect below roughly 2 percent cannot be separated from model-form error by steady RANS at any mesh density" is **withdrawn**: a discrepancy in two-dimensional airfoil lift does not bound a difference in ducted-rotor power. Study A must assess the sensitivity of its own paired difference.
 
 ## 6. Measurement-system uncertainty
 
@@ -133,7 +133,7 @@ Both themes need re-querying with different terms before anything can be conclud
 Two findings, both narrowing, both from work already done rather than from titles:
 
 1. **The equal-mean comparison method is not new.** Published work holds an equivalent clearance measure fixed while redistributing the gap. Distinctiveness now rests on the combination of discrete circumferential seams, a small-UAV ducted rotor, and measurement rather than simulation.
-2. **Steady RANS cannot resolve a sub-2 % effect** on a canonical case, so Study A's CFD has a floor independent of mesh density.
+2. **Circumferential nonuniformity at matched average clearance already has experimental precedent.** Graf et al. (1997) study it directly, which bounds the broad novelty claim more tightly than the axial-clearance example does. That source remains unread here, so this is recorded on its indexed abstract and no absence claim about discrete seams follows from it.
 
 ## Reading queue
 

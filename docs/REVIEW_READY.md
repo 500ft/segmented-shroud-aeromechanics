@@ -1,5 +1,21 @@
 # Review index
 
+## 2026-09-24 — external review corrections applied
+
+Ledger row SSY-R11. [Correction record](corrections/2026-09-24-review-corrections.md).
+
+An external review reproduced several errors by counterexample and they are corrected in place. No raw run, solver output or frozen acceptance record was rewritten; the original calculations stand and only their interpretation changed.
+
+**The universal two-percent floor is withdrawn.** It was inferred from a disagreement in two-dimensional airfoil lift and applied to differences in ducted-rotor power. Those are different quantities at different conditions, and errors in a paired comparison may cancel rather than persist. Study A must assess the sensitivity of its own paired difference.
+
+**The uncertainty arithmetic is repaired.** A `U_val` was reported while a required component was unquantified, which silently treats the unknown as zero. It is now null when a component is missing, the missing ones are named, and the combination of known terms is reported as partial. A0.1's verdict is therefore `INCOMPLETE_UNCERTAINTY`, not `NOT_VALIDATED`. The grit spread that supplied `U_D` is reclassified as treatment sensitivity, because different trips are different conditions rather than repeats.
+
+**The asymptotic-range check confirms nothing.** For equal refinement with a fitted order it is algebraically the fine-to-medium value ratio, which a test now pins. It is a diagnostic and gates no verdict. It was added and praised in this repository two sessions ago, and that was wrong.
+
+**One claim was simply false** and is corrected against the report's own table: the SST reference results miss the experiment by 1.40 and 1.98 percent, *below* this work's 2.24 percent, so "every published code misses by more than this work" does not hold.
+
+The pipeline and design-contract corrections went in with their own pull requests. Remaining review items are recorded in the ledger blocker: the unregistered design matrix, the scale bridge, transient acceptance rules, the budget rationale, literature evidence grades and failure dispositions.
+
 ## 2026-09-23 — SSY-05 analysis pipeline, written before the data
 
 Ledger row SSY-R10. [Pipeline](../scripts/analysis_pipeline.py) · [synthetic fixtures](../data/fixtures/synthetic/README.md) · 21 new tests.

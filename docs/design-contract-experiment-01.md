@@ -76,11 +76,23 @@ The circumferential mean is exactly `c̄₀` because the integral of `cos 2θ` o
 
 ```
 Ω_seam = ⋃_k [ψ_k − w/2 , ψ_k + w/2] ,   Ω_wall = [0, 2π) \ Ω_seam
+open fraction = n·w / 2π          (w in radians)
 ```
 
-Over a seam there is no wall. The clearance is **undefined there, not large**: assigning a finite radius inside a seam would fabricate a measurement, and both the measurement requirements and the CAD contract forbid it.
+Over a seam there is no wall. The clearance is **undefined there, not large**: assigning a finite radius inside a seam would fabricate a measurement.
 
-Default seam placement is equally spaced, `ψ_k = ψ₀ + 2πk/n`, so that seam count varies without also varying the azimuthal distribution. Unequal spacing is a separate registered family, not a variant of this one.
+**Angular width and physical width are different quantities.** `w` is an angle; the physical gap along the wall is `g ≈ w · (R_t + c̄₀)`. A width in degrees cannot be divided by a clearance in micrometres, and every registered level records both with the radius used to convert.
+
+**Seam count and total opening are separate variables and must not be varied together by accident.** Increasing `n` at fixed `w` also increases the open fraction, so a "count effect" measured that way is confounded with an opening effect. The design therefore carries two distinct contrasts, and neither is a substitute for the other:
+
+| contrast | held fixed | varied | what it can support |
+| --- | --- | --- | --- |
+| **A — defect burden** | individual width `w` | count `n`, and therefore total opening | the practical question: what does adding seams of a given size cost? It does **not** isolate a count effect. |
+| **B — redistribution at fixed opening** | total opening `n·w` | count `n`, so `w` changes with it | whether *distributing* a fixed opening differently matters. It does **not** isolate a width effect. |
+
+Contrast **B is primary**, because the project's question is about seam topology rather than about how much wall is missing. An isolated count effect may be claimed only with a matched-distribution contrast or an explicit model, never from A alone.
+
+**Through-wall seam versus closed recess.** A segment seam is a **through-wall opening**: it breaks azimuthal symmetry and communicates with the flow outside the duct. A circumferential casing groove is typically **axisymmetric and blind-bottomed**, communicating only with the passage. These are different boundary conditions, and the casing-treatment literature is relevant by analogy only. Geometric equivalence is not established by sharing the word "groove", and this contract does not assume it. Every registered condition states: axial extent, through-wall or blind, wall thickness, corner treatment, whether the exterior domain is included, and the sign of any step.
 
 ### 5.4 Radial step at segment joints
 
@@ -124,13 +136,16 @@ Three quantities are kept separate and must never be added together or substitut
 | fabrication tolerance | agreement between the made part and the CAD model | the fabrication route, GEO-06 |
 | measurement uncertainty | how well the built clearance field can be measured | the [budget](clearance-measurement-budget.csv), IN-06 |
 
-**The amplitude floor.** [A0.1](cfd-validation-a01.md) established that steady RANS on a canonical case carries 1.4 to 3.3 percent model-form error in lift, and that turbulence-model choice alone moves lift by about 1.2 percent. A computed seam effect below roughly 2 percent cannot be separated from model-form error at any mesh density. For the rig, the corresponding floor is `k · u_c` from the budget, which is currently `INPUTS_PENDING`.
+**The amplitude floor, and what it is not.** Amplitude levels must be chosen so that the smallest level is expected to produce an effect the relevant study can actually resolve. That expectation does not exist yet.
 
-Amplitude levels must therefore be chosen so that the **smallest** level is expected to produce an effect above whichever floor applies to the study using it. That expectation does not exist yet, which is precisely what Study A is for. The rule is recorded now so the level set is chosen against it later rather than by habit.
+An earlier draft of this contract asserted a universal floor of about two percent, taken from [A0.1](cfd-validation-a01.md)'s disagreement in **airfoil lift**. **That inference is withdrawn.** A discrepancy in absolute lift on a two-dimensional airfoil at one condition is not a bound on the smallest resolvable **difference in ducted-rotor power** between two seam configurations. They are different quantities, different geometry and different operating conditions, and errors in a paired comparison may cancel, differ or compound; cancellation has to be investigated, not presumed. Two turbulence models also cannot bound every shared modelling error.
+
+What replaces it is a requirement rather than a number. Before Study A's amplitudes are frozen, that study must estimate the numerical and model sensitivity **of the paired difference it will actually report**, at its own conditions. For the rig, the corresponding floor comes from the budget's `k · u_c`, which is `INPUTS_PENDING`. Neither floor may be inherited from a different quantity.
 
 ## 8. Comparison conditions
 
-- **Primary comparison: electrical power at matched thrust.** Each condition is iterated on rotor speed until its thrust matches the reference thrust `T*` within the tolerance of GEO-08. The achieved thrust and the speed required are both recorded; the speed required is itself a result.
+- **Primary comparison: electrical power at matched TOTAL thrust.** `T*` is the **net axial force on the declared propulsion assembly**, not the force on the rotor alone. A shroud carries force itself, so two conditions matched on rotor thrust can be delivering different useful total thrust and the comparison would then be between different operating states. The contract fixes one force boundary: the assembly comprising rotor, duct and their supporting structure up to the declared tare plane, with the same load path in every condition. Any surface excluded from that boundary is named. In simulation the rotor and duct contributions are retained **separately and reported as a sum**, so the split can be inspected and a case where duct force changes while rotor thrust does not is visible rather than hidden. Each condition is iterated on rotor speed until its total thrust matches `T*` within the tolerance of GEO-08; the achieved thrust and the speed required are both recorded, and the speed required is itself a result.
+- **Electrical and shaft power stay distinct.** The rig measures `P_electrical = mean(V(t)·I(t))`. Simulation yields `P_shaft = Q·Ω`. They are never substituted for one another, and if they are compared the motor and controller loss treatment across speed, torque and temperature is stated; a single constant efficiency is not transferable between matched-thrust settings. In hover, `T/P` is power loading; no propulsive-efficiency claim of the form `T·V/P` is available at zero forward speed.
 - **Secondary diagnostic: matched RPM.** Reported, never substituted for the primary. Comparing at matched RPM alone can turn a changed operating point into an apparent duct benefit.
 - **Operating points.** A set of matched-thrust set-points spanning the envelope, fixed in GEO-07 before any condition is run.
 - **Randomised order.** Conditions are run in randomised order **within** operating blocks, with the randomisation seed recorded before the first run. Reference conditions are re-run at the start of every block, and `REF-REPEAT` at least once per campaign.

@@ -225,6 +225,78 @@ class UncertaintyCompletenessTests(unittest.TestCase):
         self.assertIn("not repeatability", note)
 
 
+class VerdictVocabularyMatchesTheDecisionRecordTests(unittest.TestCase):
+    """The governing spec and the code must name the same verdicts.
+
+    The decision record is what a reader is told the project means by a verdict; the script is
+    what actually gets written into an uncertainty record. When those drift, the spec names a
+    verdict the code cannot produce, which is how the retired `NOT_VALIDATED` survived in the
+    A0.1 report after the uncertainty arithmetic was repaired. This test is the thing that
+    would have caught it.
+    """
+
+    SCRIPT = ROOT / "scripts/cfd_grid_convergence.py"
+    RECORD = ROOT / "docs/specs/research-programme/uncertainty-decision-record.md"
+    RETIRED = ("VALIDATED_AT_U_VAL", "NUMERICALLY_BOUNDED", "NOT_VALIDATED")
+
+    def _emitted(self):
+        """Verdict strings the script can assign, read from the source rather than guessed."""
+        import ast
+
+        tree = ast.parse(self.SCRIPT.read_text(encoding="utf-8"))
+        out = set()
+        for node in ast.walk(tree):
+            target = None
+            if isinstance(node, ast.Assign) and len(node.targets) == 1:
+                target = node.targets[0]
+                value = node.value
+            elif isinstance(node, ast.AnnAssign):
+                target, value = node.target, node.value
+            if not isinstance(target, ast.Subscript) or not isinstance(value, ast.Constant):
+                continue
+            if isinstance(target.value, ast.Name) and target.value.id == "verdicts":
+                if isinstance(value.value, str):
+                    out.add(value.value)
+        return out
+
+    def test_every_emitted_verdict_is_defined_in_the_record(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        emitted = self._emitted()
+        self.assertTrue(emitted, "no verdict assignments found; the parser needs updating")
+        for verdict in sorted(emitted):
+            self.assertIn(
+                "`%s`" % verdict, text,
+                "%s is written into uncertainty records but is not defined in the "
+                "uncertainty decision record" % verdict)
+
+    def test_retired_verdicts_are_not_emitted(self):
+        for verdict in self.RETIRED:
+            self.assertNotIn(
+                verdict, self._emitted(),
+                "%s was retired on 2026-09-24 and must not be assigned again" % verdict)
+
+    def test_retired_verdicts_are_not_asserted_in_live_documents(self):
+        """Dated progress entries are append-only history and are exempt; live docs are not."""
+        exempt = {"docs/SPRINT_PROGRESS.md", "docs/REVIEW_READY.md",
+                  "docs/specs/research-programme/uncertainty-decision-record.md",
+                  "docs/corrections/2026-09-24-review-corrections.md"}
+        offenders = []
+        for path in sorted((ROOT / "docs").rglob("*.md")):
+            rel = path.relative_to(ROOT).as_posix()
+            if rel in exempt:
+                continue
+            for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                if "NOT_VALIDATED" not in line:
+                    continue
+                lowered = line.lower()
+                if any(w in lowered for w in
+                       ("withdraw", "supersed", "retired", "no longer", "not available",
+                        "rather than", "instead of", "correction")):
+                    continue
+                offenders.append("%s:%d" % (rel, lineno))
+        self.assertEqual(offenders, [], "retired verdict asserted in live documents: %s" % offenders)
+
+
 class HistoricalPreservationTests(unittest.TestCase):
     def test_immutable_evidence_is_byte_identical(self):
         for rel, digest in IMMUTABLE.items():

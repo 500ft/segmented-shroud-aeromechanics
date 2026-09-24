@@ -26,6 +26,33 @@ interpretation was over-reached. The original acceptance record is not retuned t
 The Caradonna–Tung baseline decision stands as the owner's, with the transfer limitation recorded
 rather than the decision reversed.
 
+## Follow-up, same day — propagation audit
+
+The corrections above were applied where the review pointed and left stale where it did not.
+A sweep for the withdrawn claims found five surviving copies, all fixed under ledger row SSY-R12.
+
+| What was stale | Where | Now |
+| --- | --- | --- |
+| Closing sentence still asserted `NOT_VALIDATED`, contradicting section 3 of the same report | `docs/cfd-validation-a01.md` section 6 | States that `NOT_VALIDATED` is unavailable while `U_input` is unquantified, because there is no `U_val` to judge against |
+| Blocker field quoted 0.004721 as `U_val`, called the grit spread repeatability, and repeated the false "every published code misses by more" claim | `docs/SPRINT_TASKS.csv` row SSY-R06 | Marked superseded by SSY-R11, with the corrected reading and the direction-only statement the table actually supports |
+| Task heading recorded the retired verdict | `docs/specs/research-programme/plan.md` T06 | Verdict restated as `INCOMPLETE_UNCERTAINTY` with the restatement dated |
+| Vocabulary defined three verdicts the code cannot emit and omitted the four it does | `docs/specs/research-programme/uncertainty-decision-record.md` | Defines exactly the emitted four; `VALIDATED_AT_U_VAL`, `NUMERICALLY_BOUNDED` and `NOT_VALIDATED` are marked retired with the reason |
+| Claim boundary written into every uncertainty record called `U_D` trip repeatability, contradicting the reclassification twelve lines above it | `scripts/cfd_grid_convergence.py` | Describes one contrast across grit treatments and names it treatment sensitivity |
+
+The spec and the code disagreeing is what let the retired word survive: the governing document
+named a verdict the script could not produce, so neither side looked wrong on its own.
+`tests/test_cfd_records.py` now parses the verdict assignments out of the script rather than
+restating them, and fails when an emitted verdict is undefined in the record, when a retired
+verdict is emitted, or when one is asserted in a live document. Dated progress entries are
+append-only history and are exempt. Each check was confirmed to fail against a reintroduced
+defect and to pass once it was removed.
+
+Separately, `scripts/p2d_to_gmsh.py` imports NumPy while `requirements.txt` declared only
+jsonschema, so a clean checkout could not rebuild the A0.1 meshes. NumPy is now declared at the
+version the committed meshes were generated with.
+
+No number, run, solver output or frozen acceptance record was changed by this follow-up.
+
 ## Still open after this correction
 
 The design matrix, its aliasing and run count are unregistered. The scale bridge from the large

@@ -195,8 +195,10 @@ def main():
         out["verdict_per_model"] = verdicts
         out["claim_boundary"] = ("A0.1 validates a two-dimensional airfoil workflow at this condition only. "
                                  "It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. "
-                                 "U_D covers trip repeatability only and excludes tunnel systematics, so it is a lower "
-                                 "bound and the validation statement is correspondingly narrow.")
+                                 "U_D covers one contrast across grit treatments and excludes tunnel systematics, so it is a "
+                                 "lower bound on experimental uncertainty and the comparison is correspondingly narrow. "
+                                 "Different grits are different conditions, so that spread is treatment sensitivity, "
+                                 "not repeatability.")
     else:
         out["verdict_per_model"] = {m: "INCONCLUSIVE" for m in models}
         out["claim_boundary"] = "No verdict: the grid study did not produce three converged levels."

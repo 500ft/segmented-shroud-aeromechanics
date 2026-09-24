@@ -1,5 +1,23 @@
 # Sprint progress
 
+## 2026-09-24 (later) — the corrections propagated into every copy
+
+Ledger row SSY-R12. Follow-up to SSY-R11: the corrections landed in the places that were reviewed and were left stale in the places that were not.
+
+**The validation report contradicted itself.** Section 3 reported the verdict as `INCOMPLETE_UNCERTAINTY`, while the closing sentence of section 6 still said the verdict stands as `NOT_VALIDATED`. A reader who finished the interpretation section got the withdrawn answer. Section 6 now states why `NOT_VALIDATED` is not available at all: with `U_input` unquantified there is no `U_val` for the comparison error to be judged against.
+
+**The research ledger still carried the superseded narrative.** Row SSY-R06 quoted 0.004721 as `U_val`, called the grit spread repeatability, and repeated the claim that every published code misses this experiment by more than this work does. That claim is false and had already been withdrawn in the report. The ledger is the single research ledger, so this was the copy most likely to be read and reused. It now carries the correction and points at SSY-R11.
+
+**The programme plan recorded the retired verdict** against the task that produced it. Restated.
+
+**The decision record and the code named different verdicts.** The record defined `VALIDATED_AT_U_VAL`, `NUMERICALLY_BOUNDED` and `NOT_VALIDATED`; the script emits `INCOMPLETE_UNCERTAINTY`, `CONSISTENT_AT_U_VAL`, `INCONSISTENT_AT_U_VAL` and `INCONCLUSIVE`. The governing spec named a verdict the code could not produce, which is how the retired word survived. The record now defines exactly the four the code emits and marks the other three retired, with the reason each was dropped.
+
+**A test now pins the two together.** It parses the verdict assignments out of the script rather than restating them, fails when an emitted verdict is undefined in the record, fails when a retired verdict is emitted, and fails when one is asserted in a live document. Dated entries here and in the review index are append-only history and are exempt. All three checks were confirmed to fail against a deliberately reintroduced defect and to pass once it was removed.
+
+**Two smaller things.** The claim boundary written into every uncertainty record still described `U_D` as trip repeatability, contradicting the reclassification made a few lines above it in the same script. And `scripts/p2d_to_gmsh.py` imports NumPy while the requirements file declared only jsonschema, so a clean checkout could not rebuild the A0.1 meshes. NumPy is now declared at the version the committed meshes were generated with.
+
+Nothing here changes a number, a run or a frozen acceptance record. The verification gate passes: 141 tests, the repository contract, reference coverage, the acquisition ledger, the clearance budget, and both presentation checks.
+
 ## 2026-09-24 — external review corrections applied
 
 Ledger row SSY-R11. [Correction record](corrections/2026-09-24-review-corrections.md).

@@ -28,7 +28,14 @@ Used only where measured data exist (A0.1, A0.2, and any later validation rung).
 
 Quadrature is justified here because all three are uncertainty estimates about independent error sources.
 
-**Verdict vocabulary.** `VALIDATED_AT_U_VAL` when `|E| <= U_val` and every component of `U_val` is quantified. `NUMERICALLY_BOUNDED` when `|E|` is within the numerical band but `U_D` or `U_input` is unquantified, so a full validation statement is not available. `NOT_VALIDATED` when `|E| > U_val`. `INCONCLUSIVE` when convergence is non-monotonic or the observed order is not usable. A result may never be reported as "CFD validated" without the rung's scope qualifier.
+**Verdict vocabulary.** Amended 2026-09-24 so that the words here are exactly the words `scripts/cfd_grid_convergence.py` emits; `tests/test_cfd_records.py` fails if the two drift apart.
+
+- `INCOMPLETE_UNCERTAINTY` — one or more components of `U_val` is unquantified, so no `U_val` exists. This outranks every comparison: a missing component may not be treated as zero, and neither `CONSISTENT_AT_U_VAL` nor `INCONSISTENT_AT_U_VAL` may be claimed. The comparison error and the partial combination of the known terms are both reported, and the partial combination is never labelled `U_val`.
+- `CONSISTENT_AT_U_VAL` — every component is quantified and `|E| <= U_val`. This is a consistency screen at the stated band, not a certificate that the computation is correct: a wider band must never make a less informative computation look more accurate.
+- `INCONSISTENT_AT_U_VAL` — every component is quantified and `|E| > U_val`.
+- `INCONCLUSIVE` — convergence is non-monotonic or the observed order is not usable, so the numerical term itself is not trustworthy.
+
+The earlier terms `VALIDATED_AT_U_VAL`, `NUMERICALLY_BOUNDED` and `NOT_VALIDATED` are **retired**. The first two overstated what a passing screen shows; the third was used in the A0.1 report while `U_input` was unquantified, which is precisely the case `INCOMPLETE_UNCERTAINTY` now covers. A result may never be reported as "CFD validated" without the rung's scope qualifier.
 
 ### Band 2 — Study A decision envelope, `E_dec`
 

@@ -57,7 +57,7 @@ T00–T18 are ordered work units, one concern each. Retrieval, container pulls a
 - Do: steady incompressible runs at the three angles on all three grids with Spalart–Allmaras; repeat the finest grid with k-ω SST; monitor lift, drag and residuals; stop on a stated plateau rule.
 - Done when: every case has a convergence history and wall time in its manifest; no unconverged case is reported.
 
-### [x] T06 — A0.1 uncertainty and verdict — **done 2026-09-20: NOT_VALIDATED for SA; no SST verdict**
+### [x] T06 — A0.1 uncertainty and verdict — **done 2026-09-20; verdict restated 2026-09-24: INCOMPLETE_UNCERTAINTY for SA; no SST verdict**
 - Files: `docs/cfd-validation-a0.md` (new, section A0.1); `results/generated/cfd/a0-1/uncertainty.json`.
 - Depends on: T05.
 - Do: observed order, Richardson estimate, GCI on lift and drag; model difference; comparison with experiment and with TMR's published CFD; verdict against T03's bands in one sentence with the numbers.

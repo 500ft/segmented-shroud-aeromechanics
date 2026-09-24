@@ -1,5 +1,17 @@
 # Review index
 
+## 2026-09-23 — SSY-05 analysis pipeline, written before the data
+
+Ledger row SSY-R10. [Pipeline](../scripts/analysis_pipeline.py) · [synthetic fixtures](../data/fixtures/synthetic/README.md) · 21 new tests.
+
+The analysis is now fixed in code before any result can influence it, which is the whole point of the task. It ingests synchronised channels, computes wall-domain clearance descriptors with a two-lobe harmonic fit that excludes seam samples, interpolates power to matched thrust, collapses repeated runs to one record per condition, and fits a mean-clearance baseline against a defect-aware model on a registered holdout.
+
+About half the behaviour is refusal, and that is deliberate. It will not read a clearance declared in millimetres, invent a clearance inside a seam where there is no wall, accept a walled sample with no value, extrapolate past the measured thrust range, offer a random split, or fit a descriptor it cannot identify.
+
+**Two defects in my own first version were exposed by the fixtures and are now regression-tested.** The identifiability gate checked each descriptor's spread but not collinearity, so total seam width, which is seam count times a fixed width, passed the gate and made the fit singular; the gate now runs Gram-Schmidt and names which earlier descriptor absorbed the rejected one. And the verdict credited any positive improvement, so the null fixture reported success on a relative improvement of eight parts in ten billion; the verdict is now judged against the roadmap's registered 20 percent improvement and 10 percent error gate rather than against the sign of a floating-point number.
+
+No measurement exists and none is implied. The ingestion schema is provisional until instruments are chosen, and the descriptor set is provisional until Study A registers amplitude levels.
+
 ## 2026-09-22 — SSY-03 design contract drafted
 
 Ledger row SSY-R09. [Design contract](design-contract-experiment-01.md).

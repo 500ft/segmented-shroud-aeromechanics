@@ -31,7 +31,10 @@ import sys
 from pathlib import Path
 
 REQUIRED_UNITS = {"c_um": "um", "thrust_N": "N", "voltage_V": "V", "current_A": "A", "rpm": "rpm"}
-DESCRIPTORS = ("c_bar_um", "lobe_amplitude_um", "seam_count", "seam_total_width_deg", "step_um")
+DESCRIPTORS = ("wall_mean_um", "lobe_amplitude_um", "seam_count", "seam_individual_width_deg",
+               "seam_total_opening_deg", "step_um")
+TWO_PI = 2.0 * math.pi
+AMPLITUDE_EPS = 1e-9
 
 
 class PipelineError(ValueError):
@@ -118,30 +121,78 @@ def load_runs(directory):
 # --------------------------------------------------------------------------- descriptors
 
 
+def wall_domain_mean(theta_deg, c_um, mask):
+    """Angle-weighted mean clearance over the wall domain.
+
+    This is NOT the intercept of a harmonic fit. On an incomplete angular domain the basis
+    {1, cos2t, sin2t} is not orthogonal to the constant, so the fitted intercept and the wall mean
+    are different quantities: on a twelve-point circle carrying 100 + 10*cos(2t) with the samples
+    at 0 and 180 degrees removed, the intercept is 100 while the wall mean is 98.
+
+    Quadrature is declared, not implied. Each walled sample is given the midpoint rule's weight,
+    half the angular distance to each of its immediate neighbours around the full sample ring.
+    Seam edges are therefore resolved only to half the local sample spacing, and that spacing is
+    reported so a reader can judge whether it is fine enough for the narrowest seam in the design.
+    Non-uniform sampling is handled by construction, since the weights come from actual spacings.
+    """
+    n = len(theta_deg)
+    if n < 2:
+        raise PipelineError("a clearance field needs at least two angular samples")
+    rad = [math.radians(a) for a in theta_deg]
+    total_w, total_wc, walled = 0.0, 0.0, 0
+    for i in range(n):
+        if not mask[i]:
+            continue
+        prev_gap = (rad[i] - rad[(i - 1) % n]) % TWO_PI
+        next_gap = (rad[(i + 1) % n] - rad[i]) % TWO_PI
+        w = (prev_gap + next_gap) / 2.0
+        total_w += w
+        total_wc += w * c_um[i]
+        walled += 1
+    if not walled:
+        raise PipelineError("no walled samples: the clearance field is entirely seam")
+    spacing = TWO_PI / n
+    return total_wc / total_w, total_w, spacing
+
+
 def clearance_descriptors(run):
     """Geometry descriptors over the wall domain only.
 
-    The two-lobe amplitude comes from a least-squares fit of c = c_bar + a*cos2t + b*sin2t on the
-    walled samples, so a seam never contributes a fictitious radius to the harmonic.
+    `wall_mean_um` is the integral of the previous function and is the quantity the equal-mean
+    comparison is defined on. `harmonic_intercept_um` is the separate fit intercept, kept because
+    it describes the underlying profile, and the two are reported side by side precisely because
+    they are not interchangeable on a masked domain.
     """
     field = run["clearance_field"]
-    pairs = [(math.radians(t), c) for t, c, w in
-             zip(field["theta_deg"], field["c_um"], field["wall_mask"]) if w]
+    theta_deg, c_um, mask = field["theta_deg"], field["c_um"], field["wall_mask"]
+    pairs = [(math.radians(t), c) for t, c, w in zip(theta_deg, c_um, mask) if w]
     if len(pairs) < 4:
         raise PipelineError("fewer than four walled samples; the harmonic fit is not identifiable")
     rows = [[1.0, math.cos(2 * t), math.sin(2 * t)] for t, _ in pairs]
-    coefficients = solve_normal_equations(rows, [c for _, c in pairs])
-    c_bar, a, b = coefficients
-    occluded = sum(1 for w in field["wall_mask"] if not w) / len(field["wall_mask"])
+    intercept, a, b = solve_normal_equations(rows, [c for _, c in pairs])
+    amplitude = math.hypot(a, b)
+    mean_um, wall_angle, spacing = wall_domain_mean(theta_deg, c_um, mask)
+    occluded = 1.0 - wall_angle / TWO_PI
     cond = run.get("condition") or {}
+    n_seams = float(cond.get("n_seams", 0))
+    width_deg = float(cond.get("seam_width_deg", 0.0))
     return {
-        "c_bar_um": c_bar,
-        "lobe_amplitude_um": math.hypot(a, b),
-        "lobe_phase_deg": math.degrees(math.atan2(b, a)) / 2.0,
+        "wall_mean_um": mean_um,
+        "harmonic_intercept_um": intercept,
+        "intercept_minus_wall_mean_um": intercept - mean_um,
+        "lobe_amplitude_um": amplitude,
+        # Phase is meaningless when the amplitude vanishes; None rather than a number from noise.
+        "lobe_phase_deg": (math.degrees(math.atan2(b, a)) / 2.0) if amplitude > AMPLITUDE_EPS else None,
         "c_min_um": min(c for _, c in pairs),
+        "wall_angle_rad": wall_angle,
+        "sample_spacing_deg": math.degrees(spacing),
         "occluded_fraction": occluded,
-        "seam_count": float(cond.get("n_seams", 0)),
-        "seam_total_width_deg": float(cond.get("n_seams", 0)) * float(cond.get("seam_width_deg", 0.0)),
+        "seam_count": n_seams,
+        "seam_individual_width_deg": width_deg,
+        # Total opening and count are DIFFERENT variables: varying count at fixed individual width
+        # also varies the open area, so a count effect and an opening effect are confounded unless
+        # the design holds one of them fixed. Both are reported so a contrast can state which.
+        "seam_total_opening_deg": n_seams * width_deg,
         "step_um": float(cond.get("step_um", 0.0)),
     }
 
@@ -277,23 +328,36 @@ def fit(records, descriptors):
 
 
 def evaluate(coefficients, records, descriptors):
-    """Absolute and relative prediction error.
+    """Prediction error, scored specimen-first.
 
-    Error is normalised by the observed electrical power at matched thrust, never by the small
-    duct-minus-open-rotor difference, which can be near zero and would manufacture a huge ratio.
+    The research plan aggregates by independent specimen before averaging. Scoring rows directly
+    would let a specimen contributing more cycles or more configurations carry more weight than
+    one that contributed fewer, which is weighting by effort rather than by independent unit.
+    Both scores are returned so the difference is visible rather than assumed away.
+
+    Relative error is normalised by the observed power at matched thrust, never by the small
+    duct-minus-open-rotor difference, which can approach zero and manufacture a huge ratio.
     """
-    errors = []
+    per_record, by_specimen = [], {}
     for r in records:
         row = [1.0] + [r["descriptors"][d] for d in descriptors]
         observed = r["power_at_T_star"]
-        errors.append(dict(specimen_id=r["specimen_id"], family=r["family"],
-                           observed_W=observed, predicted_W=predict(coefficients, row),
-                           abs_error_W=abs(observed - predict(coefficients, row)),
-                           rel_error=abs(observed - predict(coefficients, row)) / abs(observed)
-                           if abs(observed) > 1e-12 else None))
-    finite = [e["rel_error"] for e in errors if e["rel_error"] is not None]
-    return dict(per_record=errors,
-                mean_abs_error_W=sum(e["abs_error_W"] for e in errors) / len(errors),
+        predicted = predict(coefficients, row)
+        err = abs(observed - predicted)
+        entry = dict(specimen_id=r["specimen_id"], family=r["family"],
+                     config_group=r.get("config_group"), observed_W=observed,
+                     predicted_W=predicted, abs_error_W=err,
+                     rel_error=err / abs(observed) if abs(observed) > 1e-12 else None)
+        per_record.append(entry)
+        by_specimen.setdefault(r["specimen_id"], []).append(entry)
+
+    specimen_scores = {s: sum(e["abs_error_W"] for e in v) / len(v) for s, v in by_specimen.items()}
+    finite = [e["rel_error"] for e in per_record if e["rel_error"] is not None]
+    return dict(per_record=per_record,
+                per_specimen_abs_error_W=specimen_scores,
+                mean_abs_error_W=sum(specimen_scores.values()) / len(specimen_scores),
+                row_mean_abs_error_W=sum(e["abs_error_W"] for e in per_record) / len(per_record),
+                n_specimens=len(specimen_scores), n_records=len(per_record),
                 mean_rel_error=sum(finite) / len(finite) if finite else None)
 
 
@@ -318,71 +382,138 @@ def holdout(records, value, key="family"):
     return train, test
 
 
-def compare_models(records, holdout_value, descriptors=DESCRIPTORS, holdout_key="family",
-                   min_improvement=0.20, max_rel_error=0.10):
-    """Mean-clearance baseline against a defect-aware model, on a held-out group.
+def classify_outcome(mean_delta, half_width, relative_improvement, relative_error,
+                     min_improvement=0.20, max_rel_error=0.10, equivalence_bound=None):
+    """Decide the outcome from the effect, its uncertainty and the declared bounds.
 
-    The gate defaults come from the repository's own registered thresholds: the roadmap's Stage 2
-    exit gate asks for at least a 20 percent improvement over the mean-clearance baseline and a
-    held-out error below 10 percent. They are parameters so a preregistration can change them
-    deliberately, and they are reported with every result so a reader sees what was applied.
+    Pure, so every branch can be exercised directly instead of hoping a fixture happens to land
+    on it. Three families of answer, and the distinction between the last two is the whole point:
+
+      resolved        the effect is separated from its own uncertainty
+      equivalent      the interval fits inside a bound declared in advance
+      inconclusive    neither. NOT evidence that the effect is absent.
+
+    `half_width` of None means the uncertainty was never estimated, which cannot yield a resolved
+    or an equivalent answer.
+    """
+    if half_width is None:
+        return "INCONCLUSIVE", ("the uncertainty on the improvement was not estimated, so nothing "
+                                "is resolved and no equivalence can be claimed")
+    if equivalence_bound is not None and abs(mean_delta) + half_width < equivalence_bound:
+        return "PRACTICALLY_EQUIVALENT", (
+            f"the improvement interval {mean_delta:.4g} +/- {half_width:.4g} lies entirely inside "
+            f"the declared equivalence bound of {equivalence_bound:.4g}")
+    if abs(mean_delta) <= half_width:
+        return "INCONCLUSIVE", (
+            f"the improvement {mean_delta:.4g} is not separated from its own uncertainty "
+            f"{half_width:.4g}, so the effect is unresolved. This is NOT evidence that seam "
+            "topology is unimportant.")
+    if mean_delta <= 0:
+        return "NO_IMPROVEMENT", (
+            f"the defect-aware model is resolvably worse on held-out data by {-mean_delta:.4g} W, "
+            "which is what over-fitting a descriptor set to training scatter looks like")
+    if relative_improvement < min_improvement:
+        return "RESOLVED_BELOW_GATE", (
+            f"a resolved improvement of {relative_improvement:.3g}, below the registered gate of "
+            f"{min_improvement:.2f}")
+    if relative_error is not None and relative_error > max_rel_error:
+        return "IMPROVED_BUT_ERROR_TOO_HIGH", (
+            f"relative improvement {relative_improvement:.3g} clears the gate, but held-out "
+            f"relative error {relative_error:.3g} exceeds the maximum {max_rel_error:.2f}")
+    return "DEFECT_AWARE_BETTER", (
+        f"a resolved relative improvement of {relative_improvement:.3g} at relative error "
+        f"{relative_error:.3g}")
+
+
+def compare_models(records, holdout_value, descriptors=DESCRIPTORS, holdout_key="family",
+                   min_improvement=0.20, max_rel_error=0.10, equivalence_bound_W=None,
+                   coverage_k=2.0):
+    """Mean-clearance baseline against a defect-aware model on a registered holdout.
+
+    The baseline adapts to the design rather than assuming one. The experiment this project
+    proposes holds mean clearance EQUAL across conditions by construction, so a baseline of
+    intercept plus mean clearance is rank-deficient exactly when the intended comparison is run.
+    Where mean clearance does not vary in training, the baseline is intercept-only, which is the
+    correct null for an equal-mean design: it says every equal-mean condition draws the same power.
+    A clearance slope is only fitted where real clearance variation supports it, never from
+    metrology scatter about one target.
+
+    Three outcomes, not two. An effect that cannot be separated from its own uncertainty is
+    INCONCLUSIVE, not evidence that topology does not matter. Practical equivalence is claimed
+    only against a bound declared in advance, and only when the interval fits inside it.
     """
     train, test = holdout(records, holdout_value, holdout_key)
     ident = identifiability(train, descriptors)
     usable = [d for d in descriptors if ident[d]["identifiable"]]
     refused = [d for d in descriptors if not ident[d]["identifiable"]]
 
-    baseline = fit(train, ["c_bar_um"])
-    baseline_eval = evaluate(baseline, test, ["c_bar_um"])
+    shared = sorted({r["specimen_id"] for r in train} & {r["specimen_id"] for r in test})
+    if "wall_mean_um" in usable:
+        baseline_desc, baseline_form = ["wall_mean_um"], "intercept_plus_wall_mean"
+    else:
+        baseline_desc, baseline_form = [], "intercept_only"
+    baseline = fit(train, baseline_desc)
+    baseline_eval = evaluate(baseline, test, baseline_desc)
 
     result = dict(holdout_key=holdout_key, holdout_value=holdout_value,
                   n_train=len(train), n_test=len(test),
+                  specimens_on_both_sides=shared,
+                  split_is_specimen_disjoint=not shared,
                   identifiability=ident, descriptors_used=usable, descriptors_refused=refused,
-                  baseline=dict(descriptors=["c_bar_um"], coefficients=baseline, **baseline_eval))
+                  baseline=dict(descriptors=baseline_desc, form=baseline_form,
+                                coefficients=baseline, **baseline_eval),
+                  gate=dict(min_relative_improvement=min_improvement,
+                            max_relative_error=max_rel_error,
+                            equivalence_bound_W=equivalence_bound_W, coverage_k=coverage_k,
+                            source="ROADMAP.md Stage 2 gates; provisional engineering choices, "
+                                   "not prospectively confirmed acceptance criteria"))
 
-    if "c_bar_um" not in usable or len(usable) < 2:
+    aware_desc = [d for d in usable if d not in baseline_desc]
+    if not aware_desc:
         result["defect_aware"] = None
         result["verdict"] = "NOT_IDENTIFIABLE"
         result["verdict_reason"] = (
-            "the defect-aware model has no identifiable descriptor beyond mean clearance in the "
-            "training set, so it was not fitted. This is a reportable outcome, not a failure to run.")
+            "no defect descriptor is identifiable in the training set beyond the baseline, so the "
+            "defect-aware model was not fitted. This is a reportable outcome about the design, not "
+            "a result about seam topology.")
         return result
 
     aware = fit(train, usable)
     aware_eval = evaluate(aware, test, usable)
     result["defect_aware"] = dict(descriptors=usable, coefficients=aware, **aware_eval)
 
+    # Uncertainty on the improvement, from the spread across independent specimens.
+    b_by, a_by = baseline_eval["per_specimen_abs_error_W"], aware_eval["per_specimen_abs_error_W"]
+    deltas = [b_by[s] - a_by[s] for s in sorted(b_by)]
+    n = len(deltas)
+    mean_delta = sum(deltas) / n
+    if n > 1:
+        var = sum((d - mean_delta) ** 2 for d in deltas) / (n - 1)
+        se = math.sqrt(var / n)
+    else:
+        se = None
+    half_width = coverage_k * se if se is not None else None
+    result["improvement_W"] = dict(mean=mean_delta, standard_error=se, n_specimens=n,
+                                   half_width=half_width,
+                                   note="uncertainty from the spread across independent specimens; "
+                                        "with one specimen it is unestimated, not zero")
+
     b, a = baseline_eval["mean_abs_error_W"], aware_eval["mean_abs_error_W"]
-    result["gate"] = dict(min_relative_improvement=min_improvement, max_relative_error=max_rel_error,
-                          source="ROADMAP.md Stage 2 exit gate and the Experiment 01 provisional gates")
+    rel = aware_eval["mean_rel_error"]
     if b <= 1e-12:
         result["relative_improvement"] = None
         result["verdict"] = "BASELINE_EXACT"
-        result["verdict_reason"] = ("the mean-clearance baseline has zero error on the held-out group, "
-                                    "so relative improvement is undefined rather than infinite.")
+        result["verdict_reason"] = ("the baseline has zero held-out error, so relative improvement "
+                                    "is undefined rather than infinite.")
         return result
 
     improvement = (b - a) / b
-    rel = aware_eval["mean_rel_error"]
     result["relative_improvement"] = improvement
-    # The verdict is judged against the project's own preregistered gate, not against whether the
-    # number happens to be positive. An improvement of 1e-11 is floating-point noise, and calling
-    # it a win is how a null result becomes a claim.
-    if improvement < min_improvement:
-        result["verdict"] = "NO_IMPROVEMENT" if improvement <= 0 else "IMPROVEMENT_BELOW_GATE"
-        result["verdict_reason"] = (
-            f"held-out mean absolute error {a:.6g} W against baseline {b:.6g} W, a relative "
-            f"improvement of {improvement:.3g}, below the registered gate of {min_improvement:.2f}")
-    elif rel is not None and rel > max_rel_error:
-        result["verdict"] = "IMPROVED_BUT_ERROR_TOO_HIGH"
-        result["verdict_reason"] = (
-            f"relative improvement {improvement:.3g} clears the {min_improvement:.2f} gate, but the "
-            f"held-out relative error {rel:.3g} exceeds the registered maximum {max_rel_error:.2f}")
-    else:
-        result["verdict"] = "DEFECT_AWARE_BETTER"
-        result["verdict_reason"] = (
-            f"held-out mean absolute error {a:.6g} W against baseline {b:.6g} W, a relative "
-            f"improvement of {improvement:.3g} at relative error {rel:.3g}")
+
+    result["verdict"], result["verdict_reason"] = classify_outcome(
+        mean_delta, half_width, improvement, rel,
+        min_improvement=min_improvement, max_rel_error=max_rel_error,
+        equivalence_bound=equivalence_bound_W)
     return result
 
 
@@ -391,12 +522,15 @@ def main(argv=None):
     ap.add_argument("--runs", required=True)
     ap.add_argument("--matched-thrust", type=float, required=True)
     ap.add_argument("--holdout-value", required=True)
-    ap.add_argument("--holdout-key", default="family", choices=["family", "config_group"])
+    ap.add_argument("--holdout-key", default="family",
+                    choices=["family", "config_group", "specimen_id"])
+    ap.add_argument("--equivalence-bound-W", type=float, default=None)
     ap.add_argument("--out")
     a = ap.parse_args(argv)
     try:
         records = group_conditions(load_runs(a.runs), a.matched_thrust)
-        result = compare_models(records, a.holdout_value, holdout_key=a.holdout_key)
+        result = compare_models(records, a.holdout_value, holdout_key=a.holdout_key,
+                                equivalence_bound_W=a.equivalence_bound_W)
     except PipelineError as e:
         print(f"REFUSED: {e}", file=sys.stderr)
         return 2
@@ -405,8 +539,8 @@ def main(argv=None):
     if a.out:
         Path(a.out).write_text(text + "\n")
     print(json.dumps({k: result[k] for k in ("holdout_key", "holdout_value", "n_train", "n_test",
-                                             "verdict", "descriptors_used", "descriptors_refused")},
-                     indent=1))
+                                             "split_is_specimen_disjoint", "verdict",
+                                             "descriptors_used", "descriptors_refused")}, indent=1))
     return 0
 
 

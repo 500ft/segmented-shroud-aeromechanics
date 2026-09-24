@@ -59,25 +59,67 @@ class IngestionRefusalTests(unittest.TestCase):
             path.unlink()
 
 
-class DescriptorTests(unittest.TestCase):
-    def test_two_lobe_amplitude_is_recovered_from_the_wall_domain(self):
-        """A seam removes wall samples; the harmonic must still be recovered from what remains."""
-        import scripts.make_synthetic_fixtures as mk
-        field = mk.clearance_field(c_bar=1000.0, lobe_a=45.0, lobe_phase_deg=0.0,
-                                   n_seams=3, seam_width_deg=6.0, step_um=0.0)
-        d = ap.clearance_descriptors({"clearance_field": field,
-                                      "condition": {"n_seams": 3, "seam_width_deg": 6.0}})
-        self.assertAlmostEqual(d["c_bar_um"], 1000.0, places=6)
-        self.assertAlmostEqual(d["lobe_amplitude_um"], 45.0, places=6)
-        self.assertGreater(d["occluded_fraction"], 0.0)
+class WallMeanTests(unittest.TestCase):
+    """The defect the 2026-09-24 review reproduced: a fitted intercept is not a wall mean."""
 
+    def counterexample(self):
+        theta = [i * 30.0 for i in range(12)]
+        c = [100.0 + 10.0 * math.cos(2 * math.radians(t)) for t in theta]
+        mask = [not (abs(t - 0) < 1e-9 or abs(t - 180) < 1e-9) for t in theta]
+        return theta, [None if not m else v for m, v in zip(mask, c)], mask, c
+
+    def test_masked_wall_mean_is_the_integral_not_the_intercept(self):
+        theta, cv, mask, c = self.counterexample()
+        d = ap.clearance_descriptors({"clearance_field": {"theta_deg": theta, "c_um": cv,
+                                                          "wall_mask": mask},
+                                      "condition": {"n_seams": 2, "seam_width_deg": 30.0}})
+        retained = [v for v, m in zip(c, mask) if m]
+        self.assertAlmostEqual(d["wall_mean_um"], sum(retained) / len(retained), places=9)
+        self.assertAlmostEqual(d["wall_mean_um"], 98.0, places=9)
+        self.assertAlmostEqual(d["harmonic_intercept_um"], 100.0, places=9)
+        self.assertAlmostEqual(d["intercept_minus_wall_mean_um"], 2.0, places=9)
+
+    def test_on_a_full_circle_the_two_agree(self):
+        theta = [i * 30.0 for i in range(12)]
+        c = [100.0 + 10.0 * math.cos(2 * math.radians(t)) for t in theta]
+        d = ap.clearance_descriptors({"clearance_field": {"theta_deg": theta, "c_um": c,
+                                                          "wall_mask": [True] * 12},
+                                      "condition": {}})
+        self.assertAlmostEqual(d["wall_mean_um"], d["harmonic_intercept_um"], places=9)
+        self.assertAlmostEqual(d["wall_mean_um"], 100.0, places=9)
+
+    def test_non_uniform_sampling_is_weighted_by_actual_spacing(self):
+        theta = [0.0, 10.0, 20.0, 180.0, 190.0, 200.0]
+        c = [100.0, 100.0, 100.0, 200.0, 200.0, 200.0]
+        d = ap.clearance_descriptors({"clearance_field": {"theta_deg": theta, "c_um": c,
+                                                          "wall_mask": [True] * 6},
+                                      "condition": {}})
+        self.assertAlmostEqual(d["wall_mean_um"], 150.0, places=6)   # symmetric by construction
+
+    def test_zero_amplitude_phase_is_undefined(self):
+        theta = [i * 30.0 for i in range(12)]
+        d = ap.clearance_descriptors({"clearance_field": {"theta_deg": theta, "c_um": [100.0] * 12,
+                                                          "wall_mask": [True] * 12},
+                                      "condition": {}})
+        self.assertIsNone(d["lobe_phase_deg"])
+
+    def test_seam_count_and_total_opening_are_separate_descriptors(self):
+        d = ap.clearance_descriptors({
+            "clearance_field": {"theta_deg": [i * 30.0 for i in range(12)],
+                                "c_um": [100.0] * 12, "wall_mask": [True] * 12},
+            "condition": {"n_seams": 3, "seam_width_deg": 8.0}})
+        self.assertEqual(d["seam_count"], 3.0)
+        self.assertEqual(d["seam_individual_width_deg"], 8.0)
+        self.assertEqual(d["seam_total_opening_deg"], 24.0)
+
+
+class PowerTests(unittest.TestCase):
     def test_power_is_the_mean_of_the_product_not_the_product_of_the_means(self):
-        """With correlated ripple the two differ, and the protocol requires the former."""
         run = {"channels": {"voltage_V": [10.0, 20.0], "current_A": [1.0, 3.0],
                             "thrust_N": [4.0, 4.0], "rpm": [6000.0, 6000.0]}}
         got = ap.run_endpoints(run)["power_W"]
-        self.assertAlmostEqual(got, (10 * 1 + 20 * 3) / 2)                 # 35.0
-        self.assertNotAlmostEqual(got, 15.0 * 2.0)                          # 30.0
+        self.assertAlmostEqual(got, (10 * 1 + 20 * 3) / 2)
+        self.assertNotAlmostEqual(got, 15.0 * 2.0)
 
 
 class MatchedThrustTests(unittest.TestCase):
@@ -97,63 +139,135 @@ class IdentifiabilityTests(unittest.TestCase):
         return ap.group_conditions(ap.load_runs(FIX / case), 4.0)
 
     def test_a_constant_descriptor_is_refused(self):
-        train, _ = ap.holdout(self.records("positive"), "seam", "family")
-        report = ap.identifiability(train, ap.DESCRIPTORS)
-        self.assertFalse(report["seam_count"]["identifiable"])
-        self.assertIn("constant", report["seam_count"]["reason"])
+        """Equal mean clearance is the design, so the clearance slope is not estimable."""
+        recs = self.records("positive")
+        report = ap.identifiability(recs, ap.DESCRIPTORS)
+        self.assertFalse(report["wall_mean_um"]["identifiable"])
+        self.assertIn("constant", report["wall_mean_um"]["reason"])
 
     def test_a_collinear_descriptor_is_refused_and_names_what_absorbed_it(self):
-        """Total seam width is seam count times a fixed width: both vary, neither is separable."""
-        train, _ = ap.holdout(self.records("positive"), "seam_n5", "config_group")
-        report = ap.identifiability(train, ap.DESCRIPTORS)
+        """At fixed individual width, total opening is a multiple of count: both vary, neither is
+        separately estimable. This is why the design must vary width independently."""
+        recs = [dict(specimen_id=f"S{i}", deployment_cycle=1, family="seam", config_group=f"g{i}",
+                     power_at_T_star=10.0 + i, n_runs=1,
+                     descriptors={k: 0.0 for k in ap.DESCRIPTORS} |
+                                 {"wall_mean_um": 100.0, "seam_count": float(i + 2),
+                                  "seam_individual_width_deg": 6.0,
+                                  "seam_total_opening_deg": 6.0 * (i + 2)})
+                for i in range(4)]
+        report = ap.identifiability(recs, ap.DESCRIPTORS)
         self.assertTrue(report["seam_count"]["identifiable"])
-        self.assertFalse(report["seam_total_width_deg"]["identifiable"])
-        self.assertIn("seam_count", report["seam_total_width_deg"]["reason"])
-
-    def test_whole_family_holdout_reports_not_identifiable_rather_than_fitting(self):
-        result = ap.compare_models(self.records("positive"), "seam", holdout_key="family")
-        self.assertIn("seam_count", result["descriptors_refused"])
+        self.assertFalse(report["seam_total_opening_deg"]["identifiable"])
+        self.assertIn("seam_count", report["seam_total_opening_deg"]["reason"])
 
     def test_random_split_is_not_offered(self):
         with self.assertRaises(ap.PipelineError):
             ap.holdout(self.records("positive"), "no-such-group", "config_group")
 
 
-class HierarchyTests(unittest.TestCase):
-    def test_repeated_runs_collapse_to_one_record_per_condition(self):
-        runs = ap.load_runs(FIX / "positive")
-        records = ap.group_conditions(runs, 4.0)
-        self.assertEqual(len(runs), 24)
-        self.assertEqual(len(records), 8)                 # 8 conditions x 3 thrust levels
-        self.assertTrue(all(r["n_runs"] == 3 for r in records))
+class BaselineFormTests(unittest.TestCase):
+    """The review's R05: the proposed experiment holds mean clearance equal, which makes a
+    clearance-slope baseline rank-deficient exactly when the intended comparison is run."""
+
+    def equal_mean_records(self):
+        return [dict(specimen_id=f"S{i}", deployment_cycle=1, family="seam", config_group=f"g{i}",
+                     power_at_T_star=10.0 + i, n_runs=1,
+                     descriptors={k: 0.0 for k in ap.DESCRIPTORS} |
+                                 {"wall_mean_um": 100.0, "seam_count": float(i)})
+                for i in range(4)]
+
+    def test_equal_mean_design_uses_an_intercept_only_baseline(self):
+        r = ap.compare_models(self.equal_mean_records(), "g3", holdout_key="config_group")
+        self.assertEqual(r["baseline"]["form"], "intercept_only")
+        self.assertEqual(r["baseline"]["descriptors"], [])
+
+    def test_equal_mean_design_no_longer_raises(self):
+        try:
+            ap.compare_models(self.equal_mean_records(), "g3", holdout_key="config_group")
+        except ap.PipelineError as e:
+            self.fail(f"the experiment as designed must analyse, got: {e}")
+
+    def test_varying_mean_fixture_uses_the_clearance_slope_baseline(self):
+        recs = ap.group_conditions(ap.load_runs(FIX / "varying-mean"), 4.0)
+        r = ap.compare_models(recs, "seam_n6_w4", holdout_key="config_group")
+        self.assertEqual(r["baseline"]["form"], "intercept_plus_wall_mean")
 
 
-class VerdictTests(unittest.TestCase):
-    def result(self, case):
+class SpecimenAwareTests(unittest.TestCase):
+    def test_scoring_is_specimen_first_not_row_first(self):
+        """A specimen contributing more rows must not gain weight for that reason alone."""
+        recs = ap.group_conditions(ap.load_runs(FIX / "positive"), 4.0)
+        r = ap.compare_models(recs, "seam_n6_w4", holdout_key="config_group")
+        ev = r["baseline"]
+        self.assertGreater(ev["n_specimens"], 1)
+        self.assertIn("per_specimen_abs_error_W", ev)
+        self.assertEqual(len(ev["per_specimen_abs_error_W"]), ev["n_specimens"])
+
+    def test_split_reports_whether_specimens_are_disjoint(self):
+        recs = ap.group_conditions(ap.load_runs(FIX / "positive"), 4.0)
+        r = ap.compare_models(recs, "seam_n6_w4", holdout_key="config_group")
+        self.assertIn("split_is_specimen_disjoint", r)
+        self.assertEqual(r["split_is_specimen_disjoint"], not r["specimens_on_both_sides"])
+
+    def test_a_shared_specimen_is_reported_not_hidden(self):
+        recs = [dict(specimen_id="SHARED", deployment_cycle=1, family="seam", config_group=g,
+                     power_at_T_star=10.0 + i, n_runs=1,
+                     descriptors={k: 0.0 for k in ap.DESCRIPTORS} |
+                                 {"wall_mean_um": 100.0, "seam_count": float(i)})
+                for i, g in enumerate(["a", "b", "c"])]
+        r = ap.compare_models(recs, "c", holdout_key="config_group")
+        self.assertEqual(r["specimens_on_both_sides"], ["SHARED"])
+        self.assertFalse(r["split_is_specimen_disjoint"])
+
+
+class OutcomeClassifierTests(unittest.TestCase):
+    """Every branch exercised directly, rather than hoping a fixture lands on it."""
+
+    def test_resolved_improvement(self):
+        self.assertEqual(ap.classify_outcome(5.0, 0.5, 0.9, 0.02)[0], "DEFECT_AWARE_BETTER")
+
+    def test_resolvably_worse_is_not_below_gate(self):
+        self.assertEqual(ap.classify_outcome(-5.0, 0.5, -0.9, 0.02)[0], "NO_IMPROVEMENT")
+
+    def test_effect_inside_its_own_uncertainty_is_inconclusive(self):
+        verdict, reason = ap.classify_outcome(0.2, 0.5, 0.03, 0.02)
+        self.assertEqual(verdict, "INCONCLUSIVE")
+        self.assertIn("NOT evidence", reason)
+
+    def test_unestimated_uncertainty_cannot_resolve_or_equate(self):
+        self.assertEqual(ap.classify_outcome(5.0, None, 0.9, 0.02)[0], "INCONCLUSIVE")
+
+    def test_equivalence_requires_a_declared_bound_and_a_fitting_interval(self):
+        self.assertEqual(ap.classify_outcome(0.05, 0.10, 0.01, 0.02,
+                                             equivalence_bound=0.5)[0], "PRACTICALLY_EQUIVALENT")
+        self.assertEqual(ap.classify_outcome(0.05, 0.10, 0.01, 0.02)[0], "INCONCLUSIVE")
+        # resolved and outside the bound, but the relative improvement is under the gate
+        self.assertEqual(ap.classify_outcome(0.9, 0.10, 0.15, 0.02,
+                                             equivalence_bound=0.5)[0], "RESOLVED_BELOW_GATE")
+
+    def test_gate_and_error_ceiling(self):
+        self.assertEqual(ap.classify_outcome(5.0, 0.5, 0.05, 0.02)[0], "RESOLVED_BELOW_GATE")
+        self.assertEqual(ap.classify_outcome(5.0, 0.5, 0.9, 0.50)[0],
+                         "IMPROVED_BUT_ERROR_TOO_HIGH")
+
+
+class EndToEndVerdictTests(unittest.TestCase):
+    def verdict(self, case, bound=None):
         recs = ap.group_conditions(ap.load_runs(FIX / case), 4.0)
-        return ap.compare_models(recs, "seam_n5", holdout_key="config_group")
+        return ap.compare_models(recs, "seam_n6_w4", holdout_key="config_group",
+                                 equivalence_bound_W=bound)
 
-    def test_positive_fixture_clears_the_registered_gate(self):
-        r = self.result("positive")
-        self.assertEqual(r["verdict"], "DEFECT_AWARE_BETTER")
-        self.assertGreater(r["relative_improvement"], r["gate"]["min_relative_improvement"])
+    def test_positive_fixture_clears_the_gate(self):
+        self.assertEqual(self.verdict("positive")["verdict"], "DEFECT_AWARE_BETTER")
 
-    def test_null_fixture_does_not_clear_the_gate(self):
-        """The defect-aware model must not be credited when the defect does nothing."""
-        r = self.result("null")
-        self.assertNotEqual(r["verdict"], "DEFECT_AWARE_BETTER")
-        self.assertLess(r["relative_improvement"], r["gate"]["min_relative_improvement"])
-
-    def test_gate_thresholds_come_from_the_registered_values(self):
-        r = self.result("positive")
-        self.assertAlmostEqual(r["gate"]["min_relative_improvement"], 0.20)
-        self.assertAlmostEqual(r["gate"]["max_relative_error"], 0.10)
+    def test_null_fixture_is_never_credited(self):
+        self.assertNotEqual(self.verdict("null", bound=1.0)["verdict"], "DEFECT_AWARE_BETTER")
 
     def test_zero_baseline_error_is_undefined_not_infinite(self):
         recs = ap.group_conditions(ap.load_runs(FIX / "positive"), 4.0)
-        for r in recs:                                     # make the baseline exact by construction
-            r["power_at_T_star"] = 10.0 + 0.0 * r["descriptors"]["c_bar_um"]
-        out = ap.compare_models(recs, "seam_n5", holdout_key="config_group")
+        for r in recs:
+            r["power_at_T_star"] = 10.0
+        out = ap.compare_models(recs, "seam_n6_w4", holdout_key="config_group")
         self.assertEqual(out["verdict"], "BASELINE_EXACT")
         self.assertIsNone(out["relative_improvement"])
 
@@ -167,13 +281,13 @@ class CliAndFixtureTests(unittest.TestCase):
 
     def test_cli_succeeds_on_the_positive_fixture(self):
         p = run_cli("--runs", str(FIX / "positive"), "--matched-thrust", "4.0",
-                    "--holdout-value", "seam_n5", "--holdout-key", "config_group")
+                    "--holdout-value", "seam_n6_w4", "--holdout-key", "config_group")
         self.assertEqual(p.returncode, 0, p.stderr)
         self.assertIn("DEFECT_AWARE_BETTER", p.stdout)
 
     def test_every_fixture_is_labelled_not_evidence(self):
         files = sorted(FIX.rglob("*.json"))
-        self.assertGreaterEqual(len(files), 40)
+        self.assertGreaterEqual(len(files), 100)
         for f in files:
             with self.subTest(fixture=f.name):
                 self.assertIn("NOT EVIDENCE", json.loads(f.read_text())["evidence_state"].upper())

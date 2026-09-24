@@ -138,6 +138,13 @@ inspection points; exported files are labeled **CAD, fabrication pending**.
 
 `build` · executable now · after SSY-02, SSY-03
 
+2026-09-24: revised after external review (see the correction record). The wall-domain mean is
+now an angle-weighted integral reported separately from the harmonic intercept, because on a
+masked domain those are different quantities; the baseline falls back to intercept-only when mean
+clearance does not vary, which is the design this project actually proposes; scoring is
+specimen-first; and an effect inside its own uncertainty is reported INCONCLUSIVE rather than as a
+null.
+
 2026-09-23: implemented (ledger row SSY-R10) as
 [`scripts/analysis_pipeline.py`](../scripts/analysis_pipeline.py) with
 [synthetic fixtures](../data/fixtures/synthetic/README.md) and 21 tests. It refuses a wrong unit,

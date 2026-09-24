@@ -54,3 +54,35 @@ Every CFD report states `U_num`, `U_input`, `U_D`, `R_clock` and `R_model` **sep
 - A0.1: `U_D` for forces comes from the Ladson tripped dataset if the source reports it; if not, A0.1's best available verdict is `NUMERICALLY_BOUNDED`.
 - A0.2: the source inventory records that no experimental uncertainty was located in the retrieved text, so A0.2's ceiling verdict is `NUMERICALLY_BOUNDED` until that is found.
 - Study A remains blocked until this record is in force, which it now is, and until the remaining release-gate conditions in the work order are met.
+
+## Amendment, 2026-09-24
+
+An external review found that this record was applied incorrectly, and in one place stated
+incorrectly. Four changes, none of which rewrites the original decision above.
+
+**An unquantified component may not be dropped.** The record said `U_input` is "reported as
+unquantified, never as zero", and then the implementation combined the remaining terms and
+called the result `U_val`. Combining only what is known *is* setting the unknown to zero. Where
+any required component is unquantified, `U_val` is **null**, the missing components are named,
+and the combination of the known terms is reported under its own name so it cannot be mistaken
+for a complete validation uncertainty.
+
+**Spread across treatments is not repeatability.** A0.1's `U_D` came from the spread across
+three grit conditions. Those are different boundary-layer trips, that is different experimental
+conditions, not repeated measurements of one. That spread is **treatment sensitivity**. The
+individual comparator values are preserved rather than collapsed, and any interpolation or
+incidence adjustment used to reach a common angle carries its own unquantified uncertainty.
+
+**Every combined term needs its measurement model stated.** For each contribution: the measurand,
+the sensitivity coefficient, whether it is standard or expanded, its coverage convention and any
+covariance assumption. A grid-convergence index with a safety factor is not automatically a
+one-standard-deviation quantity, and combining it in quadrature with something that is requires
+saying so.
+
+**`|E| ≤ U_val` is this project's consistency screen, not a universal pass or fail.** A wider
+band must never make a less informative computation look more accurate. A separate
+fitness-for-purpose tolerance, if one is wanted, is declared prospectively and on its own terms.
+
+**Unestimated is not zero, for model spread either.** Where only one turbulence model is usable,
+the model-form range is reported as unestimated rather than 0.0, and the incomplete arm stays
+visible without being accepted.

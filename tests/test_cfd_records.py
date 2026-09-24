@@ -170,6 +170,61 @@ class CfdRecordsAreTrackedTests(unittest.TestCase):
                                       + "\n".join(ignored))
 
 
+class AsymptoticRatioIsNotEvidenceTests(unittest.TestCase):
+    """The 2026-09-24 review's R03: the asymptotic-range ratio confirms nothing.
+
+    With equal refinement ratios and the apparent order fitted from the same three values,
+    r^p = |(phi3-phi2)/(phi2-phi1)| identically, so GCI_32/(r^p * GCI_21) collapses to
+    |phi_fine/phi_medium|. It was previously reported as confirmation that all three grids sat in
+    the asymptotic range. This test pins the identity so it cannot be read that way again.
+    """
+
+    def gci(self, phi1, phi2, phi3):
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from scripts.cfd_grid_convergence import gci
+        h1, h2, h3 = 1.0, 2.0, 4.0                      # equal refinement ratio of 2
+        return gci(phi1, phi2, phi3, h1, h2, h3)
+
+    def test_ratio_equals_the_fine_over_medium_value(self):
+        for phi1, phi2, phi3 in ((1.098833, 1.091606, 1.045623),
+                                 (2.5, 2.4, 2.0),
+                                 (0.31, 0.30, 0.26)):
+            with self.subTest(phi1=phi1):
+                out = self.gci(phi1, phi2, phi3)
+                self.assertAlmostEqual(out["asymptotic_ratio"], abs(phi1 / phi2), places=9)
+
+    def test_it_is_flagged_as_diagnostic_and_gates_nothing(self):
+        out = self.gci(1.098833, 1.091606, 1.045623)
+        self.assertTrue(out["asymptotic_ratio_is_diagnostic_only"])
+        self.assertIsNone(out["in_asymptotic_range"])
+
+
+class UncertaintyCompletenessTests(unittest.TestCase):
+    """R02: an unquantified component cannot be dropped from the combination."""
+
+    def record(self):
+        return json.loads((ROOT / "results/generated/cfd/a0.1/uncertainty.json").read_text())
+
+    def test_u_val_is_null_while_a_component_is_unquantified(self):
+        v = self.record()["validation"]["SA"]
+        self.assertIsNone(v["U_val"])
+        self.assertIn("U_input", v["missing_components"])
+        self.assertIsNone(v["abs_E_le_U_val"])
+
+    def test_the_partial_combination_is_named_as_partial(self):
+        v = self.record()["validation"]["SA"]
+        self.assertAlmostEqual(v["partial_combination_of_known_terms"], 0.004721, places=5)
+
+    def test_verdict_reports_incomplete_rather_than_validated(self):
+        self.assertEqual(self.record()["verdict_per_model"]["SA"], "INCOMPLETE_UNCERTAINTY")
+
+    def test_trip_spread_is_recorded_as_treatment_sensitivity(self):
+        note = self.record()["reference"]["U_D_interpretation"]
+        self.assertIn("TREATMENT SENSITIVITY", note)
+        self.assertIn("not repeatability", note)
+
+
 class HistoricalPreservationTests(unittest.TestCase):
     def test_immutable_evidence_is_byte_identical(self):
         for rel, digest in IMMUTABLE.items():

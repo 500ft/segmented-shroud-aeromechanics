@@ -82,7 +82,9 @@
    "r32": 2.0,
    "gci_coarse_triplet_fraction": 0.009818240185666875,
    "asymptotic_ratio": 1.0066201835010369,
-   "in_asymptotic_range": true,
+   "asymptotic_ratio_is_diagnostic_only": true,
+   "asymptotic_ratio_identity": "equals |phi_fine/phi_medium| for equal r with a fitted order",
+   "in_asymptotic_range": null,
    "phi_fine": 1.0988325057,
    "phi_medium": 1.0916058745,
    "phi_coarse": 1.0456225279,
@@ -104,7 +106,9 @@
  },
  "reference": {
   "value": 1.07502,
-  "U_D_k1": 0.00441
+  "U_D_k1": 0.00441,
+  "U_input": null,
+  "U_D_interpretation": "spread across trip treatments is TREATMENT SENSITIVITY, not repeatability: the grit sizes are different experimental conditions, not repeats of one"
  },
  "validation": {
   "SA": {
@@ -113,9 +117,14 @@
    "comparison_error_E": 0.02381250569999982,
    "U_num": 0.0016843596639259308,
    "U_D": 0.00441,
-   "U_input": "unquantified",
-   "U_val": 0.004720716839364618,
-   "abs_E_le_U_val": false,
+   "U_input": null,
+   "missing_components": [
+    "U_input"
+   ],
+   "partial_combination_of_known_terms": 0.004720716839364618,
+   "U_val": null,
+   "abs_E_le_U_val": null,
+   "screen": "consistency screen for this project, not a universal pass/fail rule",
    "E_percent_of_D": 2.2150755985934976
   }
  },
@@ -130,7 +139,7 @@
   "note": "Reported as a sensitivity range between discrete model choices. Per the uncertainty decision record this is NOT combined into U_val."
  },
  "verdict_per_model": {
-  "SA": "NOT_VALIDATED"
+  "SA": "INCOMPLETE_UNCERTAINTY"
  },
  "claim_boundary": "A0.1 validates a two-dimensional airfoil workflow at this condition only. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. U_D covers trip repeatability only and excludes tunnel systematics, so it is a lower bound and the validation statement is correspondingly narrow."
 }

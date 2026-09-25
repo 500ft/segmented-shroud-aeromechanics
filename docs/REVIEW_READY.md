@@ -1,5 +1,27 @@
 # Review index
 
+## 2026-09-25 — evidence and protocol closeout
+
+Ledger rows SSY-R16 to SSY-R19. Review items R08, R09, R11 and R12.
+
+**A sensitivity flag was being quoted as a correction.** The A0.2 case notes turned the Prandtl-Glauert factor at Mtip 0.437 into a predicted eleven percent discrepancy in outboard sectional pressure. That relation is linearised, thin-aerofoil, two-dimensional and irrotational; a rotor blade section carries induced flow, radial flow, thickness and viscous effects that it does not describe. What survives is that compressibility is not negligible here and an incompressible solver carries a bias of **unknown** size. D10's option (b) can therefore no longer be read as a declared bias of known magnitude, and the recommendation for any pressure-comparison claim is a verified compressible workflow. The recommendation is prepared for the decision owner, not adopted.
+
+**D10 no longer blocks the fine-grid recovery.** It governs A0.2. The unfinished A0.1 shear-stress-transport arm is a separate work item whose prerequisites are resource headroom, checkpoint integrity and the existing run protocol.
+
+**The budget stopped inverting a derivative from another machine.** The rule set the clearance-equivalent effect of interest by dividing the power target by a sensitivity taken from the large computational rotor. That is withdrawn. Power detectability and clearance-setting fidelity are separate requirements, linked only through a model that is actually supported, which would need the same machine, endpoint and operating point, a justified local slope with sign and uncertainty, and a rule for where the slope approaches zero or changes sign.
+
+**The sensor kill criterion is withdrawn.** It ruled out the pilot study whenever the required uncertainty fell below about half of one published accuracy figure for one sensor class. An accuracy quoted for a different rig is not an installed standard uncertainty, and one sensing paper does not establish the best achievable limit of all methods. Candidate methods are now named with an installed calibration and feasibility plan, and the published figure stays in the register as a literature bound that is recorded and never combined.
+
+**The validation cases now say what they cannot support.** A scope map carries four rows: the two A0.1 arms, planned A0.2, and a candidate ducted-fan benchmark. Agreement on thrust and pressure does not validate shaft torque, gap leakage or tip-vortex trajectory.
+
+**The benchmark was audited rather than assumed.** An open conference copy of the ducted-fan study was retrieved and read. It gives hub and tip radii, blade count, pitch angle and a nine-station table of chord and blade angles. It does **not** give blade section coordinates, the duct profile as coordinates, any Reynolds or Mach number, or any numerical or experimental uncertainty on the integrated coefficients: three meshes were compared by inspecting one pressure profile. Readable is not reproducible. Usefully, it measures ducted-fan thrust and rotor-only thrust separately, which is the force boundary this project's contract now requires, and it varies clearance by changing rotor diameter, so its rotor is not the same machine between conditions.
+
+**Transient acceptance is specified before any case runs.** Estimand, phase interval derived from the real geometry rather than inherited from an axisymmetric sector, nested phase refinement, a selection rule committed before screening outcomes, time resolution set by the narrowest seam encounter rather than a universal steps-per-passage figure, and three outcomes with no fourth. The numerical tolerance stays `TOLERANCE_NOT_FROZEN`, and the classifier refuses to decide anything without one, which is what stops an attractive percentage being chosen after the result. The clocking and model envelope is reported as a sum over sampled choices and never as a worst case.
+
+**Access quality and evidence strength are now separate axes.** A single grade A had rested partly on a full text being available; the validated baseline and the predictions for unmeasured geometries are now graded separately. The ducted-fan source's blanket institutional-access requirement is withdrawn, since an open route was verified. Two retrievals failed and stayed failures: the compressor paper served metadata but no abstract, and the non-axisymmetric clearance study has a green open-access copy indexed at MIT whose download is behind a human-verification interstitial that was not circumvented. Neither became an absence finding, and neither may be cited as read. That study's date is corrected from its conference year to its issue date.
+
+The conservative claim boundary is frozen at the top of the literature review: nonuniform-clearance sensitivity and matched-equivalent-clearance comparison are established methods, not contributions of this work.
+
 ## 2026-09-25 — PR #31 review response: the interpretation made consistent
 
 Ledger row SSY-R13. An owner review of PR #31 found that green CI had not resolved contradictions in the prose and in what the tool actually does. Six findings, all reproduced on the exact head before anything was changed, plus a seventh the new check found by itself.

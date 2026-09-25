@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "purpose": "Repair of evidence grades and access status for four sources (review item R12). Supersedes the grading of the named records only. docs/reading-records-2026-09-21.json and docs/day3-reading-records.json are unchanged: coverage is updated through new dated evidence, never by overwriting a historical file.",
+  "created_utc": "2026-09-25",
+  "principle": "Access quality and evidence strength are different axes and are recorded separately. A readable full text does not earn an experimental evidence grade, and a failed retrieval is never an absence finding.",
+  "access_scale": [
+    "full_text_obtained",
+    "sections_inspected",
+    "abstract_inspected",
+    "metadata_only",
+    "retrieval_blocked"
+  ],
+  "evidence_scale": {
+    "B": "one experimental study, or a simulation compared with independent data for the quantity actually tested",
+    "C": "unvalidated prediction in a new configuration",
+    "M": "methodological source, not aerodynamic evidence"
+  },
+  "records": [
+    {
+      "source_id": "akturk-camci-part1",
+      "title": "Tip Clearance Investigation of a Ducted Fan Used in VTOL UAVs, Part 1: Baseline Experiments and Computational Validation",
+      "authors": [
+        "Ali Akturk",
+        "Cengiz Camci"
+      ],
+      "paper_number": "GT2011-46356",
+      "venue": "Proceedings of ASME Turbo Expo 2011, Vancouver, 6-10 June 2011",
+      "study_family_note": "The journal version is J. Turbomach. 136(2):021004 (2014). Conference and journal versions are one study family and are not counted as two studies.",
+      "access": "sections_inspected",
+      "access_route": "Open conference-proceedings copy retrieved 2026-09-25. Title, both authors, institution and paper number match the record. The earlier blanket claim that this source requires institutional access is WITHDRAWN.",
+      "retrieved_sha256": "45d08d6cc5492f924d28a6e9e458d1dfd708ef0990cc50957df3cd48a5941e6c",
+      "sections_inspected": "pages 1-6: abstract, experimental method, ducted fan model, Table 1, instrumentation, computational method, grid refinement, start of results",
+      "evidence_grade": "B for the measured thrust and power response to tip clearance on its own rig",
+      "geometry_present_numerically": [
+        "rotor hub radius 63.5 mm (r/Rtip 0.227)",
+        "rotor tip radius 279.4 mm at the 1.71% clearance build",
+        "8 blades",
+        "rotor pitch angle 55 deg",
+        "max tip thickness 5.15 mm",
+        "nine-station table of radius, r/Rtip, beta1, beta2 and chord",
+        "shroud inner radius 11.15 in",
+        "duct lip wall thickness 11% and LE radius 3.61% of duct chord",
+        "diffuser half angle 6 deg, axial length 117.85 mm",
+        "nominal 3500 rpm",
+        "disk loading 828.3 Pa",
+        "force/torque transducer accuracy, +/-0.099 N on the thrust axis"
+      ],
+      "absent": [
+        "blade section coordinates (figure only, not numerical)",
+        "duct profile as coordinates",
+        "Reynolds number",
+        "Mach number",
+        "transition state",
+        "grid-convergence index, apparent order or numerical uncertainty (three meshes compared by inspecting one pressure profile)",
+        "experimental uncertainty for the thrust and power coefficients"
+      ],
+      "derived_here_not_stated_by_the_paper": {
+        "tip_speed_m_s": 102.4,
+        "tip_mach": 0.299,
+        "tip_chord_reynolds": 433000.0,
+        "gap_over_tip_chord": 0.0579,
+        "gap_over_tip_radius": 0.0132,
+        "basis": "3500 rpm, Rtip 0.2794 m, tip chord 63.8 mm, a = 343 m/s, nu = 1.51e-5 m2/s"
+      },
+      "directly_relevant": "Ducted-fan thrust and fan-rotor-only thrust are measured SEPARATELY, which is the force-boundary distinction this project's design contract now requires. Clearance was varied by changing rotor diameter, so the rotor is not the same machine between clearance conditions.",
+      "limitations": "Readable is not reproducible: blade sections and the duct profile would have to be recovered or re-specified before any computation could claim to reproduce this rig. No seams, slots or grooves are studied, so nothing here bounds a seam-topology claim."
+    },
+    {
+      "source_id": "graf-1998-nonaxisymmetric-clearance",
+      "title": "Effects of Nonaxisymmetric Tip Clearance on Axial Compressor Performance and Stability",
+      "authors": [
+        "Martin B. Graf",
+        "Teng-fong Wong",
+        "E. M. Greitzer",
+        "Frank E. Marble",
+        "Choon Sooi Tan",
+        "Hyun Wook Shin"
+      ],
+      "doi": "10.1115/1.2841774",
+      "venue": "Journal of Turbomachinery",
+      "publication_date": "1998-10-01",
+      "date_correction": "Previously carried as 'Graf et al. (1997)' from the conference number 97-GT-406. The journal version is dated 1998-10-01. Conference and journal versions are one study family; the issue date is recorded rather than the conference year.",
+      "access": "retrieval_blocked",
+      "access_attempts": [
+        {
+          "route": "OpenAlex metadata",
+          "outcome": "success: authors, venue and issue date verified"
+        },
+        {
+          "route": "publisher DOI",
+          "outcome": "not attempted for full text"
+        },
+        {
+          "route": "green OA copy indexed at DSpace@MIT, hdl 1721.1/104762",
+          "outcome": "blocked by a human-verification interstitial. NOT circumvented. A person can open this in a browser; it is not an institutional-access problem."
+        }
+      ],
+      "read_state": "metadata_only",
+      "evidence_grade": null,
+      "grade_note": "No grade may be assigned: no abstract or text was inspected in this session.",
+      "prohibited_claims": "No absence claim about discrete seams follows from this record, and it may not be cited as read. Its title indicates experimental study of non-axisymmetric clearance, which is why it is the highest-priority acquisition, not why it can be used.",
+      "what_it_could_change": "If it studies circumferential nonuniformity at a matched average clearance, it narrows the novelty claim further than the axial-clearance example does. Verify comparator, geometry, averaging definition and endpoints before upgrading."
+    },
+    {
+      "source_id": "cui-2023-circumferential-nonuniform",
+      "title": "Effects of circumferentially non-uniform clearance on the spanwise flow characteristics in a transonic compressor rotor",
+      "authors": [
+        "Wei-Wei Cui",
+        "Yuqiang Liu",
+        "Xinyuan Chen",
+        "Chang-Long Ruan",
+        "Fei Yao",
+        "Xinglu Wang"
+      ],
+      "doi": "10.1016/j.ast.2023.108162",
+      "venue": "Aerospace Science and Technology",
+      "year": 2023,
+      "access": "metadata_only",
+      "access_attempts": [
+        {
+          "route": "publisher DOI redirect to Elsevier",
+          "outcome": "landing page returned no metadata"
+        },
+        {
+          "route": "Semantic Scholar graph API",
+          "outcome": "success for title, authors, venue and year; abstract NOT served"
+        }
+      ],
+      "correction": "Previously recorded as judged on its title alone. Bibliographic metadata is now verified from an open API. The abstract was NOT retrieved in this session, so this record states metadata_only rather than abstract_inspected.",
+      "evidence_grade": null,
+      "grade_note": "No grade: no abstract or text inspected here.",
+      "scope_note": "The verified title establishes a TRANSONIC COMPRESSOR ROTOR, not a ducted fan. Relevance is by mechanism analogy, and the regime differs from this project's."
+    },
+    {
+      "source_id": "heliyon-2024-e25296",
+      "doi": "10.1016/j.heliyon.2024.e25296",
+      "title": "Numerical investigation on the influence of nonuniform tip clearance",
+      "access": "full_text_obtained",
+      "access_route": "Europe PMC full text of PMC10850596 (recorded 2026-09-21, unchanged)",
+      "regrade": "SUPERSEDES the single grade A in docs/reading-records-2026-09-21.json. That grade rested partly on the full text being available and a baseline being validated, which mixes access quality with evidence strength. The two claims are now graded separately.",
+      "evidence_grade_by_claim": {
+        "baseline_comparison_against_published_experiment": "B",
+        "predictions_for_unmeasured_nonuniform_geometries": "C"
+      },
+      "limitation": "Equal maximum and minimum clearance do not prove equal integrated mean for an arbitrary profile. The paper's own stated area constraint must be cited, and its geometry inspected and integrated, before its averaging definition is equated with this project's mean-clearance definition. That inspection is NOT done here."
+    }
+  ]
+}

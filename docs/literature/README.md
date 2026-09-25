@@ -1,5 +1,12 @@
 # Literature
 
+> **Claim boundary, frozen 2026-09-25.** This study investigates a defined **discrete-seam**
+> response and prediction problem. Nonuniform-clearance sensitivity and matched-equivalent-clearance
+> comparison are **established methods, not contributions of this work**. Reproducing or extending an
+> established method is a legitimate way to answer this project's question; presenting it as novel is
+> not. No statement of universal novelty, and no claim that prior work is absent, may be introduced
+> anywhere in this repository.
+
 A catalogue of every source this project has identified, and a review of what the identified work does and does not settle. Built 2026-09-22.
 
 **Read this first.** Of 1,736 distinct records, **11 have been read**, 24 carry a one-line disposition from an abstract, and 1,701 are records a logged query returned and nothing more. A record appearing below means it exists, its identifier resolves, and it looks relevant. It does not mean anyone has read it. Every entry carries its state, and the review says plainly where a claim rests on a title.
@@ -133,7 +140,7 @@ Both themes need re-querying with different terms before anything can be conclud
 Two findings, both narrowing, both from work already done rather than from titles:
 
 1. **The equal-mean comparison method is not new.** Published work holds an equivalent clearance measure fixed while redistributing the gap. Distinctiveness now rests on the combination of discrete circumferential seams, a small-UAV ducted rotor, and measurement rather than simulation.
-2. **Circumferential nonuniformity at matched average clearance already has experimental precedent.** Graf et al. (1997) study it directly, which bounds the broad novelty claim more tightly than the axial-clearance example does. That source remains unread here, so this is recorded on its indexed abstract and no absence claim about discrete seams follows from it.
+2. **Circumferential nonuniformity at matched average clearance already has experimental precedent.** Graf et al., *J. Turbomach.* (issue date 1998-10-01, conference number 97-GT-406), study non-axisymmetric tip clearance directly, which bounds the broad novelty claim more tightly than the axial-clearance example does. **Access status corrected 2026-09-25:** bibliographic metadata is verified and a green open-access copy is indexed at DSpace@MIT, but automated retrieval is blocked by a human-verification interstitial that was not circumvented. No abstract or text has been inspected here, so the record is metadata only, it may not be cited as read, and **no absence claim about discrete seams follows from it**. See [the dated repair record](../reading-records-2026-09-25.json).
 
 ## Reading queue
 

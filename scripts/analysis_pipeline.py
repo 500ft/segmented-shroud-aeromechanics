@@ -30,11 +30,16 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
+
 REQUIRED_UNITS = {"c_um": "um", "thrust_N": "N", "voltage_V": "V", "current_A": "A", "rpm": "rpm"}
 DESCRIPTORS = ("wall_mean_um", "lobe_amplitude_um", "seam_count", "seam_individual_width_deg",
                "seam_total_opening_deg", "step_um")
 TWO_PI = 2.0 * math.pi
 AMPLITUDE_EPS = 1e-9
+
+
+RANK_TOL = 1e-10
 
 
 class PipelineError(ValueError):
@@ -45,30 +50,30 @@ class PipelineError(ValueError):
 
 
 def solve_normal_equations(x_rows, y):
-    """Least-squares coefficients for y ~ X by normal equations with partial pivoting.
+    """Least-squares coefficients for y ~ X, by SVD rather than by normal equations.
 
-    Raises PipelineError when the system is singular, which here means a column carries no
-    independent information: exactly the identifiability failure the research plan names.
+    The name is kept because callers use it. The method is not: forming X'X squares the
+    condition number, and this design's predictors span degrees, counts and micrometres, so
+    that squaring is not affordable. numpy's least-squares routine is used instead.
+
+    Raises PipelineError when a column carries no independent information, which is the
+    identifiability failure the research plan names. Rank is judged on the singular values,
+    so a near-dependent column is caught as well as an exactly dependent one.
     """
     n_col = len(x_rows[0])
     if len(x_rows) < n_col:
         raise PipelineError(f"{len(x_rows)} observations cannot identify {n_col} coefficients")
-    a = [[sum(r[i] * r[j] for r in x_rows) for j in range(n_col)] + [sum(r[i] * t for r, t in zip(x_rows, y))]
-         for i in range(n_col)]
-    for col in range(n_col):
-        pivot = max(range(col, n_col), key=lambda r: abs(a[r][col]))
-        if abs(a[pivot][col]) < 1e-12:
-            raise PipelineError(
-                f"design matrix is singular at column {col}: a predictor carries no independent "
-                "variation, so its coefficient cannot be estimated")
-        a[col], a[pivot] = a[pivot], a[col]
-        for r in range(n_col):
-            if r == col:
-                continue
-            factor = a[r][col] / a[col][col]
-            for c in range(col, n_col + 1):
-                a[r][c] -= factor * a[col][c]
-    return [a[i][n_col] / a[i][i] for i in range(n_col)]
+    X = np.asarray(x_rows, dtype=float)
+    sv = np.linalg.svd(X, compute_uv=False)
+    # Relative threshold: an absolute one would depend on the units of whichever column is
+    # largest, which is exactly the mistake this scale of predictor invites.
+    if sv[-1] <= sv[0] * RANK_TOL:
+        raise PipelineError(
+            "design matrix is rank deficient: a predictor carries no independent variation, "
+            f"so its coefficient cannot be estimated (smallest singular value {sv[-1]:.3g} "
+            f"against largest {sv[0]:.3g})")
+    beta, *_ = np.linalg.lstsq(X, np.asarray(y, dtype=float), rcond=None)
+    return [float(v) for v in beta]
 
 
 def predict(coefficients, row):

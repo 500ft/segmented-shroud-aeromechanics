@@ -1,5 +1,25 @@
 # Review index
 
+## 2026-09-25 (later) — Study A candidate design and attempt dispositions
+
+Ledger rows SSY-R14 and SSY-R15. Review items R10 and R13.
+
+**The design matrix is now a table, not an adjective.** The plan previously named three factors and roughly ten to twelve runs as a resolution-IV design without giving the rows, so there was no way to tell what could be estimated. The candidate is thirteen unique locations of a three-factor Box-Behnken layout against a ten-column quadratic basis, plus four reserved holdouts and three controls. The exact rows live in one machine-readable file and the prose table is generated from it, so a row cannot be edited in prose without the audit moving.
+
+Rank is ten of ten and the condition number is 7.109340 under the stated scaling convention. Those numbers were reproduced independently here under the repository's pinned NumPy before being adopted, and they match the review's own calculation to six figures.
+
+**What the design cannot see is tested, not asserted.** The three-way interaction is exactly zero at every training location, so a manufactured one is invisible there. The test fits a surface carrying that effect, confirms training recovers the wrong coefficients with zero residual, and confirms the reserved holdouts expose it with the predicted error. Two of the four holdouts carry a non-zero triple product; that is what makes them worth reserving.
+
+The status is `CANDIDATE_DESIGN_AUDITED`. Physical levels are open, no constraint can be evaluated yet because they are all stated in unresolved quantities, and no run is released. Twenty condition labels are not twenty solves.
+
+**The solver no longer squares its own condition number.** Fitting went through normal equations, which square the conditioning of a design whose predictors span degrees, counts and micrometres. It now uses a singular-value decomposition, judging rank on a relative threshold, so a nearly dependent column is refused as well as an exactly dependent one. The change is scoped to fitting. All existing pipeline tests still pass.
+
+**Excluding a run from a fit no longer erases it.** Attempt records carried one notion of validity, and a file that would not parse simply vanished, which means the denominator was being rebuilt from whichever files happened to load. Four independent assessments now travel together: acquisition validity, aerodynamic eligibility, contact outcome, and membership of the attempted-condition denominator.
+
+They are independent but not arbitrary. Invalid acquisition can never be eligible. A rubbing run leaves the steady power fit while staying an observed failure and a counted attempt. A non-detection requires a detector that was working and covering the window; without that the outcome is unknown, and unknown is not success. Unknown outcomes are reported as an interval on the failure fraction rather than folded into the passes.
+
+The attempt register is written before acquisition starts, which is what makes the denominator real. All eight behaviour cases from the review are tested, including duplicate ingestion, retries linked to a parent, and a legacy record with no disposition, which comes through as unknown and never as eligible.
+
 ## 2026-09-25 — PR #31 review response: the interpretation made consistent
 
 Ledger row SSY-R13. An owner review of PR #31 found that green CI had not resolved contradictions in the prose and in what the tool actually does. Six findings, all reproduced on the exact head before anything was changed, plus a seventh the new check found by itself.

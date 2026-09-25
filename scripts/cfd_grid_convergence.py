@@ -15,6 +15,12 @@ usage: python scripts/cfd_grid_convergence.py --runs <dir> --out <uncertainty.js
 import argparse, json, math, os, re, sys
 
 FS = 1.25                      # Celik factor of safety for three-grid studies
+# Which provenances may supply U_D. Experimental standard uncertainty is a statement about
+# the measurement. A spread obtained by changing a condition on purpose describes that change,
+# so it is recorded and reported but never promoted into U_D by being passed as a number.
+U_D_BASES = {"reported_by_source": True, "measurement_model": True,
+             "treatment_spread": False, "unknown": False}
+
 PLATEAU_REL = 1.0e-4           # engineering quantity must be flat to this over the window
 PLATEAU_WINDOW = 500
 
@@ -108,9 +114,22 @@ def main():
     ap.add_argument("--quantity", default="Cl")
     ap.add_argument("--reference", type=float, required=True)
     ap.add_argument("--u-d", type=float, default=None, dest="u_d")
+    # A number is not an uncertainty. U_D is experimental standard uncertainty about the
+    # measurement; a spread produced by deliberately changing a treatment is a sensitivity
+    # to that treatment and is not eligible to serve as U_D, however it is passed in.
+    ap.add_argument("--u-d-basis", dest="u_d_basis", default=None,
+                    choices=sorted(U_D_BASES),
+                    help="required with --u-d; only a basis marked eligible supplies U_D")
     ap.add_argument("--u-input", type=float, default=None, dest="u_input")
     ap.add_argument("--alpha", type=float, required=True)
     a = ap.parse_args()
+    if a.u_d is not None and a.u_d_basis is None:
+        ap.error("--u-d requires --u-d-basis: the number's provenance decides whether it is "
+                 "experimental standard uncertainty or a sensitivity to a changed condition")
+    u_d_eligible = bool(a.u_d is not None and U_D_BASES.get(a.u_d_basis))
+    # Ineligible input is kept and reported, never used as U_D and never silently dropped.
+    u_d = a.u_d if u_d_eligible else None
+    ineligible_u_d = None if u_d_eligible else a.u_d
 
     levels = [("g3", 57344), ("g2", 14336), ("g1", 3584)]      # fine -> coarse
     models, cases = {}, {}
@@ -145,10 +164,15 @@ def main():
                # writing a null order would look like a reported result.
                observed_order={m: models[m]["apparent_order"] for m in models
                                if models[m].get("apparent_order") is not None},
-               reference=dict(value=a.reference, U_D_k1=a.u_d, U_input=a.u_input,
+               reference=dict(value=a.reference, U_D_k1=u_d, U_input=a.u_input,
+                              U_D_basis=a.u_d_basis,
+                              U_D_basis_eligible=u_d_eligible,
+                              value_supplied_but_not_eligible_as_U_D=ineligible_u_d,
                               U_D_interpretation="spread across trip treatments is TREATMENT SENSITIVITY, "
                                                  "not repeatability: the grit sizes are different "
-                                                 "experimental conditions, not repeats of one"))
+                                                 "experimental conditions, not repeats of one. It is "
+                                                 "neither an upper nor a lower bound on measurement "
+                                                 "uncertainty; that relationship is unknown."))
 
     ok = [m for m in models if "error" not in models[m]]
     if ok:
@@ -161,11 +185,11 @@ def main():
             # thing it is not. Where a required component is missing, U_val is null and the
             # missing components are named; a partial combination is reported under its own name
             # so it can never be mistaken for a complete validation uncertainty.
-            missing = [n for n, v in (("U_input", a.u_input), ("U_D", a.u_d)) if v is None]
-            partial = math.sqrt(U_num ** 2 + sum(v ** 2 for v in (a.u_input, a.u_d) if v is not None))
+            missing = [n for n, v in (("U_input", a.u_input), ("U_D", u_d)) if v is None]
+            partial = math.sqrt(U_num ** 2 + sum(v ** 2 for v in (a.u_input, u_d) if v is not None))
             complete = None if missing else partial
             comp[m] = dict(S=S, D=a.reference, comparison_error_E=E,
-                           U_num=U_num, U_D=a.u_d, U_input=a.u_input,
+                           U_num=U_num, U_D=u_d, U_input=a.u_input,
                            missing_components=missing,
                            partial_combination_of_known_terms=partial,
                            U_val=complete,
@@ -179,26 +203,35 @@ def main():
             range=max(vals) - min(vals) if len(vals) > 1 else 0.0,
             note="Reported as a sensitivity range between discrete model choices. "
                  "Per the uncertainty decision record this is NOT combined into U_val.")
+        # Precedence is declared, not incidental. Numerical evidence is judged first: if the
+        # grid study itself is unusable there is nothing to compare, whatever is known about the
+        # experiment. Missing components are still listed in that case, so an INCONCLUSIVE record
+        # never reads as though the uncertainty budget were complete.
         verdicts = {}
         for m in ok:
             c = comp[m]
-            if c["U_val"] is None:
+            if "oscillatory" in (models[m].get("note") or ""):
+                verdicts[m] = "INCONCLUSIVE"
+            elif c["U_val"] is None:
                 verdicts[m] = "INCOMPLETE_UNCERTAINTY"
             elif c["abs_E_le_U_val"]:
                 verdicts[m] = "CONSISTENT_AT_U_VAL"
             else:
                 verdicts[m] = "INCONSISTENT_AT_U_VAL"
-        for m in ok:
-            if "oscillatory" in (models[m].get("note") or ""):
-                verdicts[m] = "INCONCLUSIVE"
+        out["verdict_precedence"] = (
+            "1. numerical evidence unusable -> INCONCLUSIVE, with missing components still listed. "
+            "2. numerical evidence usable but a required uncertainty component unquantified -> "
+            "INCOMPLETE_UNCERTAINTY. 3. otherwise the project consistency screen |E| <= U_val.")
 
         out["verdict_per_model"] = verdicts
-        out["claim_boundary"] = ("A0.1 validates a two-dimensional airfoil workflow at this condition only. "
-                                 "It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. "
-                                 "U_D covers one contrast across grit treatments and excludes tunnel systematics, so it is a "
-                                 "lower bound on experimental uncertainty and the comparison is correspondingly narrow. "
-                                 "Different grits are different conditions, so that spread is treatment sensitivity, "
-                                 "not repeatability.")
+        out["claim_boundary"] = ("A0.1 exercises a two-dimensional airfoil workflow at this condition only. "
+                                 "What it can supply is numerical evidence for that workflow and a comparison "
+                                 "against published computations; the comparison against the experiment is "
+                                 "unresolved while a required uncertainty component is unquantified. It says "
+                                 "nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps. "
+                                 "The spread across grit treatments is a sensitivity to a deliberately changed "
+                                 "condition. It is not repeatability, and it is neither an upper nor a lower bound "
+                                 "on measurement uncertainty: that relationship is unknown.")
     else:
         out["verdict_per_model"] = {m: "INCONCLUSIVE" for m in models}
         out["claim_boundary"] = "No verdict: the grid study did not produce three converged levels."

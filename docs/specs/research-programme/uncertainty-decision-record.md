@@ -58,8 +58,10 @@ Every CFD report states `U_num`, `U_input`, `U_D`, `R_clock` and `R_model` **sep
 ## Consequences for the current work order
 
 - D4 of the work order is superseded by this record.
-- A0.1: `U_D` for forces comes from the Ladson tripped dataset if the source reports it; if not, A0.1's best available verdict is `NUMERICALLY_BOUNDED`.
-- A0.2: the source inventory records that no experimental uncertainty was located in the retrieved text, so A0.2's ceiling verdict is `NUMERICALLY_BOUNDED` until that is found.
+- A0.1: `U_D` for forces comes from the Ladson tripped dataset if the source reports it. It does not, and the grit spread is a treatment sensitivity that is not eligible to stand in for it, so A0.1's verdict is `INCOMPLETE_UNCERTAINTY`.
+- A0.2: the source inventory records that no experimental uncertainty was located in the retrieved text, so A0.2's ceiling verdict is `INCOMPLETE_UNCERTAINTY` until that is found.
+
+*(Superseded 2026-09-25: both bullets previously prescribed `NUMERICALLY_BOUNDED`, a term retired above. Retained here in corrected form rather than deleted, so the change is visible.)*
 - Study A remains blocked until this record is in force, which it now is, and until the remaining release-gate conditions in the work order are met.
 
 ## Amendment, 2026-09-24

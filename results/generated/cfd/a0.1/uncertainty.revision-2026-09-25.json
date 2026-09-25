@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "revises": {
+    "file": "uncertainty.json",
+    "sha256": "bfd70b0c664a4158751bd0150210a497b21c222e650eb5dd9db40f0fa6dff9c4",
+    "note": "The original generated record is unchanged and remains the recorded output. Nothing here is re-solved: every number is copied from it."
+  },
+  "revision_date": "2026-09-25",
+  "why": "The 0.00441 term was passed to the tool as U_D. It is the spread across three grit treatments, which is a sensitivity to a deliberately changed condition and is not experimental standard uncertainty. Under the corrected eligibility rule it no longer supplies U_D, so U_D joins U_input as an unquantified component.",
+  "quantity": "Cl",
+  "alpha_deg": 10.12,
+  "reference": {
+    "value": 1.07502,
+    "U_D_k1": null,
+    "U_D_basis": "treatment_spread",
+    "U_D_basis_eligible": false,
+    "value_supplied_but_not_eligible_as_U_D": 0.00441,
+    "U_input": null
+  },
+  "validation": {
+    "SA": {
+      "S": 1.0988325057,
+      "D": 1.07502,
+      "comparison_error_E": 0.02381250569999982,
+      "U_num": 0.0016843596639259308,
+      "U_D": null,
+      "U_input": null,
+      "missing_components": [
+        "U_input",
+        "U_D"
+      ],
+      "partial_combination_of_known_terms_superseded": 0.004720716839364618,
+      "partial_combination_of_known_terms": 0.0016843596639259308,
+      "partial_combination_note": "The superseded partial combined U_num with the ineligible treatment spread. With only U_num quantified, the partial combination is U_num itself.",
+      "U_val": null,
+      "abs_E_le_U_val": null,
+      "screen": "consistency screen for this project, not a universal pass/fail rule",
+      "E_percent_of_D": 2.2150755985934976
+    }
+  },
+  "verdict_per_model": {
+    "SA": "INCOMPLETE_UNCERTAINTY"
+  },
+  "verdict_unchanged": true,
+  "verdict_note": "The verdict does not move. It was already INCOMPLETE_UNCERTAINTY because U_input was unquantified; this revision adds a second missing component rather than changing the outcome.",
+  "claim_boundary": "A0.1 exercises a two-dimensional airfoil workflow at this condition only. It supplies numerical evidence for that workflow and a comparison against published computations. The comparison against the experiment is unresolved. No experimental standard uncertainty is available for this case."
+}

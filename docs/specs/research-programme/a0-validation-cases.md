@@ -54,7 +54,7 @@ Retrieved from NTRS as accession 19820004169: 60 pages, 2,334,139 bytes, sha256 
 | rotor speed | 1250 rpm subsonic, 2500 rpm transonic | **confirmed**; 2500 rpm is Mtip 0.877 and is out of scope | figure annotations |
 | baseline datum | not stated in the plan | **CT = 0.00460** at 8° collective, 1250 rpm | "Omega = 1250 rpm, CT = 0.00460" |
 | pressure stations | "several r/R stations" | **r/R = 0.50, 0.68, 0.80, 0.96** | figure annotations; three radial locations per blade |
-| experimental uncertainty | assumed available | **MISSING** in the retrieved text | caps the A0.2 verdict at `NUMERICALLY_BOUNDED` |
+| experimental uncertainty | assumed available | **MISSING** in the retrieved text | caps the A0.2 verdict at `INCOMPLETE_UNCERTAINTY` (previously `NUMERICALLY_BOUNDED`, retired 2026-09-24) |
 
 ### The baseline condition is not incompressible
 

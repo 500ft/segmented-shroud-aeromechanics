@@ -45,6 +45,8 @@ Celik et al. (ASME J. Fluids Eng. 130(7), 2008), three grids, factor of safety 1
 | asymptotic-range ratio | 1.007 — **diagnostic only, see below** |
 | Richardson extrapolated Cl | 1.100180 |
 | grid-convergence index, fine | 0.153 % |
+
+**The safety factor is a sourced assumption whose condition was not checked.** Celik et al. prescribe 1.25 where the observed order is close to the formal order. The observed order here is 2.6697 against a formal order near 2, and the procedure does not limit it. Across the defensible combinations the fine-grid index is 0.153 % as reported, 0.368 % at a factor of 3.0, 0.274 % with the order limited to 2, and 0.658 % with both. The comparison error below is 2.22 % of the reference, between 3.4 and 14.5 times the largest of those, so **no combination changes the conclusion of this case**. Registered as [`GCI-SAFETY-FACTOR`](canonical-quantities.json); the arithmetic is in the [provenance audit](number-provenance-audit-2026-09-25.md) and is recomputed from the committed record by `tests/test_canonical_quantities.py`.
 | `U_num` | 0.001684 |
 
 The apparent order sits slightly above the formal second order of the schemes, which is ordinary on a systematically refined structured family, and the convergence is monotonic.

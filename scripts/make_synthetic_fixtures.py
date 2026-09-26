@@ -103,6 +103,8 @@ EQUAL_MEAN_CONDITIONS = [
     ("seam", "seam_n3_w6",    0.0, 3,  6.0, 20.0),
     ("seam", "seam_n3_w12",   0.0, 3, 12.0, 20.0),
 ]
+# SYNTHETIC. Registered as FIXTURE-MEAN-CLEARANCE. This is NOT IN-02, the project's target mean
+# clearance, which is an unset owner input. Chosen only to make the fixtures legible.
 C_BAR_TARGET = 1000.0
 SPECIMENS_PER_CONDITION = 4
 

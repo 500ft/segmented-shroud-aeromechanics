@@ -1,5 +1,66 @@
 # Review index
 
+## 2026-09-25 (third) — provenance audit of consequential numbers
+
+Ledger row SSY-R21. An audit of documentation and traceability. No requirement, threshold, solver setting or geometry was changed by producing it.
+
+**The gap was not missing vocabularies but missing coverage.** Three already existed: evidence labels on the A0 source parameters, evidence states on the clearance budget terms, and the claim ledger's own scale. Each governs one artifact well. None covered a number used in more than one place, so a repeated quantity had no single definition and nothing could notice two documents disagreeing.
+
+Ten such quantities now have one definition each, with a provenance category, an evidence status, units, limits, and where relevant the question that would resolve them. Seven are tied to the code that implements them, and `scripts/check_quantities.py` fails when the two drift. A register nobody checks is decoration, so the checker runs in continuous integration and four deliberate defects were confirmed to fail it: a constant changed without the register, a defaulted gate drifting, a provisional value with no stated resolution path, and a false claim of physical testing.
+
+**Two gates are enforced in code and derived nowhere.** The Stage 2 exit requires a twenty percent improvement over mean clearance and a held-out error under ten percent. Both are registered, both are enforced, and nothing anywhere states what decision either protects. They are now labelled provisional at the proposal, at the point of enforcement and in the register, each carrying the question that would settle it. The earlier review had already called them provisional; they had not been marked as such where a reader would meet them.
+
+**One sourced assumption was applied outside its stated condition.** The grid-convergence safety factor of 1.25 comes from Celik and colleagues, who prescribe it where the observed order of convergence is close to the formal order. A0.1's observed order is 2.6697 against a formal order near two, and the procedure never limits it. Rather than assert this either way, the audit computed it: across the defensible combinations of factor and order limiting, the fine-grid index runs from 0.153 to 0.658 percent. The comparison error is 2.22 percent of the reference, between three and fifteen times the largest of them. **The choice does not change the conclusion of this case**, and that is now recorded beside the result rather than left for a reader to wonder about. A test recomputes the whole table from the committed record.
+
+**Two convergence constants decide more than they look like they do.** A flatness of one part in ten thousand over the last five hundred iterations is what separates a passing case from an unconverged one, and it is what recorded the A0.1 fine-grid shear-stress-transport case as failed. Both are selected values with no provenance and no sensitivity study, and they are now labelled as such.
+
+**A fixture constant could have been misread as a project target.** The synthetic fixtures use a mean clearance of one thousand micrometres, which is a plausible real value. It is now stated at the constant itself that this is not the target mean clearance, which remains an unset owner input.
+
+A traceability index links each consequential decision to its reasoning, its registered inputs, its validation and its status, without repeating a single equation. Fourteen rows: four supported, three provisional, six blocked on inputs that do not exist, one unresolved by owner decision.
+
+Nothing here makes a prediction into a measurement. This project has made no measurement, and the register refuses to let any quantity claim otherwise.
+
+## 2026-09-25 — evidence and protocol closeout
+
+Ledger rows SSY-R16 to SSY-R19. Review items R08, R09, R11 and R12.
+
+**A sensitivity flag was being quoted as a correction.** The A0.2 case notes turned the Prandtl-Glauert factor at Mtip 0.437 into a predicted eleven percent discrepancy in outboard sectional pressure. That relation is linearised, thin-aerofoil, two-dimensional and irrotational; a rotor blade section carries induced flow, radial flow, thickness and viscous effects that it does not describe. What survives is that compressibility is not negligible here and an incompressible solver carries a bias of **unknown** size. D10's option (b) can therefore no longer be read as a declared bias of known magnitude, and the recommendation for any pressure-comparison claim is a verified compressible workflow. The recommendation is prepared for the decision owner, not adopted.
+
+**D10 no longer blocks the fine-grid recovery.** It governs A0.2. The unfinished A0.1 shear-stress-transport arm is a separate work item whose prerequisites are resource headroom, checkpoint integrity and the existing run protocol.
+
+**The budget stopped inverting a derivative from another machine.** The rule set the clearance-equivalent effect of interest by dividing the power target by a sensitivity taken from the large computational rotor. That is withdrawn. Power detectability and clearance-setting fidelity are separate requirements, linked only through a model that is actually supported, which would need the same machine, endpoint and operating point, a justified local slope with sign and uncertainty, and a rule for where the slope approaches zero or changes sign.
+
+**The sensor kill criterion is withdrawn.** It ruled out the pilot study whenever the required uncertainty fell below about half of one published accuracy figure for one sensor class. An accuracy quoted for a different rig is not an installed standard uncertainty, and one sensing paper does not establish the best achievable limit of all methods. Candidate methods are now named with an installed calibration and feasibility plan, and the published figure stays in the register as a literature bound that is recorded and never combined.
+
+**The validation cases now say what they cannot support.** A scope map carries four rows: the two A0.1 arms, planned A0.2, and a candidate ducted-fan benchmark. Agreement on thrust and pressure does not validate shaft torque, gap leakage or tip-vortex trajectory.
+
+**The benchmark was audited rather than assumed.** An open conference copy of the ducted-fan study was retrieved and read. It gives hub and tip radii, blade count, pitch angle and a nine-station table of chord and blade angles. It does **not** give blade section coordinates, the duct profile as coordinates, any Reynolds or Mach number, or any numerical or experimental uncertainty on the integrated coefficients: three meshes were compared by inspecting one pressure profile. Readable is not reproducible. Usefully, it measures ducted-fan thrust and rotor-only thrust separately, which is the force boundary this project's contract now requires, and it varies clearance by changing rotor diameter, so its rotor is not the same machine between conditions.
+
+**Transient acceptance is specified before any case runs.** Estimand, phase interval derived from the real geometry rather than inherited from an axisymmetric sector, nested phase refinement, a selection rule committed before screening outcomes, time resolution set by the narrowest seam encounter rather than a universal steps-per-passage figure, and three outcomes with no fourth. The numerical tolerance stays `TOLERANCE_NOT_FROZEN`, and the classifier refuses to decide anything without one, which is what stops an attractive percentage being chosen after the result. The clocking and model envelope is reported as a sum over sampled choices and never as a worst case.
+
+**Access quality and evidence strength are now separate axes.** A single grade A had rested partly on a full text being available; the validated baseline and the predictions for unmeasured geometries are now graded separately. The ducted-fan source's blanket institutional-access requirement is withdrawn, since an open route was verified. Two retrievals failed and stayed failures: the compressor paper served metadata but no abstract, and the non-axisymmetric clearance study has a green open-access copy indexed at MIT whose download is behind a human-verification interstitial that was not circumvented. Neither became an absence finding, and neither may be cited as read. That study's date is corrected from its conference year to its issue date.
+
+The conservative claim boundary is frozen at the top of the literature review: nonuniform-clearance sensitivity and matched-equivalent-clearance comparison are established methods, not contributions of this work.
+## 2026-09-25 (later) — Study A candidate design and attempt dispositions
+
+Ledger rows SSY-R14 and SSY-R15. Review items R10 and R13.
+
+**The design matrix is now a table, not an adjective.** The plan previously named three factors and roughly ten to twelve runs as a resolution-IV design without giving the rows, so there was no way to tell what could be estimated. The candidate is thirteen unique locations of a three-factor Box-Behnken layout against a ten-column quadratic basis, plus four reserved holdouts and three controls. The exact rows live in one machine-readable file and the prose table is generated from it, so a row cannot be edited in prose without the audit moving.
+
+Rank is ten of ten and the condition number is 7.109340 under the stated scaling convention. Those numbers were reproduced independently here under the repository's pinned NumPy before being adopted, and they match the review's own calculation to six figures.
+
+**What the design cannot see is tested, not asserted.** The three-way interaction is exactly zero at every training location, so a manufactured one is invisible there. The test fits a surface carrying that effect, confirms training recovers the wrong coefficients with zero residual, and confirms the reserved holdouts expose it with the predicted error. Two of the four holdouts carry a non-zero triple product; that is what makes them worth reserving.
+
+The status is `CANDIDATE_DESIGN_AUDITED`. Physical levels are open, no constraint can be evaluated yet because they are all stated in unresolved quantities, and no run is released. Twenty condition labels are not twenty solves.
+
+**The solver no longer squares its own condition number.** Fitting went through normal equations, which square the conditioning of a design whose predictors span degrees, counts and micrometres. It now uses a singular-value decomposition, judging rank on a relative threshold, so a nearly dependent column is refused as well as an exactly dependent one. The change is scoped to fitting. All existing pipeline tests still pass.
+
+**Excluding a run from a fit no longer erases it.** Attempt records carried one notion of validity, and a file that would not parse simply vanished, which means the denominator was being rebuilt from whichever files happened to load. Four independent assessments now travel together: acquisition validity, aerodynamic eligibility, contact outcome, and membership of the attempted-condition denominator.
+
+They are independent but not arbitrary. Invalid acquisition can never be eligible. A rubbing run leaves the steady power fit while staying an observed failure and a counted attempt. A non-detection requires a detector that was working and covering the window; without that the outcome is unknown, and unknown is not success. Unknown outcomes are reported as an interval on the failure fraction rather than folded into the passes.
+
+The attempt register is written before acquisition starts, which is what makes the denominator real. All eight behaviour cases from the review are tested, including duplicate ingestion, retries linked to a parent, and a legacy record with no disposition, which comes through as unknown and never as eligible.
+
 ## 2026-09-25 — PR #31 review response: the interpretation made consistent
 
 Ledger row SSY-R13. An owner review of PR #31 found that green CI had not resolved contradictions in the prose and in what the tool actually does. Six findings, all reproduced on the exact head before anything was changed, plus a seventh the new check found by itself.

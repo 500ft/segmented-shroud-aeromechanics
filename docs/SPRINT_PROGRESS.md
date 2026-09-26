@@ -1,5 +1,25 @@
 # Sprint progress
 
+## 2026-09-25 (third) — provenance audit of consequential numbers
+
+Ledger row SSY-R21. An audit of documentation and traceability. No requirement, threshold, solver setting or geometry was changed by producing it.
+
+**The gap was not missing vocabularies but missing coverage.** Three already existed: evidence labels on the A0 source parameters, evidence states on the clearance budget terms, and the claim ledger's own scale. Each governs one artifact well. None covered a number used in more than one place, so a repeated quantity had no single definition and nothing could notice two documents disagreeing.
+
+Ten such quantities now have one definition each, with a provenance category, an evidence status, units, limits, and where relevant the question that would resolve them. Seven are tied to the code that implements them, and `scripts/check_quantities.py` fails when the two drift. A register nobody checks is decoration, so the checker runs in continuous integration and four deliberate defects were confirmed to fail it: a constant changed without the register, a defaulted gate drifting, a provisional value with no stated resolution path, and a false claim of physical testing.
+
+**Two gates are enforced in code and derived nowhere.** The Stage 2 exit requires a twenty percent improvement over mean clearance and a held-out error under ten percent. Both are registered, both are enforced, and nothing anywhere states what decision either protects. They are now labelled provisional at the proposal, at the point of enforcement and in the register, each carrying the question that would settle it. The earlier review had already called them provisional; they had not been marked as such where a reader would meet them.
+
+**One sourced assumption was applied outside its stated condition.** The grid-convergence safety factor of 1.25 comes from Celik and colleagues, who prescribe it where the observed order of convergence is close to the formal order. A0.1's observed order is 2.6697 against a formal order near two, and the procedure never limits it. Rather than assert this either way, the audit computed it: across the defensible combinations of factor and order limiting, the fine-grid index runs from 0.153 to 0.658 percent. The comparison error is 2.22 percent of the reference, between three and fifteen times the largest of them. **The choice does not change the conclusion of this case**, and that is now recorded beside the result rather than left for a reader to wonder about. A test recomputes the whole table from the committed record.
+
+**Two convergence constants decide more than they look like they do.** A flatness of one part in ten thousand over the last five hundred iterations is what separates a passing case from an unconverged one, and it is what recorded the A0.1 fine-grid shear-stress-transport case as failed. Both are selected values with no provenance and no sensitivity study, and they are now labelled as such.
+
+**A fixture constant could have been misread as a project target.** The synthetic fixtures use a mean clearance of one thousand micrometres, which is a plausible real value. It is now stated at the constant itself that this is not the target mean clearance, which remains an unset owner input.
+
+A traceability index links each consequential decision to its reasoning, its registered inputs, its validation and its status, without repeating a single equation. Fourteen rows: four supported, three provisional, six blocked on inputs that do not exist, one unresolved by owner decision.
+
+Nothing here makes a prediction into a measurement. This project has made no measurement, and the register refuses to let any quantity claim otherwise.
+
 ## 2026-09-25 — evidence and protocol closeout
 
 Ledger rows SSY-R16 to SSY-R19. Review items R08, R09, R11 and R12.

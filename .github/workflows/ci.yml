@@ -19,6 +19,10 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Check research repository contract
         run: python scripts/check_repo_contract.py
+      - name: Check the canonical quantity register against the code
+        run: python scripts/check_quantities.py
+      - name: Check the Study A candidate design document is current
+        run: python scripts/study_a_design.py --check
       - name: Run tests
         run: python -m unittest discover -s tests -v
       - name: Check README links, identity and negative controls

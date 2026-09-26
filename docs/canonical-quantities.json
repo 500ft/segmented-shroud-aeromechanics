@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "purpose": "One definition per quantity that is used in more than one place, or that gates a decision. Local documents cross-reference these identifiers instead of restating a value. scripts/check_quantities.py fails when a registered value and the code that implements it disagree.",
+  "scope_note": "Deliberately small. This is not an inventory of every number in the repository. The A0 source inventory, the clearance budget CSV and the claim ledger keep their own vocabularies for their own artifacts; this register does not replace them.",
+  "date": "2026-09-25",
+  "provenance_categories": {
+    "requirement": "an imposed target this project must meet",
+    "measured_input": "a quantity measured, by this project or by a source of record",
+    "sourced_assumption": "taken from an external source, with its applicability condition stated",
+    "calculated_result": "computed from other registered quantities",
+    "selected_value": "chosen by this project; a choice, not a derivation",
+    "measured_result": "an outcome observed under a documented protocol",
+    "provisional_estimate": "in force but unjustified, and marked for resolution"
+  },
+  "evidence_status": {
+    "unverified": "no check performed",
+    "analytically_assessed": "checked by calculation only",
+    "physically_tested": "checked against a physical measurement",
+    "not_applicable": "no verification is meaningful for this kind of quantity"
+  },
+  "quantities": {
+    "GATE-IMPROVEMENT": {
+      "definition": "Minimum relative improvement of a defect-aware model over the mean-clearance baseline for the Stage 2 exit gate.",
+      "value": 0.20, "unit": "dimensionless fraction",
+      "provenance": "provisional_estimate", "evidence_status": "unverified",
+      "code_anchor": {"file": "scripts/analysis_pipeline.py", "symbol": "min_improvement"},
+      "used_in": ["docs/specs/research-programme/proposal.md", "docs/TASKS.md",
+                  "scripts/analysis_pipeline.py"],
+      "limits": "No derivation exists. Nothing states what decision this number protects or what difference is worth acting on. Flagged provisional by the 2026-09-24 review (R10) and still provisional.",
+      "open_question": "What is the smallest improvement that would change a design choice?"
+    },
+    "GATE-RELATIVE-ERROR": {
+      "definition": "Maximum held-out relative prediction error for the Stage 2 exit gate.",
+      "value": 0.10, "unit": "dimensionless fraction",
+      "provenance": "provisional_estimate", "evidence_status": "unverified",
+      "code_anchor": {"file": "scripts/analysis_pipeline.py", "symbol": "max_rel_error"},
+      "used_in": ["docs/specs/research-programme/proposal.md", "docs/TASKS.md",
+                  "scripts/analysis_pipeline.py"],
+      "limits": "As GATE-IMPROVEMENT. Registered and enforced, never derived.",
+      "open_question": "What prediction error would make the model unfit for its purpose?"
+    },
+    "GCI-SAFETY-FACTOR": {
+      "definition": "Factor of safety in the Celik three-grid convergence index.",
+      "value": 1.25, "unit": "dimensionless",
+      "provenance": "sourced_assumption", "evidence_status": "analytically_assessed",
+      "source": "Celik et al., ASME J. Fluids Eng. 130(7), 2008, doi:10.1115/1.2960953",
+      "applicability_condition": "The source prescribes 1.25 where the observed order of convergence is close to the formal order, and a larger factor otherwise.",
+      "condition_status": "NOT CHECKED. A0.1's observed order is 2.6697 against a formal order near 2, and the code does not limit the observed order.",
+      "code_anchor": {"file": "scripts/cfd_grid_convergence.py", "symbol": "FS"},
+      "used_in": ["scripts/cfd_grid_convergence.py", "docs/cfd-validation-a01.md",
+                  "docs/specs/research-programme/uncertainty-decision-record.md"],
+      "sensitivity": "The fine-grid index spans 0.153% to 0.658% over defensible combinations of factor and order limiting. The A0.1 comparison error is 2.22%, so no combination changes that conclusion. See docs/number-provenance-audit-2026-09-25.md.",
+      "limits": "Scales the numerical uncertainty. It is not the binding term for A0.1, where no validation uncertainty exists at all."
+    },
+    "PLATEAU-RELATIVE": {
+      "definition": "Relative variation of the engineering quantity over the final iteration window below which a case is recorded as converged.",
+      "value": 0.0001, "unit": "dimensionless fraction",
+      "provenance": "selected_value", "evidence_status": "unverified",
+      "code_anchor": {"file": "scripts/cfd_grid_convergence.py", "symbol": "PLATEAU_REL"},
+      "used_in": ["scripts/cfd_grid_convergence.py"],
+      "limits": "Together with PLATEAU-WINDOW this decides PASS against UNCONVERGED. It is what recorded the A0.1 fine-grid SST case as unconverged. No sensitivity study exists.",
+      "open_question": "Would a different flatness criterion reclassify any recorded case?"
+    },
+    "PLATEAU-WINDOW": {
+      "definition": "Number of final iterations over which flatness is assessed.",
+      "value": 500, "unit": "iterations",
+      "provenance": "selected_value", "evidence_status": "unverified",
+      "code_anchor": {"file": "scripts/cfd_grid_convergence.py", "symbol": "PLATEAU_WINDOW"},
+      "used_in": ["scripts/cfd_grid_convergence.py"],
+      "limits": "See PLATEAU-RELATIVE."
+    },
+    "RANK-TOLERANCE": {
+      "definition": "Relative singular-value threshold below which a design matrix is refused as rank deficient.",
+      "value": 1e-10, "unit": "dimensionless, relative to the largest singular value",
+      "provenance": "selected_value", "evidence_status": "analytically_assessed",
+      "code_anchor": {"file": "scripts/analysis_pipeline.py", "symbol": "RANK_TOL"},
+      "used_in": ["scripts/analysis_pipeline.py"],
+      "limits": "Decides whether a descriptor is refused as unidentifiable, which changes which model is fitted. Relative rather than absolute, deliberately: an absolute threshold would depend on the units of whichever predictor is largest.",
+      "verification": "tests/test_analysis_pipeline.py exercises exactly dependent and near-dependent designs."
+    },
+    "A01-REFERENCE-LIFT": {
+      "definition": "Experimental lift coefficient used as the A0.1 comparison datum.",
+      "value": 1.07502, "unit": "dimensionless",
+      "provenance": "measured_input", "evidence_status": "not_applicable",
+      "source": "NASA Turbulence Modeling Resource curated Ladson tripped data, recovered from a dated archive snapshot",
+      "used_in": ["docs/cfd-validation-a01.md", "docs/SPRINT_TASKS.csv"],
+      "limits": "Paired with A01-REFERENCE-ANGLE. Carries no reported experimental uncertainty, which is why A0.1's verdict is INCOMPLETE_UNCERTAINTY."
+    },
+    "A01-REFERENCE-ANGLE": {
+      "definition": "Angle of attack of the A0.1 comparison point.",
+      "value": 10.12, "unit": "degrees",
+      "provenance": "measured_input", "evidence_status": "not_applicable",
+      "source": "the measured angle of the 80-grit experimental point",
+      "used_in": ["docs/cfd-validation-a01.md", "docs/SPRINT_TASKS.csv"],
+      "limits": "Deliberately the measured angle rather than a round 10 degrees, so the experiment is never interpolated to meet the computation."
+    },
+    "A01-GRIT-SPREAD": {
+      "definition": "Spread of the comparison quantity across the 80, 120 and 180 grit trip conditions.",
+      "value": 0.00441, "unit": "dimensionless",
+      "provenance": "measured_input", "evidence_status": "not_applicable",
+      "used_in": ["docs/cfd-validation-a01.md",
+                  "results/generated/cfd/a0.1/uncertainty.revision-2026-09-25.json"],
+      "limits": "NOT eligible to serve as experimental standard uncertainty. Different grits are different experimental conditions, so this is a sensitivity to a changed treatment. It is neither an upper nor a lower bound on measurement uncertainty; that relationship is unknown. The tool refuses to accept it as U_D.",
+      "enforced_by": "scripts/cfd_grid_convergence.py U_D_BASES, tests/test_cfd_records.py"
+    },
+    "FIXTURE-MEAN-CLEARANCE": {
+      "definition": "Mean clearance used when generating synthetic test fixtures.",
+      "value": 1000.0, "unit": "micrometres",
+      "provenance": "selected_value", "evidence_status": "not_applicable",
+      "code_anchor": {"file": "scripts/make_synthetic_fixtures.py", "symbol": "C_BAR_TARGET"},
+      "used_in": ["scripts/make_synthetic_fixtures.py", "data/fixtures/synthetic/"],
+      "limits": "SYNTHETIC TEST DATA, NOT EVIDENCE and NOT a project target. It is not IN-02, the target mean clearance, which remains an unset owner input. Chosen only to make the fixtures legible."
+    }
+  }
+}

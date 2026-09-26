@@ -101,7 +101,7 @@ Every study below has the six-field first-experiment spec and a kill criterion. 
 *Why:* the held-out prediction claim and any acoustic observable need more geometries, an unbuilt configuration, and instrumentation the budget names.
 
 - **Trigger.** Study C positive; funding secured against the instrumentation list produced by Study B; XC-02 closed if any mechanism-derived seam pattern is to be used.
-- **Content.** Multiple seam geometries covering the descriptor support; a preregistered model; prediction of an unbuilt configuration before it is built; acoustic measurement as a secondary observable; the roadmap's Stage 2 exit gate (held-out error below 10 % and at least 20 % better than mean-clearance).
+- **Content.** Multiple seam geometries covering the descriptor support; a preregistered model; prediction of an unbuilt configuration before it is built; acoustic measurement as a secondary observable; the roadmap's Stage 2 exit gate (held-out error below 10 % and at least 20 % better than mean-clearance). **Both figures are provisional engineering choices, not derived quantities** ([`GATE-RELATIVE-ERROR`, `GATE-IMPROVEMENT`](../../canonical-quantities.json)): they are registered and enforced in code, but nothing states what decision either protects. They may not be presented as prospectively confirmed acceptance criteria until that is recorded.
 - **Kill criterion.** Held-out error not better than the mean-clearance baseline: the simpler-model result is published as the finding.
 
 ## 5. Method commitments for the CFD studies

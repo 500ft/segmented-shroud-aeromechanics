@@ -389,6 +389,11 @@ def holdout(records, value, key="family"):
 
 def classify_outcome(mean_delta, half_width, relative_improvement, relative_error,
                      min_improvement=0.20, max_rel_error=0.10, equivalence_bound=None):
+    # The two gate defaults are PROVISIONAL ENGINEERING CHOICES, not derived quantities. They are
+    # registered in docs/canonical-quantities.json as GATE-IMPROVEMENT and GATE-RELATIVE-ERROR,
+    # where the unanswered question behind each is recorded. scripts/check_quantities.py fails if
+    # these defaults and the register drift apart. Passing them is a project decision rule; it is
+    # not evidence that a model is fit for any purpose.
     """Decide the outcome from the effect, its uncertainty and the declared bounds.
 
     Pure, so every branch can be exercised directly instead of hoping a fixture happens to land

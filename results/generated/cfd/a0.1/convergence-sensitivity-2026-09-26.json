@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "question": "Would a different convergence criterion reclassify any recorded A0.1 case?",
+  "criterion_in_force": {
+    "relative_tolerance": 0.0001,
+    "window_iterations": 500
+  },
+  "sample_step_iterations": 50,
+  "limitation": "Committed histories are downsampled, so each spread is a LOWER BOUND on the full-history spread. PASS verdicts here are optimistic; UNCONVERGED and TOO_SHORT_TO_ASSESS verdicts are sound.",
+  "cases": {
+    "g1_SA_a10.12": {
+      "recorded_status": "PASS",
+      "final_iteration": 4000,
+      "samples": 81,
+      "under": {
+        "tol=0.0001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 1.2340119043949728e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 1.2340119043949728e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=1e-05,window=500": {
+          "verdict": "UNCONVERGED",
+          "relative_spread": 1.2340119043949728e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.0001,window=250": {
+          "verdict": "PASS",
+          "relative_spread": 1.2340108245318374e-05,
+          "samples_used": 5,
+          "samples_required": 5
+        },
+        "tol=0.0001,window=1000": {
+          "verdict": "PASS",
+          "relative_spread": 1.3600625369509155e-05,
+          "samples_used": 20,
+          "samples_required": 20
+        },
+        "tol=0.0001,window=2000": {
+          "verdict": "PASS",
+          "relative_spread": 1.3600616958985211e-05,
+          "samples_used": 40,
+          "samples_required": 40
+        }
+      },
+      "flips_under": [
+        "tol=1e-05,window=500"
+      ]
+    },
+    "g1_SST_a10.12": {
+      "recorded_status": "PASS",
+      "final_iteration": 3000,
+      "samples": 61,
+      "under": {
+        "tol=0.0001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 9.262358310415668e-08,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 9.262358310415668e-08,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=1e-05,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 9.262358310415668e-08,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.0001,window=250": {
+          "verdict": "PASS",
+          "relative_spread": 9.26235833901276e-08,
+          "samples_used": 5,
+          "samples_required": 5
+        },
+        "tol=0.0001,window=1000": {
+          "verdict": "PASS",
+          "relative_spread": 1.0409126504992866e-07,
+          "samples_used": 20,
+          "samples_required": 20
+        },
+        "tol=0.0001,window=2000": {
+          "verdict": "PASS",
+          "relative_spread": 2.5758177071819206e-07,
+          "samples_used": 40,
+          "samples_required": 40
+        }
+      },
+      "flips_under": []
+    },
+    "g2_SA_a10.12": {
+      "recorded_status": "PASS",
+      "final_iteration": 6000,
+      "samples": 121,
+      "under": {
+        "tol=0.0001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 3.320788006614097e-06,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 3.320788006614097e-06,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=1e-05,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 3.320788006614097e-06,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.0001,window=250": {
+          "verdict": "PASS",
+          "relative_spread": 3.320787854204612e-06,
+          "samples_used": 5,
+          "samples_required": 5
+        },
+        "tol=0.0001,window=1000": {
+          "verdict": "PASS",
+          "relative_spread": 3.5507230108932098e-06,
+          "samples_used": 20,
+          "samples_required": 20
+        },
+        "tol=0.0001,window=2000": {
+          "verdict": "PASS",
+          "relative_spread": 4.339466016741128e-06,
+          "samples_used": 40,
+          "samples_required": 40
+        }
+      },
+      "flips_under": []
+    },
+    "g2_SST_a10.12": {
+      "recorded_status": "PASS",
+      "final_iteration": 4000,
+      "samples": 81,
+      "under": {
+        "tol=0.0001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 1.2848015880707344e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 1.2848015880707344e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=1e-05,window=500": {
+          "verdict": "UNCONVERGED",
+          "relative_spread": 1.2848015880707344e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.0001,window=250": {
+          "verdict": "PASS",
+          "relative_spread": 1.2119734893103576e-05,
+          "samples_used": 5,
+          "samples_required": 5
+        },
+        "tol=0.0001,window=1000": {
+          "verdict": "PASS",
+          "relative_spread": 2.738518867143941e-05,
+          "samples_used": 20,
+          "samples_required": 20
+        },
+        "tol=0.0001,window=2000": {
+          "verdict": "PASS",
+          "relative_spread": 6.30217948670034e-05,
+          "samples_used": 40,
+          "samples_required": 40
+        }
+      },
+      "flips_under": [
+        "tol=1e-05,window=500"
+      ]
+    },
+    "g3_SA_a10.12": {
+      "recorded_status": "PASS",
+      "final_iteration": 6888,
+      "samples": 139,
+      "under": {
+        "tol=0.0001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 2.2009436152301377e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.001,window=500": {
+          "verdict": "PASS",
+          "relative_spread": 2.2009436152301377e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=1e-05,window=500": {
+          "verdict": "UNCONVERGED",
+          "relative_spread": 2.2009436152301377e-05,
+          "samples_used": 10,
+          "samples_required": 10
+        },
+        "tol=0.0001,window=250": {
+          "verdict": "PASS",
+          "relative_spread": 1.2487697368040343e-05,
+          "samples_used": 5,
+          "samples_required": 5
+        },
+        "tol=0.0001,window=1000": {
+          "verdict": "PASS",
+          "relative_spread": 4.587395487019924e-05,
+          "samples_used": 20,
+          "samples_required": 20
+        },
+        "tol=0.0001,window=2000": {
+          "verdict": "UNCONVERGED",
+          "relative_spread": 0.0001178353138651293,
+          "samples_used": 40,
+          "samples_required": 40
+        }
+      },
+      "flips_under": [
+        "tol=0.0001,window=2000",
+        "tol=1e-05,window=500"
+      ]
+    },
+    "g3_SST_a10.12": {
+      "recorded_status": "UNCONVERGED",
+      "final_iteration": 117,
+      "samples": 4,
+      "under": {
+        "tol=0.0001,window=500": {
+          "verdict": "TOO_SHORT_TO_ASSESS",
+          "relative_spread": null,
+          "samples_used": 4,
+          "samples_required": 10
+        },
+        "tol=0.001,window=500": {
+          "verdict": "TOO_SHORT_TO_ASSESS",
+          "relative_spread": null,
+          "samples_used": 4,
+          "samples_required": 10
+        },
+        "tol=1e-05,window=500": {
+          "verdict": "TOO_SHORT_TO_ASSESS",
+          "relative_spread": null,
+          "samples_used": 4,
+          "samples_required": 10
+        },
+        "tol=0.0001,window=250": {
+          "verdict": "TOO_SHORT_TO_ASSESS",
+          "relative_spread": null,
+          "samples_used": 4,
+          "samples_required": 5
+        },
+        "tol=0.0001,window=1000": {
+          "verdict": "TOO_SHORT_TO_ASSESS",
+          "relative_spread": null,
+          "samples_used": 4,
+          "samples_required": 20
+        },
+        "tol=0.0001,window=2000": {
+          "verdict": "TOO_SHORT_TO_ASSESS",
+          "relative_spread": null,
+          "samples_used": 4,
+          "samples_required": 40
+        }
+      },
+      "flips_under": []
+    }
+  },
+  "findings": {
+    "no_case_flips_when_loosened": true,
+    "cases_flipping_at_one_order_tighter": [
+      "g1_SA_a10.12",
+      "g2_SST_a10.12",
+      "g3_SA_a10.12"
+    ],
+    "cases_flipping_on_a_longer_window": [
+      "g3_SA_a10.12"
+    ],
+    "recorded_unconverged_that_were_never_actually_assessed": [
+      "g3_SST_a10.12"
+    ]
+  }
+}

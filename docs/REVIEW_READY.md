@@ -1,5 +1,21 @@
 # Review index
 
+## 2026-09-26 — the convergence criterion answered, and CAD assessed as gated
+
+Ledger rows SSY-R22 (partly closed) and SSY-R23.
+
+**The flatness criterion no longer decides silently.** Provenance finding F3 left two selected values in force with no sensitivity behind them: a relative variation of one part in ten thousand over the last five hundred iterations, which is what separates a passing case from an unconverged one. The question is now answered against the committed histories, with no solver run.
+
+Loosening changes nothing: every passing case still passes an order looser, so no recorded conclusion depends on the criterion being as strict as it is. Tightening is a different story. Three of the five passing cases fail one order tighter, with spreads between one and two parts in a hundred thousand against a threshold of one in ten thousand. The criterion sits closer to its margin than its round value suggests, and the window length matters as much as the tolerance, since the finest Spalart-Allmaras case also fails when the window is lengthened fourfold.
+
+**The stalled case was never assessed, rather than assessed and found wanting.** The fine-grid shear-stress-transport run reached iteration 117, well short of a single window, so the criterion could never be applied to it. It is recorded as unconverged, which reads as a judgement that was never made. The compute-recovery record had flagged exactly this as unresolved, and it is now resolved. The status vocabulary needs a third term so a terminated run is not reported as a failed one; that is registered rather than done.
+
+One limitation governs all of it. The committed histories are downsampled to roughly one sample per fifty iterations, so every spread is a lower bound on what the full history would show. Passing verdicts are therefore optimistic; failures and unassessable runs are sound. That is stated in the record itself rather than left for a reader to infer.
+
+The criterion is left exactly as it was. Nothing recorded changes, and altering an acceptance rule after seeing results is the move this project's discipline exists to prevent.
+
+**CAD was assessed and remains gated.** All ten tasks in the CAD ledger are deferred, and every one of them is transitively blocked: the two identifier-only placeholders on the disclosure path, and the other eight on a chain rooting in SSY-01, SSY-02, SSY-03 and the same disclosure decision. Even the tooling task, which looks like pure infrastructure, depends on the reference-geometry approval beneath it. The plan says in terms that released parameter values depend on those closures and that they must not be invented. No geometry was produced and no remote host was contacted, because there is nothing that could be built without fabricating a rotor radius, a mean clearance and a seam geometry that no decision has set.
+
 ## 2026-09-25 (third) — provenance audit of consequential numbers
 
 Ledger row SSY-R21. An audit of documentation and traceability. No requirement, threshold, solver setting or geometry was changed by producing it.

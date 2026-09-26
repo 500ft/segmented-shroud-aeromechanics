@@ -14,6 +14,10 @@ documents so the checks are proven to reject real defects now, not merely to be 
 """
 import hashlib
 import json
+import shutil
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -223,6 +227,169 @@ class UncertaintyCompletenessTests(unittest.TestCase):
         note = self.record()["reference"]["U_D_interpretation"]
         self.assertIn("TREATMENT SENSITIVITY", note)
         self.assertIn("not repeatability", note)
+
+
+class RetiredVerdictsAreNotOperativeTests(unittest.TestCase):
+    """The smallest useful documentation check: no live document PRESCRIBES a retired verdict.
+
+    Deliberately narrow. It does not parse prose or judge meaning; it looks for the retired
+    words and skips any line that is visibly withdrawing or superseding one. Everything about
+    what the code actually does is tested by behaviour below, not by reading source text.
+    """
+
+    RETIRED = ("VALIDATED_AT_U_VAL", "NUMERICALLY_BOUNDED", "NOT_VALIDATED")
+    # Dated entries are append-only history; the correction record exists to quote what was wrong.
+    EXEMPT = {"docs/SPRINT_PROGRESS.md", "docs/REVIEW_READY.md",
+              "docs/corrections/2026-09-24-review-corrections.md"}
+    MARKERS = ("withdraw", "supersed", "retired", "no longer", "not available",
+               "rather than", "instead of", "correction", "previously")
+
+    def test_no_live_document_prescribes_a_retired_verdict(self):
+        offenders = []
+        for path in sorted((ROOT / "docs").rglob("*.md")):
+            rel = path.relative_to(ROOT).as_posix()
+            if rel in self.EXEMPT:
+                continue
+            for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                if not any(v in line for v in self.RETIRED):
+                    continue
+                if any(m in line.lower() for m in self.MARKERS):
+                    continue
+                offenders.append("%s:%d" % (rel, lineno))
+        self.assertEqual(offenders, [], "retired verdict stated as operative: %s" % offenders)
+
+
+class UncertaintyBehaviourTests(unittest.TestCase):
+    """What the tool DOES, run end to end, rather than what its source says.
+
+    Every case below runs the real command line against a synthetic run tree. The tree is
+    fixture input, never evidence: no committed record is read or written.
+    """
+
+    SCRIPT = ROOT / "scripts/cfd_grid_convergence.py"
+    CELLS = (("g3", 57344), ("g2", 14336), ("g1", 3584))   # fine -> coarse
+
+    def _tree(self, values, model="SA", alpha="10.12"):
+        """A run directory whose three levels sit on a flat plateau at the given values."""
+        import tempfile
+
+        root = Path(tempfile.mkdtemp(prefix="cfdfix-"))
+        self.addCleanup(shutil.rmtree, root, True)
+        for (g, _cells), phi in zip(self.CELLS, values):
+            d = root / ("%s_%s_a%s" % (g, model, alpha)) / "postProcessing/forceCoeffs1/0"
+            d.mkdir(parents=True)
+            rows = "".join("%d 0.01 %.12f\n" % (i, phi) for i in range(1, 601))
+            (d / "coefficient.dat").write_text("# Time Cd Cl\n" + rows, encoding="utf-8")
+        return root
+
+    def _run(self, values, *extra, **kw):
+        out = Path(tempfile.mkdtemp(prefix="cfdout-"))
+        self.addCleanup(shutil.rmtree, out, True)
+        dest = out / "u.json"
+        cmd = [sys.executable, str(self.SCRIPT), "--runs", str(self._tree(values)),
+               "--out", str(dest), "--quantity", "Cl", "--alpha", "10.12",
+               "--reference", str(kw.get("reference", 1.0))] + list(extra)
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        return proc, (json.loads(dest.read_text()) if dest.exists() else None)
+
+    # --- U_D eligibility -------------------------------------------------------------
+    def test_a_number_alone_cannot_supply_u_d(self):
+        """--u-d without a declared basis is refused rather than quietly accepted."""
+        proc, _ = self._run((1.0, 1.02, 1.06), "--u-d", "0.00441")
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("--u-d-basis", proc.stderr)
+
+    def test_treatment_spread_is_not_promoted_into_u_d(self):
+        """The exact A0.1 defect: the grit spread passed as a number must not complete U_val."""
+        _, doc = self._run((1.0, 1.02, 1.06), "--u-d", "0.00441",
+                           "--u-d-basis", "treatment_spread", "--u-input", "0.001")
+        comp = doc["validation"]["SA"]
+        self.assertIsNone(comp["U_val"], "an ineligible input completed the uncertainty budget")
+        self.assertIn("U_D", comp["missing_components"])
+        self.assertEqual(doc["verdict_per_model"]["SA"], "INCOMPLETE_UNCERTAINTY")
+
+    def test_the_ineligible_value_is_retained_not_discarded(self):
+        _, doc = self._run((1.0, 1.02, 1.06), "--u-d", "0.00441",
+                           "--u-d-basis", "treatment_spread")
+        ref = doc["reference"]
+        self.assertEqual(ref["value_supplied_but_not_eligible_as_U_D"], 0.00441)
+        self.assertFalse(ref["U_D_basis_eligible"])
+        self.assertIsNone(ref["U_D_k1"])
+
+    def test_an_eligible_basis_does_supply_u_d(self):
+        """The gate must not be a blanket refusal: a source-reported U_D still works."""
+        _, doc = self._run((1.0, 1.02, 1.06), "--u-d", "0.05",
+                           "--u-d-basis", "reported_by_source", "--u-input", "0.001")
+        comp = doc["validation"]["SA"]
+        self.assertIsNotNone(comp["U_val"])
+        self.assertEqual(comp["missing_components"], [])
+
+    # --- verdict precedence ----------------------------------------------------------
+    def test_unusable_numerics_outrank_the_uncertainty_state(self):
+        """Oscillatory convergence gives INCONCLUSIVE, and missing components are still named."""
+        _, doc = self._run((1.0, 1.02, 0.98))
+        self.assertEqual(doc["verdict_per_model"]["SA"], "INCONCLUSIVE")
+        self.assertEqual(sorted(doc["validation"]["SA"]["missing_components"]),
+                         ["U_D", "U_input"])
+
+    def test_usable_numerics_with_a_missing_component_are_incomplete(self):
+        _, doc = self._run((1.0, 1.02, 1.06), "--u-input", "0.001")
+        self.assertEqual(doc["verdict_per_model"]["SA"], "INCOMPLETE_UNCERTAINTY")
+
+    def test_a_complete_budget_reaches_the_consistency_screen(self):
+        near, far = (1.0, 1.02, 1.06), (1.0, 1.02, 1.06)
+        _, consistent = self._run(near, "--u-input", "0.05", "--u-d", "0.05",
+                                  "--u-d-basis", "reported_by_source", reference=1.0)
+        self.assertEqual(consistent["verdict_per_model"]["SA"], "CONSISTENT_AT_U_VAL")
+        _, inconsistent = self._run(far, "--u-input", "0.001", "--u-d", "0.001",
+                                    "--u-d-basis", "reported_by_source", reference=0.5)
+        self.assertEqual(inconsistent["verdict_per_model"]["SA"], "INCONSISTENT_AT_U_VAL")
+
+    def test_the_screen_is_never_called_a_pass_rule(self):
+        _, doc = self._run((1.0, 1.02, 1.06), "--u-input", "0.05", "--u-d", "0.05",
+                           "--u-d-basis", "reported_by_source")
+        self.assertIn("not a universal pass/fail", doc["validation"]["SA"]["screen"])
+        self.assertNotIn("validates", doc["claim_boundary"])
+
+
+class InterpretationRevisionTests(unittest.TestCase):
+    """A revised interpretation may not quietly become a new result.
+
+    The raw solver output for A0.1 is gone, so the record cannot be regenerated. The original
+    stays byte-identical and the revision is derived from it. This checks that the revision
+    reuses the original's numbers rather than introducing any, and that it only reclassifies
+    the ineligible term.
+    """
+
+    ORIGINAL = CFD_ROOT / "a0.1/uncertainty.json"
+    REVISION = CFD_ROOT / "a0.1/uncertainty.revision-2026-09-25.json"
+
+    def setUp(self):
+        if not self.REVISION.exists():
+            self.skipTest("no revision present")
+        self.orig = json.loads(self.ORIGINAL.read_text())
+        self.rev = json.loads(self.REVISION.read_text())
+
+    def test_it_pins_the_original_by_hash(self):
+        digest = hashlib.sha256(self.ORIGINAL.read_bytes()).hexdigest()
+        self.assertEqual(self.rev["revises"]["sha256"], digest,
+                         "the revision no longer describes the file it revises")
+
+    def test_no_measured_quantity_is_altered(self):
+        o, r = self.orig["validation"]["SA"], self.rev["validation"]["SA"]
+        for k in ("S", "D", "comparison_error_E", "U_num", "E_percent_of_D"):
+            self.assertEqual(o[k], r[k], "%s was changed by a re-interpretation" % k)
+        self.assertEqual(self.orig["reference"]["value"], self.rev["reference"]["value"])
+
+    def test_the_ineligible_term_is_reclassified_not_deleted(self):
+        self.assertIsNone(self.rev["reference"]["U_D_k1"])
+        self.assertEqual(self.rev["reference"]["value_supplied_but_not_eligible_as_U_D"],
+                         self.orig["reference"]["U_D_k1"])
+        self.assertEqual(sorted(self.rev["validation"]["SA"]["missing_components"]),
+                         ["U_D", "U_input"])
+
+    def test_the_verdict_did_not_move(self):
+        self.assertEqual(self.rev["verdict_per_model"], self.orig["verdict_per_model"])
 
 
 class HistoricalPreservationTests(unittest.TestCase):

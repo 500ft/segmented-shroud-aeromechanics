@@ -121,7 +121,7 @@ An earlier version of this section said every published code misses this experim
 
 Agreement with another code is cross-code evidence, not proof that workflow errors are absent. Nor may tunnel uncertainty be declared the cause before geometry, Mach number, incidence adjustment, wall treatment, farfield placement and turbulence model have been separated. The likeliest single contributor remains that the comparison band is built from an incomplete uncertainty budget, which is now stated rather than assumed.
 
-The likeliest reading is that `U_D` is too narrow. It was derived from the spread across three trip conditions, which captures trip repeatability and nothing else: no wall interference, no angle-of-attack calibration, no model-support effects. The acceptance record said at the time that this made it a lower bound. This result is the consequence of that choice, and the conservative reading is that a validation statement built on repeatability alone is too strict to be useful. Raising the band after seeing the result would be exactly the move the acceptance file forbids, so the verdict stands as `NOT_VALIDATED` and the reason is recorded instead.
+The likeliest reading is that the comparison band is built from the wrong kind of quantity. It was derived from the spread across three trip conditions, which describes how the result responds to deliberately changing the trip. It is not repeatability, and it is neither an upper nor a lower bound on measurement uncertainty: that relationship is unknown and was never established. It also excludes wall interference, angle-of-attack calibration and model-support effects entirely. The acceptance record called it a lower bound at the time; that description is withdrawn, because a sensitivity to a changed condition bounds nothing about the measurement. This result is the consequence of that choice, and the conservative reading is that a comparison band built on one treatment contrast alone is too narrow to support a validation statement. Raising the band after seeing the result would be exactly the move the acceptance file forbids, so the band is left as committed and the reason is recorded instead. The verdict is `INCOMPLETE_UNCERTAINTY`, as section 3 sets out: with `U_input` unquantified there is no `U_val` for `|E|` to be judged against, so `NOT_VALIDATED` is not available here and the earlier text asserting it is withdrawn.
 
 ## 7. Consequence for the programme
 
@@ -133,12 +133,12 @@ What survives is a requirement, not a number: **Study A must estimate the numeri
 
 ## 8. Limitations and claim boundary
 
-- A0.1 validates a two-dimensional airfoil workflow at one condition. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps.
+- A0.1 exercises a two-dimensional airfoil workflow at one condition. It supplies numerical evidence for that workflow and a comparison against published computations. The comparison against the experiment is unresolved, because a required uncertainty component is unquantified. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps.
 - Drag is reported, not gated, for the reasons frozen in the acceptance file. On the finest grid Cd = 0.012031 against a tripped experimental 0.01201 at the 80-grit condition; the agreement is closer than lift, but the tripping and Reynolds systematics the source warns about are unquantified here, so no drag claim is made.
 - Skin friction was computed but cannot be validated: the source states no experimental data exist.
 - `U_input` is unquantified, so no complete validation uncertainty exists for this case.
 - The asymptotic-range ratio is a diagnostic with a known algebraic identity, not evidence.
-- `U_D` covers trip repeatability only and is a lower bound on experimental uncertainty.
+- The 0.00441 term is a sensitivity to the grit treatment, not `U_D`. It is neither an upper nor a lower bound on experimental uncertainty, and no experimental standard uncertainty is available for this case.
 - The k-ω SST arm is incomplete (two of three levels), so it carries no index and no verdict. The model-form sensitivity **for this work** is therefore unmeasured; only the published reference spread is available, and the SST numbers above must not be quoted as a result.
 
 ## 9. Next gate

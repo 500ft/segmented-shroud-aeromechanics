@@ -1,5 +1,41 @@
 # Sprint progress
 
+## 2026-09-25 — PR #31 review response: the interpretation made consistent
+
+Ledger row SSY-R13. An owner review of PR #31 found that green CI had not resolved contradictions in the prose and in what the tool actually does. Six findings, all reproduced on the exact head before anything was changed, plus a seventh the new check found by itself.
+
+**A number was enough to become an uncertainty.** The command line accepted the grit spread as `U_D`, so a quantity the same file explicitly calls treatment sensitivity could complete the uncertainty budget just by being passed in. Provenance is now declared with the value, and only an eligible basis supplies `U_D`. An ineligible value is kept and reported, never used and never dropped. The committed A0.1 record was generated through that path, so its `U_D` is reclassified.
+
+**The report contradicted itself twice more.** One passage still called the grit spread trip repeatability and another called it a lower bound on experimental uncertainty, while a third correctly called it treatment sensitivity. A spread produced by deliberately changing the trip bounds nothing about the measurement; that relationship is unknown and was never established. The "lower bound" wording is withdrawn wherever it appeared, including in the claim boundary this tool writes into every record.
+
+**Nothing here validates anything.** The report and the generated claim boundary both said A0.1 validates the workflow while its own verdict was `INCOMPLETE_UNCERTAINTY`. Replaced with what is actually available: numerical evidence for the workflow, a comparison against published computations, and an unresolved comparison against the experiment.
+
+**Two authorities disagreed.** The decision record retired three verdicts at one line and still prescribed one of them sixty lines later. Decision D9 still called the consistency screen an ASME pass rule. Following Eca, Dowding and Roache, that standard estimates discrepancy for specified outputs and conditions and is not inherently a pass or fail exercise. Both are corrected, with the superseded text kept in corrected form rather than deleted. A seventh copy in the A0 case definitions was found by the narrowed check rather than by reading.
+
+**Precedence is now declared rather than incidental.** Unusable numerical evidence outranks the uncertainty state, because there is nothing to compare; missing components are still listed in that case. Usable numerics with a component unquantified give `INCOMPLETE_UNCERTAINTY`. Only a complete budget reaches the consistency screen.
+
+**The tests were checking the wrong thing.** The previous check parsed verdict assignments out of the script, which proves nothing about behaviour on any output path, and scanned documents for one retired term while exempting the very file that still prescribed one. Replaced with the smallest useful document check, covering all three retired terms with no exemption for the decision record, plus behaviour tests that run the real command line end to end against synthetic input. Each was confirmed to fail for the scientific reason, not an import error.
+
+The raw solver output for A0.1 no longer exists, so the record cannot be regenerated. The original stays byte-identical and carries a dated revision derived from it, pinned to its hash by test. The verdict does not move: it was already `INCOMPLETE_UNCERTAINTY`, and this adds a second missing component rather than changing the outcome.
+
+## 2026-09-24 (later) — the corrections propagated into every copy
+
+Ledger row SSY-R12. Follow-up to SSY-R11: the corrections landed in the places that were reviewed and were left stale in the places that were not.
+
+**The validation report contradicted itself.** Section 3 reported the verdict as `INCOMPLETE_UNCERTAINTY`, while the closing sentence of section 6 still said the verdict stands as `NOT_VALIDATED`. A reader who finished the interpretation section got the withdrawn answer. Section 6 now states why `NOT_VALIDATED` is not available at all: with `U_input` unquantified there is no `U_val` for the comparison error to be judged against.
+
+**The research ledger still carried the superseded narrative.** Row SSY-R06 quoted 0.004721 as `U_val`, called the grit spread repeatability, and repeated the claim that every published code misses this experiment by more than this work does. That claim is false and had already been withdrawn in the report. The ledger is the single research ledger, so this was the copy most likely to be read and reused. It now carries the correction and points at SSY-R11.
+
+**The programme plan recorded the retired verdict** against the task that produced it. Restated.
+
+**The decision record and the code named different verdicts.** The record defined `VALIDATED_AT_U_VAL`, `NUMERICALLY_BOUNDED` and `NOT_VALIDATED`; the script emits `INCOMPLETE_UNCERTAINTY`, `CONSISTENT_AT_U_VAL`, `INCONSISTENT_AT_U_VAL` and `INCONCLUSIVE`. The governing spec named a verdict the code could not produce, which is how the retired word survived. The record now defines exactly the four the code emits and marks the other three retired, with the reason each was dropped.
+
+**A test now pins the two together.** It parses the verdict assignments out of the script rather than restating them, fails when an emitted verdict is undefined in the record, fails when a retired verdict is emitted, and fails when one is asserted in a live document. Dated entries here and in the review index are append-only history and are exempt. All three checks were confirmed to fail against a deliberately reintroduced defect and to pass once it was removed.
+
+**Two smaller things.** The claim boundary written into every uncertainty record still described `U_D` as trip repeatability, contradicting the reclassification made a few lines above it in the same script. And `scripts/p2d_to_gmsh.py` imports NumPy while the requirements file declared only jsonschema, so a clean checkout could not rebuild the A0.1 meshes. NumPy is now declared at the version the committed meshes were generated with.
+
+Nothing here changes a number, a run or a frozen acceptance record. The verification gate passes: 141 tests, the repository contract, reference coverage, the acquisition ledger, the clearance budget, and both presentation checks.
+
 ## 2026-09-24 — external review corrections applied
 
 Ledger row SSY-R11. [Correction record](corrections/2026-09-24-review-corrections.md).

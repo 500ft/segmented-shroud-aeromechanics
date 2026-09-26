@@ -37,7 +37,7 @@ Severity: **1** changes a conclusion · **2** changes a margin or a gate · **3*
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | F1 | Stage 2 exit gate: held-out error and improvement over mean-clearance | `proposal.md` §Study D, `analysis_pipeline.py` defaults `min_improvement=0.20`, `max_rel_error=0.10`, `TASKS.md` | 20 % and 10 % | Registered in the roadmap and enforced in code. **No derivation anywhere**: nothing states what decision either number would change | The decision each gate protects, and the smallest difference worth acting on | A study passes or fails on numbers nobody justified. Already flagged provisional by the 2026-09-24 review (R10) and still provisional | 1 | Keep enforcing, label provisional at every appearance, and record what evidence would fix them |
 | F2 | Grid-convergence safety factor | `cfd_grid_convergence.py:17` `FS = 1.25` | 1.25 | Sourced to Celik et al. 2008, which prescribes 1.25 **where the observed order is close to formal**. A0.1's observed order is 2.6697 against a formal order near 2, 33 % above it. The condition is never checked and the order is never limited | A stated applicability test, and a rule for when the observed order is far from formal | Numerical uncertainty is scaled by an unjustified factor. **Quantified below: it does not change the A0.1 conclusion** | 2 | Record the sensitivity and the unchecked condition beside the result |
-| F3 | Convergence criterion | `cfd_grid_convergence.py:24-25` `PLATEAU_REL = 1e-4`, `PLATEAU_WINDOW = 500` | 1e-4 over 500 iterations | Selected. No provenance, no sensitivity | Why this flatness over this window | These two numbers decide `PASS` against `UNCONVERGED`, and they are what recorded the g3 SST case as failed | 2 | Label as selected, state what they decide, add a sensitivity task |
+| F3 | Convergence criterion | `cfd_grid_convergence.py:24-25` `PLATEAU_REL = 1e-4`, `PLATEAU_WINDOW = 500` | 1e-4 over 500 iterations | Selected. **Sensitivity now computed, 2026-09-26** (see below) | A stated tolerance on the reported quantity, from which the criterion could be derived | Decides `PASS` against `UNCONVERGED`. Less than one order of headroom, and it does **not** distinguish a run that failed from one that stopped too early to judge | 2 | Sensitivity done; the selection itself is still undesived |
 | F4 | Identifiability and rank tolerances | `analysis_pipeline.py` `RANK_TOL = 1e-10`, `tol=1e-9`, `collinearity_tol=1e-8`, `AMPLITUDE_EPS = 1e-9` | as listed | Selected numerical tolerances | Justification and sensitivity | They decide whether a descriptor is refused as unidentifiable, which silently changes the model that gets fitted | 2 | Label as selected; note that `RANK_TOL` is relative to the largest singular value |
 | F5 | Freestream turbulence quantities | `make_case.py:20-22` | `K_INF = 9e-9·a²`, `OMEGA_INF = 1e-6·a²/ν`, `NUTILDA_INF = 3ν` | The module docstring says these follow the TMR specification and are not guesses, and an independent check converted them to an eddy-viscosity ratio of 0.009 before any case ran. Good provenance, but **not carried in a machine-readable label** | A provenance label alongside the constants | Low: the values are traceable in prose | 3 | Cross-reference the canonical register |
 | F6 | Experimental reference and angle | `cfd-validation-a01.md` | `Cl = 1.07502` at `10.12°` | Measured input from the source of record; the angle is the measured one specifically so the experiment is never interpolated. Well provenanced | Nothing | None | 3 | Register as the canonical measured input |
@@ -101,3 +101,48 @@ record. It is **not** physical validation of anything.
 It does not make any prediction in this repository a measurement, and it does not close any
 research task. A complete provenance chain around an unresolved decision leaves the decision
 unresolved.
+
+## Follow-up, 2026-09-26: the convergence criterion (F3)
+
+**Question.** Would a different flatness criterion reclassify any recorded A0.1 case?
+
+**Method.** Re-ran the criterion over the committed convergence histories at a grid of tolerances
+and windows. No solver was run. Record:
+[`convergence-sensitivity-2026-09-26.json`](../results/generated/cfd/a0.1/convergence-sensitivity-2026-09-26.json),
+reproduced from the histories by `tests/test_convergence_sensitivity.py`.
+
+**Limitation, which governs every number here.** The committed histories are downsampled to about
+one sample per 50 iterations, so each spread is a **lower bound** on what the full history would
+show. Pass verdicts are therefore optimistic. Failures and unassessable runs are sound.
+
+**Results.**
+
+| case | recorded | spread over the last 500 iterations | flips at 1e-5 | flips at a 2000-iteration window |
+| --- | --- | --- | --- | --- |
+| `g1_SA` | PASS | 1.23e-05 | **yes** | no |
+| `g1_SST` | PASS | 9.26e-08 | no | no |
+| `g2_SA` | PASS | 3.32e-06 | no | no |
+| `g2_SST` | PASS | 1.29e-05 | **yes** | no |
+| `g3_SA` | PASS | 2.20e-05 | **yes** | **yes** |
+| `g3_SST` | UNCONVERGED | not assessable | — | — |
+
+**Three findings.**
+
+1. **Loosening changes nothing.** Every passing case still passes at 1e-3, so no result depends
+   on the criterion being as strict as it is.
+2. **The headroom is under one order of magnitude.** Three of five passing cases fail at 1e-5,
+   with spreads between 1.2e-05 and 2.2e-05 against a 1e-4 threshold. The criterion is closer to
+   its margin than its round value suggests, and the window matters too: `g3_SA` also fails when
+   the window is lengthened to 2000 iterations.
+3. **The stalled case was never assessed, not assessed and failed.** `g3_SST` reached iteration
+   117, well short of a single 500-iteration window, so the criterion could never be applied. It
+   is recorded as `UNCONVERGED`, which reads as a judgement that was never made. This is the same
+   distinction the [compute-recovery record](../evidence/task-compute-recovery-2026-09-25/README.md)
+   flagged as unresolved, and it is now resolved: the run terminated before assessment.
+
+**Decision.** The criterion stays as it is: no recorded conclusion changes, and altering it after
+seeing results is the move the acceptance discipline forbids. Both values remain **selected**, now
+with their sensitivity recorded rather than unknown. The status vocabulary should gain a third
+term so a terminated run is not reported as a failed one; that is registered, not done here.
+
+**Validation.** None. This is arithmetic on committed histories and is not physical validation.

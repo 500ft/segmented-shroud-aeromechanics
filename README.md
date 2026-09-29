@@ -8,9 +8,9 @@ A CAD–ANSYS computational study of how seams and misalignment affect predicted
 
 [Overview](#the-problem) · [Evidence](#evidence-snapshot) · [Quick start](#quick-start) · [First experiment](#first-experiment) · [Reviewer guide](docs/START_HERE.md)
 
-![Conceptual study sequence from controlled rigid-duct defects and qualified measurements to a held-out comparison, before conditional mechanism and yield studies](docs/media/project-overview.svg)
+![Illustration of a rotor in a segmented shroud with a visible seam step](docs/media/hero.jpg)
 
-*Earlier hardware-study architecture, retained as a future extension—not fabricated geometry or measured performance. No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.*
+*AI-generated concept illustration, not fabricated project geometry or measured performance. No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.*
 
 **Current finish line:** the owner selected a simulation-only project, with parametric
 CAD, ANSYS Fluent comparisons, numerical credibility checks and a bounded final report.

@@ -3,4 +3,4 @@ jsonschema==4.26.0
 
 # Used by scripts/p2d_to_gmsh.py to read the Plot3D grid family. This is the version the
 # committed A0.1 meshes were generated with; the converter is stdlib-only apart from this.
-numpy==2.1.1
+numpy==2.5.3

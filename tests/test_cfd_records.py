@@ -32,7 +32,7 @@ REQUIRED_MANIFEST_FIELDS = {
     "boundary_conditions", "operating_point", "convergence_rule",
     "outputs", "status", "git_commit",
 }
-ALLOWED_STATUS = {"PASS", "FAILED", "UNCONVERGED"}
+ALLOWED_STATUS = {"PASS", "FAILED", "UNCONVERGED", "TERMINATED_BEFORE_ASSESSMENT"}
 MIN_GRID_LEVELS = 3
 
 # Evidence labels permitted by the work order (D2a added VERIFIED_FROM_ARCHIVE).

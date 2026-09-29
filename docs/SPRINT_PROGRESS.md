@@ -1,5 +1,21 @@
 # Sprint progress
 
+## 2026-09-29 — a terminated run is no longer reported as a failed one, and the identifiability tolerances have a stated basis
+
+Ledger rows SSY-R23 (done) and SSY-R22 (F4 done, F1 still blocked).
+
+**The fine-grid shear-stress-transport case stopped at iteration 117 of a 500-iteration window and was recorded as unconverged.** That reads as a judgement nobody made: the flatness criterion was never applied, because there was no window to apply it to. A third status now separates the two, and the classifier has one owner. The manifest builder used to hardcode the same tolerance and window a second time, which is exactly how a criterion drifts; it now imports the rule.
+
+The recorded manifests are frozen, so nothing was rewritten. A dated sidecar pins each by hash and reclassifies exactly one case. Tests fail if any recorded manifest is edited, if a passing case changes status, or if the classifier's short-run guard is removed; the last two were confirmed by deliberately introducing the defect.
+
+**The identifiability tolerances now say where they came from.** They had been selected with no stated basis. Measured on constructed columns: an exactly dependent column leaves a relative residual of about 3e-16, machine epsilon, and an independent one about 0.25. The 1e-8 threshold sits in the empty gap between, five or more orders clear of both, which the tests assert. A column differing from an exact combination by one picometre would slip through, far below anything this project could measure.
+
+The spread tolerance is absolute rather than relative, so it depends on the unit, and that is now recorded. It is safe only because ingestion pins clearance to micrometres. In metres, a real one-nanometre variation would be refused as constant.
+
+Both tolerances were tested on constructed columns and the synthetic fixtures, not on real data. Nothing here changes a recorded result or a threshold, and none of it is physical validation.
+
+**A write nearly destroyed the ledger, and nothing would have noticed.** Rewriting the research ledger with a literal backslash-n as the line terminator collapsed all thirty-five rows onto one line. No test read the file, so every check stayed green. It was caught only because a comparison against main returned zero rows. It was restored from version control, and a minimal integrity test now requires the ledger to parse into a plausible number of rows with unique identifiers and no escaped newlines. It was confirmed to fail against the exact corruption. This is the same shape as the earlier dropped-row and CRLF incidents: the ledger is the sole record of research status, so it needed a check of its own.
+
 ## 2026-09-26 — the convergence criterion answered, and CAD assessed as gated
 
 Ledger rows SSY-R22 (partly closed) and SSY-R23.

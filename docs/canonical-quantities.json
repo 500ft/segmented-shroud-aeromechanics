@@ -106,7 +106,7 @@
       "used_in": [
         "scripts/cfd_grid_convergence.py"
       ],
-      "limits": "See PLATEAU-RELATIVE. A run shorter than the window cannot be assessed at all, which is a different statement from being assessed and found unconverged; the recorded status does not currently distinguish them.",
+      "limits": "See PLATEAU-RELATIVE. A run shorter than the window cannot be assessed at all, which is a different statement from being assessed and found unconverged; as of 2026-09-29 the classifier and the status vocabulary do distinguish them (TERMINATED_BEFORE_ASSESSMENT).",
       "sensitivity": "Answered 2026-09-26. Lengthening the window to 2000 iterations flips g3_SA, so the window matters as much as the tolerance. Shortening to 250 reclassifies nothing."
     },
     "RANK-TOLERANCE": {
@@ -179,6 +179,54 @@
         "data/fixtures/synthetic/"
       ],
       "limits": "SYNTHETIC TEST DATA, NOT EVIDENCE and NOT a project target. It is not IN-02, the target mean clearance, which remains an unset owner input. Chosen only to make the fixtures legible."
+    },
+    "IDENTIFIABILITY-SPREAD-TOL": {
+      "definition": "Absolute spread below which a descriptor is refused as constant across the training conditions.",
+      "value": 1e-09,
+      "unit": "units of the descriptor (micrometres, degrees, or a dimensionless count)",
+      "provenance": "selected_value",
+      "evidence_status": "analytically_assessed",
+      "code_anchor": {
+        "file": "scripts/analysis_pipeline.py",
+        "symbol": "tol"
+      },
+      "used_in": [
+        "scripts/analysis_pipeline.py"
+      ],
+      "basis": "ABSOLUTE, so it depends on the unit. That is safe here only because ingestion enforces the units: clearance must be declared in micrometres or the record is refused, and the other descriptors are degrees or counts. In micrometres 1e-9 is a femtometre, far below any measurement this project could make. Were a descriptor ever carried in metres, a real one-nanometre variation (1e-9 m) would be refused as constant.",
+      "limits": "Not scale-free, unlike RANK-TOLERANCE and COLLINEARITY-TOL. The unit guard at ingestion is what makes it acceptable."
+    },
+    "COLLINEARITY-TOL": {
+      "definition": "Relative residual, after projecting out the intercept and the descriptors already accepted, below which a descriptor is refused as a linear combination of them.",
+      "value": 1e-08,
+      "unit": "dimensionless, relative to the descriptor's norm",
+      "provenance": "selected_value",
+      "evidence_status": "analytically_assessed",
+      "code_anchor": {
+        "file": "scripts/analysis_pipeline.py",
+        "symbol": "collinearity_tol"
+      },
+      "used_in": [
+        "scripts/analysis_pipeline.py"
+      ],
+      "basis": "Measured 2026-09-29 on constructed columns. An exactly dependent column (total opening = count x fixed width) leaves a relative residual of about 3e-16, machine epsilon. A genuinely independent column leaves about 0.25. The threshold sits eight orders above the first and seven below the second, in a gap where no legitimate descriptor was observed.",
+      "sensitivity": "A near-dependent column differing from an exact combination by one picometre leaves about 2e-8, just above the threshold, and would be accepted. That is below any resolution this project could measure, so it is not a practical gap.",
+      "limits": "Tested on constructed columns and the synthetic fixtures, not on real data. A real descriptor set may sit inside the gap."
+    },
+    "AMPLITUDE-EPS": {
+      "definition": "Lobe amplitude below which the fitted lobe phase is reported as undefined rather than as a number.",
+      "value": 1e-09,
+      "unit": "micrometres",
+      "provenance": "selected_value",
+      "evidence_status": "unverified",
+      "code_anchor": {
+        "file": "scripts/analysis_pipeline.py",
+        "symbol": "AMPLITUDE_EPS"
+      },
+      "used_in": [
+        "scripts/analysis_pipeline.py"
+      ],
+      "limits": "Only suppresses a meaningless phase for a zero-amplitude fit; it gates no verdict. No sensitivity study, none needed while it gates nothing."
     }
   }
 }

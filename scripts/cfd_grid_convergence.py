@@ -46,6 +46,24 @@ def series(path, quantity):
     return [r[0] for r in rows], [r[i] for r in rows]
 
 
+PASS, UNCONVERGED, TERMINATED = "PASS", "UNCONVERGED", "TERMINATED_BEFORE_ASSESSMENT"
+
+
+def assess_status(values, window=PLATEAU_WINDOW, tol=PLATEAU_REL):
+    """(status, relative variation) with a run too short to judge kept apart from one that failed.
+
+    A history shorter than the assessment window cannot be tested against the flatness criterion
+    at all. Calling it UNCONVERGED reports a judgement nobody made; the A0.1 fine-grid SST case
+    stopped at iteration 117 of a 500-iteration window and was recorded exactly that way.
+    Neither status is usable for a grid study, but they mean different things and call for
+    different responses: a failed run needs its setup examined, a terminated one needs to be run.
+    """
+    if len(values) < window:
+        return TERMINATED, None
+    ok, rel = plateau(values, window, tol)
+    return (PASS if ok else UNCONVERGED), rel
+
+
 def plateau(values, window=PLATEAU_WINDOW, tol=PLATEAU_REL):
     """(converged, relative variation) of the engineering quantity over the last `window` steps."""
     w = values[-window:] if len(values) >= window else values
@@ -142,9 +160,9 @@ def main():
                 per[g] = dict(status="MISSING", path=f)
                 continue
             t, v = series(f, a.quantity)
-            conv, rel = plateau(v)
+            status, rel = assess_status(v)
             cd_t, cd_v = series(f, "Cd")
-            per[g] = dict(status="PASS" if conv else "UNCONVERGED", cells=cells,
+            per[g] = dict(status=status, cells=cells,
                           iterations=int(t[-1]), value=v[-1], cd=cd_v[-1],
                           plateau_relative_variation=rel, plateau_tolerance=PLATEAU_REL,
                           h=1.0 / math.sqrt(cells))

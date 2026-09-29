@@ -8,7 +8,9 @@ command that regenerates them.
 """
 import argparse, hashlib, json, os, re, subprocess, sys
 
-REQUIRED_STATUS = {"PASS", "FAILED", "UNCONVERGED"}
+from cfd_grid_convergence import assess_status, PLATEAU_REL, PLATEAU_WINDOW  # one owner for the criterion
+
+REQUIRED_STATUS = {"PASS", "FAILED", "UNCONVERGED", "TERMINATED_BEFORE_ASSESSMENT"}
 
 
 def sha256(path):
@@ -59,9 +61,7 @@ def main():
     ci = {n: i for i, n in enumerate(header)}
     cl = [r[ci["Cl"]] for r in rows]
     cd = [r[ci["Cd"]] for r in rows]
-    w = cl[-500:] if len(cl) >= 500 else cl
-    rel = (max(w) - min(w)) / abs(sum(w) / len(w))
-    status = "PASS" if rel <= 1e-4 else "UNCONVERGED"
+    status, rel = assess_status(cl)
 
     runinfo = ""
     if os.path.isfile(os.path.join(a.case, "RUNINFO")):
@@ -107,7 +107,7 @@ def main():
         operating_point=dict(mach=0.15, reynolds_chord=6.0e6, alpha_deg=a.alpha,
                              U_inf=1.0, chord=1.0, nu=1.0 / 6.0e6,
                              regime="incompressible; Prandtl-Glauert factor 1.011 recorded as a declared bias"),
-        convergence_rule="Cl flat to 1e-4 relative over the last 500 iterations",
+        convergence_rule=f"Cl flat to {PLATEAU_REL:g} relative over the last {PLATEAU_WINDOW} iterations",
         convergence_observed=dict(iterations=int(rows[-1][0]),
                                   plateau_relative_variation=rel,
                                   walltime_s=walltime, runinfo=runinfo),
@@ -126,7 +126,7 @@ def main():
         raise SystemExit(f"bad status {manifest['status']}")
     open(os.path.join(a.out, "case.manifest.json"), "w").write(json.dumps(manifest, indent=1) + "\n")
     print(f"{manifest['case_id']}: status={status} Cl={cl[-1]:.6f} Cd={cd[-1]:.6f} "
-          f"rel={rel:.2e} iters={int(rows[-1][0])} walltime={walltime}s")
+          f"rel={'n/a' if rel is None else format(rel, '.2e')} iters={int(rows[-1][0])} walltime={walltime}s")
 
 
 if __name__ == "__main__":

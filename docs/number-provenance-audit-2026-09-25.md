@@ -38,7 +38,7 @@ Severity: **1** changes a conclusion · **2** changes a margin or a gate · **3*
 | F1 | Stage 2 exit gate: held-out error and improvement over mean-clearance | `proposal.md` §Study D, `analysis_pipeline.py` defaults `min_improvement=0.20`, `max_rel_error=0.10`, `TASKS.md` | 20 % and 10 % | Registered in the roadmap and enforced in code. **No derivation anywhere**: nothing states what decision either number would change | The decision each gate protects, and the smallest difference worth acting on | A study passes or fails on numbers nobody justified. Already flagged provisional by the 2026-09-24 review (R10) and still provisional | 1 | Keep enforcing, label provisional at every appearance, and record what evidence would fix them |
 | F2 | Grid-convergence safety factor | `cfd_grid_convergence.py:17` `FS = 1.25` | 1.25 | Sourced to Celik et al. 2008, which prescribes 1.25 **where the observed order is close to formal**. A0.1's observed order is 2.6697 against a formal order near 2, 33 % above it. The condition is never checked and the order is never limited | A stated applicability test, and a rule for when the observed order is far from formal | Numerical uncertainty is scaled by an unjustified factor. **Quantified below: it does not change the A0.1 conclusion** | 2 | Record the sensitivity and the unchecked condition beside the result |
 | F3 | Convergence criterion | `cfd_grid_convergence.py:24-25` `PLATEAU_REL = 1e-4`, `PLATEAU_WINDOW = 500` | 1e-4 over 500 iterations | Selected. **Sensitivity now computed, 2026-09-26** (see below) | A stated tolerance on the reported quantity, from which the criterion could be derived | Decides `PASS` against `UNCONVERGED`. Less than one order of headroom, and it does **not** distinguish a run that failed from one that stopped too early to judge | 2 | Sensitivity done; the selection itself is still undesived |
-| F4 | Identifiability and rank tolerances | `analysis_pipeline.py` `RANK_TOL = 1e-10`, `tol=1e-9`, `collinearity_tol=1e-8`, `AMPLITUDE_EPS = 1e-9` | as listed | Selected numerical tolerances | Justification and sensitivity | They decide whether a descriptor is refused as unidentifiable, which silently changes the model that gets fitted | 2 | Label as selected; note that `RANK_TOL` is relative to the largest singular value |
+| F4 | Identifiability and rank tolerances | `analysis_pipeline.py` `RANK_TOL = 1e-10`, `tol=1e-9`, `collinearity_tol=1e-8`, `AMPLITUDE_EPS = 1e-9` | as listed | Selected numerical tolerances | Justification and sensitivity | They decide whether a descriptor is refused as unidentifiable, which silently changes the model that gets fitted | 2 | Label as selected; note that `RANK_TOL` is relative to the largest singular value. **Basis stated 2026-09-29**, see the follow-up at the end |
 | F5 | Freestream turbulence quantities | `make_case.py:20-22` | `K_INF = 9e-9·a²`, `OMEGA_INF = 1e-6·a²/ν`, `NUTILDA_INF = 3ν` | The module docstring says these follow the TMR specification and are not guesses, and an independent check converted them to an eddy-viscosity ratio of 0.009 before any case ran. Good provenance, but **not carried in a machine-readable label** | A provenance label alongside the constants | Low: the values are traceable in prose | 3 | Cross-reference the canonical register |
 | F6 | Experimental reference and angle | `cfd-validation-a01.md` | `Cl = 1.07502` at `10.12°` | Measured input from the source of record; the angle is the measured one specifically so the experiment is never interpolated. Well provenanced | Nothing | None | 3 | Register as the canonical measured input |
 | F7 | Experimental standard uncertainty for A0.1 | `cfd-validation-a01.md`, `uncertainty.revision-2026-09-25.json` | **does not exist** | The 0.00441 grit spread is a treatment sensitivity and is not eligible. Correctly refused by the tool since 2026-09-25 | A source that reports experimental uncertainty, or a measurement model | The comparison against the experiment cannot be completed at any mesh density | 1 | Already recorded; no further action in this audit |
@@ -146,3 +146,43 @@ with their sensitivity recorded rather than unknown. The status vocabulary shoul
 term so a terminated run is not reported as a failed one; that is registered, not done here.
 
 **Validation.** None. This is arithmetic on committed histories and is not physical validation.
+
+## Follow-up, 2026-09-29: the status vocabulary (F3) and the identifiability tolerances (F4)
+
+**F3 follow-through.** The convergence sensitivity found that the fine-grid shear-stress-transport
+case was recorded `UNCONVERGED` although it stopped at iteration 117, before one 500-iteration
+window had elapsed. The criterion was never applied to it. A third status,
+`TERMINATED_BEFORE_ASSESSMENT`, now separates that from an assessed failure. Both are unusable for a
+grid study; they differ in what they ask for. A failed run needs its setup examined. A terminated
+one needs to be run.
+
+The rule has one owner. `cfd_case_manifest.py` used to hardcode the same `1e-4` and `500` a second
+time; it now imports the classifier from `cfd_grid_convergence.py`, so the register's anchors
+cover both. The frozen manifests are untouched. A dated sidecar pins each by hash and reclassifies
+only `g3_SST_a10.12`, and `tests/test_terminated_status.py` fails if any recorded manifest is
+edited or any passing case changes.
+
+**F4 basis.** Measured on constructed columns rather than argued.
+
+| descriptor pair | relative residual after projection | against `COLLINEARITY_TOL = 1e-8` |
+| --- | --- | --- |
+| exactly dependent (total opening = count × a fixed width) | about 3 × 10⁻¹⁶, machine epsilon | eight orders below |
+| near-dependent, 1 nm jitter | about 2 × 10⁻⁵ | accepted, correctly |
+| near-dependent, 1 pm jitter | about 2 × 10⁻⁸ | just above, so accepted |
+| genuinely independent | about 0.25 | seven orders above |
+
+The threshold sits in a gap where no legitimate descriptor was observed. A column differing from an
+exact combination by one picometre would be accepted, which is far below any resolution this
+project could measure, so it is not a practical gap. It was tested on constructed columns and the
+synthetic fixtures, **not on real data**, and a real descriptor set may sit inside the gap.
+
+`IDENTIFIABILITY_SPREAD_TOL = 1e-9` is different in kind: it is an **absolute** spread, so it
+depends on the unit. It is safe here only because ingestion enforces micrometres for clearance
+and the other descriptors are degrees or counts. Carried in metres, a genuine one-nanometre
+variation would be refused as constant. That dependence is now stated where the value is
+registered, and a test pins the unit guard.
+
+**Still open in this audit.** F1, the two acceptance gates, cannot be derived until the minimum
+meaningful effect exists, which depends on owner inputs IN-01 and IN-03. Nothing here changes a
+recorded result or a threshold. All of it is arithmetic on committed values and constructed
+columns, and none of it is physical validation.

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "revision_date": "2026-09-29",
+  "reason": "A run shorter than the assessment window cannot be tested against the flatness criterion, so UNCONVERGED reports a judgement nobody made. Recorded manifests are unchanged; this sidecar reclassifies without rewriting.",
+  "cases": {
+    "g1_SA_a10.12": {
+      "manifest_sha256": "da743ed8912cadd59ef9f948f4ad62919c8b67bf4c7816fbeb0eefed4d5401a8",
+      "recorded_status": "PASS",
+      "revised_status": "PASS",
+      "final_iteration": 4000,
+      "assessment_window": 500,
+      "changed": false
+    },
+    "g1_SST_a10.12": {
+      "manifest_sha256": "53b045c906ee9593513ef19e1a89529246f2f8d3529556f3f7145765b9af4e48",
+      "recorded_status": "PASS",
+      "revised_status": "PASS",
+      "final_iteration": 3000,
+      "assessment_window": 500,
+      "changed": false
+    },
+    "g2_SA_a10.12": {
+      "manifest_sha256": "b73e2c10245a351c376918e417a5736410d059d20adddbf1a2b04fce37d4eeeb",
+      "recorded_status": "PASS",
+      "revised_status": "PASS",
+      "final_iteration": 6000,
+      "assessment_window": 500,
+      "changed": false
+    },
+    "g2_SST_a10.12": {
+      "manifest_sha256": "16cd2aa376e1c667a63e832f9a31bf8d79da860d5f346c454a89919324a8c3f1",
+      "recorded_status": "PASS",
+      "revised_status": "PASS",
+      "final_iteration": 4000,
+      "assessment_window": 500,
+      "changed": false
+    },
+    "g3_SA_a10.12": {
+      "manifest_sha256": "b71ff699bf514fdb937d6c70b65a5f8e658fe5c7096e04967d011b32118496a8",
+      "recorded_status": "PASS",
+      "revised_status": "PASS",
+      "final_iteration": 6888,
+      "assessment_window": 500,
+      "changed": false
+    },
+    "g3_SST_a10.12": {
+      "manifest_sha256": "b5c3fb5ef0af3d315c5a74373423aef45c6d02ae52df77bd2485392cc7fcef29",
+      "recorded_status": "UNCONVERGED",
+      "revised_status": "TERMINATED_BEFORE_ASSESSMENT",
+      "final_iteration": 117,
+      "assessment_window": 500,
+      "changed": true
+    }
+  }
+}

@@ -7,7 +7,7 @@ Branch: `task/day-three-20260909`. Scope: Reconcile retrieval and test the equal
 
 Six new ledger tests preserve acquisition routes, unavailable query mappings, zero-result semantics, unscreened status, all raw rows and deterministic regeneration. 21 tests and repository contract pass. All 499 raw rows retained; 50 provenance holes remain. Public JSASS PDF and a patent claim were accessed; other full-text and disclosure gates remain unresolved.
 
-See [plan](../../docs/DAY3_PLAN.md) and [primary deliverable](../../docs/day3-source-review.md). Status is maintained only in [SPRINT_TASKS.csv](../../docs/SPRINT_TASKS.csv); original research/CAD gates remain unchanged. Delivery is a new PR, not an automatic merge or scientific release.
+See [plan](https://github.com/500ft/segmented-shroud-aeromechanics/blob/36a962d4067744684842ee336dcaf9a926313489/docs/DAY3_PLAN.md) and [primary deliverable](../../docs/day3-source-review.md). Status is maintained only in [SPRINT_TASKS.csv](../../docs/SPRINT_TASKS.csv); original research/CAD gates remain unchanged. Delivery is a new PR, not an automatic merge or scientific release.
 
 ## Verification and reproducibility
 

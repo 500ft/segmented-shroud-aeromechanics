@@ -1,4 +1,9 @@
 # Segmented-shroud aeromechanics — adaptive plan
+
+**Superseded for active scope:** the [CAD–ANSYS owner decision](../../decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+sets the current completion criteria. The tiers below are historical programme
+planning, not the active queue or acceptance criteria for the computational study.
+
 Date: 2026-09-16. Companion to [proposal.md](proposal.md). Status lives in the sprint ledger; this file says what earns a build and when.
 
 ## Must-have (v1 = the programme's floor: a CFD-bounded answer and a budget with numbers)

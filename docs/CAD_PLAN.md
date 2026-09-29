@@ -1,5 +1,23 @@
 # Segmented Shroud Aeromechanics — revised CAD work orders
 
+## Current scope — computational CAD authorized
+
+The [owner's CAD–ANSYS decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+supersedes the blanket parking of generic reference and rigid-defect CAD for the
+computational study. Its source/parameter and geometry-verification requirements
+replace installed-metrology and physical-fabrication prerequisites for that scope.
+Use the existing engineering-audit geometry machinery; do not build a new framework.
+The [execution readiness record](../evidence/task-cad-ansys-2026-09-29/README.md)
+describes the available route. No shroud geometry has yet been authored or released.
+
+The work orders below and `CAD_TASKS.csv` retain their original **hardware** scope
+and deferred status. They are not the active computational queue; the
+[sprint ledger](SPRINT_TASKS.csv) owns the current work. Their historical tool choices,
+timing estimates and numerical claims are not acceptance criteria for new CFD/CAD.
+XC-02 remains a gate for implementation-sensitive mechanism/fabrication detail.
+
+## Retained hardware work orders
+
 For the plain-language list of physical parts and assemblies, see [CAD_ITEMS.md](CAD_ITEMS.md). It maps to the existing work orders without adding tasks, estimates or completion status.
 
 Amended 2026-09-06 after source review. Planning only: no CAD, fixture, fabrication or calibration result exists from this amendment.

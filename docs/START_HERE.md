@@ -6,14 +6,22 @@
 
 A segmented shroud can close successfully yet reconstruct poor aerodynamic geometry. This project separates that problem into a first, controlled question: at equal mean rotor-tip clearance, do seam and distortion patterns matter enough to improve prediction over a mean-clearance model?
 
-The first apparatus is a **rigid adjustable duct**, not a folding shroud. Measurement qualification precedes performance testing. Mechanism reconstruction and deployment yield are conditional later studies; protective-guard performance needs its own experiment.
+The current deliverable is a **CAD–ANSYS computational study**, selected in the
+[owner decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study).
+It finishes with bounded simulation results; a physical rig is a future extension.
+The [execution readiness record](../evidence/task-cad-ansys-2026-09-29/README.md)
+states what has actually run and the next source/geometry task.
 
-The current implementation validates research metadata, source provenance, prior-art coverage and the Stage A uncertainty budget. No shroud model, specimen, simulation result, or physical performance result has been produced.
+The current implementation checks research metadata, provenance and uncertainty
+records. Existing OpenFOAM airfoil results are benchmark evidence, not shroud
+predictions or Fluent qualification. No shroud model or physical performance result
+has been produced. The hardware-oriented reading routes below are retained context;
+the owner decision governs the active scope and completion criteria.
 
 ## What to inspect first
 
 1. Read the [2026-09-09 source-review decision](day3-source-review.md) and the [2026-09-15 candidate triage](prior-art-search-2026-09-14-screening.md). Together they identify what the accessible literature establishes, which competitor treatments remain unresolved, and which 22 records are queued for close reading.
-2. Read the [research programme](specs/research-programme/proposal.md): validated CFD before hardware, a budget fed by owner decisions, and a pilot only if the budget says it can see the effect.
+2. Read the [current scope decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study), then the [earlier research programme](specs/research-programme/proposal.md) only for background.
 3. Inspect [Experiment 01](experiment-01-rigid-defect-duct.md) and the [measurement-requirements draft](measurement-system-spec.md); the draft's open-input register says which numbers the owner still has to decide.
 4. Run the [README quick start](../README.md#quick-start). These are offline integrity checks after dependency installation, not aerodynamic calculations.
 5. Read the [claim ledger](claim-ledger.md) and [disclosure boundary](../CONTRIBUTING.md#public-disclosure-boundary) before proposing stronger claims or adding implementation-sensitive geometry.
@@ -32,11 +40,13 @@ The current implementation validates research metadata, source provenance, prior
 | Executable checks | [Scripts](../scripts/), [tests](../tests/), [CI](../.github/workflows/ci.yml) | Schema, documentation, and acquisition-integrity checks |
 | Stage A gate | [Budget register](clearance-measurement-budget.csv), [calculator](../scripts/clearance_uncertainty_budget.py), [requirements draft](measurement-system-spec.md) | Verdict `INPUTS_PENDING` with seven pending terms; the draft names who closes each input |
 | Verification records | [2026-09-14 evidence](../evidence/task-2026-09-14/README.md), [day-3 evidence](../evidence/task-day3-2026-09-09/README.md) | Commands, baseline, limitations, and software outputs |
-| Future study outputs | [Data contract](../data/README.md), [results notice](../results/README.md) | No CAD, FEA, CFD, or measured results are available |
+| Computational evidence | [A0.1 benchmark report](cfd-validation-a01.md), [ANSYS readiness](../evidence/task-cad-ansys-2026-09-29/README.md) | Existing benchmark limitations and executed software checks; no shroud prediction or physical measurement |
 
 Two acquisitions exist. The historical 2026-09-09 export keeps all 499 raw rows, 50 of them without successful query-log support, and the acquisition ledger preserves them with that gap visible. The canonical 2026-09-11 public export has 450 rows, all traceable, and is the only one credited in the coverage record. An identifier match is not a reviewed study; the 22 queued candidates are unread.
 
 ## First-experiment decision
+
+This section describes the deferred hardware extension, not the computational finish.
 
 This table is a reading aid; the [protocol](experiment-01-rigid-defect-duct.md) and [research plan](research-plan.md) are authoritative. All numerical gates below are **provisional design decisions**, not achieved results or a completed preregistration.
 
@@ -75,7 +85,7 @@ The [directed dependency audit](research-dependency-audit.md) explains the separ
 
 ## Where the next work lives
 
-- [Research programme](specs/research-programme/proposal.md), [tiers and triggers](specs/research-programme/scope.md), [first work order](specs/research-programme/plan.md): Study A0 validation, Study A CFD parametric with an uncertainty band, Study B budget feed, then a gated pilot.
+- [Owner decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study) and [readiness evidence](../evidence/task-cad-ansys-2026-09-29/README.md): current computational scope and next execution task. The [earlier programme](specs/research-programme/proposal.md) is retained background.
 - [Gate-driven roadmap](../ROADMAP.md): measurement-first sequence and conditional expansion.
 - [Literature review and catalogue](literature/README.md): 1,736 identified records by theme, with the read state of each and a prioritised reading queue.
 - [Research task definitions](TASKS.md): exact-gap, metrology, defect-basis, and disclosure prerequisites.

@@ -1,0 +1,92 @@
+{
+  "evidence_state": "executed software-readiness check; no geometry, mesh or flow solution",
+  "base_commit": "f349804",
+  "engineering_audit_revision": "6e55653246ecf39f6b40927a4697d0218027b719",
+  "host_inventory": {
+    "utc": "2026-09-29T21:05:56.8744681Z",
+    "os": "Microsoft Windows 11 Home",
+    "total_memory_kib": 24529336,
+    "free_memory_kib": 11092140,
+    "cpu": [
+      {
+        "Name": "AMD Ryzen 5 5600G with Radeon Graphics         ",
+        "NumberOfCores": 6,
+        "NumberOfLogicalProcessors": 12
+      }
+    ],
+    "disk": [
+      {
+        "DeviceID": "C:",
+        "Size": 998969962496,
+        "FreeSpace": 32236720128
+      },
+      {
+        "DeviceID": "D:",
+        "Size": 2000396742656,
+        "FreeSpace": 809912975360
+      }
+    ],
+    "ansys_installs": [
+      {
+        "release_directory": "v261",
+        "student_install": true,
+        "fluent_present": true,
+        "cfx_present": true
+      }
+    ],
+    "solidworks_present": true,
+    "active_solver_processes": []
+  },
+  "fluent_startup": {
+    "status": "PASS",
+    "product": "ANSYS Fluent 2026 R1 Student",
+    "precision": "double",
+    "dimensions": 3,
+    "solver_processes": 1,
+    "license_parallel_processes_reported": 4,
+    "command": "Start-Process -FilePath \"C:\\Program Files\\ANSYS Inc\\ANSYS Student\\v261\\fluent\\ntbin\\win64\\fluent.exe\" -ArgumentList @(\"3ddp\",\"-g\",\"-t1\",\"-i\",\"D:\\ShroudCFD\\startup-20260929-wait\\exit.jou\") -WorkingDirectory \"D:\\ShroudCFD\\startup-20260929-wait\" -Wait -PassThru",
+    "finished_utc": "2026-09-29T21:31:03.4645199Z",
+    "launcher_exit_code": 0,
+    "launcher_elapsed_seconds": 50.6622078,
+    "journal": "exit.jou",
+    "raw_transcript_host_path": "D:\\ShroudCFD\\startup-20260929-wait\\fluent-20260929-173022-5464.trn",
+    "raw_transcript_sha256": "86cf54cb67ff9b3dbb36892a7e35eca28e1b7ffa0b0093a017c425d17eefc565",
+    "verified_from_transcript": [
+      "license granted",
+      "compute node connected",
+      "journal read",
+      "exit command processed",
+      "auto-transcript stopped"
+    ],
+    "initial_detached_attempt": {
+      "status": "NOT_VERIFIED",
+      "directory": "D:\\ShroudCFD\\startup-20260929",
+      "observation": "Launcher returned but no transcript was found and redirected logs were empty. Retained; not counted as success.",
+      "retry_change": "Keep the SSH session attached using PowerShell Start-Process -Wait."
+    },
+    "scope_limits": [
+      "No CFD case loaded or solved.",
+      "No CAD part authored or reopened.",
+      "No CFX license checkout attempted.",
+      "No mesh-count ceiling or full-machine throughput test performed."
+    ]
+  },
+  "published_student_limits": {
+    "checked_date": "2026-09-29",
+    "source": "https://ansys.synopsys.com/academic/students/ansys-student",
+    "source_section": "Problem Size Limits; Terms of Use",
+    "fluid_cells_or_nodes": 1000000,
+    "cpu_hpc_cores": 4,
+    "geometry_export": false,
+    "permitted_use_summary": "Educational/self-learning/student projects and demonstrations under the applicable license.",
+    "interpretation": "Published product limits, not measured solver capacity. Use native CAD exports; do not rely on Student geometry export. Recheck actual case/license compatibility before meshing. Do not coarsen away the tip-gap physics or assume invalid sector symmetry to fit."
+  },
+  "remaining_readiness": [
+    "Reference geometry and source uncertainties resolved.",
+    "Chosen computational inputs registered.",
+    "Baseline geometry import and rotating-region setup exercised.",
+    "Mesh/resource feasibility measured for this case.",
+    "Prospective convergence and comparison criteria frozen."
+  ],
+  "scientific_validation": false
+}

@@ -1,5 +1,11 @@
 # Segmented Shroud Yield — long-term research backlog
 
+**Current scope:** the [CAD–ANSYS owner decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+sets a computational finish line. The backlog below retains the broader hardware
+programme and its original done-conditions; none is silently closed by this decision.
+Its floor/ceiling and physical prerequisites do not replace the computational release
+conditions. The [sprint ledger](SPRINT_TASKS.csv) owns active work status.
+
 ## CAD decomposition of the research backlog
 
 [CAD_PLAN.md](CAD_PLAN.md) and [CAD_TASKS.csv](CAD_TASKS.csv) split SSY-04 into independently reviewable geometry and inspection tasks. SSY-CAD-01 through SSY-CAD-07 refine SSY-03/04; they do not duplicate completion status or close SSY-06. SSY-CAD-08/09 have details and estimates withheld until XC-02 closes. SSY-CAD-10 covers reproducible geometry tooling. The original 17 research-level tasks and dependency audit are unchanged; the ten CAD entries are a separate, currently parked work breakdown. Cross-ledger dependencies are checked through CAD_DEPENDENCIES.json. Owner authorized merging this PR's current documents to main; research/disclosure gates remain unresolved until their own evidence arrives.

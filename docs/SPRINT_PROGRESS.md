@@ -1,5 +1,15 @@
 # Sprint progress
 
+## 2026-09-29 — computational finish selected; Fluent startup exercised
+
+The [owner decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+sets CAD–ANSYS results as the completion target. The scope decision and executed
+[host/software readiness check](../evidence/task-cad-ansys-2026-09-29/README.md)
+are recorded in SSY-R24. No shroud CAD, mesh or flow solution was produced.
+SSY-R25 is next: resolve reference inputs and execute baseline CAD/import/mesh
+feasibility before releasing a defect sweep. Hardware metrology and funding are
+future-work gates, not prerequisites for this computational version.
+
 ## 2026-09-29 — a terminated run is no longer reported as a failed one, and the identifiability tolerances have a stated basis
 
 Ledger rows SSY-R23 (done) and SSY-R22 (F4 done, F1 still blocked).

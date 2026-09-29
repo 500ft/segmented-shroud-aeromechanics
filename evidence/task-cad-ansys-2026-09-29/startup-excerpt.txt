@@ -1,0 +1,7 @@
+Selected transcript lines; local path redacted. Full original hash and host path are in readiness.json.
+Welcome to ANSYS Fluent 2026 R1
+Info: Your license enables 4-way parallel execution.
+Node 0 connecting to the Host ... connection established.
+Reading journal file [local run directory]/exit.jou...
+> /exit
+Auto-Transcript Stop Time:  17:30:57, 29 Sep 2026 Eastern Daylight Time

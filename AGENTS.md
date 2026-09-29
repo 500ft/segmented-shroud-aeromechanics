@@ -56,4 +56,11 @@ critical path below, or record an owner decision. If it does none, don't open it
 - Dependency updates arrive as Dependabot's grouped monthly PRs; don't hand-edit
   pins to chase them.
 
-**Critical path (2026-09-29):** Owner decision: freeze as a research design, or fund the rigid-duct thrust-stand experiment. Until that decision, add no new tooling.
+**Critical path (owner decision, 2026-09-29):** Finish as a CAD–ANSYS computational
+study; see [the scope decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study).
+Confirm the CFD execution route, resolve the reference geometry and computational
+parameter inputs, execute the baseline with mesh/resource evidence, then run the
+bounded defect comparison and report its limitations. Hardware funding and installed
+metrology are not prerequisites for this computational finish. Do not expand the
+checker stack or build a new CAD framework; use the existing engineering-audit
+machinery. No simulation result is evidence of deployment reliability or protection.

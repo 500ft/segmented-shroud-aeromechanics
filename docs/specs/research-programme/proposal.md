@@ -1,5 +1,11 @@
 # Segmented-shroud aeromechanics — research programme
 
+**Historical programme proposal.** The [CAD–ANSYS owner decision](../../decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+now owns the active finish line, toolchain and computational release conditions.
+This document explains the earlier programme and existing studies; its hardware
+sequence, provisional run estimates and study-specific gates do not override that
+decision. No new simulation result is implied by the scope change.
+
 Status: proposal for owner review, 2026-09-16. Three-year, gate-driven; one publishable unit per phase. Nothing here is a result. Evidence state of the repository: research design; no CAD, CFD, FEA or measured results.
 
 Scope of this document: the owner's four-study outline (A CFD parametric, B budget feed, C pilot, D decisive) stress-tested, revised where it does not survive, and turned into studies with a first experiment, a kill criterion and an honest claim boundary each. Companion files: [scope.md](scope.md) (what is built when, with triggers) and [plan.md](plan.md) (the first work order). Repository rules that bind every study: [research plan](../../research-plan.md), [claim ledger](../../claim-ledger.md), [measurement-requirements draft](../../measurement-system-spec.md), [prior-art boundary](../../prior-art.md), and the [disclosure boundary](../../../CONTRIBUTING.md#public-disclosure-boundary) (XC-02 open: no closure-mechanism detail).

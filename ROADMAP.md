@@ -1,90 +1,104 @@
-# Research Roadmap
+# Roadmap
 
-## Current finish line — CAD–ANSYS computational study
+This is the plan for finishing the project. The owner's scope decision is in
+[docs/decision-log.md](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study);
+task status is in [docs/SPRINT_TASKS.csv](docs/SPRINT_TASKS.csv); work history
+is in [docs/SPRINT_PROGRESS.md](docs/SPRINT_PROGRESS.md) and
+[docs/REVIEW_READY.md](docs/REVIEW_READY.md).
 
-The owner selected simulation-only completion in the
-[scope decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study).
-That decision owns the deliverables, computational release conditions and claim limits.
+## Finish line (owner decision, 2026-09-29)
 
-The active sequence is execution-route readiness → source-resolved reference CAD →
-baseline CFD and measured mesh/resource feasibility → bounded defect comparison →
-final computational report. The [readiness record](evidence/task-cad-ansys-2026-09-29/README.md)
-records what has actually been checked. The [sprint ledger](docs/SPRINT_TASKS.csv)
-owns task status. No hardware funding is required to finish this version.
+A computational study in CAD and ANSYS Fluent: how seams and radial steps in a
+rigid shroud change the shaft power a ducted rotor needs at the same total
+thrust, for one rotor and one operating point. The deliverables are parametric
+CAD, solver inputs and results, mesh-convergence and model-sensitivity checks,
+and a report that says which differences the numbers resolve. "No resolvable
+difference" is a valid result. No thrust stand or hardware purchase is needed.
 
-## Deferred experimental extension
+## The constraint that shapes the plan
 
-The stages below describe the retained hardware programme. They do not block the
-computational finish and are not newly authorized by the scope decision.
-The project advances through them only when their measurement/model gates close.
+The installed licence is ANSYS Student 2026 R1, limited to 1,000,000 cells or
+nodes and 4 cores ([readiness record](evidence/task-cad-ansys-2026-09-29/README.md)).
+The decision log allows a rotating sector only when the rotor and shroud
+geometry genuinely repeat around the axis, not just to fit the licence.
 
-## Stage 0 — Research contract
+- A blade-resolved, full-annulus model of a rotor in a seamed duct, with the
+  tip gap resolved, is unlikely to fit in 1M cells. The baseline mesh study
+  (step 3) measures this before any sweep is planned. If it does not fit, the
+  fallback is a modelled rotor (for example Fluent's virtual blade model, if
+  the Student build includes it). That still captures seam and step effects on
+  the duct's thrust, but not tip-leakage flow, and the question narrows to
+  match.
+- The seam count can keep the geometry periodic. With an 8-blade rotor, 8, 4 or
+  2 evenly spaced seams make a 45°, 90° or 180° sector legitimate, because the
+  combined geometry really does repeat. With the 2-blade Caradonna–Tung rotor,
+  the smallest legitimate sector is 180°.
 
-**Status:** complete for the concept repository.
+## Reference rotor: owner decision needed
 
-- Define the segmented-shroud causal chain.
-- Separate established clearance and deployable-mechanism research from the candidate gap.
-- Register hypotheses, baselines, observables, and failure branches.
-- Define specimen and data manifests.
+The decision log keeps the **Caradonna–Tung** rotor as the candidate reference.
+Its geometry is exact (two untwisted NACA 0012 blades), but it was tested
+without a duct, so no ducted result could be validated against it.
 
-**Exit gate:** a cold reader can distinguish planned work from evidence and identify the smallest experiment that could reject the direction.
+The repository has already read a better-matched source:
+[Akturk and Camci](docs/reading-records-2026-09-25.json) (ASME GT2011-46356;
+J. Turbomachinery 136(2), 2014). It is an 8-blade ducted fan for VTOL UAVs,
+279.4 mm tip radius at 3500 rpm, with thrust and power measured at several tip
+clearances, and duct and rotor thrust measured separately. Its drawback is that
+blade sections and the duct profile are given only as figures, so the geometry
+has to be digitised, with that uncertainty stated.
 
-## Stage 1 — Measurement-system qualification
+Recommendation: use Akturk–Camci as the baseline, and keep Caradonna–Tung only
+as a check of the rotor-only solver setup.
 
-**Status:** not started. A [measurement-requirements draft](docs/measurement-system-spec.md) exists with its inputs open; no channel has been calibrated or qualified.
+## Where it stands (2026-09-30)
 
-- Establish clearance resolution and repeatability.
-- Calibrate thrust, voltage, current, RPM, and temperature channels.
-- Quantify stand drift, warm-up behavior, and alignment uncertainty.
-- Complete guarded low-energy commissioning.
+- Fluent Student starts on the CAD host: licence checkout, compute node,
+  journal read and clean exit. No case has been loaded or solved.
+- An earlier OpenFOAM check on a 2D NACA 0012 airfoil reproduces published
+  reference computations within 0.4%. Its validation verdict is
+  `INCOMPLETE_UNCERTAINTY`, because one uncertainty component was never
+  quantified ([A0.1 report](docs/cfd-validation-a01.md)). It does not qualify
+  Fluent.
+- The analysis pipeline for the final comparison exists and is tested on
+  synthetic fixtures only.
+- No shroud geometry, mesh or flow solution exists.
 
-**Exit gate:** measurement uncertainty is smaller than the minimum defect and performance difference the experiment is intended to resolve.
+## What's left
 
-## Stage 2 — Adjustable rigid defect duct
+| # | Step | Who | Done when |
+|---|---|---|---|
+| 1 | Choose the reference rotor: Akturk–Camci (recommended) or Caradonna–Tung | Owner | Recorded in the decision log. **Current step.** |
+| 2 | Resolve the reference geometry and register rotor, duct, operating point and clearance convention, keeping sourced values apart from chosen ones | Agent | One geometry record, reviewed |
+| 3 | Build the baseline CAD and mesh; measure cell count and run time against the 1M-cell, 4-core limit | Agent, on the CAD host | Go or no-go on blade-resolved versus a modelled rotor, recorded with the numbers |
+| 4 | Solve the baseline, check mesh convergence, compare with the reference's published thrust and power | Agent | Baseline report with the agreement stated |
+| 5 | Run the seam and step cases at matched thrust, with the declared sensitivity checks | Agent | Comparison table with numerical uncertainty |
+| 6 | Write the report: which differences are resolved and which are not. Update the README and portfolio | Agent | Merged |
 
-**Status:** blocked on Stage 1.
+Rules carried from the decision: no new checker framework (use the existing
+engineering-audit CAD machinery), and no simulation result is presented as
+evidence of deployment reliability or protection.
 
-- Compare open rotor, monolithic duct, and adjustable rigid duct.
-- Test uniform clearance, two-lobe ovality, seam opening, and local step conditions.
-- Randomize condition order and compare at matched thrust.
-- Close the model-identifiability gate in docs/research-plan.md before choosing a family holdout. Distinguish supported empirical interpolation from physically constrained extrapolation.
+## Not in this version: the experimental programme
 
-**Exit gate:** a defect-aware model improves held-out error by at least 20% over a mean-clearance model and reaches below 10% prediction error.
+The original hardware programme is kept as a future extension. None of it
+blocks the computational finish.
 
-**Failure branch:** if topology adds no value beyond uncertainty, publish the simpler mean-clearance tolerance result and stop deployable-mechanism integration.
-
-## Stage 3 — Closure-mechanism repeatability
-
-**Status:** blocked on Stage 2.
-
-- Compare an ordinary over-center closure with a self-centering, preload-controlled interface.
-- Match nominal geometry and ring mass.
-- Measure deployment success, preload, seams, ovality, energy barrier, stiffness, and proof-load margin.
-- Treat specimens—not cycles—as the primary independent units.
-
-**Exit gate:** the mechanism changes the defect distribution enough for the Stage 2 model to predict a meaningful yield difference.
-
-## Stage 4 — Coupled aero-mechanical yield
-
-**Status:** blocked on Stage 3.
-
-- Freeze the defect-to-performance model.
-- Predict held-out mechanism specimens or an unseen defect family.
-- Estimate deployment, lock, clearance, performance, and joint yield with uncertainty.
-- Assess performance-duct qualification under registered aero-mechanical criteria. Failed aerodynamic qualification leaves protective performance unknown.
-
-**Independent guard gate:** a protective-guard label requires separate registered
-impact, containment, deflection, deployment/lock and power-penalty tests. Those
-tests may be deferred only if the guard claim is also deferred. An aerodynamic
-null result does not establish protection.
-
-## Stage 5 — Optional extensions
-
-These do not block the minimum publishable core:
-
-- Second rotor scale
-- Thermal and vibration aging
-- Guard impact and blade-containment testing (optional project extension; mandatory before any protective-guard claim)
-- Acoustics
-- Free-flight integration
-- In-flight transformation
+- **Stage 1 — Measurement qualification.** Clearance, thrust, voltage, current,
+  RPM and temperature channels calibrated; stand drift and warm-up quantified.
+  Exit gate: measurement uncertainty smaller than the smallest defect and
+  performance difference the experiment has to resolve. A
+  [requirements draft](docs/measurement-system-spec.md) exists.
+- **Stage 2 — Adjustable rigid defect duct.** Open rotor, monolithic duct and
+  adjustable duct compared at matched thrust under uniform clearance, two-lobe
+  ovality, seam opening and local steps. Exit gate: a defect-aware model
+  improves held-out error by at least 20% over a mean-clearance model and
+  reaches below 10% prediction error. Failure branch: if defect geometry adds
+  nothing beyond uncertainty, publish the simpler mean-clearance tolerance
+  result and stop mechanism work.
+- **Stage 3 — Closure-mechanism repeatability**, **Stage 4 — coupled
+  aero-mechanical yield**, and **Stage 5** extensions (second rotor scale,
+  aging, acoustics, free flight). Each is gated on the stage before it.
+- **Guard claims** need their own impact, containment, deflection and
+  power-penalty tests. An aerodynamic result, positive or null, says nothing
+  about protection.

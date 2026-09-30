@@ -10,10 +10,8 @@ conditions. The [sprint ledger](SPRINT_TASKS.csv) owns active work status.
 
 [CAD_PLAN.md](CAD_PLAN.md) and [CAD_TASKS.csv](CAD_TASKS.csv) split SSY-04 into independently reviewable geometry and inspection tasks. SSY-CAD-01 through SSY-CAD-07 refine SSY-03/04; they do not duplicate completion status or close SSY-06. SSY-CAD-08/09 have details and estimates withheld until XC-02 closes. SSY-CAD-10 covers reproducible geometry tooling. The original 17 research-level tasks and dependency audit are unchanged; the ten CAD entries are a separate, currently parked work breakdown. Cross-ledger dependencies are checked through CAD_DEPENDENCIES.json. Owner authorized merging this PR's current documents to main; research/disclosure gates remain unresolved until their own evidence arrives.
 
-The active 2026-09-05 integrity sprint is governed by [SPRINT_ROADMAP.md](SPRINT_ROADMAP.md)
-and the sole status ledger [SPRINT_TASKS.csv](SPRINT_TASKS.csv). This document
-retains long-term research dependencies; “executable now” means no intrinsic
-hardware dependency, not completed predecessors. It is not the active ready queue.
+This is the long-term backlog. The current plan and finish line are in
+[ROADMAP.md](../ROADMAP.md).
 
 > **Objective.** Produce the strongest, most honestly packaged evidence—not a finished flying
 > shroud. Priority flows from causal isolation, measurement credibility, and executability. A

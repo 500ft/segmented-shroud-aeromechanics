@@ -282,7 +282,7 @@ because a commit cannot embed its own identity. No deployment, publication,
 outreach or spending occurred. Original checkout/user changes were preserved.
 Base includes the existing unmerged task PR #1 head; it is not origin/main.
 
-[Roadmap](SPRINT_ROADMAP.md) · [Authoritative ledger](SPRINT_TASKS.csv) ·
+[Roadmap](https://github.com/500ft/segmented-shroud-aeromechanics/blob/7c8eb755a171bc66ee712987665f2f61396c0d9d/docs/SPRINT_ROADMAP.md) · [Authoritative ledger](SPRINT_TASKS.csv) ·
 [Progress](SPRINT_PROGRESS.md) · [Selected candidate hashes](../evidence/sprint-2026-09-05/candidate.json).
 
 ## Completed deliverables and evidence

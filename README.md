@@ -13,10 +13,9 @@ the same average tip gap.
 [The question](#the-question) · [Where it stands](#where-it-stands) ·
 [Roadmap](ROADMAP.md) · [Quick start](#quick-start) · [Reviewer guide](docs/START_HERE.md)
 
-![Illustration of a rotor in a segmented shroud with a visible seam step](docs/media/hero.jpg)
+![Project overview: build the baseline model now, then solve and check it, then run seam and step cases comparing shaft power at matched thrust](docs/media/project-overview.svg)
 
-*Concept illustration (AI-generated), not project geometry or a result.
-No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.*
+*Project overview diagram of the three remaining steps. There are no results yet.*
 
 ## The question
 
@@ -94,6 +93,7 @@ solve, and the seam and step cases.
 ## Limits
 
 - Everything so far is software, literature and planning. No shroud CFD has run.
+  No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.
 - The study compares predicted shaft power. Electrical efficiency, rubbing risk
   and deployment reliability are outside it.
 - A good aerodynamic result would say nothing about whether the shroud protects

@@ -1,6 +1,22 @@
 # Research Roadmap
 
-The project advances only when the preceding measurement or model gate closes.
+## Current finish line — CAD–ANSYS computational study
+
+The owner selected simulation-only completion in the
+[scope decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study).
+That decision owns the deliverables, computational release conditions and claim limits.
+
+The active sequence is execution-route readiness → source-resolved reference CAD →
+baseline CFD and measured mesh/resource feasibility → bounded defect comparison →
+final computational report. The [readiness record](evidence/task-cad-ansys-2026-09-29/README.md)
+records what has actually been checked. The [sprint ledger](docs/SPRINT_TASKS.csv)
+owns task status. No hardware funding is required to finish this version.
+
+## Deferred experimental extension
+
+The stages below describe the retained hardware programme. They do not block the
+computational finish and are not newly authorized by the scope decision.
+The project advances through them only when their measurement/model gates close.
 
 ## Stage 0 — Research contract
 

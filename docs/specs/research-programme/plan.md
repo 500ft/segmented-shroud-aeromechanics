@@ -1,5 +1,12 @@
 # Work order — Study A0 validation ladder and Study A preregistration
 
+**Current authority:** the [CAD–ANSYS owner decision](../../decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+supersedes this work order's solver route, mandatory ladder sequence and project finish
+line. This older work order is retained to interpret existing OpenFOAM artifacts;
+its pending checkboxes are not the active ready queue. Source evidence and unresolved
+physics/geometry questions remain relevant; see the decision and sprint ledger for
+the next computational task. Hardware-budget closure is not a computational gate.
+
 Status: proposed, for owner review; build starts only from the merged revision, on `task/research-programme-a0`. Date: 2026-09-16, revised the same day after the owner's baseline decision. Design: [proposal.md](proposal.md); tiers: [scope.md](scope.md); case definitions: [a0-validation-cases.md](a0-validation-cases.md). Status of research tasks lives only in the [sprint ledger](../../SPRINT_TASKS.csv); checkboxes here track implementation.
 
 Owner decisions taken 2026-09-16: the validation baseline is a standard aircraft wing (A0.1 airfoil, A0.2 wing-section rotor); the budget-feed study is out of this work order and is not touched.

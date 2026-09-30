@@ -1,6 +1,6 @@
 # Segmented Shroud Aeromechanics
 
-A measurement-first study of how seams, distortion, and reconstruction error affect rotor-shroud performance.
+A CAD–ANSYS computational study of how seams and misalignment affect predicted rotor-shroud performance.
 
 [![Repository checks](https://github.com/500ft/segmented-shroud-aeromechanics/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/segmented-shroud-aeromechanics/actions/workflows/ci.yml)
 ![Evidence: research design, not validated](https://img.shields.io/badge/evidence-research_design%2C_not_validated-415a77)
@@ -12,27 +12,36 @@ A measurement-first study of how seams, distortion, and reconstruction error aff
 
 *AI-generated concept illustration, not fabricated project geometry or measured performance. No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.*
 
+**Current finish line:** the owner selected a simulation-only project, with parametric
+CAD, ANSYS Fluent comparisons, numerical credibility checks and a bounded final report.
+The [scope decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+owns the requirements; a funded thrust stand is not required to complete this version.
+The [host readiness record](evidence/task-cad-ansys-2026-09-29/README.md) records actual
+software checks. No shroud CFD result has yet been produced.
+
 ## The problem
 
 A segmented rotor shroud must reconstruct useful aerodynamic geometry, not simply close into a ring. Seams, local steps, and distortion can change the clearance around the blade tips. An acceptable average gap may conceal a local contact risk or a loss of aerodynamic benefit.
 
-This project asks whether **defect geometry adds predictive information beyond average clearance**. The first comparison uses controlled rigid ducts, keeping deployment mechanics out of the apparatus until the aerodynamic premise is supported.
+This project asks whether **defect geometry adds predictive information beyond average clearance**. The first computational comparison uses controlled rigid-duct geometry, keeping deployment mechanics outside the model.
 
 Neither tip-clearance sensitivity nor generic segmented mechanisms are claimed as new. The [targeted source review](docs/day3-source-review.md) narrows the candidate question to an equal-mean-clearance seam comparison and identifies competing work that still needs resolution.
 
 ## Proposed approach
 
-1. **Qualify the measurements.** Calibrate thrust, electrical power, and clearance; establish uncertainty and stand drift.
-2. **Isolate geometric defects.** Compare uniform, two-lobe, and discrete-seam conditions at equal mean clearance, with open-rotor and monolithic references.
-3. **Compare at matched thrust.** Measure electrical power and dynamic minimum clearance; retain RPM, temperature, vibration, and any contact events.
-4. **Test predictive value.** Compare a defect-aware model with a mean-clearance baseline using a supported, predeclared holdout.
-5. **Expand only if justified.** Mechanism repeatability and aero-mechanical yield are later studies, subject to separate research, metrology, and disclosure gates.
+1. **Establish the execution route.** Confirm CAD/Fluent access and source-resolved reference geometry.
+2. **Build the baseline.** Verify parametric CAD, run the reference CFD, and measure mesh/resource feasibility.
+3. **Compare controlled defects.** Evaluate shaft power at matched total assembly thrust; separate seam opening from mean clearance.
+4. **Check the conclusion.** Assess mesh and model sensitivity, then selected transient comparisons; report unresolved differences explicitly.
+5. **Finish the computational report.** Deliver reproducible geometry, inputs and results within the declared envelope. Hardware and mechanisms are future extensions.
 
 The eventual yield question combines deployment/lock success, sufficient dynamic clearance, and retained aerodynamic benefit. That is a **proposed component-level metric**, not an estimated reliability value. Protection against impact or debris requires an independent guard evaluation.
 
 ## Evidence snapshot
 
-The executable deliverable today is research-integrity tooling, not a rotor model or hardware demonstration.
+Available evidence includes research tooling and an incomplete OpenFOAM benchmark
+validation effort. Those records do not establish Fluent or shroud prediction accuracy.
+See the [A0.1 report](docs/cfd-validation-a01.md) and the scope decision for the distinction.
 
 | Available artifact | What it establishes | Inspect it |
 | --- | --- | --- |
@@ -43,7 +52,7 @@ The executable deliverable today is research-integrity tooling, not a rotor mode
 | Reproducible acquisition ledger | Preserved routes, identifiers, access scope, and explicit provenance gaps | [Ledger](evidence/task-day3-2026-09-09/acquisition-ledger.json), [generator](scripts/acquisition_ledger.py) |
 | Measurement-first experiment contract | Controls, comparison basis, identifiability, and stop conditions | [Experiment 01](docs/experiment-01-rigid-defect-duct.md) |
 | Stage A uncertainty budget and requirements draft | Fail-closed stop rule, verdict `INPUTS_PENDING`; the draft names every open input and who closes it | [Budget register](docs/clearance-measurement-budget.csv), [calculator](scripts/clearance_uncertainty_budget.py), [requirements draft](docs/measurement-system-spec.md) |
-| Research programme | Validated CFD before hardware, a budget fed by owner decisions, a pilot only if the budget can see the effect | [Proposal](docs/specs/research-programme/proposal.md), [tiers and triggers](docs/specs/research-programme/scope.md), [work order](docs/specs/research-programme/plan.md) |
+| Computational scope and execution route | Adopted CAD–ANSYS finish line and observed host/software readiness | [Decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study), [readiness](evidence/task-cad-ansys-2026-09-29/README.md) |
 | Recorded software checks | Documentation/schema/provenance checks—not aerodynamic validation | [2026-09-14 record](evidence/task-2026-09-14/README.md), [day-3 record](evidence/task-day3-2026-09-09/README.md) |
 
 Two acquisitions are retained. The historical 2026-09-09 export keeps **499 raw rows, 50 without successful query-log support**, and is credited for nothing. The canonical 2026-09-11 public export has **450 rows, all traceable to a logged query**, and recovers 4 of the 6 eligible day-1 sources. Identifiers are acquisition records, not reviewed studies. Two competing full texts (S2, S3) remain unread and the 22 queued candidates are unread, so every novelty statement is bounded to inspected sources; see the [source review](docs/day3-source-review.md) and the [triage report](docs/prior-art-search-2026-09-14-screening.md).
@@ -80,7 +89,7 @@ This operation is offline. Unchanged inputs should produce no diff. It does not 
 
 ## First experiment
 
-The first study is an **adjustable rigid-defect duct on a contained rotor stand**. It intentionally excludes deployment mechanisms. Before collecting hypothesis-test data, the measurement uncertainty must be small enough to resolve the registered effect of interest.
+The **adjustable rigid-defect duct on a contained rotor stand** is now a deferred experimental extension. It intentionally excludes deployment mechanisms. Before collecting hypothesis-test data, the measurement uncertainty must be small enough to resolve the registered effect of interest.
 
 The primary comparison is electrical power required at **matched thrust**. A shaft-power result from prior literature is not interchangeable with electrical efficiency, and an RPM-matched comparison is only a secondary diagnostic.
 
@@ -90,7 +99,7 @@ The [full protocol](docs/experiment-01-rigid-defect-duct.md) owns the provisiona
 
 ## Evidence and safety limits
 
-- No CAD, FEA, CFD, fabricated duct, deployable shroud, or measured performance result is included.
+- No shroud CAD or shroud CFD result, fabricated duct, deployable shroud, or measured performance result is included. Existing airfoil CFD records are benchmark evidence only.
 - No aerodynamic benefit, aero-mechanical yield, strike-safety, or protective-guard capability is demonstrated.
 - A complete specimen manifest does not authenticate measurements or release a design for manufacture.
 - Rotor testing requires qualified containment, remote arming/shutdown, current protection, verified clearance, low-energy commissioning, a site-specific risk assessment, and facility approval.
@@ -105,7 +114,7 @@ The [full protocol](docs/experiment-01-rigid-defect-duct.md) owns the provisiona
 | See every source identified so far, and what is actually read | [Literature review and catalogue](docs/literature/README.md) |
 | Inspect variables and statistical claims | [Research plan](docs/research-plan.md) and [claim ledger](docs/claim-ledger.md) |
 | Assess measurement feasibility | [Experiment 01](docs/experiment-01-rigid-defect-duct.md), [measurement-requirements draft](docs/measurement-system-spec.md) |
-| See what is planned next and why | [Research programme](docs/specs/research-programme/proposal.md) |
+| See the active finish line and next task | [Owner decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study), [readiness record](evidence/task-cad-ansys-2026-09-29/README.md) |
 | Trace work and alternative outcomes | [Review index](docs/REVIEW_READY.md), [dependency audit](docs/research-dependency-audit.md), [decision log](docs/decision-log.md) |
 
 ## Contributing and license

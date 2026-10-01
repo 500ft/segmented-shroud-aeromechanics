@@ -34,22 +34,15 @@ geometry genuinely repeat around the axis, not just to fit the licence.
   combined geometry really does repeat. With the 2-blade Caradonna–Tung rotor,
   the smallest legitimate sector is 180°.
 
-## Reference rotor: owner decision needed
+## Reference rotor (decided 2026-09-30)
 
-The decision log keeps the **Caradonna–Tung** rotor as the candidate reference.
-Its geometry is exact (two untwisted NACA 0012 blades), but it was tested
-without a duct, so no ducted result could be validated against it.
-
-The repository has already read a better-matched source:
-[Akturk and Camci](docs/reading-records-2026-09-25.json) (ASME GT2011-46356;
-J. Turbomachinery 136(2), 2014). It is an 8-blade ducted fan for VTOL UAVs,
-279.4 mm tip radius at 3500 rpm, with thrust and power measured at several tip
-clearances, and duct and rotor thrust measured separately. Its drawback is that
-blade sections and the duct profile are given only as figures, so the geometry
-has to be digitised, with that uncertainty stated.
-
-Recommendation: use Akturk–Camci as the baseline, and keep Caradonna–Tung only
-as a check of the rotor-only solver setup.
+The baseline is the 8-blade ducted fan of Akturk and Camci (ASME
+GT2011-46356; J. Turbomachinery 136(2), 2014): 279.4 mm tip radius at 3500 rpm,
+tested in a duct with thrust and power measured at several tip clearances. Its
+blade and duct geometry has to be digitised from figures, and that uncertainty
+is carried. The Caradonna–Tung rotor, tested without a duct, is kept only as a
+rotor-only solver check. Reasons are in the
+[decision log](docs/decision-log.md#2026-09-30--reference-rotor-the-akturkcamci-ducted-fan).
 
 ## Where it stands (2026-09-30)
 
@@ -68,8 +61,8 @@ as a check of the rotor-only solver setup.
 
 | # | Step | Who | Done when |
 |---|---|---|---|
-| 1 | Choose the reference rotor: Akturk–Camci (recommended) or Caradonna–Tung | Owner | Recorded in the decision log. **Current step.** |
-| 2 | Resolve the reference geometry and register rotor, duct, operating point and clearance convention, keeping sourced values apart from chosen ones | Agent | One geometry record, reviewed |
+| 1 | Choose the reference rotor | Owner | Done 2026-09-30: Akturk–Camci ducted fan |
+| 2 | Digitise the Akturk–Camci rotor and duct and register the operating point and clearance convention, keeping values read from the paper apart from digitised and chosen ones | Agent | One geometry record, reviewed. **Current step.** |
 | 3 | Build the baseline CAD and mesh; measure cell count and run time against the 1M-cell, 4-core limit | Agent, on the CAD host | Go or no-go on blade-resolved versus a modelled rotor, recorded with the numbers |
 | 4 | Solve the baseline, check mesh convergence, compare with the reference's published thrust and power | Agent | Baseline report with the agreement stated |
 | 5 | Run the seam and step cases at matched thrust, with the declared sensitivity checks | Agent | Comparison table with numerical uncertainty |

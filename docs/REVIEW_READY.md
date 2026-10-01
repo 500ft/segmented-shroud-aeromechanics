@@ -11,9 +11,9 @@ Nothing here has had an independent review.
 
 1. **The computational scope decision** ([decision log](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study))
    and the [roadmap](../ROADMAP.md). Worth checking: whether a useful study
-   fits in the Fluent Student limit of 1M cells and 4 cores, and whether the
-   recommended reference rotor (Akturk–Camci ducted fan) is a better baseline
-   than Caradonna–Tung.
+   fits in the Fluent Student limit of 1M cells and 4 cores, and the reasons for
+   choosing the Akturk–Camci ducted fan as the reference rotor
+   ([decision](decision-log.md#2026-09-30--reference-rotor-the-akturkcamci-ducted-fan)).
 2. **The ANSYS readiness record**
    ([record](../evidence/task-cad-ansys-2026-09-29/README.md)). Fluent starts,
    checks out its licence and exits cleanly. No case has been solved.

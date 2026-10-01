@@ -1,5 +1,43 @@
 # Decision Log
 
+## 2026-09-30 — Reference rotor: the Akturk–Camci ducted fan
+
+**Decision:** the baseline rotor and duct for the computational study are the
+8-blade ducted fan of Akturk and Camci (ASME GT2011-46356; J. Turbomachinery
+136(2):021004, 2014), 279.4 mm tip radius at 3500 rpm. The owner delegated this
+choice on 2026-09-30 ("make a decision for the other repos"); it was made by
+Claude on the owner's behalf and is recorded here as the owner's decision.
+
+**Why this rotor.**
+- It was tested inside a duct, with thrust and power measured at several tip
+  clearances and duct and rotor thrust measured separately. That is the
+  comparison this study needs a baseline for.
+- The Caradonna–Tung rotor was tested without a duct, so no ducted result
+  could be checked against its data.
+- Eight blades let seam counts of 8, 4 or 2 make a 45°, 90° or 180° sector
+  model legitimate, because the combined geometry genuinely repeats. That is
+  the only legitimate way to fit a seamed case inside the 1M-cell licence
+  limit; with two blades the smallest legitimate sector is 180°.
+- The paper is already read
+  ([reading record](reading-records-2026-09-25.json), evidence grade B for the
+  measured thrust and power response to tip clearance).
+
+**What it costs.** Blade sections and the duct profile are given only as
+figures, so the geometry has to be digitised, and that digitising uncertainty
+is carried into the baseline comparison. The paper reports no Reynolds or Mach
+number, transition state, numerical uncertainty or experimental uncertainty for
+its coefficients; derived values (tip Mach 0.299, tip-chord Reynolds about
+4.3 × 10⁵) are computed here and labelled as such.
+
+**Consequences.**
+- Caradonna–Tung is dropped as the reference. It stays available as a
+  rotor-only solver-setup check, used only if the blade-resolved route is chosen
+  in roadmap step 3.
+- Roadmap step 2 starts: digitise and register the rotor, duct, operating point
+  and clearance convention, keeping values read from the paper apart from
+  digitised and chosen ones.
+- The A0 validation cases and the uncertainty decision record are unchanged.
+
 ## 2026-09-29 — Finish as a CAD–ANSYS computational study
 
 **Owner decision:** “lets go with the CAD-ANSYS setup”. The owner also authorized

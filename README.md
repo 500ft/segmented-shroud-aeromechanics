@@ -84,11 +84,11 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-The first step is the owner's: choose the reference rotor. The roadmap
-recommends the Akturk–Camci 8-blade ducted fan, which was tested with a duct
-at several tip clearances, over the unducted Caradonna–Tung rotor. After that
-come the reference geometry, the baseline mesh and its cost, the baseline
-solve, and the seam and step cases.
+The reference rotor is chosen: the Akturk–Camci 8-blade ducted fan, which was
+tested with a duct at several tip clearances. The next step is digitising its
+blade and duct geometry from the paper, then the baseline mesh and its cost,
+the baseline solve, and the seam and step cases. The [roadmap](ROADMAP.md) has
+the steps.
 
 ## Limits
 

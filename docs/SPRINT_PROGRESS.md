@@ -7,6 +7,9 @@ log is kept at
 
 ## Week of 2026-09-28
 
+- **09-30** Reference rotor decided: the Akturk–Camci 8-blade ducted fan,
+  tested in a duct at several tip clearances. Caradonna–Tung stays only as a
+  rotor-only solver check. Next: digitise its geometry.
 - **09-30** Roadmap for the computational finish: the Fluent Student licence
   caps a model at 1M cells and 4 cores, so the baseline mesh study decides how
   the rotor is modelled. The Akturk–Camci ducted fan is recommended as the

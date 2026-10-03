@@ -2,7 +2,7 @@
 
 A shroud around a drone rotor can add thrust, but only if it stays close to the
 blade tips all the way round. A shroud built in segments has seams and small
-steps where the pieces meet. This project uses CAD and ANSYS Fluent to find out
+steps where the pieces meet. The proposed study would use CAD and ANSYS Fluent to find out
 how much those seams and steps cost in power, compared with a smooth shroud with
 the same average tip gap.
 
@@ -13,16 +13,16 @@ the same average tip gap.
 [The question](#the-question) · [Where it stands](#where-it-stands) ·
 [Roadmap](ROADMAP.md) · [Quick start](#quick-start) · [Reviewer guide](docs/START_HERE.md)
 
-![Project overview: build the baseline model now, then solve and check it, then run seam and step cases comparing shaft power at matched thrust](docs/media/project-overview.svg)
+![Proposed workflow: baseline model, solver checks, then seam and step comparisons at matched thrust](docs/media/project-overview.svg)
 
-*Project overview diagram of the three remaining steps. There are no results yet.*
+*Proposed CFD workflow. The existing airfoil check is described below.*
 
 ## The question
 
 Tip clearance matters for any ducted rotor, and that is well known. The
 narrower question here is whether the shape of the defects adds information
 beyond the average gap: two shrouds with the same mean clearance, one smooth and
-one with seams or steps, compared at the same total thrust. The main output is
+one with seams or steps, compared at the same total thrust. The intended output is
 the shaft power each needs.
 
 The study uses rigid geometry only, so deployment mechanisms stay out of the
@@ -45,10 +45,13 @@ needed to finish ([decision](docs/decision-log.md#2026-09-29--finish-as-a-cadans
 - An earlier OpenFOAM check on a 2D NACA 0012 airfoil matches published
   reference computations within 0.4%. Its full validation uncertainty is
   incomplete ([A0.1 report](docs/cfd-validation-a01.md)).
-- The analysis pipeline for the final comparison is written and tested on
-  synthetic data.
+- The existing [analysis pipeline](scripts/analysis_pipeline.py) computes mean
+  electrical input power as `mean(voltage × current)` and interpolates it to
+  matched thrust. It is tested on synthetic data. CFD shaft-power extraction
+  from rotor torque times angular velocity has not been implemented.
 
-No shroud geometry, mesh or flow solution exists yet.
+Partial geometry digitisation and exports are [preserved as WIP](https://github.com/500ft/segmented-shroud-aeromechanics/tree/c4f6b5268298fd18c2c0d3ae618a18338e3c1c93/shutdown-preserved/geometry).
+They have not been merged or validated. No shroud mesh or flow solution exists.
 
 ## Quick start
 
@@ -85,16 +88,16 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 ## What's next
 
 The reference rotor is chosen: the Akturk–Camci 8-blade ducted fan, which was
-tested with a duct at several tip clearances. The next step is digitising its
-blade and duct geometry from the paper, then the baseline mesh and its cost,
-the baseline solve, and the seam and step cases. The [roadmap](ROADMAP.md) has
-the steps.
+tested with a duct at several tip clearances. Further reference-record and
+pilot-mesh work awaits owner decision D4: authorize that limited feasibility
+work or close the project. The project remains paused pending that decision;
+the [roadmap](ROADMAP.md) records the status.
 
 ## Limits
 
 - Everything so far is software, literature and planning. No shroud CFD has run.
   No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.
-- The study compares predicted shaft power. Electrical efficiency, rubbing risk
+- The planned CFD study compares predicted shaft power. Electrical efficiency, rubbing risk
   and deployment reliability are outside it.
 - A good aerodynamic result would say nothing about whether the shroud protects
   against impacts; that needs its own tests.

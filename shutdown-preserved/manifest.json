@@ -1,0 +1,256 @@
+{
+  "purpose": "Shutdown preservation only. Snapshots may contain superseded plans and incomplete work. No research was resumed.",
+  "branch": "wip/segmented-shroud-aeromechanics-20261002",
+  "files": [
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/CLAUDE_CLOSEOUT_PLAN_2026-09-25.txt",
+      "preserved_path": "shutdown-preserved/original/CLAUDE_CLOSEOUT_PLAN_2026-09-25.txt",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "22a090a980ca5ffb41cf0affec965a46512805c30e97f1c993450a1f4d994add",
+      "bytes": 33270
+    },
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/CLAUDE_LITERATURE_CRITIQUE_2026-09-24.txt",
+      "preserved_path": "shutdown-preserved/original/CLAUDE_LITERATURE_CRITIQUE_2026-09-24.txt",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "5e8099779cf1901d6bb03a1fda31977a669a7b1fb59619b0b927395243c0ab57",
+      "bytes": 39337
+    },
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/CLAUDE_WEEKLY_PLAN_2026-09-19.txt",
+      "preserved_path": "shutdown-preserved/original/CLAUDE_WEEKLY_PLAN_2026-09-19.txt",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "09083a008f8910e9cafda15c5a701e4b13254d2024faddea642521e3adbcf59b",
+      "bytes": 39486
+    },
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/graphify-out/GRAPH_REPORT.md",
+      "preserved_path": "shutdown-preserved/original/graphify-out/GRAPH_REPORT.md",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "87dd2c172b4e907738fe83e6656ff3f54458754b8c0f6ac00bca9a02e9e74c2b",
+      "bytes": 9217
+    },
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/graphify-out/graph.html",
+      "preserved_path": "shutdown-preserved/original/graphify-out/graph.html",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "9a30d65596f74ea69b5796a47a63f294a6982f7fd876eeac52e7b93a98b5e9d6",
+      "bytes": 160656
+    },
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/graphify-out/graph.json",
+      "preserved_path": "shutdown-preserved/original/graphify-out/graph.json",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "8edc7773e04442c1bbf3185560c49aa68833f8f90cb7d1623af0b3c7a0daafb7",
+      "bytes": 153580
+    },
+    {
+      "original_path": "/Users/redhose/Segmented-Shroud-Yield/graphify-out/manifest.json",
+      "preserved_path": "shutdown-preserved/original/graphify-out/manifest.json",
+      "source_head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "sha256": "6fbde419b352c9b10b178cdf3982ee91fbddffb8e5245dfb492812a820f425e7",
+      "bytes": 3018
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/data/study-a/candidate-design-2026-09-25.json",
+      "preserved_path": "shutdown-preserved/closeout/data/study-a/candidate-design-2026-09-25.json",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "190cc09e769fe7fce1054b7594a0b8c894a8ff161a013a9708e9fb5156a7a364",
+      "bytes": 4471
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/docs/specs/closeout-2026-09-29/plan.md",
+      "preserved_path": "shutdown-preserved/closeout/docs/specs/closeout-2026-09-29/plan.md",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "f4a7536539a2fda56ce28f3dabd44392eb8005065fd7ff56c0182cc90fe452cb",
+      "bytes": 1934
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/docs/specs/research-programme/a0-validation-cases.md",
+      "preserved_path": "shutdown-preserved/closeout/docs/specs/research-programme/a0-validation-cases.md",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "2889b152e832976ff992c0029407bd25a7c27cf6f2987f661d057ff997c3812c",
+      "bytes": 11987
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/docs/specs/research-programme/study-a-candidate-design.md",
+      "preserved_path": "shutdown-preserved/closeout/docs/specs/research-programme/study-a-candidate-design.md",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "a437bfe40730431474a73fb33501afc208d2152af2dc42080f5957ca8b6c725b",
+      "bytes": 5314
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/docs/specs/research-programme/uncertainty-decision-record.md",
+      "preserved_path": "shutdown-preserved/closeout/docs/specs/research-programme/uncertainty-decision-record.md",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "ea4bd39ddcfe0d998e7dd1cceafa233dc8d8411611426135b63c1f16e930ad47",
+      "bytes": 10036
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/scripts/study_a_design.py",
+      "preserved_path": "shutdown-preserved/closeout/scripts/study_a_design.py",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "e7b408fbcc653e4eb8248158e346090ab55fd268c86b6dd469973eee2bdb4c68",
+      "bytes": 11052
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/tests/test_study_a_design.py",
+      "preserved_path": "shutdown-preserved/closeout/tests/test_study_a_design.py",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "78251fbf49ebf9a874682204e410312971bab203fe062f7bc82544dae53cc4ad",
+      "bytes": 9304
+    },
+    {
+      "original_path": "/Users/redhose/shroud-closeout-20260929/tests/test_transient_acceptance.py",
+      "preserved_path": "shutdown-preserved/closeout/tests/test_transient_acceptance.py",
+      "source_head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "sha256": "5d2e2ef1f706f8196a09654e0641908b6540388570cc894993aaae9467bec754",
+      "bytes": 5455
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/ROADMAP.md",
+      "preserved_path": "shutdown-preserved/geometry/ROADMAP.md",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "231122853db1eb6d640e5fc2d461d186daa6ad411ce9bd6fe44c3c5f71aad173",
+      "bytes": 6295
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/data/reference/akturk-camci/README.md",
+      "preserved_path": "shutdown-preserved/geometry/data/reference/akturk-camci/README.md",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "7ae41790638dfef2707445f35c9f876a7c8cf6c892f1db41dfaf2279cd258124",
+      "bytes": 3786
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/data/reference/akturk-camci/blade-stations.csv",
+      "preserved_path": "shutdown-preserved/geometry/data/reference/akturk-camci/blade-stations.csv",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "200986831bbdb5049d5b41609bd401d24ac462a3eb7063f4fe112b239e998475",
+      "bytes": 310
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/data/reference/akturk-camci/geometry.json",
+      "preserved_path": "shutdown-preserved/geometry/data/reference/akturk-camci/geometry.json",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "f82067875c52732824c6298e93cbf92bd378aa7004af71244c21bf1a0d8ac2e1",
+      "bytes": 10556
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/data/reference/akturk-camci/tip-trace-pixels.csv",
+      "preserved_path": "shutdown-preserved/geometry/data/reference/akturk-camci/tip-trace-pixels.csv",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "65a7a372af6b336cc41c69d4ce3849883a11839cdd4520ecdc9ada224983c27d",
+      "bytes": 1409
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/results/generated/reference-geometry/geometry-audit.json",
+      "preserved_path": "shutdown-preserved/geometry/results/generated/reference-geometry/geometry-audit.json",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "dd1923add9a9a719c89e09af988620098298c8b8dc8146f87acd2d7633170179",
+      "bytes": 756
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/results/generated/reference-geometry/tip-section-mm.csv",
+      "preserved_path": "shutdown-preserved/geometry/results/generated/reference-geometry/tip-section-mm.csv",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "b808c29ee907b97e5c7ef7ead22c905d0b1a29faa4e9611d0ccddfdf8b214e7d",
+      "bytes": 5219
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/results/generated/reference-geometry/tip-section-mm.txt",
+      "preserved_path": "shutdown-preserved/geometry/results/generated/reference-geometry/tip-section-mm.txt",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "1fe8276de6a91d2f0dcc4dffd9f7c950ce9466c9d5b464569ab8d081519f246f",
+      "bytes": 1817
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/results/generated/reference-geometry/tip-section.svg",
+      "preserved_path": "shutdown-preserved/geometry/results/generated/reference-geometry/tip-section.svg",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "07919372f0b902aaa0baed036ca6aba5b48e306852a00a5c3af4ee09bf35e0c9",
+      "bytes": 4557
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/scripts/export_reference_geometry.py",
+      "preserved_path": "shutdown-preserved/geometry/scripts/export_reference_geometry.py",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "3167d0772d0f7e3069e9b6ae16b2d6dcaf20bb4a9fdcba043ded43de35846be7",
+      "bytes": 5809
+    },
+    {
+      "original_path": "/Users/redhose/shroud-geometry-0930/tests/test_reference_geometry.py",
+      "preserved_path": "shutdown-preserved/geometry/tests/test_reference_geometry.py",
+      "source_head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "sha256": "5b72d9bb201d7f50aff309267107b9c940eb0dd89cb52e98a6cb85290d1e0f81",
+      "bytes": 3918
+    },
+    {
+      "original_path": "/Users/redhose/Desktop/Segmented-Shroud-Project-Guide.pdf",
+      "preserved_path": "shutdown-preserved/desktop/Segmented-Shroud-Project-Guide.pdf",
+      "sha256": "b10837d61a33e6969c256e919b956920685d7214e148683d0f69f9bd09b00346",
+      "bytes": 69962
+    },
+    {
+      "original_path": "/Users/redhose/Projects/repo-visuals-20260929/segmented-shroud-aeromechanics-pr-body.md",
+      "preserved_path": "shutdown-preserved/visuals/segmented-shroud-aeromechanics-pr-body.md",
+      "sha256": "c655766b696afadd081c762ff2a308e0ee6d10710e91ed19b9f9f0a6992329b9",
+      "bytes": 518
+    },
+    {
+      "original_path": "admin@192.168.1.10:D:\\ShroudCFD\\startup-20260929\\exit.jou",
+      "preserved_path": "shutdown-preserved/cad-host/startup-20260929/exit.jou",
+      "sha256": "75ac40d092bacbac4cfeb7059771ba0149a84ebc38299334b13b1bc41386799a",
+      "bytes": 12
+    },
+    {
+      "original_path": "admin@192.168.1.10:D:\\ShroudCFD\\startup-20260929-wait\\exit.jou",
+      "preserved_path": "shutdown-preserved/cad-host/startup-20260929-wait/exit.jou",
+      "sha256": "75ac40d092bacbac4cfeb7059771ba0149a84ebc38299334b13b1bc41386799a",
+      "bytes": 12
+    }
+  ],
+  "checked_repositories": [
+    {
+      "path": "/Users/redhose/Segmented-Shroud-Yield",
+      "head": "64c5760f7c62405d2595a224b94eb9680e53ea9d",
+      "status": "?? CLAUDE_CLOSEOUT_PLAN_2026-09-25.txt\n?? CLAUDE_LITERATURE_CRITIQUE_2026-09-24.txt\n?? CLAUDE_WEEKLY_PLAN_2026-09-19.txt\n"
+    },
+    {
+      "path": "/Users/redhose/shroud-closeout-20260929",
+      "head": "2317d8fe099e127e246fc2631aa49068f7ebbe63",
+      "status": " M data/study-a/candidate-design-2026-09-25.json\n M docs/specs/research-programme/a0-validation-cases.md\n M docs/specs/research-programme/study-a-candidate-design.md\n M docs/specs/research-programme/uncertainty-decision-record.md\n M scripts/study_a_design.py\n M tests/test_study_a_design.py\n M tests/test_transient_acceptance.py\n?? docs/specs/closeout-2026-09-29/plan.md\n"
+    },
+    {
+      "path": "/Users/redhose/shroud-geometry-0930",
+      "head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "status": " M ROADMAP.md\n?? data/reference/akturk-camci/README.md\n?? data/reference/akturk-camci/blade-stations.csv\n?? data/reference/akturk-camci/geometry.json\n?? data/reference/akturk-camci/tip-trace-pixels.csv\n?? scripts/export_reference_geometry.py\n?? tests/test_reference_geometry.py\n"
+    },
+    {
+      "path": "/Users/redhose/shroud-cad-ansys",
+      "head": "7e30089b8c40653ddfea6b6b02ee4394553bebd0",
+      "status": ""
+    },
+    {
+      "path": "/Users/redhose/Projects/critical-audit-20261002/segmented-shroud-aeromechanics",
+      "head": "ebb3ea6ae39cbfb6004933c808085d62d67f5711",
+      "status": ""
+    },
+    {
+      "path": "/Users/redhose/Projects/repo-visuals-20260929/segmented-shroud-aeromechanics",
+      "head": "7c9caafeaa1ac4ca2e9cbae4fe06f7a157f9703d",
+      "status": ""
+    },
+    {
+      "path": "/Users/redhose/Developer/repo-professionalization-20260910/segmented-shroud-aeromechanics",
+      "head": "61ba9bef59b8ddadeaa0c2842eb01132acbebd44",
+      "status": ""
+    }
+  ],
+  "excluded": [
+    "Credentials and SSH keys: not copied.",
+    "Python bytecode, pytest caches and graphify cache/runtime/cost files: left in their original paths.",
+    "Virtual environments, third-party source downloads and private/session logs: not copied.",
+    "CAD host D:\\ShroudCFD\\startup-20260929 and startup-20260929-wait: empty stdout/stderr logs and raw Fluent transcript excluded. Existing published startup evidence remains in repository history.",
+    "Other repositories and unrelated files: not copied."
+  ]
+}

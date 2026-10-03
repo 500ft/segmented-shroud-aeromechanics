@@ -1,0 +1,225 @@
+{
+  "status": "partial_geometry",
+  "reference": "Akturk and Camci, Tip Clearance Investigation of a Ducted Fan Used in VTOL Unmanned Aerial Vehicles, Part I: Baseline Experiments and Computational Validation",
+  "sources": {
+    "journal": {
+      "url": "https://cengizcamci.github.io/papers/turbo_136_02_021004_part1.pdf",
+      "doi": "10.1115/1.4023468",
+      "sha256": "e964255d431ea095a9e364427213ca9942673da6fd5bb1f336297c66a95d3f1b",
+      "retrieved_local_date": "2026-09-30",
+      "inspected": "Printed pages 021004-2 to 021004-3: Figure 1, Figure 2, Table 1 and section 2.2; operating-point and clearance definitions checked in text."
+    },
+    "conference": {
+      "url": "https://cengizcamci.github.io/papers/GT2011_46356_DUCTED_FAN_1.pdf",
+      "doi": "10.1115/GT2011-46356",
+      "sha256": "f7bca4ddbe2d97e2812b27a5cf350b6f5a91775028d8c662e5aaa519b716ee4d",
+      "retrieved_local_date": "2026-09-30",
+      "inspected": "Printed pages 1, 3-9: nomenclature, Figures 1-2, Table 1, clearance method and performance comparisons."
+    }
+  },
+  "source_history": "The downloaded conference PDF has a different hash from docs/reading-records-2026-09-25.json. This extraction uses the newly hashed copies above; it does not assert byte identity with the earlier retrieval. The historical record is unchanged.",
+  "read": {
+    "hub_radius": {
+      "value": 63.5,
+      "unit": "mm",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Table 1, p. 021004-3"
+    },
+    "tip_radius": {
+      "unit": "mm",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Table 1, p. 021004-3; nominal smallest-clearance rotor",
+      "value_ref": "blade-stations.csv:last.radius_mm"
+    },
+    "blade_count": {
+      "value": 8,
+      "unit": "count",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Table 1, p. 021004-3"
+    },
+    "rotor_pitch": {
+      "value": 55,
+      "unit": "deg",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Table 1, p. 021004-3",
+      "note": "Setting datum not dimensioned; do not apply this angle again to the Figure 2 outline."
+    },
+    "tip_thickness_metric": {
+      "value": 5.15,
+      "unit": "mm",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Table 1, p. 021004-3",
+      "status": "conflicts_with_inch_value"
+    },
+    "tip_thickness_inch": {
+      "value": 0.216,
+      "unit": "in",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Table 1, p. 021004-3",
+      "status": "conflicts_with_metric_value"
+    },
+    "shroud_inner_radius": {
+      "value": 11.15,
+      "unit": "in",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3",
+      "note": "Axial station not dimensioned."
+    },
+    "duct_max_wall_thickness_over_chord": {
+      "value": 0.11,
+      "unit": "1",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3"
+    },
+    "duct_le_radius_over_chord": {
+      "value": 0.0361,
+      "unit": "1",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3"
+    },
+    "diffuser_exit_half_angle": {
+      "value": 6,
+      "unit": "deg",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3"
+    },
+    "diffuser_axial_length": {
+      "value": 117.85,
+      "unit": "mm",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3",
+      "note": "Described as approximate; do not interpret displayed digits as tolerance."
+    },
+    "support_rod_count": {
+      "value": 4,
+      "unit": "count",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3"
+    },
+    "support_rod_diameter": {
+      "value": 12.7,
+      "unit": "mm",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3"
+    },
+    "nominal_speed": {
+      "value": 3500,
+      "unit": "rpm",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Section 2.2, p. 021004-3"
+    },
+    "clearance_labels": {
+      "value": [
+        1.71,
+        3.04,
+        5.17
+      ],
+      "unit": "percent of blade height",
+      "provenance": "read",
+      "source": "journal",
+      "locator": "Conference pp. 1, 7-9 and journal clearance comparison"
+    }
+  },
+  "blade_stations": {
+    "file": "blade-stations.csv",
+    "provenance": "read",
+    "source": "journal",
+    "locator": "Table 1, p. 021004-3; cross-checked with conference Table 1, p. 4",
+    "angles": "beta1 and beta2 are section end angles illustrated against the axial direction in Figure 2, not section stagger or rotor pitch.",
+    "uncertainty": "Transcribed displayed values. Half a last displayed digit is a rounding allowance only; manufacturing and measurement uncertainty are unreported.",
+    "figure_label_conflict": "Figure 2 labels several inner stations differently from Table 1. Use dimensional radii in the table. Do not assign the overlapping curves to table stations by order alone."
+  },
+  "digitised_tip": {
+    "file": "tip-trace-pixels.csv",
+    "provenance": "digitised",
+    "source": "journal",
+    "locator": "Figure 2, isolated r/Rtip=1 profile, p. 021004-3",
+    "image": {
+      "pdf_xref": 16,
+      "width_px": 966,
+      "height_px": 799,
+      "sha256": "0e78f9a6037e1f8a50688c514a9d21eafa6cbddc3021fda85f3173f9cc393c8c",
+      "pixel_origin": "top left; x right; y down"
+    },
+    "method": "Manual selection of the outline, aided by dark-pixel runs in selected columns of the native embedded JPEG. No fitted airfoil, thickness adjustment or smoothing. Surface labels refer to image position, not pressure or suction side.",
+    "calibration": "Chord between leading_edge and trailing_edge rows; physical chord from the last blade-stations row. Assume equal image scale in both directions. Export frame: origin at leading edge, +x toward trailing edge, +y toward upper image contour, z=0. This local frame does not locate the section in the rotor.",
+    "chosen_extraction_allowances": {
+      "pixel_coordinate_half_width_px": 2,
+      "chord_rounding_half_width_mm": 0.05,
+      "meaning": "Operator-selected sensitivity allowances, not measured errors or confidence intervals. Apply the pixel allowance to points and chord endpoints. Reuse the same perturbation when a point is itself a chord endpoint. Endpoint errors are shared across the trace, so coordinate errors are correlated."
+    },
+    "drawing_fidelity_uncertainty": null,
+    "limits": "Printed illustration scale, contour fidelity and endpoint ambiguity have no validated error bound. Intermediate stations overlap and are obscured by an arrow. This is a tip-section polyline for inspection and geometry sensitivity work; it is insufficient to loft the complete reference blade."
+  },
+  "operating_point": {
+    "provenance": "owner_selected_reference",
+    "speed_ref": "read.nominal_speed",
+    "condition": "hover, zero imposed freestream",
+    "clearance_build": "Table 1 nominal smallest-clearance rotor",
+    "atmospheric_pressure_Pa": null,
+    "temperature_K": null,
+    "density_kg_m3": null,
+    "note": "Register the published nominal point; no CFD case or fluid-property assumptions have been chosen."
+  },
+  "clearance_convention": {
+    "definition": "100*t/h, with t the radial gap and h the blade height; conference nomenclature p. 1. Rotors of different diameter set the gap in a fixed shroud (conference p. 7).",
+    "audit_formula": "For the tabulated rotor, h=Rtip-Rhub and t=Rshroud-Rtip. Export the result beside the printed label, without adjusting either input.",
+    "normalisation": "Thrust and power coefficients use casing inner diameter and angular speed in rad/s (conference p. 1 and equations 1-2, p. 6).",
+    "rounding": "The displayed shroud radius can account for part of the clearance-label mismatch; the printed percentage alone does not determine an exact CAD gap. Other builds lack complete dimensional rotor records."
+  },
+  "missing_geometry": [
+    {
+      "item": "Duct meridional contour, chord and axial placement of rotor",
+      "value": null,
+      "reason": "Figure 1 is a perspective schematic with no orthographic profile, coordinate grid or dimensioned axial datum. The wall and lip ratios need an absolute duct chord. Diffuser length and exit angle do not determine the entire contour.",
+      "needed": "Author CAD or a dimensioned meridional drawing."
+    },
+    {
+      "item": "Blade sections below the tip, stacking offsets, hub attachment and root",
+      "value": null,
+      "reason": "Figure 2 contains overlapping contours with a covering arrow; the table supplies chord and end angles only. The first tabulated station is outside the hub. Chord and end angles do not define a unique section.",
+      "needed": "Section coordinates and stacking/root definitions, or original rotor CAD."
+    },
+    {
+      "item": "Hub axial profile, motor and support placement",
+      "value": null,
+      "reason": "A hub radius and support rod diameter/count do not fix the exposed surfaces or their axial positions. These affect flow and the allowed sector symmetry.",
+      "needed": "Dimensioned assembly or an explicitly approved omission."
+    },
+    {
+      "item": "Resolved tip-thickness and clearance dimensions",
+      "value": null,
+      "reason": "Metric and inch tip thickness disagree; the labelled clearance and nominal dimensions are not identical.",
+      "needed": "Source clarification, toleranced dimensions, or approval of declared reconstruction values."
+    }
+  ],
+  "additional_sources_checked": [
+    {
+      "url": "https://cengizcamci.github.io/publications.html",
+      "outcome": "Provides the open journal copies and conference paper."
+    },
+    {
+      "url": "https://cengizcamci.github.io/papers/ETC_2011_AA_CC_21_january_2011.pdf",
+      "outcome": "Different smaller rotor; its dimensions were not transferred."
+    },
+    {
+      "url": "https://cengizcamci.github.io/papers/turbo_136_02_021005_part2.pdf",
+      "outcome": "Text and geometry references inspected for additional baseline dimensions. Tip-treatment designs refer back to Part I; no missing baseline contour recovered."
+    }
+  ],
+  "next_owner_action": "Obtain the authors’ rotor/duct CAD or dimensioned section and assembly drawings, or explicitly approve an approximate reconstruction with the missing geometry chosen and documented before CAD."
+}

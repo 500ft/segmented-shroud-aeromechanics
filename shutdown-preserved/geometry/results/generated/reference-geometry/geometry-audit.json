@@ -1,0 +1,16 @@
+{
+  "status": "partial_geometry",
+  "source": "data/reference/akturk-camci/geometry.json",
+  "shroud_inner_radius_mm": 283.21,
+  "blade_height_mm": 215.89999999999998,
+  "radial_gap_from_printed_radii_mm": 3.8100000000000023,
+  "clearance_from_printed_radii_percent_height": 1.7647058823529425,
+  "clearance_label_percent_height": 1.71,
+  "tip_thickness_inch_converted_mm": 5.4864,
+  "tip_thickness_metric_mm": 5.15,
+  "nominal_speed_rad_s": 366.51914291880917,
+  "normalisation_diameter_m": 0.5664199999999999,
+  "point_count_including_closure": 65,
+  "coordinate_note": "Six output decimals retain the transform; uncertainty is in the source record.",
+  "cad_note": "Partial tip curve only. Missing geometry and conflicts remain in the source record."
+}

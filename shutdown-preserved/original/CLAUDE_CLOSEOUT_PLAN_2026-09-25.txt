@@ -1,0 +1,278 @@
+SEGMENTED SHROUD AEROMECHANICS
+SAME-DAY CLOSEOUT PLAN AND REVIEW OF PR #31
+2026-09-25
+
+PURPOSE
+
+This is a planning handoff for Claude. Complete the six remaining review deliverables, correct the prerequisite PR, and prepare or execute the independently authorized compute recovery. Do not substitute a completed planning document for completed scientific validation. This session has reviewed and developed the plan only; it has not edited implementation, launched a solver, submitted a GitHub review, or merged a PR.
+
+Reviewed main: 029dc5f2033d51d52e1c442e9acaa4efd14d964a.
+Reviewed PR #31: b71c83345bf7195db78afa4d0cff4788a55eeab9, branch fix/propagate-review-corrections. Open, no submitted reviews, reported GitHub checks green when inspected today. PRs #28, #29 and #30 have merged. Recheck heads before execution.
+
+MAIN CRITIQUE OF THE PROPOSED PLAN
+
+1. Do not merge PR #31 as a routine prerequisite: it still contains scientific contradictions. Amend and review it first. Independent source reading, scope mapping and dimensionless design preparation need not wait for that merge. Implementation depending on its changes must use a clearly recorded base.
+2. D10 governs A0.2, not the A0.1 fine-grid SST recovery. Separate those work items. The recorded host-pressure failure is evidence for a resource problem, not proof that every solver/setup issue has been excluded.
+3. Literature repair should establish a conservative claim boundary early, but full access to Graf is not a prerequisite for a useful comparative design. Equal-mean comparison is already outside the broad novelty claim. A study can reproduce or extend an established method and still answer the project's question.
+4. Six PRs would repeatedly touch the same proposal, contract, ledger and tests. Use two cohesive follow-up PRs with focused commits after correcting #31. Put actual recovered CFD results in a separate results PR only if they are ready; do not hold unrelated corrections hostage to solver wall time.
+5. Radius and mean clearance are not the only CAD gates. Current CAD_PLAN.md requires SSY-01/02/03 and XC-02 closure plus the recorded promotion of deferred work. Keep the engineering-audit briefing as a tool reference, not permission to bypass those gates.
+6. Four unread papers are not the complete SSY-01 blocker list. TASKS.md also names the broader-search shortfalls, 111 qualifying unselected records, instrument constraints and the dated patent search. Today can finish an evidence-status repair without falsely closing SSY-01.
+7. A candidate matrix can be numerically complete today while dimensional levels remain provisional. State separately: design audited; physical inputs open; preregistration not frozen; runs not released.
+
+WHAT TODAY SHOULD DELIVER
+
+Must finish: review disposition and corrections for #31; evidence/access/grade repair; corrected budget rationale; ingestion outcome contract with tested behavior; exact candidate design with numerical audit; validation scope/geometry sufficiency table; transient acceptance specification; a reproducible compute-recovery decision record; exact-head checks and a residual decision list.
+
+Useful if time permits: complete the already-defined A0.1 SST recovery and report its numerical evidence; obtain and inspect additional primary full texts through legitimate routes.
+
+Conditional later: A0.2 mesh/runs after its solver, source and acceptance decisions; dimensional Study A freeze after inputs and release criteria; CAD after its actual ledger prerequisites. A paper that stays unavailable does not prevent completion of the access audit, but does prevent claims requiring its full text.
+
+Do not expand today into a new literature database, CAD toolchain, sensor purchase, mechanism model, hardware commissioning or full three-dimensional sweep. Make each current deliverable correct and usable.
+
+GATE ZERO: SPECIFIC REVIEW FINDINGS ON PR #31
+
+Review recommendation: REQUEST CHANGES on the scientific consistency points below. This is a local review recommendation, not a submitted GitHub review. The reported green CI does not establish that the prose or evidence interpretation is consistent.
+
+G0-1. docs/cfd-validation-a01.md:124 still calls spread across different grit treatments trip repeatability; line 141 repeats it. Line 70 correctly calls it treatment sensitivity. Remove the contradictory active statements and the assertion that this treatment contrast establishes a lower bound on measurement uncertainty. Variation caused by deliberately changing the trip is not automatically a component, upper bound or lower bound of measurement error.
+
+G0-2. The same report at line 136 and scripts/cfd_grid_convergence.py:196 still say A0.1 validates the workflow while its result is INCOMPLETE_UNCERTAINTY. Replace with a condition-specific description of the available numerical/cross-code evidence and unresolved experimental comparison. The script's revised paragraph at lines 198 onward still promotes treatment sensitivity into a lower bound; correct that too. Preserve original recorded outputs and identify a newly generated interpretation by revision.
+
+G0-3. uncertainty-decision-record.md:61-62 still prescribes NUMERICALLY_BOUNDED, despite retiring it at line 38. Its live consequences section must use the current states. plan.md D9 still calls the consistency rule an ASME pass/fail rule; bring that decision entry into agreement with the dated amendment. Mark superseded text as historical when retained, rather than presenting two current authorities.
+
+G0-4. Specify precedence for unusable numerical results versus incomplete input uncertainty. The prose says incomplete uncertainty outranks every comparison; the script can later override it with INCONCLUSIVE on oscillatory convergence. Use a deliberate truth table: unusable numerical evidence -> INCONCLUSIVE with missing components also listed; usable numerical evidence plus unknown required uncertainty -> INCOMPLETE_UNCERTAINTY; otherwise apply the stated consistency screen. Another explicit policy is acceptable, but code, spec and tests must agree.
+
+G0-5. Audit eligibility of the numerical U_D input. Merely providing a number must not turn a quantity explicitly labelled treatment sensitivity into experimental standard uncertainty. Until an accepted measurement model supplies U_D, keep that required component unknown and report treatment spread separately. If the CLI already permits a fully quantified claim using the old spread, fix that path with a regression case.
+
+G0-6. Narrow the test claims. The AST helper only collects constant assignments of the form verdicts[key]=string; it does not prove behavior on every output path. The document scan checks NOT_VALIDATED but not every retired term, and exempts the very decision record where an obsolete operative instruction remains. Keep the smallest useful documentation check, then test actual result behavior for the truth table and non-eligible uncertainty inputs. Do not build a general prose parser.
+
+Done: the same scientific interpretation appears in active report, generated-record boundary, decision record and D9. Negative cases fail for the scientific reason, not an import error. Current-head tests and CI pass. Historical raw data and frozen acceptance bytes remain intact. Review this corrected head before the maintainer merges it; the urgency instruction does not supply evidence of a pass.
+
+WORK PACKAGE A: EVIDENCE AND PROTOCOL CLOSEOUT
+
+A1. Literature repair -- perform first, with a bounded retrieval pass.
+Files: existing literature register generator/outputs as needed; new dated reading records; docs/literature/README.md; active claim summaries. Preserve hash-bound source and historical reading records.
+
+How:
+  - Freeze the conservative claim: this study investigates a defined discrete-seam response and prediction problem; nonuniform-clearance sensitivity and matched-equivalent-clearance comparisons are established methods.
+  - Store access/read scope separately from strength of evidence for each extracted claim. Examples: full-text available / relevant sections inspected / baseline experimentally compared / new geometry unmeasured. Do not award an experimental evidence grade for readable text.
+  - Give Graf a dated abstract-inspected record with no full-text absence conclusions. If full text becomes available, verify comparator, geometry, averaging definition and endpoints before upgrading that record.
+  - Verify the Akturk-Camci Part I author route by matching title, authors and DOI. Record exactly which sections and figures are inspected, and distinguish article issue year, online date and repository upload date.
+  - Record the 2023 circumferential paper's inspected abstract and unresolved methods. Regrade the Heliyon baseline and new nonuniform predictions separately; equal extrema do not prove equal integrated mean.
+  - Resolve the supposed four institutional blockers to four explicit identifiers, current attempted routes, outcomes and scientific questions. Do not assume institutional access is required merely because the DOI route failed.
+  - Timebox the initial retrieval/status pass to approximately 45 minutes of agent work, excluding slow external responses. Move unfinished acquisition to an explicit queue and continue independent work; never convert an access failure into an absence finding.
+
+Done: corrected dated records, generated summaries consistent with them, study-family deduplication, and an access table with no blanket claims. SSY-01 remains open unless its entire existing done-condition is actually satisfied.
+
+A2. Budget rationale -- remove the wrong dependency without inventing new values.
+Files: proposal Study B/C; measurement-spec cross-references; design-contract amplitude rationale; input register explanations.
+
+How:
+  - Define power detectability in W or a named relative endpoint and clearance-setting fidelity in micrometres as separate requirements. Both remain tied to explicit engineering decisions and installed uncertainty evidence.
+  - Remove automatic IN-01=IN-03/(dP/dc) from a different rotor. Any future conversion needs the same machine, endpoint and operating point; a supported local slope with uncertainty; and a rule for near-zero or sign-changing slope.
+  - Remove the sensor rejection threshold based on half of one published accuracy value. Literature performance is a candidate-method input, not an installed standard uncertainty or a universal sensing limit.
+  - Keep unresolved IN-01/02/03 and installed contributors pending. Correcting a rationale does not qualify the instrument or close SSY-02.
+
+Done: there is no active automatic wrong-scale inversion or universal sensor floor; units and responsibility are clear; existing budget checks still report the honest pending state.
+
+A3. Scope map and geometry/data sufficiency.
+Files: existing a0-validation-cases.md; research-programme plan/proposal; a compact source-audit table in the existing evidence structure.
+
+Each row must name: case; source locator/version; geometry completeness; operating conditions; Reynolds-number definition and range; Mach definition/range; transition/tripping; actual comparison quantities; experimental and numerical uncertainty availability; assessment state; supported uses; unsupported transfers; missing inputs.
+
+Separate four rows at minimum: A0.1 SA, incomplete A0.1 SST, planned A0.2, and the candidate ducted-fan benchmark. A0.2 comparison of thrust and Cp does not independently validate shaft torque, gap leakage or tip-vortex trajectory.
+
+Audit Akturk-Camci Part I for blade sections/twist/chord, hub, duct profile, clearance definition, rotor modifications between conditions, boundary conditions, force/load paths and usable data. A paper being readable does not establish a reproducible geometry. Retain missing items explicitly. The PIV/actuator-disk companion can support a different comparator; it is not resolved tip-gap validation.
+
+Correct D10 and the case definitions together: the Prandtl-Glauert factor is a limited sensitivity indicator, not a measured 11% rotor-pressure correction. A compressible solver addresses omitted compressibility; it does not eliminate all model bias. Recommended D10 option for a pressure-comparison claim: a verified compressible workflow, with its setup/cost documented. Prepare that option and the narrower incompressible alternative for the existing decision owner; do not silently adopt an option.
+
+Also reconcile T02/T03 status with their evidence: distinguish source verification still missing a dimension from complete geometry verification, and an A0.1 acceptance freeze from the still-pending A0.2 freeze. Reading the report is not completing either absent artifact.
+
+Done: the scope map is complete as an assessment even where evidence is missing. Quantitative transfer and run release remain blocked where the required evidence is absent.
+
+A4. Transient acceptance rules -- finish the specification today.
+Files: Study A draft preregistration, numerical-method section, uncertainty decision record cross-reference.
+
+Define before any result:
+  - Endpoint: delta P_shaft at matched time-averaged total assembly thrust T*, with rotor and duct force components retained. Time windows and thrust matching must be comparable across configurations.
+  - Phase interval: derive it from the full rotor/duct/support geometry and boundary conditions. Use a full revolution when a smaller interval is unjustified. An axisymmetric benchmark's sector is not automatically valid for seams.
+  - Steady phase refinement: start with nested 4, 8 and, if needed, 16 positions over that interval. Compare phase-averaged endpoint and extrema as sampling is refined. Four positions are an initial budget, not an acceptance theorem.
+  - Transient selection: reference plus the consequential nonzero screening case and a near-decision-boundary case when resources permit, using a selection rule committed before screening outcomes. Record the limits if only one defect can be confirmed.
+  - Time resolution: use seam encounter duration w/Omega, blade passage, CFL/interface constraints and the selected quantities. The nominal steps-per-passage value is an initial mesh/time-step choice; acceptance needs refinement.
+  - Convergence: compare successive time-step levels and sufficiently long post-transient averaging windows; check cycle-to-cycle drift, force/torque, matched-thrust residual and interface conservation. Distinguish numerical convergence from statistical sampling precision; correlated time steps are not independent repeats.
+  - Tolerances: list named absolute tolerances in units and a prospective allocation from the decision-relevant effect size. If that physical target is unknown today, mark the specification complete but numerical acceptance NOT_FROZEN. Do not choose an attractive percentage after seeing the result.
+  - Interpretation: label steady trend supported only over tested cases when transient/refinement evidence supports it; reversal or materially different mean invalidates that steady trend; unresolved evidence stays inconclusive. Test these branches with synthetic inputs.
+
+Replace any claim that U_num(delta)+R_clock+R_model is a proven worst-case physical-error bound. Preserve separate quantities and per-model/per-phase results. A sampled envelope remains conditional on the sampled choices; interactions and shared model bias can lie outside it. Error cancellation is a possibility to assess, not a guaranteed property.
+
+Done: explicit estimand, required comparisons, decision logic, prospective tolerance inputs and computational-cost formula. No claimed validation comes from writing this specification.
+
+WORK PACKAGE B: ANALYSIS READINESS
+
+B1. Ingestion dispositions must be functional, not four unused labels.
+Files: existing analysis pipeline and ingestion contract; existing synthetic fixtures/tests; design-contract invalid-condition wording.
+
+Use a minimal versioned contract with four distinct assessments, each with a reason and evidence reference:
+  acquisition_validity: valid / invalid / unknown
+  aerodynamic_eligibility: eligible / ineligible / pending
+  contact_or_clearance_outcome: no_detected_failure / failure / unknown
+  attempted_condition_membership: included / excluded, derived from the defined attempt boundary
+
+These assessments are distinct but not arbitrary. Invalid acquisition cannot produce a trusted power endpoint; failure cannot silently become no_detected_failure. Split contact detection and clearance assessment internally if one is observed while the other is unknown. A non-detection requires a functioning detector and coverage rule; missing data is not success.
+
+Create the attempt record before acquisition starts, with unique attempt ID and the declared event that makes it an attempt. The denominator cannot be reconstructed solely from successfully parsed run files. Pre-run cancellations are separate from initiated attempts; technical retries get separate attempt IDs linked to their parent, and are aggregated at the stated physical experimental unit for yield. Preserve malformed/missing-acquisition attempts in the reconciliation report.
+
+Required behavior cases:
+  1. Valid acquisition, no detected failure, thrust matched -> eligible; included attempt.
+  2. Rubbing with otherwise valid channels -> ineligible for the steady-power fit; observed failure; included attempt.
+  3. Detector/DAQ dropout -> invalid or pending measurement; unknown outcome unless another valid channel establishes failure; included initiated attempt.
+  4. Cannot attain T* -> power endpoint unavailable, attempt retained, no inferred contact outcome.
+  5. Cancelled before the registered initiation event -> cancellation counted separately, excluded from initiated denominator.
+  6. Invalid acquisition plus independently recorded contact -> measurement invalid AND observed failure.
+  7. Duplicate ingest of the same attempt -> no denominator inflation.
+  8. Legacy record with no disposition -> explicit unknown/pending migration behavior, never assumed eligible or safe.
+
+Filter eligibility before interpolation/fitting while retaining the audit and failure tables. Report attempted, eligible, failed, unknown and cancelled counts. For incomplete failure observation, show counts and, if useful, bounds rather than treating unknowns as passes. Installation/specimen and retry identifiers must survive aggregation.
+
+Done: the end-to-end pipeline uses these dispositions; fixtures demonstrate fit exclusion and denominator retention together. Preserve specimen-first scoring and declare when an existing-specimen configuration test differs from new-specimen prediction. Do not create a second status database.
+
+B2. Concrete candidate design and numerical audit.
+
+Recommendation: replace the unspecified resolution-IV design with an explicit three-factor quadratic candidate using the 13 unique locations of a three-factor Box-Behnken layout. This is a proposed response-surface design, not a claim that the physical response is quadratic and not an already-approved run release. It avoids pretending that identical deterministic centre runs create replication.
+
+Factors and coding:
+  x = n - 3, for seam count n in {2,3,4}.
+  y = (F-F_mid)/F_half, where F is total open angular fraction,
+      F_mid=(F_low+F_high)/2, F_half=(F_high-F_low)/2.
+  z = 2*s/s_high - 1, where s is a nonnegative registered radial-step magnitude.
+  Each equal-width seam has w=2*pi*F/n radians; physical width g must name its radius/convention.
+
+F_low, F_high and s_high are prospective physical inputs. Require 0<F_low<F_high<1, nonoverlap, minimum wall ligament and positive rotor-envelope clearance with registered margins. The operational range will be much narrower if geometry, metrology or compute require it. Do not set numerical ranges from an unobserved effect prediction.
+
+Use the existing equal-wall-mean step construction with a precisely defined s. One candidate for equal segment lengths: n=2 or 4 alternates offsets -s/2,+s/2; n=3 uses offsets -s/2,0,+s/2 with a registered angular placement. The mean offset is zero and maximum adjacent jump is s, but jump distribution differs. Record the full offset vector: count/step interactions may reflect that construction. If the intended step definition differs, revise the mapping before using this matrix. The s=0 contrasts isolate redistribution without this extra step-pattern change.
+
+Training rows (x,y,z):
+  T01  -1  -1   0
+  T02  -1   1   0
+  T03   1  -1   0
+  T04   1   1   0
+  T05  -1   0  -1
+  T06  -1   0   1
+  T07   1   0  -1
+  T08   1   0   1
+  T09   0  -1  -1
+  T10   0  -1   1
+  T11   0   1  -1
+  T12   0   1   1
+  T13   0   0   0
+
+Model columns, in order:
+  1, x, y, z, x*y, x*z, y*z, x^2, y^2, z^2.
+
+Numerical audit performed in this planning review using local NumPy 2.5.3:
+  matrix shape 13x10; rank 10;
+  two-norm condition number approximately 7.10934;
+  smallest singular value approximately 0.750093;
+  three residual degrees of freedom for the fitted deterministic surrogate.
+Those residual degrees of freedom are not a pure-error estimate or physical replication. This audit did not install dependencies or run CFD. Reproduce it under the repository's pinned environment before adopting it.
+
+Reserved configuration holdouts, not used to choose terms or fit coefficients:
+  H01 (-1,-0.5, 0)
+  H02 ( 1, 0.5, 0)
+  H03 (-1, 0.5, 0.5)
+  H04 ( 1,-0.5,-0.5)
+They lie within the convex hull of the training locations. They test new combinations/intermediate levels, not an unseen physical defect family, a new seam count, a new rotor scale or a new specimen. Physical prediction requires independently constructed/installed test units with the promised split.
+
+Aliasing and limits to record:
+  - The ten declared columns are identifiable; that does not make omitted effects absent.
+  - x^3=x, y^3=y, z^3=z at the three training levels, so pure cubic effects alias with linear effects.
+  - x*y*z=0 at every training location: a three-way interaction is invisible there. It is -0.25 and +0.25 at H03/H04, so those holdouts can expose this limitation.
+  - Avoid claiming behavior at the all-extreme corners: they are not in the training design's convex hull.
+  - Treating n as numeric imposes an interpolation model over these counts. If categorical coding or another term basis is selected, redo rank, aliases and holdout definitions.
+  - Do not feed n, individual width and total opening as unconstrained independent factors; their geometric relationship is exact.
+
+Checks for Claude:
+  - Save exact rows and role labels to one machine-readable table; generate the prose table from it.
+  - Compute SVD/rank on the coded matrix; include an augmented omitted-term/alias report and geometry constraint checks. A missing row or infeasible geometry requires recomputation, not an unchanged rank claim.
+  - Solve least squares with the declared numerical route; after #31, NumPy is already a dependency. Prefer its tested least-squares routine to extending a custom normal-equation solver. Keep this change scoped to fitting and conditioning.
+  - Recover a manufactured quadratic and its held-out predictions to declared numerical tolerance. This review observed coefficient/prediction errors below 2e-15; use a robust test tolerance rather than requiring that exact machine result.
+  - Add a manufactured x*y*z effect: training fit alone cannot detect it, while H03/H04 must reveal error. Do not retrain on those holdouts and still call them independent validation.
+  - Test a deliberately rank-deficient matrix, unit-rescaling invariance, and a near-dependent design. Report conditioning using a stated scaling convention.
+
+Controls and run accounting:
+  Add continuous duct, sealed zero-defect segmented condition and open rotor as separate condition labels. Their experimental roles differ. If continuous and sealed segmented CFD geometry are identical, deduplicate the solve by geometry/input identity while preserving the two experimental control definitions.
+  There are 13 training + 4 holdout + 3 control labels = 20 planned condition labels before operating points, mesh levels, model variants, phase positions or thrust iterations. This is not a 20-solve promise. Reinstallation is physical replication, not another independent deterministic CFD case.
+  Baseline for a single matched-clearance/T* block is intercept-only unless other supported predictors are explicitly registered. A clearance slope requires separate uniform-clearance levels; do not manufacture it from metrology noise. Fit and score power/paired-power consistently with the existing endpoint contract.
+
+Done today: exact dimensionless table, constraints, model basis, full-rank/conditioning/alias audit, withheld roles and total-cost expression. If dimensional inputs are unresolved, label it CANDIDATE_DESIGN_AUDITED, not preregistration frozen. Do not generate/run seam variants from this draft.
+
+COMPUTE RECOVERY: TWO DISTINCT LANES
+
+C1. Existing A0.1 fine-grid SST recovery.
+D10 is not its prerequisite. Its prerequisites are preserved case identity, resource headroom, checkpoint integrity and the existing A0.1 run protocol.
+  - Read the prior manifest/logs and distinguish requested iteration ceiling from convergence conditions. Record evidence for OOM/host pressure and any remaining diagnostic uncertainty.
+  - Record host pressure, Docker VM allocation, container limit, disk space, case cells and available checkpoint files. Do not terminate unrelated user work or change resource settings silently.
+  - Use one authorized solver job with bounded monitoring. If a complete compatible checkpoint exists, resume under a new attempt record referencing it; otherwise use a documented fresh run. Preserve the failed attempt and its logs.
+  - Record installed solver/image, input/mesh hashes, changes, peak memory and elapsed time. Stop according to declared convergence/resource rules, not simply because a file appeared.
+  - Use the completed SST grid family only if all required levels are usable. Remaining convergence concerns or missing uncertainty do not become a validation pass after the fine case finishes.
+Done: either a reproducible completed run with appropriately scoped analysis, or a diagnosed resource/checkpoint barrier with exact evidence. A job launched today is not a job completed today.
+
+C2. A0.2 readiness.
+Requires D10, the A0.1-to-A0.2 release decision under the corrected interpretation, source-resolved geometry and prospective A0.2 acceptance. Published rotor dimensions that need visual verification are an agent source-verification task, not an owner preference. The unchosen physical small-UAV rotor is a separate owner/resource decision.
+Done today: concrete solver recommendation, source gaps and a reviewed costed execution route. Do not promise completed A0.2 CFD today from an unresolved setup.
+
+Estimate future cost by summing per-case measured mesh and solver costs across actual grid/model/phase/operating-point/thrust-iteration combinations, plus transient periods and reruns. Do not multiply every factor blindly if only a subset receives a verification study; list the subset. A0.1 timing is a smoke-test baseline, not calibrated throughput for a full-annulus moving-mesh rotor.
+
+PULL-REQUEST AND LEDGER STRATEGY
+
+1. Amend/review #31 on its exact head. Do not write another plan-only PR as a prerequisite to implementing this already concrete work order unless the maintainer specifically requires that review route.
+2. Follow-up PR A: literature, budget, scope map and transient protocol. Focused commits for A1-A4, consistent active documents, dated evidence and remaining decisions. One coherent evidence/protocol review.
+3. Follow-up PR B: disposition behavior and candidate matrix/conditioning checks. Focused commits for B1-B2; explicit base dependency on A if it consumes its definitions. Reuse the repository's tests and pinned NumPy once available; avoid new frameworks.
+4. A compute-results PR only when genuine results exist. Link corrected interpretation; retain raw failure records and source hashes. No empty results PR or gate bypass for a date.
+
+Preparation can overlap in independent lanes; mutations to shared files should be integrated serially. Use isolated branches/worktrees if needed and keep stack bases explicit. At merge, rebase/update dependent branches and rerun relevant integration checks; do not accidentally include a prerequisite's whole diff as new work.
+
+Use existing SSY task IDs. Add evidence rows in the established ledger style, allocating unused row IDs at implementation time. Map each of the six review items R08-R13 to its artifact, check, status and remaining gate. A row stating that an artifact is complete must not close its parent research task automatically.
+
+TODAY'S SEQUENCE AND STOPPING RULE
+
+First 30-45 focused minutes: check exact heads; resolve #31 review points; freeze the narrow claim; open a single decision packet; inspect A0.1 recovery prerequisites. Prepare independent source/design work while maintainer review is pending.
+Next 60-90 minutes: finish bounded literature/access grading and budget rationale; build the source sufficiency/scope table.
+Next 90-150 minutes: implement dispositions and their end-to-end fixtures; materialize/audit the dimensionless matrix; make the smallest justified numerical fitting change.
+Next 60-90 minutes: reconcile transient decision rules, plan/contract references and statuses; prepare the two reviewable PRs.
+Final 45-60 minutes: relevant tests plus repository gates on exact heads, preservation check, claim/ledger reconciliation, succinct decision packet and handoff.
+These are focused-work estimates, not guarantees about external access, reviews or solver completion. If time slips, cut additional acquisition attempts and optional solver work first. Do not cut correctness checks, manipulate ledger status or widen scientific tolerances to meet the date.
+
+DECISIONS TO PREPARE IN ONE PACKET, NOT REPEATED INTERRUPTIONS
+
+- D10: recommended compressible route for pressure-comparison goals; precise setup implications and remaining model limitations; narrower alternative and its claim boundary.
+- A0.1 release: retain incomplete experimental validation while deciding whether named verification evidence supports proceeding to the next benchmark. This is not an automatic change from INCOMPLETE_UNCERTAINTY to pass.
+- Physical apparatus: actual small-rotor/stand envelope, target mean clearance and practical power/clearance targets. Clearly distinguish these from literature dimensions of the canonical rotor.
+- Physical factor levels and numerical acceptance tolerances: proposed ranges/rationale after compatibility checks; no inferred consent from silence.
+- XC-02 and CAD promotion: existing status and exact gate, not hidden inside rotor selection.
+- Literature access: only the remaining specific identifiers for which legitimate routes failed, with what decision each full text could change. Do not ask for credentials or assume a subscription.
+
+FINAL ACCEPTANCE CHECKLIST FOR THE BUILDER
+
+[ ] #31's contradictions and active vocabulary are resolved at the reviewed head.
+[ ] All six review items have artifact-level acceptance evidence or an explicit unmet criterion.
+[ ] Evidence grades describe claims; access failures do not become absence findings.
+[ ] Power/clearance budget requirements are separate and unresolved numbers remain pending.
+[ ] Ineligible power data stay in attempted/failure reporting; unknown outcome is not success.
+[ ] Exact design rows, term basis, rank, conditioning, aliases and holdouts are reproducible.
+[ ] Candidate-design completion is distinct from physical freeze and run authorization.
+[ ] Scope map and transient rules state what has and has not been demonstrated.
+[ ] D10 is removed from the A0.1 restart dependency; A0.2 retains its actual prerequisites.
+[ ] Raw historical evidence and frozen acceptance records retain their original identity.
+[ ] Existing repository checks and targeted negative cases pass on the actual PR heads.
+[ ] Final report distinguishes implemented, reviewed, merged, compute complete and scientifically qualified.
+
+REVIEW EVIDENCE AND METHOD REFERENCES
+
+PR inspected: https://github.com/500ft/segmented-shroud-aeromechanics/pull/31
+Prior detailed handoff: CLAUDE_LITERATURE_CRITIQUE_2026-09-24.txt.
+NIST Box-Behnken design reference: https://www.itl.nist.gov/div898/handbook/pri/section3/pri3362.htm
+NIST resolution/aliasing reference: https://itl.nist.gov/div898/handbook/pri/section3/pri3344.htm
+Eca, Dowding and Roache on quantity/condition-specific validation and its interpretation: https://researchportal.ulisboa.pt/en/publications/on-the-interpretation-and-scope-of-the-vampv-20-standard-for-veri/
+GUM measurement-model and covariance reference: https://www.iso.org/sites/JCGM/GUM/JCGM100/C045315e-html/C045315e_FILES/MAIN_C045315e/05_e.html
+
+This review read the PR diff and relevant current-main documents and ran a standalone numerical design audit. It did not rerun the repository's full test suite; CI success is reported from GitHub, not independently reproduced here. The candidate design's numeric rank/conditioning results are our calculation, not empirical evidence about seams.

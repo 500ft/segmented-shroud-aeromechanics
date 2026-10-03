@@ -1,0 +1,87 @@
+{
+  "protocols/example-specimen-manifest.json": {
+    "mtime": 1788476356.0876038,
+    "ast_hash": "27474313c40bc9e4c9f2d7824fc233ba",
+    "semantic_hash": "27474313c40bc9e4c9f2d7824fc233ba"
+  },
+  "protocols/specimen-manifest.schema.json": {
+    "mtime": 1788476355.944595,
+    "ast_hash": "a8b553833db54a2aecd393a9a7923fba",
+    "semantic_hash": "a8b553833db54a2aecd393a9a7923fba"
+  },
+  "scripts/check_repo_contract.py": {
+    "mtime": 1788476356.2278666,
+    "ast_hash": "4f08332c1fdf9106a91f9d66ff0827c8",
+    "semantic_hash": "4f08332c1fdf9106a91f9d66ff0827c8"
+  },
+  "tests/test_repo_contract.py": {
+    "mtime": 1788476356.3674219,
+    "ast_hash": "3364165fa0a47351bf56f88893389c41",
+    "semantic_hash": "3364165fa0a47351bf56f88893389c41"
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1788476356.507337,
+    "ast_hash": "3e6809083b3d5fdbfb992717a39e0148",
+    "semantic_hash": "3e6809083b3d5fdbfb992717a39e0148"
+  },
+  "CONTRIBUTING.md": {
+    "mtime": 1788476187.6017265,
+    "ast_hash": "7f24747be9098b5fd8f83f5ff4894c82",
+    "semantic_hash": "7f24747be9098b5fd8f83f5ff4894c82"
+  },
+  "README.md": {
+    "mtime": 1788476187.3276992,
+    "ast_hash": "4a62c99d0495f4f98f41a7782285b5d1",
+    "semantic_hash": "4a62c99d0495f4f98f41a7782285b5d1"
+  },
+  "ROADMAP.md": {
+    "mtime": 1788476187.4635766,
+    "ast_hash": "fce5ec13d8fa691eb7df51f48f7ab685",
+    "semantic_hash": "fce5ec13d8fa691eb7df51f48f7ab685"
+  },
+  "data/README.md": {
+    "mtime": 1788476267.4552362,
+    "ast_hash": "6566e9c4883251854d78c3e179486410",
+    "semantic_hash": "6566e9c4883251854d78c3e179486410"
+  },
+  "docs/claim-ledger.md": {
+    "mtime": 1788476266.8872225,
+    "ast_hash": "38aff0558e1b0a24f8e1a7e5414ae4f7",
+    "semantic_hash": "38aff0558e1b0a24f8e1a7e5414ae4f7"
+  },
+  "docs/data-and-figures.md": {
+    "mtime": 1788476267.1766288,
+    "ast_hash": "b24138812ac2064cb195696b9be9a18f",
+    "semantic_hash": "b24138812ac2064cb195696b9be9a18f"
+  },
+  "docs/decision-log.md": {
+    "mtime": 1788476267.31186,
+    "ast_hash": "35b03a5321432e47efaa4b4362d18938",
+    "semantic_hash": "35b03a5321432e47efaa4b4362d18938"
+  },
+  "docs/experiment-01-rigid-defect-duct.md": {
+    "mtime": 1788476267.0390437,
+    "ast_hash": "27f8290c4c46079cf7b81154a64a213a",
+    "semantic_hash": "27f8290c4c46079cf7b81154a64a213a"
+  },
+  "docs/prior-art.md": {
+    "mtime": 1788476266.7470226,
+    "ast_hash": "02c743864c555d5f3703e37d0887aa42",
+    "semantic_hash": "02c743864c555d5f3703e37d0887aa42"
+  },
+  "docs/research-plan.md": {
+    "mtime": 1788476266.6081977,
+    "ast_hash": "d7d2410963c9f1410b0e99e16977edd5",
+    "semantic_hash": "d7d2410963c9f1410b0e99e16977edd5"
+  },
+  "results/README.md": {
+    "mtime": 1788476267.5909152,
+    "ast_hash": "85993c79b4ee0e306d272a6243fb46a6",
+    "semantic_hash": "85993c79b4ee0e306d272a6243fb46a6"
+  },
+  "assets/segmented-shroud-overview.svg": {
+    "mtime": 1788476356.6449394,
+    "ast_hash": "a15e1f96a59f103cb0d1bd2e97b01799",
+    "semantic_hash": "a15e1f96a59f103cb0d1bd2e97b01799"
+  }
+}

@@ -1,0 +1,567 @@
+SEGMENTED SHROUD AEROMECHANICS
+CLAUDE WEEKLY BUILD PLAN
+Week beginning 2026-09-19
+
+CAD planning addendum added 2026-09-21 at the end of this file. Read it before future CAD planning or implementation. The original repository and PR status above that addendum is a 2026-09-19 snapshot; recheck it when starting work.
+
+Literature review added 2026-09-24 in CLAUDE_LITERATURE_CRITIQUE_2026-09-24.txt. Read its corrections before using this older plan, especially uncertainty verdicts, the unsupported universal 2% CFD floor, and the clearance/statistical contracts in pending PRs #28 and #29. The new review is a planning recommendation, not a silently amended historical acceptance freeze.
+
+PURPOSE
+
+This is a planning handoff for Claude. Claude may implement the work described here after the stated preconditions are satisfied. This document is not a scientific result, does not authorize hardware operation, and does not authorize a novelty, patent, performance-duct, or protective-guard claim.
+
+The repository is 500ft/segmented-shroud-aeromechanics. The current research question is whether discrete circumferential seam defects change rotor-shroud performance at equal mean tip clearance and matched thrust, and whether any effect can be predicted from seam descriptors. The immediate programme must establish whether the CFD toolchain is credible before it produces seam predictions.
+
+CURRENT STATE
+
+1. PR #17 is merged. It delivered the top-25 candidate triage and the measurement-requirements draft.
+2. PR #18 is merged. It introduced the research-programme proposal, adaptive scope, and Study A0 work order.
+3. PR #19 is merged. It repaired repository consistency and entry-document discrepancies.
+4. PR #20 is open and must be reviewed before implementation. Its head is bf10ed774e3e971cf9a2fc8582a09bb56ed1f70a. It changes the A0 plan to a validation ladder:
+   A0.1: NACA 0012 2D case using NASA Turbulence Modeling Resource material.
+   A0.2: Caradonna–Tung two-blade hover rotor using NASA TM 81232.
+   A0.3: ducted fan, deferred until usable public geometry and data are confirmed.
+5. The main repository still has no measured results, no fabricated specimen, no validated CFD result, and no qualified measurement system.
+6. The 2026-09-14 candidate triage contains 22 includes, 3 exclusions, and 0 deferrals. Those records are triage only; none is a completed close reading. There are still 111 qualifying but unselected export records, known competing full texts S2/S3 that remain unresolved, and no completed patent search.
+7. The clearance budget remains INPUTS_PENDING. A green budget check only means that the pending record is internally reproducible.
+8. XC-02 disclosure remains open. Do not add implementation-sensitive mechanism geometry or fabrication detail.
+
+NON-NEGOTIABLE PRECONDITIONS
+
+Before Claude edits implementation files:
+
+P0. Owner or maintainer reviews and merges PR #20, or explicitly supplies the replacement revision that contains the same validation-ladder decisions. Claude must record the actual base commit in the evidence README. Do not build from an unmerged branch and later pretend it was the accepted plan.
+
+P1. Start a fresh branch from the merged main, named task/research-programme-a0 or the owner-approved equivalent.
+
+P2. Run the existing repository gates before adding files. Use the repository's working Python 3.11 environment, not the system python3 if it lacks jsonschema. Record sys.executable, Python version, jsonschema version, commit, hardware, Docker version, and operating system.
+
+P3. Confirm that the NASA TMR source, its cited experimental data, and NASA TM 81232 are actually accessible. No nominal geometry, operating point, or data value may be copied from memory. Every source number must receive one of these labels: VERIFIED_FROM_SOURCE, DERIVED_FROM_SOURCE, ASSUMED_FOR_MESH_ONLY, or MISSING.
+
+P4. Confirm the OpenFOAM arm64 container route before any mesh work. Record the exact image digest, solver release, command, and tutorial result. Do not hide a container failure behind an unrecorded local installation.
+
+P5. Do not run Study A seam variants until the A0.2 gate passes. If A0.2 is not complete, only source verification, geometry preparation, solver smoke tests, and non-seam validation work are allowed.
+
+P6. Do not mark any task done because a file exists. A task is done only when its evidence file contains the command, source locator, input hash, output hash where applicable, result, limitation, and claim boundary.
+
+THIS WEEK'S OUTCOME
+
+The week should finish with one of three honest outcomes:
+
+Outcome A — A0.1 and A0.2 are reproducible and pass their predeclared validation criteria. The repository is allowed to prepare, but not yet run, a frozen Study A seam preregistration.
+
+Outcome B — A0.1 passes but A0.2 is incomplete or fails. The repository has a verified 2D workflow but no validated rotating-rotor workflow. Study A remains blocked.
+
+Outcome C — A0.1 fails after the prescribed checks, or the toolchain cannot reproduce the canonical data within the declared validation uncertainty. CFD is stopped and the programme returns to a measurement-first path. No seam claim is made.
+
+The week is successful even under Outcome B or C if the failure is reproducible, well localized, and useful for choosing the next method.
+
+CRITICAL DESIGN IMPROVEMENTS OVER THE CURRENT A0 PLAN
+
+1. Treat the validation ladder as a claim ladder. A0.1 validates a 2D airfoil workflow. A0.2 validates open-rotor loading for a particular rotor. Neither validates duct tip-gap flow. Until A0.3 exists, every Study A result must carry the label rotor-validated, gap-unvalidated.
+
+2. Verify source numbers before building geometry. The current case file intentionally contains nominal values that must be checked. Claude must not promote nominal values into verified values without page, table, figure, or data-file locators.
+
+3. Separate formal validation uncertainty from sensitivity spread. GCI measures numerical discretization uncertainty. Clocking variation is a deterministic sensitivity unless a probability model is declared. Turbulence-model spread is model-form sensitivity and is not automatically an independent random uncertainty. Do not mechanically call the RSS of these terms a confidence interval. Before Study A, create an uncertainty decision record that says which terms are formal uncertainty, which are sensitivity bounds, and how the decision band is constructed.
+
+4. Use a two-band reporting rule. Report a formal validation comparison band U_val for comparison with measured data, using the documented ASME V&V 20-style components available from the source. Separately report a conservative Study A decision band U_dec that includes numerical, clocking, and model-form sensitivity. If independence cannot be defended, use a stated conservative envelope or retain the terms as separate bands. A null means not resolvable by this model and mesh, not proof that seams have no physical effect.
+
+5. Do not accept an apparently converged solution without monitor evidence. Each run needs residual histories, thrust and torque histories, stopping criterion, final averaging window, and a statement about whether the monitored quantities plateaued. A low residual alone is not convergence of the engineering quantity.
+
+6. Treat data digitization as an uncertainty source. If published curves must be digitized, retain the original PDF hash, page/figure locator, digitization method, point file, and digitization uncertainty. Do not compare extra decimal places than the source supports.
+
+7. Keep the prior-art lane separate from the CFD lane. A close-reading record must not be inserted into the historical day-3 file. A patent route search must not be inferred from opening one known public patent page. Screening, close reading, patent searching, CFD validation, and physical qualification are different evidence classes.
+
+8. Make the duct gap limitation visible at every decision point. The validation ladder is intentionally useful but incomplete. If A0.2 passes, it permits a labelled rotor workflow; it does not permit a paper sentence that says the solver is validated for segmented ducts.
+
+WEEKLY WORK BREAKDOWN
+
+TRACK 0 — Baseline, provenance, and solver smoke test
+
+T00. Establish the execution record.
+
+Files:
+  evidence/task-a0-validation/README.md
+
+Actions:
+  a. Record base commit, branch, interpreter, dependency versions, CPU cores, memory, Docker version, and date/time in UTC.
+  b. Run:
+     python -m unittest discover -s tests -v
+     python scripts/check_repo_contract.py
+     python scripts/reference_coverage.py --check
+     python scripts/acquisition_ledger.py --check
+     python scripts/clearance_uncertainty_budget.py --check
+     python tools/check_presentation.py . "Segmented Shroud Aeromechanics" segmented-shroud-aeromechanics
+     python tools/test_presentation.py
+     git diff --check
+  c. Preserve complete output and exit codes. Do not summarize a failed command as passing.
+
+Done when:
+  All baseline checks pass, the interpreter is recorded, and the budget still reports INPUTS_PENDING. Any pre-existing failure becomes a blocker with its exact output.
+
+T01. Verify the source package before using it.
+
+Files:
+  evidence/task-a0-validation/source-inventory.json
+  evidence/task-a0-validation/README.md
+
+Actions:
+  a. Record the NASA TMR URL, cited data URL or file, NASA TM 81232 URL or file, and all local copies.
+  b. Compute SHA-256 for every retained source file.
+  c. For every parameter required by A0.1 and A0.2, record source locator, value, unit, evidence label, and whether the value is directly reported or derived.
+  d. List missing items separately. A missing blade coordinate, test condition, or measured datum is not filled with a plausible value.
+
+Done when:
+  A reviewer can trace every geometry and operating-point input to a source locator or see that it is blocked.
+
+T02. Run the official OpenFOAM arm64 smoke test.
+
+Files:
+  evidence/task-a0-validation/container-smoke.json
+
+Actions:
+  a. Pull the official arm64-compatible OpenFOAM image selected by the implementation plan.
+  b. Record image digest, solver version, container command, host architecture, wall time, and peak memory if available.
+  c. Run a small official tutorial case and preserve the final log and residual plot or summary.
+  d. Confirm that the container can write case outputs to a controlled evidence directory.
+
+Done when:
+  The tutorial runs to completion and the exact image digest is recorded. If it fails, stop CFD case work and document the SU2 or owner-approved alternative; do not improvise another solver silently.
+
+TRACK 1 — A0.1 NACA 0012 validation
+
+T03. Freeze A0.1 acceptance before solving.
+
+Files:
+  docs/specs/research-programme/a0-validation-cases.md
+  evidence/task-a0-validation/a01-acceptance.json
+
+Actions:
+  a. Verify the TMR Mach number, Reynolds number, angles of attack, reference quantities, grid family, turbulence models, and experimental uncertainty from the source.
+  b. Define the exact comparison quantities and the validation data subset. Do not change the gated angles after seeing results.
+  c. Define the comparison error E = simulation minus data and the validation uncertainty components available for this case.
+  d. Define the GCI procedure before solving: at least three grids, refinement ratio at least 1.3, observed order, Richardson estimate, and the chosen safety factor with citation.
+  e. Declare how drag is treated if transition, wall treatment, or incompressible assumptions make drag substantially more sensitive than lift.
+
+Done when:
+  The acceptance JSON is committed before A0.1 results exist and includes a numeric or source-bounded acceptance band, units, exclusions, and kill criteria.
+
+T04. Build or import the A0.1 grid family.
+
+Files:
+  results/generated/cfd/a0.1/geometry/
+  results/generated/cfd/a0.1/meshes/
+  results/generated/cfd/a0.1/manifests/
+
+Actions:
+  a. Prefer the TMR grid family when licensing and file format permit; otherwise generate a scripted, documented C-grid family.
+  b. Create at least three systematically refined grids with the same topology and a declared refinement ratio.
+  c. Record cell counts, first-layer height, y-plus target/observed value, far-field location, boundary conditions, and refinement method.
+  d. Run mesh-quality checks and preserve their output.
+
+Done when:
+  The three grids are reproducible from committed inputs, pass mesh-quality checks, and no geometry or grid parameter is labelled verified without a source or derivation.
+
+T05. Run A0.1 baseline cases with two turbulence models.
+
+Files:
+  one JSON manifest and one solver log per case under results/generated/cfd/a0.1/
+
+Actions:
+  a. Run the predeclared angles only.
+  b. Use Spalart–Allmaras and k-omega SST as specified by the accepted plan.
+  c. Record residuals, lift, drag, moment if used, iteration count, wall time, final averaging window, and stopping reason.
+  d. Preserve failed or unconverged cases with status FAILED or UNCONVERGED. Do not delete them or silently rerun until a pass appears.
+
+Done when:
+  Every case has a complete manifest and convergence history. An unconverged run cannot be used in GCI or validation comparison.
+
+T06. Compute A0.1 numerical uncertainty and issue the first gate report.
+
+Files:
+  results/generated/cfd/a0.1/uncertainty.json
+  docs/cfd-validation-a01.md
+
+Actions:
+  a. Compute observed order, Richardson extrapolation, and GCI for the declared outputs.
+  b. Detect non-monotonic or oscillatory convergence. If present, report it as a limitation and do not manufacture a clean order.
+  c. Compare the finest-grid outputs to the frozen data using the predeclared acceptance band.
+  d. Report model-to-model spread separately from GCI.
+  e. State the A0.1 verdict in one sentence: PASS, FAIL, or INCONCLUSIVE, with numbers and units.
+
+Done when:
+  The report contains enough numbers to reproduce the verdict, includes all failed cases, and states exactly what A0.1 does and does not validate.
+
+KILL / PIVOT AFTER A0.1
+
+Stop and switch to the measurement-first fallback if any of these occurs:
+
+  - Source data cannot be verified or retained.
+  - The container cannot run and no approved alternative is available.
+  - The solver cannot reach a documented quantity plateau on the finest grid.
+  - GCI is non-convergent or remains too large for the predeclared acceptance band.
+  - The comparison fails after the prescribed mesh/model checks.
+
+A failure is not a reason to loosen the band after the result. Record the failure, the likely cause, the next diagnostic, and whether the workflow remains useful for geometry preprocessing only.
+
+TRACK 2 — A0.2 Caradonna–Tung hover rotor
+
+Only start T07 after T06 produces a PASS or an explicitly accepted INCONCLUSIVE decision that does not claim solver validation. A0.2 must not be started as if A0.1 passed if the lower rung failed.
+
+T07. Verify Caradonna–Tung inputs against NASA TM 81232.
+
+Files:
+  evidence/task-a0-validation/a02-source-table.json
+
+Actions:
+  a. Verify blade count, airfoil, radius, chord, collective, rotor speed, test condition, pressure stations, thrust data, and any torque data.
+  b. Mark the transonic condition out of scope if the selected solver is incompressible; preserve it as an explicit excluded condition.
+  c. Record whether the source provides machine-readable data or whether digitization is required.
+  d. If digitizing, create a point file with page/figure locators and an estimated digitization error.
+
+Done when:
+  All A0.2 inputs used by the solver are source-verified or explicitly blocked. No “typical Caradonna–Tung value” is accepted as evidence.
+
+T08. Build the A0.2 rotating mesh and case template.
+
+Files:
+  results/generated/cfd/a0.2/geometry/
+  results/generated/cfd/a0.2/meshes/
+  results/generated/cfd/a0.2/manifests/
+
+Actions:
+  a. Use the two-blade NACA 0012 geometry and the declared rotor dimensions.
+  b. Define the hover far-field, rotating zone, periodic sector or full domain, boundary conditions, and wall treatment in the manifest.
+  c. Build at least three systematically refined meshes for the selected baseline condition.
+  d. Record the relation between the periodic-domain assumption and the published experimental setup.
+
+Done when:
+  The geometry and mesh are reproducible, mesh quality passes, and the case manifest states all assumptions that are not directly specified by the source.
+
+T09. Run A0.2 subsonic baseline cases.
+
+Files:
+  case manifests and solver logs under results/generated/cfd/a0.2/
+
+Actions:
+  a. Run only the source-verified subsonic condition.
+  b. Run both turbulence models on the declared grid family if resources permit; if not, record the resource limitation before reducing the design.
+  c. Monitor thrust, torque, residuals, and any pressure stations intended for comparison.
+  d. Keep the transonic condition unrun and explicitly out of scope.
+
+Done when:
+  Each case is converged or marked failed/unconverged with preserved evidence. No A0.2 result is described as duct validation.
+
+T10. Compute A0.2 validation verdict.
+
+Files:
+  results/generated/cfd/a0.2/uncertainty.json
+  docs/cfd-validation-a02.md
+
+Actions:
+  a. Compute GCI for thrust and the declared pressure outputs.
+  b. Compare thrust coefficient and sectional pressure distributions to the source data with source uncertainty and digitization uncertainty carried explicitly.
+  c. Report turbulence-model spread and any periodic-domain or far-field sensitivity separately.
+  d. Issue PASS, FAIL, or INCONCLUSIVE with a claim boundary.
+
+Done when:
+  The report says either: (1) open-rotor validation passed at the declared level, (2) it failed, or (3) the evidence is insufficient. It must never say “CFD validated” without the scope qualifier.
+
+STUDY A RELEASE GATE — DO NOT SKIP
+
+T11. Decide whether Study A seam work is allowed.
+
+Files:
+  evidence/task-a0-validation/decision-record.md
+
+Study A is allowed to proceed to preregistration only if:
+
+  - A0.1 has a documented PASS or an accepted limited-scope result.
+  - A0.2 has a documented PASS for the open-rotor quantities used by Study A, or the owner explicitly accepts the narrower label rotor-validated, gap-unvalidated.
+  - The uncertainty decision record distinguishes GCI, clocking, model-form spread, input uncertainty, and measurement uncertainty.
+  - The equal-mean clearance definition is fixed before any seam variant is generated.
+  - The matched-thrust procedure is written before any seam result is inspected.
+  - The Study A case list and held-out configuration are committed before variant geometry generation.
+
+If any condition is not met, record BLOCKED and stop. Do not produce a seam sweep as a substitute for a validation result.
+
+T12. Prepare, but do not automatically run, Study A preregistration.
+
+Files:
+  docs/specs/research-programme/study-a-preregistration.md
+
+Include:
+  - Generic parameters n, g, and s only; no mechanism-specific joint geometry.
+  - Continuous duct control and seam variants.
+  - Both equal-mean averaging rules and the missing-wall treatment.
+  - Matched-thrust primary comparison and matched-RPM secondary diagnostic.
+  - Formal uncertainty band and conservative decision band.
+  - Screening factors, centre cases, mesh-study cases, clocking cases, model-sensitivity cases, and the held-out configuration.
+  - Kill criterion: if every observed effect is inside the declared decision band, report a CFD-bounded null and do not proceed to mechanism work.
+
+Done when:
+  The preregistration commit predates every Study A variant manifest. If the gate is blocked, the file may remain a draft and must be labelled as such.
+
+TRACK 3 — Prior-art and evidence closeout
+
+This lane may proceed only in parallel through disjoint files. Do not have two writers edit one JSON or Markdown file at the same time.
+
+T13. Close-read the six highest-priority competitor sources.
+
+Files:
+  docs/reading-records-2026-09-16.json
+  docs/prior-art-search-2026-09-14-screening.md
+  evidence/task-prior-art-2026-09-19/README.md
+
+Read first:
+  1. doi:10.1115/97-gt-406 — circumferentially non-uniform clearance and performance/stability.
+  2. doi:10.1016/j.heliyon.2024.e25296 — nonuniform clearance flow structure.
+  3. doi:10.1115/2000-gt-0416 — asymmetric clearance flow redistribution.
+  4. doi:10.1115/1.4023468 — ducted-fan VTOL baseline and measurement.
+  5. doi:10.1115/gt2011-46356 — related conference version; compare it with the journal record rather than double-counting.
+  6. doi:10.1115/1.4023469 — circumferentially varying ducted-fan treatment.
+
+For each source, record identifier/version, access route, exact sections/pages, aboutness, evidence grade, and every axis state. Abstract-only text cannot establish that a full paper did not address an axis. A source that supplies evidence against the candidate gap must narrow the claim ledger.
+
+Done when:
+  Six records exist with locators, source hashes where retained, and explicit unresolved states. The historical day-3 reading file is unchanged.
+
+T14. Conduct a dated, bounded patent search.
+
+Files:
+  docs/patent-search-2026-09-19.md
+  evidence/task-patent-search-2026-09-19/README.md
+
+Actions:
+  a. Freeze search strings, classifications, date range, and public routes before searching.
+  b. Record each route, query, timestamp, outcome, and rate/access limitation.
+  c. Record hits as UNSCREENED candidates with identifiers and source links.
+  d. Do not claim patent clearance, legal freedom to operate, or global novelty.
+
+Done when:
+  Another reader can reproduce what was searched and what was not searchable. A public page for one known patent is not reported as a patent search.
+
+T15. Feed only supported findings into the project records.
+
+Files:
+  docs/prior-art.md
+  docs/claim-ledger.md
+  docs/SPRINT_TASKS.csv
+  docs/SPRINT_PROGRESS.md
+  docs/REVIEW_READY.md
+
+Actions:
+  a. Add a dated section linking the new reading and patent-search records.
+  b. Preserve “bounded to inspected/accessibly reviewed work” language unless every stronger condition is actually satisfied.
+  c. Keep SSY-01 open if the 111 records, known full texts, broader search, or patent task remain incomplete.
+  d. Add ledger entries only for work actually completed. A plan file, a green test, or an unscreened hit is not a research result.
+
+Done when:
+  The status ledger, prior-art boundary, claim ledger, and review index agree and no historical evidence file was rewritten.
+
+REPRODUCIBILITY PACKAGE
+
+Every CFD case must have a manifest containing:
+
+  case_id
+  study and rung
+  source document hash and locator
+  geometry revision and source status
+  mesh-generation input hash
+  mesh hash and cell count
+  solver image digest and solver version
+  turbulence model
+  physical properties and units
+  boundary conditions
+  operating point
+  convergence rule
+  final averaging window
+  outputs and units
+  status: PASS, FAILED, or UNCONVERGED
+  git commit
+
+Every evidence report must contain:
+
+  purpose
+  exact inputs
+  commands
+  source and file hashes
+  output summary
+  uncertainty method
+  verdict
+  limitations
+  claim boundary
+  next gate
+
+Do not commit large raw solver directories without an explicit repository size policy. If raw files are kept outside Git, the manifest must retain their path, hash, and regeneration command.
+
+TESTING AND CI REQUIREMENTS
+
+Use the existing standard-library unittest style. Add no dependency unless the owner approves it and the repository requirements are updated.
+
+The minimum new test should verify:
+
+  1. Every CFD manifest has source, geometry, mesh, solver, settings, and commit identity.
+  2. Every reported GCI cites at least three mesh levels.
+  3. A missing manifest field fails.
+  4. A two-mesh GCI claim fails.
+  5. A result marked validated without a rung-specific claim boundary fails.
+  6. Historical reading files and acquisition evidence are not modified by the new lane.
+
+Run the complete suite after every meaningful change:
+
+  python -m unittest discover -s tests -v
+  python scripts/check_repo_contract.py
+  python scripts/reference_coverage.py --check
+  python scripts/acquisition_ledger.py --check
+  python scripts/clearance_uncertainty_budget.py --check
+  python tools/check_presentation.py . "Segmented Shroud Aeromechanics" segmented-shroud-aeromechanics
+  python tools/test_presentation.py
+  git diff --check
+
+The repository's CI passing means the repository contract is intact. It does not mean CFD converged, validation passed, or the hardware is safe.
+
+WEEKLY DECISION TREE
+
+1. Can the source data and geometry be verified?
+   No: stop that rung; record the missing source and do not invent values.
+   Yes: continue.
+
+2. Can the solver container run the tutorial and reproduce a simple case?
+   No: stop CFD case work and document the alternative.
+   Yes: continue.
+
+3. Does A0.1 pass its frozen comparison and convergence criteria?
+   No: stop and repair the workflow; do not move to seam cases.
+   Inconclusive: preserve the limitation and decide whether A0.2 is still scientifically useful.
+   Yes: continue.
+
+4. Does A0.2 pass for the open-rotor quantities?
+   No: Study A remains blocked.
+   Yes: continue with the scope label rotor-validated, gap-unvalidated unless A0.3 exists.
+
+5. Is the uncertainty decision record dimensionally and statistically defensible?
+   No: do not run seam variants.
+   Yes: preregister Study A before generating variants.
+
+6. Did Study A effects exceed the declared decision band?
+   No: publish a CFD-bounded null and stop mechanism escalation.
+   Yes: prepare the owner budget decision and measurement gate; do not call the CFD result measured.
+
+SCOPE TIERS FOR THE WEEK
+
+MUST COMPLETE
+
+  - Source inventory and hash binding for A0.1/A0.2.
+  - OpenFOAM arm64 smoke test or a documented approved alternative.
+  - A0.1 acceptance freeze, grid family, runs, uncertainty report, and verdict.
+  - A0.2 source verification and geometry/mesh readiness; run it only if source and A0.1 gates permit.
+  - A0 rung-specific claim boundaries.
+  - Close reading of the six highest-priority competitors if access and time allow; otherwise preserve the queue and state exactly what remains.
+  - Full reproducibility and preservation checks.
+
+NICE TO HAVE
+
+  - A0.2 complete uncertainty report.
+  - A0.2 case-record test with negative controls.
+  - A draft Study A preregistration if A0.2 passes.
+  - First version of the patent-search report.
+
+MAYBE LATER, TRIGGER-GATED
+
+  - A0.3 ducted-fan validation: trigger only when a public geometry and measured dataset are verified.
+  - Study A seam sweep: trigger only after A0.2 and the uncertainty decision record pass.
+  - Study B budget feed: trigger only after Study A supplies a bounded effect range; CFD informs the owner but does not set MEI automatically.
+  - Study C pilot: trigger only when the named sensor, installed calibration plan, rotor/stand resource, and Stage 1 measurement gate are ready.
+  - Acoustics: trigger only after the aerodynamic effect survives the uncertainty band and an acoustic channel is funded; steady CFD cannot establish tonal noise.
+  - Mechanism geometry: trigger only after the Stage 2 aerodynamic gate and XC-02 disclosure decision.
+  - Cloud compute: trigger only when measured peak memory or wall time exceeds the local threshold recorded in the evidence file.
+
+EXPLICITLY OUT OF SCOPE
+
+  - Fabrication, rotor operation, flight, free-flight transformation, and hardware procurement.
+  - Any protective-guard claim.
+  - Global novelty, patent clearance, or freedom-to-operate language.
+  - Treating NACA 0012 or Caradonna–Tung validation as duct-gap validation.
+  - Running seam variants before preregistration.
+  - Choosing the minimum effect of interest from a CFD result without an owner decision.
+  - Adding mechanism-specific seam geometry while XC-02 is open.
+
+FINAL HANDOFF EXPECTATION TO CLAUDE
+
+Claude should return one implementation PR only after the relevant gates are complete or explicitly blocked. The PR description must state:
+
+  - the base commit and plan revision used;
+  - which A0 rungs were completed;
+  - the exact validation verdict and uncertainty numbers for each completed rung;
+  - which source values were verified, derived, assumed, or missing;
+  - whether Study A is allowed, blocked, or only preregistered;
+  - whether the prior-art close-reading and patent lanes were completed or remain open;
+  - every failed, unconverged, inaccessible, or deferred item;
+  - the claim boundary in plain language;
+  - all commands and CI status on the exact PR head.
+
+The most valuable result this week is not the largest number of CFD cases. It is a reproducible answer to: “What has this toolchain actually been shown to validate, and what is still only a planned extension?”
+
+
+CAD HANDOFF ADDENDUM — 2026-09-21
+
+USER-SUPPLIED REFERENCE
+
+Repository: 500ft/engineering-audit
+Path: docs/cad_agent_briefing.md
+Source: https://github.com/500ft/engineering-audit/blob/main/docs/cad_agent_briefing.md
+Read for this planning update on 2026-09-21. This is a changing branch link, not a pinned evidence revision. At implementation start, record the reviewed engineering-audit commit and use a commit permalink in the resulting evidence.
+
+Treat this briefing as a cross-project engineering reference for future shroud work. It reports native SOLIDWORKS part authoring, parameter re-drive, independent CadQuery volume comparisons, STEP round trips, and an initial MAPDL static solve. These are reported demonstrations on other geometry, not verified shroud results. This addendum incorporates the workflow into planning; no CAD or simulation has been executed for it.
+
+REPOSITORY OWNERSHIP AND TOOL CHOICE
+
+Reusable authoring and verification machinery belongs in engineering-audit: inspect cadloop/, cadloop/volume.py and cadloop/fea/ before proposing another runner or verifier. The autonomous-racing-systems mast is a worked example; its contract, dimensions and acceptance results do not become shroud inputs.
+
+Keep shroud-specific contracts and evidence in segmented-shroud-aeromechanics. Its existing docs/CAD_PLAN.md selects CadQuery for parameterized families and neutral STEP verification, with Onshape for manual fixtures subject to access. The briefing does not silently replace that choice. SOLIDWORKS is an optional native-authoring route when an actual deliverable requires it and a documented plan amendment establishes the host/access route and artifact ownership. Do not make a Windows host a prerequisite for the existing CadQuery path.
+
+Use the existing proposed cad/shroud/parameters.csv as the authoritative shroud parameter register. If a shared tool requires JSON, generate that input from the reviewed register, preserve units and provenance, and record the source hash. Do not introduce a second manually maintained set of dimensions. Reuse existing task IDs and ledgers rather than creating a parallel CAD backlog.
+
+PLANNING TASKS NOW; EXECUTION AFTER THE EXISTING GATES
+
+CAD-P1 — Map the shared workflow to existing shroud work orders.
+  How: When the CAD plan is next revised, map parameter provenance to SSY-CAD-01/02; regeneration, independent checks and host compatibility to SSY-CAD-10; reference and defect checks to SSY-CAD-03/04/05; interfaces to SSY-CAD-06; and evidence packaging to SSY-CAD-07. Cite the reviewed shared-tool revision and identify any required adapter rather than duplicating a framework.
+  Done: Each affected existing work order identifies its reused tool, shroud-specific input, acceptance evidence and unresolved dependency. A proposed tool change is explicit. This mapping alone does not promote deferred tasks to executable status.
+
+CAD-P2 — Define a geometry acceptance contract that answers the research question.
+  How: Specify the rotor axis, origin, angular zero and direction, units, reference profile, measurement section or axial sampling rule, and the rotor envelope used for static clearance. Register the averaging convention before generating variants. Define c(theta) only where the relevant shroud wall exists; retain a separate domain mask for missing-wall seams. Record seam endpoints and angular sampling/refinement rules so a narrow seam cannot disappear between sample points.
+  Required checks: Equal mean under the declared convention; minimum static clearance over the declared domain; two-lobe amplitude and phase; seam count, width and azimuth; radial-step magnitude and position; bounding box; expected solid/component count; valid topology; and volume. Check reference datums and support blockage across comparison configurations. Do not invent a finite clearance inside a missing-wall seam or use an arbitrary mask normalization to claim equal mean.
+  Done: Every metric has a definition, unit, expected-value method, predeclared numerical tolerance and failure behavior. Separate numerical geometry tolerance from fabrication tolerance and measurement uncertainty. Static design clearance is labeled as such; CAD cannot establish running clearance or measured performance.
+
+CAD-P3 — Specify independent checks and deliberate failure cases.
+  How: Hand-check simple nominal cases, then compare generated geometry with an independently derived expectation. Reading the same reviewed parameters is acceptable; computing expected metrics from the candidate's measured output, or reusing the same geometry-construction helper on both sides, is not independent verification. CadQuery may independently check SOLIDWORKS, but a CadQuery generator still needs an independent analytic or separately derived check.
+  Positive cases: Continuous reference; zero-amplitude two-lobe equivalence; zero-width seam and zero-height step limits under the registered definitions; representative valid defect cases.
+  Negative cases: Rotor intersection; missing or invalid units/dimensions; missing fit-critical inputs; a seam narrower than the initial angular sample spacing; a misplaced defect with unchanged volume; stale exported geometry after a parameter change; and corrupt or wrong-unit STEP input.
+  Done: The plan pairs each case with the specific check expected to pass or fail. Volume agreement alone cannot accept shroud geometry. The very small numerical differences reported in the briefing are observations from its examples, not transferable tolerances or physical accuracy claims.
+
+CAD-P4 — Require evidence that parameters drive the saved and exported part.
+  How: For each exposed dimension and positional driver, choose a valid perturbation with a predicted geometric consequence. Regenerate, save, reopen and measure; then export STEP and inspect it in a fresh process. Verify intended changes and the relevant invariants. Include seam azimuth and step position, since a volume-only check cannot detect their movement. Preserve the reviewed baseline and use separate output locations for perturbed cases.
+  Done: A parameter-to-metric table identifies the perturbation, expected response, measured response and verdict for native and neutral geometry. A parameter is not demonstrated as editable merely because its displayed value changed.
+
+CAD-P5 — Adapt host execution only if the native-authoring route is selected.
+  How: First read engineering-audit/docs/host_setup.md; before SOLIDWORKS COM code, also read docs/solidworks_api_findings.md. Verify signatures and return semantics for the installed API version. Probe sketch-to-global orientation with known geometry and a bounding-box check. Inspect per-feature return values and equation acceptance; record incremental geometry metrics to localize failures. A successful rebuild or plausible preview is insufficient.
+  How: Reuse the documented host runner, record job identity and expected artifacts, and allow long overall completion times with short polling intervals. Distinguish pending, failed and completed jobs. On timeout, check whether the original job remains active before launching a duplicate. Reopen saved files and validate geometry; file existence alone does not establish correctness.
+  Done: The proposed host smoke test has a known expected result, actual completion evidence, installed-version record and explicit timeout/failure handling. Exact commands are taken from the pinned shared-tool revision and verified there; the racing-mast commands are examples, not ready-made shroud commands.
+
+CAD-P6 — Preserve input provenance and acceptance state through release.
+  How: Each parameter records its value, units, source locator, evidence route and unresolved status. Distinguish design_then_inspect, vendor_drawing and measurement. A nominal design choice stays provisional_design until its required evidence exists. A drawing does not satisfy a measurement requirement without a prospectively recorded route amendment. Missing critical inputs block the affected operation; nominal design-only inputs cannot silently become fabrication inputs.
+  How: Plan one evidence manifest per accepted case: input revision/hash; generator and shared-tool revision; software versions; native and STEP identities; commands; measured and expected metrics; tolerances; re-drive results; verdicts; and limitations. Hashes establish identity, not geometric correctness. If an independent expected-value check is missing, preserve accepted: null with a reason; a performed check that fails is a failure, not an unknown or pass.
+  Done: SSY-CAD-07 can distinguish a nominal design review, a geometrically verified artifact, and a fabrication release using traceable evidence. Keep CAD_TASKS.csv as the sole CAD status ledger.
+
+FEA AND OTHER CAPABILITIES STILL TO ESTABLISH
+
+The briefing explicitly leaves native assembly/mates, assembly STEP, modal analysis, a dimensioned drawing/tolerance set, complete position-parameter control, and independent FEA verification unresolved. Recheck their status at the pinned revision. Do not present them as available acceptance evidence based on the part-authoring demonstrations.
+
+If structural FEA becomes a separately scoped task, plan its acceptance before running it: imported units/orientation/topology; traceable material and load definitions; boundary-condition review; reaction-force and moment equilibrium; mesh convergence for named quantities of interest; and an independent analytic or benchmark comparison. Separate local stress singularities from meaningful reported metrics. A solver completion message does not validate the model, and a static solve does not establish fatigue, blade containment, aerodynamic performance or dynamic tip clearance.
+
+ACTIVATION AND NEXT-SESSION HANDOFF
+
+This update adds planning requirements only. Rigid-family CAD remains subject to the shroud ledger and its SSY-01, SSY-02, SSY-03 and XC-02 entry conditions; any later promotion or plan amendment must be recorded. Mechanism placeholders SSY-CAD-08/09 retain their disclosure restriction. Do not restore their withheld details from another repository or historical commit. The CAD briefing supplies capability information, not closure of those dependencies.
+
+Give the next session this file plus: 500ft/engineering-audit -> docs/cad_agent_briefing.md. Ask it to read the shroud CAD plan and current ledger, pin the shared-tool reference, and incorporate CAD-P1 through CAD-P6 when the corresponding work orders are activated. Do not expand the current CFD-validation week into native CAD, assembly or FEA implementation merely because the tooling exists.

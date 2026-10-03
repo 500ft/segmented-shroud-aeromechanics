@@ -1,0 +1,288 @@
+SEGMENTED SHROUD AEROMECHANICS
+LITERATURE REVIEW AND REVISION HANDOFF
+2026-09-24
+
+Execution-order update dated 2026-09-25: see CLAUDE_CLOSEOUT_PLAN_2026-09-25.txt. PRs #28-30 have since merged; the newer handoff distinguishes completed corrections from residual issues in PR #31 and supplies the remaining same-day work order.
+
+PURPOSE AND REVIEW BOUNDARY
+
+Planning only. This file recommends corrections and supplies acceptance conditions for Claude. It does not implement them, approve either open PR, change a frozen historical result, or authorize hardware work.
+
+Question: For a small-UAV ducted rotor, does discrete seam geometry explain electrical power at matched total thrust beyond mean clearance, and what evidence is needed to predict that effect on an independently held-out configuration?
+
+Reviewed baseline: origin/main d7543c0215d03910323e446663517aca6eb5dcaa, checked on GitHub today. The local main checkout remains at 64c5760; newer main-branch literature documents were read through git show after fetching. Also reviewed:
+  PR #28: SSY-03 design contract, f4b8edbb04e50670267be6abc2c0ce558f61dec2.
+  PR #29: SSY-05 analysis pipeline, 5783ab6555ff0ea5133527b04a0fa58cf7aa9ce3.
+Both were open at review time. Findings against those branches are distinguished below from findings against main.
+
+This is a targeted critical review, not a systematic review of all 1,736 catalogue records. Primary studies were selected for clearance topology, experimental endpoint, relevant scale, or verification method; citation counts did not determine relevance. Evidence inspected ranges from relevant full-text sections to indexed abstracts, explicitly recorded in the source ledger. No unseen full paper is treated as cleared prior art. No patent or global novelty conclusion follows.
+
+RECOMMENDATION
+
+Continue the project, but correct the inference and analysis contracts before launching more seam cases. The core experiment remains worthwhile. The strongest possible contribution is a reproducible, measured, uncertainty-qualified relationship between a precisely defined seam and matched-thrust power, with defensible prediction on new specimens/configurations. A general discovery that nonuniform clearance matters is already outside the credible novelty claim.
+
+Keep: rigid inserts before mechanisms; matched-thrust comparison; missing-wall masks; independent geometry checks; calibration on the installed apparatus; preservation of unsuccessful cases; the distinction between CFD shaft power and measured electrical power; the existing identifiability gate. PR #28 already adds useful zero-defect segmented and reinstallation controls, and PR #29 already implements instantaneous V*I power and refuses extrapolation outside measured thrust support. Improve these assets rather than replacing the project.
+
+P0: CORRECTIONS BEFORE INTERPRETING RESULTS OR ACCEPTING THE ANALYSIS
+
+R01. Withdraw the universal two-percent RANS floor.
+Where: docs/cfd-validation-a01.md sections 6-8; docs/literature/README.md; PR #28 design contract section 7; their summaries and downstream planning.
+Evidence: S1, S2; direct review of the project's comparison table. Confidence: high.
+
+The A0.1 report observes a discrepancy in absolute airfoil lift at one operating condition. It then asserts that any seam effect below about 2% is unresolvable by steady RANS, irrespective of mesh. That inference is unsupported. An absolute lift discrepancy is neither an established model-form error nor a bound on a difference in ducted-rotor power. Errors in two configurations can partially cancel, remain different, or compound; cancellation must be investigated, not presumed. Two turbulence models also cannot bound every shared modelling error.
+
+Replace that conclusion with: A0.1 shows disagreement with the selected experimental comparator and agreement with selected reference computations. It does not establish a detection threshold for seam-induced power differences. Study A requires its own numerical study of the paired difference, model sensitivities, and application-relevant validation.
+
+Also correct the report's opening claim that every published code misses the experiment by more than this work: its own table gives SST discrepancies of 1.40% and 1.98%, below this work's 2.24%. Agreement with another code is useful cross-code evidence, not proof that workflow errors are absent. Do not declare the tunnel uncertainty to be the cause before separating geometry, Mach number, incidence adjustment, wall treatment, farfield and model effects.
+
+Done: no active document or pending contract uses 2% as a universal seam-effect or amplitude threshold. Preserve original calculations and the historical decision, with a dated correction explaining why the interpretation changed.
+
+R02. Make unknown uncertainty remain unknown in the calculation and verdict.
+Where: scripts/cfd_grid_convergence.py, docs/cfd-validation-a01.md, docs/specs/research-programme/uncertainty-decision-record.md, generated uncertainty report, and the acceptance record's explanatory language.
+Evidence: S1, S3; inspected code and independently recomputed arithmetic. Confidence: high.
+
+The report evaluates sqrt(0.001684^2 + unquantified^2 + 0.00441^2) as 0.004721. The script actually omits the unknown term. That number is a partial combination of the included terms; it is not a fully quantified U_val. Moreover, the 0.00441 term is spread across different trip treatments after angle adjustment. Those are changed experimental conditions, not repeated measurements under identical conditions. It does not automatically estimate experimental repeatability or measurement uncertainty.
+
+Revision steps:
+  1. Separate comparison error E, numerical evidence, partial sensitivity summaries, complete validation uncertainty, and project acceptance. Unknown required terms yield U_val=null plus named missing components; numerical values must not silently replace null.
+  2. Reclassify inter-trip spread as treatment sensitivity unless a justified measurement model supports another interpretation. Preserve the individual comparator values. Record any interpolation or incidence-adjustment uncertainty.
+  3. For every included uncertainty, identify the measurand, sensitivity coefficient, standard versus expanded form, coverage convention and covariance assumptions. A GCI safety factor is not automatically a one-standard-deviation distribution. Verified source provenance does not imply a physically exact input.
+  4. Treat the ASME-style analysis as an estimate of model discrepancy for specified quantities and conditions. The rule |E| <= U_val is this project's consistency screen, not a universal ASME pass/fail rule. A wider band must not make a less informative model look more accurate. Define a separate prospective fitness-for-purpose tolerance if one is needed.
+  5. When only one turbulence model is usable, report model spread as unestimated, not 0.0. Keep the incomplete SST result visible without accepting it.
+
+Done: meaningful regression cases cover unknown U_input, unavailable U_D, incompatible coverage conventions, one usable turbulence model, and a very large uncertainty band. None can generate an unsupported validation pass. Reissue interpretation through a dated amendment; do not rewrite the original freeze or retroactively tune a tolerance to obtain a pass.
+
+R03. Downgrade the current asymptotic-range check from proof to diagnostic.
+Where: scripts/cfd_grid_convergence.py gci(), and A0.1 report section 3.
+Evidence: S4 plus an independent algebraic check of the implementation. Confidence: high for the algebra, not a finding that the existing solution is necessarily outside the asymptotic range.
+
+For equally refined, monotonically converging data with the order fitted from the same three values:
+  r^p = abs((phi3-phi2)/(phi2-phi1)).
+With the script's relative GCI definitions, GCI32/(r^p*GCI21) reduces to abs(phi1/phi2). The reported ratio 1.0066205205907626 is exactly the fine/medium lift ratio. It is not an independent confirmation of an asymptotic error model. There is one three-grid set and two adjacent grid pairs, not two independent triplets.
+
+Retain the ordinary three-grid estimate with its assumptions stated. Where that estimate controls a research release, seek an additional refinement level and stability across overlapping triplets, or a separately justified convergence/error treatment. Check iterative error, domain extent, wall treatment and the actual quantity of interest. A fourth mesh is useful evidence, not an automatic guarantee. The SST drag anomaly warrants investigation; standard coefficients and absence of warnings do not diagnose under-resolution uniquely.
+
+Done: report wording stops claiming the ratio proves asymptotic behavior. A check demonstrates its algebraic dependence. Further computation is scoped only after the existing resource and release decisions; this review does not request an immediate expensive rerun.
+
+R04. Correct the mean-clearance quantity before building on PR #29.
+Where: PR #29 scripts/analysis_pipeline.py clearance_descriptors(); PR #28 design contract sections 4-6.
+Evidence: independent mathematics and read-only execution of the pending function. Confidence: high.
+
+PR #29 labels the intercept of c=a0+a*cos(2theta)+b*sin(2theta) fitted on walled samples as c_bar. On an incomplete angular domain, the harmonic basis is not generally orthogonal to the constant. The fitted intercept and the wall-domain mean are different quantities. Nonuniform angular sampling adds a second source of bias.
+
+Reproduced counterexample: use theta=0,30,...,330 degrees; c=100+10*cos(2theta) micrometres; remove samples at 0 and 180 degrees as seams. The pending function returns c_bar=100, while the mean of the ten retained, equally spaced wall samples is 98. This example diagnoses the discrete statistic; a continuous wall mean additionally needs a declared quadrature and seam-boundary treatment.
+
+Revision: compute the defined wall integral with valid angular weights independently of the harmonic fit. Name the harmonic intercept separately. For masked fields, distinguish a fitted underlying harmonic from a Fourier descriptor of the actually present wall. For seams plus ovality, offset the underlying profile if necessary to keep the wall mean fixed; the full-circle zero integral of cos(2theta) does not apply after removing arbitrary intervals. Treat zero-amplitude phase as undefined.
+
+Done: analytic full-wall and masked-wall cases; uneven samples; wraparound seams; missed narrow seams; and step-containing profiles reproduce registered means and domains. CAD and analysis agree on the same metric without sharing the candidate's measured answer as the expected value.
+
+R05. Make the baseline work for the experiment that is actually proposed.
+Where: PR #29 compare_models(), fit(), group_conditions(), evaluate(); SSY-03/05 contracts.
+Evidence: S8 and direct execution of the pending baseline fit. Confidence: high.
+
+At one exactly matched mean clearance and one thrust set-point, mean clearance has no independent variation. A baseline with intercept plus c_bar is rank-deficient. Read-only execution on three records with c_bar=100 and powers 10,11,12 W raises PipelineError. Adding more repeated runs at the same clearance cannot identify that slope.
+
+Choose prospectively between an intercept-only baseline for a single-clearance block and a separately identified clearance-response model trained on multiple uniform-clearance levels. Never fit a clearance slope from metrology noise around one target mean. If the study needs dP/dc, it needs actual supporting clearance variation on the relevant machine.
+
+The pending pipeline also retains one row per specimen/cycle/condition, then averages errors over those rows. This does not implement the research plan's specimen-first scoring; a specimen with more cycles has greater weight. Its split can place the same specimen on both sides through different configuration labels. Define whether the target is a new condition on known hardware or transfer to a new specimen, then enforce the corresponding split and weighting. Register any training-based descriptor selection; numerical column rank alone does not establish physical extrapolation support.
+
+Done: exact-equal-mean data are handled deliberately; duplicating cycles from one specimen cannot inflate independent sample size or its score weight; a promised new-specimen holdout has disjoint specimen IDs. Include prediction intervals and interval coverage before claiming predictive reliability. Keep synthetic software checks distinct from scientific validation.
+
+P1: DESIGN REVISIONS BEFORE THE NEXT STUDY IS FROZEN
+
+R06. Separate seam topology from total opening area and from casing treatments.
+Where: Study A design matrix; PR #28 seam definition; literature review section 3; future CAD contract.
+Evidence: S5-S7, with the proposed contrasts below being engineering deductions. Confidence: high that these variables differ; seam effect size remains unknown.
+
+Equal wall mean does not hold total missing wall, leakage area or exterior communication fixed. For n nonoverlapping equal seams of angular width w, open angular fraction is n*w/(2*pi), with w in radians. Varying n at constant width changes total opening as well as topology. Seam width is a treatment variable here, not merely a nuisance to hide in the averaging rule.
+
+Add two explicitly different contrasts to the proposed design:
+  A. Practical defect burden: hold individual width fixed and vary count, reporting the changed total opening.
+  B. Distribution at fixed opening: hold n*w fixed, vary count/spacing, and record the resulting individual widths. This asks whether redistribution matters at fixed opening, not whether count alone has an isolated causal effect.
+Both may be useful; do not describe them as the same test. Predeclare which is primary and what can be inferred from each. Include a matched-distribution contrast or an explicit model if an isolated count effect is claimed.
+
+Specify axial extent, through-wall versus closed recess, wall thickness, corner treatment, exterior flow domain and step sign. Register angular width w and physical width g with their radius/conversion; a width in degrees cannot be divided directly by a clearance in micrometres. A continuous circumferential casing groove can be axisymmetric and closed-bottomed, while a segment seam can break azimuthal symmetry and open outside. Casing-treatment literature is relevant, but geometric equivalence is not established by vocabulary.
+
+Done: every planned contrast lists held quantities, changed quantities, nondimensional descriptors and allowed inference. CAD tests distinguish through-opening from blind recess and preserve domain masks. Preserve PR #28's segmented zero-defect and reinstall controls; characterize residual roughness and flushness rather than claiming literal zero manufacturing defect.
+
+R07. Make total thrust and the power boundary explicit.
+Where: measurement spec, Experiment 01 comparison basis, Study A force integration, future stand drawing.
+Evidence: S6-S7; S7 Fig. 9 was inspected visually. Confidence: high.
+
+The literature separates thrust on the rotor from force on the shroud. Matching rotor-only thrust can compare different useful total forces. Define T* as the net axial force on the declared propulsion assembly, with a consistent tare/support convention. Diagram which load paths enter the force measurement. In CFD, retain rotor and duct contributions separately and report their sum; account explicitly for any additional included surfaces. Do not require a new sensor if the existing assembly measurement can answer the question.
+
+Keep P_electrical=mean(V(t)*I(t)) and P_shaft=Q*Omega distinct. PR #29 already implements the former. If they are compared, specify the motor/ESC loss treatment over speed, torque and temperature; a single constant efficiency is not automatically transferable between matched-thrust settings. In hover, T/P is power loading; avoid an undefined propulsive-efficiency claim using T*forward_speed/P at zero forward speed.
+
+Done: an endpoint diagram and equations identify the same force boundary in simulation and experiment. A synthetic check would catch accidentally matching rotor thrust when duct force changes. Vehicle mass, footprint and endurance stay separate later tradeoffs, not inferred from component power loading.
+
+R08. Turn the validation ladder into a scope map, and address the scale bridge.
+Where: A0 case definitions, plan D3/D10, Study B, PR #28 scale section.
+Evidence: S1, S2, S6-S7. Confidence: high on the transfer limitation; suitable ducted benchmark feasibility remains to be established.
+
+Keep Caradonna-Tung as a canonical rotor check, but do not let its popularity select the physical phenomenon for the whole project. PR #28 correctly distinguishes the large computational rotor from the unchosen small physical rotor. Make that distinction operational: tabulate quantities actually compared, Reynolds and Mach ranges, geometry, transition state, clearances, boundary conditions and uncertainties for each validation case. Thrust and pressure agreement do not by themselves validate shaft torque or tip-vortex trajectories.
+
+Before using Study A to set the rig's expected effect or clearance sensitivity, evaluate a target-scale ducted benchmark. The Akturk-Camci Part I author copy is readable now and should undergo a geometry/data sufficiency audit. Their 2012 PIV paper is another useful comparator, but its simplified rotor model and near-duct velocity measurements do not establish resolved tip-gap accuracy. Published figures and a few dimensions are not necessarily reproducible blade geometry. Record missing inputs rather than inventing them.
+
+For target-scale transfer, list at least clearance/chord and clearance/radius, seam width/chord, step/clearance, blade count/solidity, tip Reynolds number, tip Mach number, loading and duct profile. Matching a geometric ratio alone does not match all the relevant flow regimes. This is a coverage table, not a request for a large similarity sweep now.
+
+Correct the A0.2 text that turns the Prandtl-Glauert factor at tip Mach into a predicted 11% sectional-pressure discrepancy. That linearized estimate flags possible compressibility sensitivity; it is not a quantified error correction for a three-dimensional rotor with induced flow. Resolve solver regime prospectively and measure its influence where material.
+
+Done: every claim names the quantities and conditions supported. No CFD result on the large rotor supplies an installed small-rotor sensitivity without an explicit, evidenced bridge. Exploring a target-scale reference can proceed as planning without abandoning the owner's existing baseline decision.
+
+R09. Use transient confirmation to assess the steady approximation, not merely illustrate it.
+Where: Study A numerical-method and decision-envelope definitions.
+Evidence: S9 and engineering inference from moving blades encountering stationary seams. Confidence: high on method distinction; required resolution is case-dependent.
+
+The plan already recognizes MRF clocking and proposes sliding-mesh confirmation. Keep that improvement, but four frozen positions are not automatically a converged time average. Register a phase-sampling refinement check and the physical time-average estimand. Preserve the symmetry required by the full geometry: A0.2's periodic sector cannot be inherited by a single seam or incompatible seam pattern.
+
+Select the transient control, a consequential nonzero case and, if affordable, a near-decision-boundary case by a rule declared before selection. Demonstrate time-step, cycle-to-cycle and averaging-window convergence of matched-thrust mean power. Resolve the narrowest seam encounter time, not just a universal steps-per-blade-passage count. Include spatial and interface sensitivity where relevant.
+
+Report the steady/transient difference and per-model/per-clocking predictions. The sum U_num(delta)+R_clock+R_model is a sensitivity summary over sampled choices, not a proven worst-case bound on physical model error or a confidence interval. Interactions can exceed an additive main-effect construction. An envelope built from sampled per-case intervals is still limited to those cases and models.
+
+Done: a predeclared rule determines when steady screening may support a trend, when transient results reverse it, and when the effect remains unresolved. Compute cost uses measured memory/time and counts mesh levels, thrust iterations, clocking positions, model variants, restarts and averaging periods; old laptop throughput estimates are not schedule evidence.
+
+R10. Publish the actual experimental design matrix and an honest null-result rule.
+Where: Study A design, Study C kill rule, Experiment 01 confirmation plan, SSY-05 evaluation.
+Evidence: S8, S10, S11. Confidence: high.
+
+The proposal names three three-level factors and about 10-12 runs as a resolution-IV design without giving the matrix or aliases. This is not enough to determine what can be estimated. A numeric three-factor quadratic model already has ten coefficients before adding other descriptors; n may instead require categorical or physics-based coding. Repeated deterministic CFD centre cases do not create physical replication.
+
+List exact rows, model terms, constraints, rank, aliasing, and reserved holdout combinations before committing to a run count. Include seam count/width interaction and any needed uniform-clearance calibration levels. Distinguish the core topology comparison at a matched mean from ancillary runs that identify a clearance slope. Scale inputs and assess conditioning; the pending normal-equation solver needs numerical evidence if predictors span degrees, counts and micrometres.
+
+For physical tests, preserve blocks and specimen identity through interpolation and scoring. Repeated operating points need a declared aggregation rather than dependence on which duplicate row happens to bracket T*. The count of time samples or cycles cannot substitute for independently made/installed experimental units. Use pilot variability to plan precision or power at a prospectively chosen minimum meaningful effect; do not invent a sample count from the catalogue.
+
+Use three separate outcomes: a resolved effect; evidence of practical equivalence inside declared bounds; and insufficient precision. A difference inside its measurement uncertainty is not evidence that topology is irrelevant. The current pilot stop rule can justify pausing expenditure, but cannot on its own justify a published tolerance-equivalence conclusion. A power difference can also be measured precisely while being too small to matter.
+
+Done: design matrix and split manifest are reviewable; the analysis reports uncertainty in effect and prediction metrics; an underpowered synthetic null yields inconclusive evidence, not equivalence. The 10% prediction-error/20% improvement gates remain provisional engineering choices until prospective confirmation criteria are accepted.
+
+R11. Keep the budget tied to the actual measurand and machine.
+Where: proposal Study B and C; measurement-input rationale; PR #28 amplitude rule.
+Evidence: S3; mathematical dimensional/sensitivity analysis. Confidence: high.
+
+Do not automatically set IN-01 = IN-03/(dP/dc) using a large-rotor CFD derivative. The expression needs the same endpoint, machine, operating point and a locally justified, nonzero derivative; its sign, units and uncertainty must be specified. If the derivative is near zero or changes sign, inversion is unstable or meaningless. A scalar uniform-clearance derivative cannot represent every seam descriptor's influence. Keep power detectability and clearance-setting fidelity as separate requirements linked only by a supported model.
+
+Remove the proposed universal sensor kill threshold based on half of one published 25-micrometre accuracy number. Accuracy on another rig is not an installed standard uncertainty, and one sensing paper does not establish the best achievable limit of all methods. Use named candidate methods and an installed calibration/feasibility plan. No procurement is requested by this review.
+
+Done: no finite clearance MEI is fabricated from a zero, unsupported or wrong-scale sensitivity. Required uncertainty is allocated from independently chosen engineering targets. Method selection is evidence-based and keeps unresolved installed contributors pending.
+
+R12. Repair evidence grades, access status and literature claims.
+Where: new dated reading records, docs/literature/README.md/register.json, claim ledger, and review summaries.
+Evidence: S5-S7 and S12. Confidence: high on classification; unresolved full texts remain unresolved.
+
+The 2024 Heliyon reading record uses grade A partly because a full text and a validated baseline exist. Access quality and evidence strength are different. Grade the baseline comparison separately from predictions for unmeasured nonuniform geometries; those variants remain simulation evidence. Equal maximum and minimum values also do not prove equal integrated mean for arbitrary profiles. Cite the paper's stated area constraint, and inspect/integrate geometry before equating it with this project's mean definition.
+
+Graf's indexed primary-paper abstract already describes experimentally studied circumferential nonuniformity at the same average clearance, with endpoint-dependent consequences. This is a more direct boundary on the broad nonuniformity claim than the axial-clearance Heliyon example. Full-text retrieval failed in this review, so do not mark Graf fully read or make absence claims about seams. The 2023 circumferential compressor paper's publisher abstract is available too; it is no longer accurate to say that only its title was inspected after this review is incorporated.
+
+The Akturk-Camci Part I author-uploaded text is publicly readable. Replace a blanket institutional-access requirement for that source with the verified route and a dated section/figure audit. Conference and journal versions belong to one study family unless additional data justify separate treatment. Correct online-publication versus issue dates rather than taking a repository upload date as the publication year.
+
+Prioritize: circumferential matched-mean precedent; actual ducted-fan experiments; distinctions between open seams, slots and closed grooves; metrology and thrust/power uncertainty. More database records are lower priority than closing these decisions. Update coverage through new versioned evidence rather than overwriting historical files bound to hashes.
+
+Done: each retained claim maps to inspected text, evidence type, scope and limitations. Unsupported, title-only candidates stay unresolved. No statement of universal novelty, clearance, or absence of prior work is introduced.
+
+R13. Preserve failures as scientific outcomes as well as validity dispositions.
+Where: PR #28 invalid-condition rules; future SSY-05 ingestion/analysis; research-plan yield definition.
+Evidence: direct consistency check against the project's existing yield endpoint. Confidence: high.
+
+Excluding a rubbing run from an aerodynamic steady-power fit may be appropriate, but contact is also an outcome the project explicitly studies. Likewise, a systematic inability to reach matched thrust or repeated condition-specific dropout can carry information. Keep separate fields for acquisition validity, aerodynamic-analysis eligibility, contact/clearance failure and inclusion in the attempted-condition denominator. Do not let survivor-only power plots imply acceptable overall performance.
+
+Done: every attempted condition remains countable, exclusions carry a prospective reason, and contact/failure frequencies include unsuccessful attempts. This is analysis planning, not a new operating procedure or authorization.
+
+SOURCE AND CLAIM LEDGER
+
+Evidence grades apply to claims: B = one experimental study or a simulation compared with independent data for the quantity actually tested; C = unvalidated prediction in a new configuration; M = methodological source, not aerodynamic evidence. Aboutness is 3 for directly informing a reviewed decision, 2 for adjacent-domain evidence. None of the sources below establishes a measured seam effect for this apparatus.
+
+S1. Eca, Dowding and Roache (2022), On the Interpretation and Scope of the V&V 20 Standard. DOI 10.1115/1.4053854.
+  Access: authors' institutional abstract inspected, not full paper. Aboutness 3, grade M.
+  Supports R01/R02/R08: validation estimates discrepancy for specified outputs and conditions; model error is assessed with experimental, numerical and parameter uncertainties. It is not inherently a pass/fail exercise.
+  https://researchportal.ulisboa.pt/en/publications/on-the-interpretation-and-scope-of-the-vampv-20-standard-for-veri/
+
+S2. Turbulence Modeling Resource, 2D NACA 0012 validation case.
+  Access: maintained TMBWG page inspected. Aboutness 3, grade M/reference case.
+  Supports condition-specific interpretation of A0.1. It does not provide a universal seam-power error floor. Preserve exact experiment, grid, model and boundary-condition identities when comparing codes.
+  https://tmbwg.github.io/turbmodels/naca0012_val.html
+
+S3. JCGM 100:2008, Guide to the Expression of Uncertainty in Measurement, section 5 and Annex F; official ISO HTML and BIPM terminology inspected.
+  Aboutness 3, grade M. Supports explicit measurement models, sensitivity coefficients and covariance. Does not supply any installed shroud uncertainty values.
+  https://www.iso.org/sites/JCGM/GUM/JCGM100/C045315e-html/C045315e_FILES/MAIN_C045315e/05_e.html
+  https://www.iso.org/sites/JCGM/GUM/JCGM100/C045315e-html/C045315e_FILES/MAIN_C045315e/AF_e.html
+  https://jcgm.bipm.org/vim/en/2.31.html
+
+S4. NASA Glenn, Examining Spatial (Grid) Convergence.
+  Access: official methodology page inspected. Aboutness 3, grade M.
+  Supports reporting grid refinement, apparent order and GCI assumptions. The algebraic dependence diagnosed in R03 is this review's independent deduction from the actual script, not a quotation of a NASA finding about this repository.
+  https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html
+
+S5. Graf et al. (1997), Effects of Non-Axisymmetric Tip Clearance on Axial Compressor Performance and Stability, ASME 97-GT-406 / MIT GTL report 228.
+  Access: indexed primary-paper abstract/excerpts and MIT report catalogue; direct MIT download returned HTTP 405, CiteSeer download 404. No full-text close-read claimed. Aboutness 2 overall, 3 for the matched-mean precedent; experimental evidence B provisional on abstract inspection.
+  Supports narrowing generic novelty: circumferential wavelength matters for some compressor responses at the same average clearance; efficiency and stability need not respond equally. Does not establish a matched-thrust seam-power effect in a small ducted rotor.
+  https://doi.org/10.1115/97-GT-406
+  https://dspace.mit.edu/bitstream/handle/1721.1/104762/38084138.pdf
+  https://www.gas-turbine-lab.mit.edu/gtl-reports
+
+S6a. Akturk and Camci, Tip Clearance Investigation of a Ducted Fan Used in VTOL UAVs, Part I, DOI 10.1115/1.4023468; online 2013, journal issue February 2014.
+  Access: author-uploaded full-text sections on methods, clearance variation and thrust comparison inspected; article figures not visually audited here. Aboutness 3, grade B for its measured baseline comparisons.
+  Supports a ducted validation candidate and force-component accounting. Its clearance sweep changes rotor diameter, which is not this project's fixed-rotor defect contrast. Geometry reproducibility and experimental uncertainty still need a deliberate audit.
+  https://www.researchgate.net/publication/360616432_Tip_Clearance_Investigation_of_a_Ducted_Fan_Used_in_VTOL_Unmanned_Aerial_Vehicles-_Part_I_Baseline_Experiments_and_Computational_Validation
+
+S6b. Akturk and Camci (2012), Experimental and Computational Assessment of a Ducted-Fan Rotor Flow Model, DOI 10.2514/1.C031562.
+  Access: author-uploaded methods/results text inspected. Aboutness 2-3, grade B for the measured near-duct velocity comparisons, not for seam predictions.
+  Supports a small ducted-fan flow comparator; uses a radial-equilibrium actuator-disk model, so this is not a ready-made validation of resolved blade-tip leakage.
+  https://www.researchgate.net/publication/269784918_Experimental_and_Computational_Assessment_of_a_Ducted-Fan_Rotor_Flow_Model
+
+S7. Hrishikeshavan, Sirohi, Tishchenko and Chopra (2011), Design, Development, and Testing of a Shrouded Single-Rotor Micro Air Vehicle with Antitorque Vanes, DOI 10.4050/JAHS.56.012008.
+  Access: author-hosted paper text; pages 5-6 inspected as rendered images, including Figs. 9-10. Aboutness 3, grade B for that tested apparatus.
+  Supports rotor/shroud force separation, target-scale context, and keeping component power loading separate from vehicle mass/footprint tradeoffs. Its reported gains are not predictions for this project.
+  https://sites.utexas.edu/sirohi/wp-content/uploads/sites/6029/2017/07/015_hrishikeshavan11_jahs.pdf
+
+S8. Roberts et al. (2017), Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure, DOI 10.1111/ecog.02881.
+  Access: indexed paper abstract/excerpt; direct institutional PDF link returned 404. Aboutness 3 for analysis methodology, grade M.
+  Supports aligning validation blocks with data dependence and prediction targets. This is methodological transfer from another application domain, not an aerodynamic result.
+  https://doi.org/10.1111/ecog.02881
+
+S9. Ansys Fluent Theory Guide, moving reference frames versus sliding mesh.
+  Access: indexed official-guide excerpt; solver documentation, not a shroud experiment. Aboutness 3, grade M.
+  Supports steady-approximation versus time-dependent relative-motion distinction; implementation must follow the installed OpenFOAM version, not Fluent commands.
+  https://ansyshelp.ansys.com/public/Views/Secured/corp/v251/en/pdf/Ansys_Fluent_Theory_Guide.pdf
+
+S10. NIST/SEMATECH e-Handbook, fractional factorial specifications and resolution; choosing an experimental design.
+  Access: official pages inspected. Aboutness 3, grade M.
+  Supports explicit estimability and aliasing rather than assigning a resolution label to an unspecified run list. Does not validate the project's unlisted three-level design.
+  https://itl.nist.gov/div898/handbook/pri/section3/pri3344.htm
+  https://www.itl.nist.gov/div898/handbook/pri/section3/pri3.htm
+
+S11. Lakens (2017), Equivalence Tests: A Practical Primer, DOI 10.1177/1948550617697177.
+  Access: open primary-paper text inspected. Aboutness 3 for null inference, grade M.
+  Supports prespecified practical-equivalence bounds and distinguishing inconclusive evidence from absence of a meaningful effect. A repeated-measures engineering experiment needs an analysis appropriate to its own dependence and uncertainty structure.
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC5502906/
+
+S12a. Zhang et al. (2024), Numerical investigation on the influence of nonuniform tip clearance on rotor tip-clearance flow field structure, DOI 10.1016/j.heliyon.2024.e25296.
+  Access: indexed primary full-text sections 2.1-2.3 and results, checked against the repository reading record; figures not inspected. Aboutness 2; baseline experimental comparison B, new unmeasured geometries C.
+  Supports existing matched-equivalent-clearance precedent for axial profiles, not a measured circumferential seam result. Its stated area control must not be replaced with an inference from extrema alone.
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC10850596/
+
+S12b. Cui et al. (2023), Effects of circumferentially non-uniform clearance on the spanwise flow characteristics in a transonic compressor rotor, DOI 10.1016/j.ast.2023.108162.
+  Access: publisher abstract and introductory excerpt inspected; full methods unresolved. Aboutness 2-3; no definitive method-quality grade assigned from abstract alone.
+  Supports endpoint-specific circumferential-clearance relevance and prioritization for close reading. It does not establish the absence or presence of the exact discrete-seam protocol.
+  https://www.sciencedirect.com/science/article/abs/pii/S1270963823000597
+
+Evidence-strength summary: direct ducted-rotor experiments support studying clearance and measuring the correct force/power boundary. Compressor studies already limit broad novelty claims, but transfer of their effect sizes to this apparatus is unestablished. Methodological sources and reproducible mathematical counterexamples make the uncertainty and pipeline corrections substantially firmer than any forecast of a physical seam effect. Several closest prior-art methods and figures remain incompletely inspected; this review closes neither SSY-01 nor an application-validation gate. No correction/retraction notice was encountered in inspected records; a complete publisher-status audit was not performed.
+
+NEXT WORK PACKAGES FOR CLAUDE, IN ORDER
+
+WP1 — Correct scientific interpretation, then reconcile active documents.
+  Covers R01-R03 and the null/model-spread parts of R02.
+  Deliverable: a dated correction record, coherent report language, and proposed analysis fixes with meaningful regression cases. Preserve raw runs, old acceptance revisions and original verdict provenance. No new CFD run required to establish the identified logical errors.
+
+WP2 — Resolve PR #28/#29 measurement and inference contracts before merge.
+  Covers R04-R07, R10 and R13. Build on their existing work.
+  Deliverable: correct wall-mean/harmonic definitions; an identifiable equal-mean baseline; specimen-aware splitting/scoring; explicit force boundary; registered duplicate-run aggregation; and separate validity/failure fields. Run existing tests plus the listed counterexamples. Synthetic success remains software evidence only.
+
+WP3 — Close the most useful reading gaps and prepare the next study decision.
+  Covers R08/R09/R11/R12 and the design-matrix part of R10.
+  Deliverable: source-linked comparator matrix, readable-source close readings, target-scale benchmark feasibility, candidate transient acceptance rules, a reviewable design matrix, and a corrected budget rationale. Actual rotor choice, meaningful-effect targets and any changed release decision remain explicit owner/design-review decisions; prepare concrete alternatives before asking for them.
+
+Do not translate this list into thirteen new top-level backlog systems. Attach the revisions to SSY-01, SSY-02, SSY-03, SSY-05 and the existing A0/Study A work orders. Keep the engineering-audit CAD briefing as the reusable-tool reference; mathematical clearance acceptance must agree with these corrected definitions before its workflow is applied.
+
+REVIEW CHECKS PERFORMED TODAY
+
+Read-only code execution reproduced: masked harmonic intercept 100 versus wall sample mean 98 micrometres; singular baseline on exactly equal clearance; GCI ratio identical to fine/medium lift ratio; and 0.0047205885 as the partial two-term band only. No source code, test suite, ledger or committed scientific record was changed. These are targeted counterexamples, not a complete test run or a claim to have reproduced the CFD simulations.

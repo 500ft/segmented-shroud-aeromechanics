@@ -44,26 +44,35 @@ is carried. The Caradonna–Tung rotor, tested without a duct, is kept only as a
 rotor-only solver check. Reasons are in the
 [decision log](docs/decision-log.md#2026-09-30--reference-rotor-the-akturkcamci-ducted-fan).
 
-## Where it stands (2026-09-30)
+## Where it stands
 
 - Fluent Student starts on the CAD host: licence checkout, compute node,
   journal read and clean exit. No case has been loaded or solved.
-- An earlier OpenFOAM check on a 2D NACA 0012 airfoil reproduces published
-  reference computations within 0.4%. Its validation verdict is
+- An earlier OpenFOAM check on a 2D NACA 0012 airfoil was compared with
+  published reference computations. Its validation verdict is
   `INCOMPLETE_UNCERTAINTY`, because one uncertainty component was never
   quantified ([A0.1 report](docs/cfd-validation-a01.md)). It does not qualify
   Fluent.
-- The analysis pipeline for the final comparison exists and is tested on
-  synthetic fixtures only.
-- No shroud geometry, mesh or flow solution exists.
+- The [analysis pipeline](scripts/analysis_pipeline.py) computes mean electrical
+  input power from paired voltage/current samples and compares it at matched
+  thrust. Its tests use synthetic fixtures. CFD shaft-power extraction from
+  rotor torque times angular velocity remains unimplemented.
+- Partial geometry digitisation and exports are [preserved as WIP](https://github.com/500ft/segmented-shroud-aeromechanics/tree/c4f6b5268298fd18c2c0d3ae618a18338e3c1c93/shutdown-preserved/geometry).
+  They have not been merged or validated. No shroud mesh or flow solution exists.
+- The README power-endpoint correction is complete. Further reference-record
+  and pilot-mesh work awaits owner decision D4.
 
 ## What's left
+
+**Current step: owner decision D4.** Authorize limited reference-record and
+pilot-mesh feasibility work, or close the project. The project remains paused;
+no closure or further research is authorized by this correction.
 
 | # | Step | Who | Done when |
 |---|---|---|---|
 | 1 | Choose the reference rotor | Owner | Done 2026-09-30: Akturk–Camci ducted fan |
-| 2 | Digitise the Akturk–Camci rotor and duct and register the operating point and clearance convention, keeping values read from the paper apart from digitised and chosen ones | Agent | One geometry record, reviewed. **Current step.** |
-| 3 | Build the baseline CAD and mesh; measure cell count and run time against the 1M-cell, 4-core limit | Agent, on the CAD host | Go or no-go on blade-resolved versus a modelled rotor, recorded with the numbers |
+| 2 | Digitise the Akturk–Camci rotor and duct and register the operating point and clearance convention, keeping values read from the paper apart from digitised and chosen ones | Agent, after D4 | One geometry record, reviewed. |
+| 3 | Build the baseline CAD and mesh; measure cell count and run time against the 1M-cell, 4-core limit | Agent, on the CAD host after D4 | Go or no-go on blade-resolved versus a modelled rotor, recorded with the numbers |
 | 4 | Solve the baseline, check mesh convergence, compare with the reference's published thrust and power | Agent | Baseline report with the agreement stated |
 | 5 | Run the seam and step cases at matched thrust, with the declared sensitivity checks | Agent | Comparison table with numerical uncertainty |
 | 6 | Write the report: which differences are resolved and which are not. Update the README and portfolio | Agent | Merged |

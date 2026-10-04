@@ -1,0 +1,50 @@
+{
+  "verdict": "BLOCKED_GEOMETRY",
+  "input_sha256": {
+    "data/reference/akturk-camci/geometry.json": "bb388f7e5d255e367a969297b18f5ac5aa961125cb7925ce663f226570d2f91f",
+    "data/reference/akturk-camci/blade-stations.csv": "200986831bbdb5049d5b41609bd401d24ac462a3eb7063f4fe112b239e998475",
+    "data/reference/akturk-camci/tip-trace-pixels.csv": "65a7a372af6b336cc41c69d4ce3849883a11839cdd4520ecdc9ada224983c27d",
+    "evidence/task-reference-feasibility-2026-10-04/reference.json": "9d9bc4460d9aa63913b350cf5499bb3319d1c037f52572fc1976998a1b444c13"
+  },
+  "station_count": 9,
+  "trace_points_including_closure": 65,
+  "first_station_to_hub_unrecovered_span_mm": 12.700000000000003,
+  "chord_pixel_length": 636.5728552176884,
+  "tip_scale_mm_per_pixel": 0.10022419190052073,
+  "independent_transform_max_error_mm": 4.984267998331404e-07,
+  "preserved_exports_byte_identical": {
+    "geometry-audit.json": true,
+    "tip-section-mm.csv": true,
+    "tip-section-mm.txt": true,
+    "tip-section.svg": true
+  },
+  "gap_from_printed_radii_mm": 3.8100000000000023,
+  "clearance_from_printed_radii_percent_height": 1.7647058823529425,
+  "clearance_label_difference_percentage_points": 0.05470588235294249,
+  "clearance_print_rounding_range_percent_height": [
+    1.6819444444444358,
+    1.8475440222428285
+  ],
+  "printed_label_within_rounding_range": true,
+  "rounding_note": "Independent half-last-digit allowances on printed casing inches and rotor/hub millimetres; not manufacturing tolerances or a probability interval.",
+  "tip_thickness_unit_disagreement_mm": 0.33639999999999937,
+  "instrument_torque_accuracy_only_power_sensitivity": [
+    {
+      "rpm": 2400,
+      "omega_rad_s": 251.32741228718345,
+      "plus_minus_W_from_quoted_torque_accuracy": 0.7539822368615504
+    },
+    {
+      "rpm": 3000,
+      "omega_rad_s": 314.1592653589793,
+      "plus_minus_W_from_quoted_torque_accuracy": 0.942477796076938
+    },
+    {
+      "rpm": 3500,
+      "omega_rad_s": 366.51914291880917,
+      "plus_minus_W_from_quoted_torque_accuracy": 1.0995574287564276
+    }
+  ],
+  "power_sensitivity_note": "Omega times quoted torque accuracy with speed held exact. Full power uncertainty and its confidence remain unknown.",
+  "solver_run": false
+}

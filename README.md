@@ -1,10 +1,10 @@
 # Segmented Shroud Aeromechanics
 
-A shroud around a drone rotor can add thrust, but only if it stays close to the
-blade tips all the way round. A shroud built in segments has seams and small
-steps where the pieces meet. The proposed study would use CAD and ANSYS Fluent to find out
-how much those seams and steps cost in power, compared with a smooth shroud with
-the same average tip gap.
+A shroud around a drone rotor can add thrust. Its performance depends in part
+on the gap around the blade tips. A shroud built in segments has seams and small
+steps where the pieces meet. The proposed CAD and CFD study would estimate their
+predicted shaft-power cost at matched total thrust, compared with a smooth shroud
+with the same average tip gap. OpenFOAM is the preferred feasibility route.
 
 [![Repository checks](https://github.com/500ft/segmented-shroud-aeromechanics/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/segmented-shroud-aeromechanics/actions/workflows/ci.yml)
 ![Evidence: research design, not validated](https://img.shields.io/badge/evidence-research_design%2C_not_validated-415a77)
@@ -22,8 +22,8 @@ the same average tip gap.
 Tip clearance matters for any ducted rotor, and that is well known. The
 narrower question here is whether the shape of the defects adds information
 beyond the average gap: two shrouds with the same mean clearance, one smooth and
-one with seams or steps, compared at the same total thrust. The intended output is
-the shaft power each needs.
+one with seams or steps, compared at the same total thrust. The intended output
+is the shaft power each needs.
 
 The study uses rigid geometry only, so deployment mechanisms stay out of the
 model. The [source review](docs/day3-source-review.md) explains how prior work
@@ -31,17 +31,18 @@ narrowed the question to this equal-mean-clearance comparison.
 
 ## Where it stands
 
-The owner chose a computational finish on 2026-09-29: CAD, Fluent runs,
-convergence and sensitivity checks, and a report. A thrust stand is no longer
-needed to finish ([decision](docs/decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)).
+The [reference audit](evidence/task-reference-feasibility-2026-10-04/README.md)
+reproduces the preserved geometry exports, but returns `BLOCKED_GEOMETRY`:
+source blade sections and dimensioned duct/assembly geometry are still missing.
+The reviewed data still describe only part of the rotor geometry.
 
-- Fluent Student 2026 R1 starts on the CAD host and checks out its licence
+The owner authorized a public-data-first computational investigation. OpenFOAM
+is preferred, with compute cost to be measured once a faithful mesh is possible.
+A thrust stand remains a later extension.
+
+- Fluent Student starts on the CAD host
   ([readiness record](evidence/task-cad-ansys-2026-09-29/README.md)). No case
-  has been solved.
-- That licence caps a model at 1,000,000 cells and 4 cores. Resolving the tip
-  gap on a full rotor in a seamed duct probably won't fit, so the baseline mesh
-  study decides how the rotor is modelled. The [roadmap](ROADMAP.md) explains
-  the options.
+  has been solved there.
 - An earlier OpenFOAM check on a 2D NACA 0012 airfoil matches published
   reference computations within 0.4%. Its full validation uncertainty is
   incomplete ([A0.1 report](docs/cfd-validation-a01.md)).
@@ -49,9 +50,6 @@ needed to finish ([decision](docs/decision-log.md#2026-09-29--finish-as-a-cadans
   electrical input power as `mean(voltage × current)` and interpolates it to
   matched thrust. It is tested on synthetic data. CFD shaft-power extraction
   from rotor torque times angular velocity has not been implemented.
-
-Partial geometry digitisation and exports are [preserved as WIP](https://github.com/500ft/segmented-shroud-aeromechanics/tree/c4f6b5268298fd18c2c0d3ae618a18338e3c1c93/shutdown-preserved/geometry).
-They have not been merged or validated. No shroud mesh or flow solution exists.
 
 ## Quick start
 
@@ -87,18 +85,18 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-The reference rotor is chosen: the Akturk–Camci 8-blade ducted fan, which was
-tested with a duct at several tip clearances. Further reference-record and
-pilot-mesh work awaits owner decision D4: authorize that limited feasibility
-work or close the project. The project remains paused pending that decision;
-the [roadmap](ROADMAP.md) records the status.
+The reference is the Akturk-Camci ducted fan. The next action is to obtain the
+missing source geometry and measurement uncertainty definitions listed in the
+[geometry record](data/reference/akturk-camci/geometry.json) and
+[reference audit](evidence/task-reference-feasibility-2026-10-04/README.md).
+The [roadmap](ROADMAP.md) records the authorized direction and remaining work.
 
 ## Limits
 
 - Everything so far is software, literature and planning. No shroud CFD has run.
   No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.
-- The planned CFD study compares predicted shaft power. Electrical efficiency, rubbing risk
-  and deployment reliability are outside it.
+- The planned CFD study compares predicted shaft power. Electrical efficiency,
+  rubbing risk and deployment reliability are outside it.
 - A good aerodynamic result would say nothing about whether the shroud protects
   against impacts; that needs its own tests.
 - Rotor testing, if it ever happens, needs containment, remote arming and
@@ -111,7 +109,7 @@ the [roadmap](ROADMAP.md) records the status.
 | Document | What it covers |
 | --- | --- |
 | [Reviewer guide](docs/START_HERE.md) | The project in five minutes |
-| [Roadmap](ROADMAP.md) | Finish line, the licence constraint, remaining steps |
+| [Roadmap](ROADMAP.md) | Finish line, current evidence, remaining steps |
 | [Decision log](docs/decision-log.md) | Scope decisions and their reasons |
 | [Source review](docs/day3-source-review.md) · [prior art](docs/prior-art.md) | Closest competing work |
 | [Literature](docs/literature/README.md) | Every source identified, and which were actually read |

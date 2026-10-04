@@ -59,8 +59,7 @@ rotor-only solver check. Reasons are in the
   rotor torque times angular velocity remains unimplemented.
 - Partial geometry digitisation and exports are [preserved as WIP](https://github.com/500ft/segmented-shroud-aeromechanics/tree/c4f6b5268298fd18c2c0d3ae618a18338e3c1c93/shutdown-preserved/geometry).
   They have not been merged or validated. No shroud mesh or flow solution exists.
-- The README power-endpoint correction is complete. Further reference-record
-  and pilot-mesh work awaits owner decision D4.
+- The README power-endpoint correction is complete.
 
 ## What's left
 

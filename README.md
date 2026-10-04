@@ -2,9 +2,9 @@
 
 A shroud around a drone rotor can add thrust, but only if it stays close to the
 blade tips all the way round. A shroud built in segments has seams and small
-steps where the pieces meet. The proposed study would use CAD and ANSYS Fluent to find out
-how much those seams and steps cost in power, compared with a smooth shroud with
-the same average tip gap.
+steps where the pieces meet. The proposed study would use CAD and ANSYS Fluent
+to find out how much those seams and steps cost in power, compared with a smooth
+shroud with the same average tip gap.
 
 [![Repository checks](https://github.com/500ft/segmented-shroud-aeromechanics/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/segmented-shroud-aeromechanics/actions/workflows/ci.yml)
 ![Evidence: research design, not validated](https://img.shields.io/badge/evidence-research_design%2C_not_validated-415a77)
@@ -22,8 +22,8 @@ the same average tip gap.
 Tip clearance matters for any ducted rotor, and that is well known. The
 narrower question here is whether the shape of the defects adds information
 beyond the average gap: two shrouds with the same mean clearance, one smooth and
-one with seams or steps, compared at the same total thrust. The intended output is
-the shaft power each needs.
+one with seams or steps, compared at the same total thrust. The intended output
+is the shaft power each needs.
 
 The study uses rigid geometry only, so deployment mechanisms stay out of the
 model. The [source review](docs/day3-source-review.md) explains how prior work
@@ -97,8 +97,8 @@ the [roadmap](ROADMAP.md) records the status.
 
 - Everything so far is software, literature and planning. No shroud CFD has run.
   No shroud specimen, aerodynamic measurement, or rubbing test has been completed for this repository.
-- The planned CFD study compares predicted shaft power. Electrical efficiency, rubbing risk
-  and deployment reliability are outside it.
+- The planned CFD study compares predicted shaft power. Electrical efficiency,
+  rubbing risk and deployment reliability are outside it.
 - A good aerodynamic result would say nothing about whether the shroud protects
   against impacts; that needs its own tests.
 - Rotor testing, if it ever happens, needs containment, remote arming and

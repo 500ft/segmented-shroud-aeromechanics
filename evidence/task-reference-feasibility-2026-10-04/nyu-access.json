@@ -1,0 +1,33 @@
+{
+  "sources": {
+    "accounts": {
+      "url": "https://services.rt.nyu.edu/docs/hpc/getting_started/HPC_Accounts/getting_and_renewing_an_account/",
+      "retrieved_date": "2026-10-04",
+      "sha256": "78439cc63e424e4382343490ae0d06ade8dca6dfb7644e5aaf764b1c7e5db39e"
+    },
+    "software": {
+      "url": "https://services.rt.nyu.edu/docs/hpc/tools_and_software/intro/",
+      "retrieved_date": "2026-10-04",
+      "sha256": "20af284be984a5b042caa2d44f28885088105b06c9607c50d8ee3bb640babd86"
+    },
+    "containers": {
+      "url": "https://services.rt.nyu.edu/docs/hpc/containers/intro/",
+      "retrieved_date": "2026-10-04",
+      "sha256": "c6babe2888383b39a182d4f93b56d50f5ee49e427f46ed9f11e549d4c20e65ab"
+    }
+  },
+  "status": "conditional alternative; no access or job requested",
+  "findings": {
+    "accounts": "Official account instructions describe Torch. Students require a full-time NYU faculty sponsor; an active allocation supplies the SLURM account needed for jobs. Greene availability to this project is unverified.",
+    "software": "NYU recommends user environments through Apptainer. The inspected software examples do not establish an OpenFOAM module, version or supported MPI configuration.",
+    "containers": "Generic Apptainer support is documented. OpenFOAM execution, MPI compatibility and scaling remain untested."
+  },
+  "unknown": [
+    "owner eligibility and faculty sponsor",
+    "active project allocation and permitted cluster",
+    "OpenFOAM build or container and MPI support",
+    "available memory, wall-time and queue limits"
+  ],
+  "page_licence": "No explicit reuse licence identified on the inspected documentation pages. Raw HTML stays outside git; only attributed findings and hashes are recorded.",
+  "PI_question_draft_unsent": "Would you sponsor this ducted-fan CFD project for NYU HPC access? Which cluster and allocation could support it, and is there a supported OpenFOAM module or Apptainer/MPI route? Please confirm memory, wall-time and queue limits before we size a pilot. Geometry is still incomplete, so no job is ready to submit."
+}

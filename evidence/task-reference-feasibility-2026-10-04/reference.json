@@ -1,0 +1,146 @@
+{
+  "evidence_state": "executed source and preserved-geometry audit; no CFD run",
+  "date": "2026-10-04",
+  "geometry_source": "../../data/reference/akturk-camci/geometry.json",
+  "source_notation": "Source IDs conference and journal resolve to URLs, hashes and attribution in the geometry record.",
+  "selection": {
+    "role": "development audit, not final-test evaluation",
+    "scope": "All preserved geometry inputs and exports; conference nomenclature, Table 1, Figures 1-11 and relevant methods/results; journal geometry and uncertainty cross-check. No performance curves fitted or acceptance threshold selected.",
+    "whole_unit_split": null,
+    "pass_threshold": null
+  },
+  "uncertainty": {
+    "force_xy_accuracy_N": {
+      "plus_minus": 0.033,
+      "type": "factory-calibrated transducer accuracy quoted by authors",
+      "source": "conference p. 5; journal section 2.3.2",
+      "confidence_level": null,
+      "coverage_factor": null
+    },
+    "force_z_accuracy_N": {
+      "plus_minus": 0.099,
+      "type": "factory-calibrated transducer accuracy quoted by authors",
+      "source": "conference p. 5; journal section 2.3.2",
+      "confidence_level": null,
+      "coverage_factor": null
+    },
+    "moment_xyz_accuracy_N_m": {
+      "plus_minus": 0.003,
+      "type": "factory-calibrated transducer accuracy quoted by authors",
+      "source": "conference p. 5; journal section 2.3.2",
+      "confidence_level": null,
+      "coverage_factor": null
+    },
+    "Cpt_random": {
+      "plus_minus": 0.002,
+      "unit": "1",
+      "type": "reported random uncertainty of total pressure coefficient",
+      "source": "conference p. 7 equation 4 discussion; journal section 4.2",
+      "confidence_level": null,
+      "coverage_factor": null,
+      "note": "Method references are cited; the paper does not state a coverage factor or confidence for this number. Applies to Cpt, not CT, CP or shaft power."
+    },
+    "pressure_acquisition_duration_s": {
+      "value": 5,
+      "source": "conference p. 5; journal section 2.3.1",
+      "note": "Pressure sampling duration; no inference about force/torque averaging duration."
+    },
+    "unreported": [
+      "RPM uncertainty",
+      "force/torque repeatability and number of independent runs",
+      "total thrust expanded uncertainty",
+      "shaft-power expanded uncertainty",
+      "CT and CP expanded uncertainty",
+      "ambient pressure and temperature values/uncertainties at each point",
+      "cross-channel and cross-case covariance",
+      "confidence/coverage of quoted instrument accuracy"
+    ],
+    "propagation": "If compatible standard uncertainties become available: u(P)^2 = Omega^2*u(Q)^2 + Q^2*u(Omega)^2 + 2*Q*Omega*cov(Q,Omega). Present accuracy limits cannot be substituted as standard deviations. Unknown terms remain unknown.",
+    "comparison": "Experimental, digitization, geometry and numerical contributions remain separate; combine for the actual comparison with correlations where known. No universal CFD acceptance band follows."
+  },
+  "reference_conditions": {
+    "nominal_speed_ref": "geometry.read.nominal_speed",
+    "pressure_profile_rpm": 2400,
+    "pressure_profile_source": "conference Figures 9-10, pp. 8-9",
+    "thrust_coefficient_marker_rpm": [
+      1200,
+      1500,
+      1800,
+      2100,
+      2400,
+      2700,
+      3000
+    ],
+    "thrust_coefficient_source": "conference Figure 6, p. 7, visual marker abscissae",
+    "dimensional_total_thrust_marker_rpm": [
+      1500,
+      1800,
+      2100,
+      2400,
+      2700,
+      3000
+    ],
+    "dimensional_total_thrust_source": "conference Figure 11, p. 9, visual marker abscissae",
+    "figure_merit_gain_percent": 17.85,
+    "figure_merit_gain_exact_rpm": null,
+    "figure_merit_gain_source": "conference p. 7 describes higher rotor speed; Figure 8 plots the speed sweep. This percentage is not a stated result at the pressure-profile operating point.",
+    "CFD_reference_point_selected": false,
+    "matching_requirement": "Match rotor build, RPM, clearance definition, force boundary and density convention. Nominal facility speed is not automatically a plotted reference point. Figure 7 pairs CT and CP but does not label each point by RPM; a unique RPM association must be verified before using it."
+  },
+  "endpoints": {
+    "Omega": "2*pi*rpm/60, rad/s",
+    "shaft_power": "P=Q*Omega, W with Q in N m; for unsteady data use mean(Q(t)*Omega(t)) over the declared interval.",
+    "total_thrust": "Measured Fz of the assembled ducted-fan rig. Reference comparison needs the same included bodies and tare convention. Support loads/tare details remain unresolved.",
+    "component_warning": "Conference p. 9 says computed rotor thrust and duct thrust. Figure 11 separates those predictions; it does not supply independently measured duct thrust. The rotor-only measurement described on p. 6 is a different configuration.",
+    "coefficients": {
+      "CT": "T/(rho*Omega^2*D^4)",
+      "CP": "P/(rho*Omega^3*D^5)",
+      "D": "casing inner diameter, not rotor diameter",
+      "rho": "Pa/(R*Ta)",
+      "source": "conference nomenclature p. 1 and equations 1-2 p. 6"
+    },
+    "clearance_ref": "geometry.clearance_convention",
+    "matched_thrust": "For a target bracketed within one geometry and operating branch: P*=P1+(P2-P1)*(T*-T1)/(T2-T1). Interpolate each geometry separately; do not extrapolate. RPM is the adjusted input for a matched-thrust comparison.",
+    "CFD_export_requirement": "Record pressure and viscous force/moment on every included patch, rotor-axis origin/direction, moment sign and whether torque is on the rotor or fluid. Positive Q denotes shaft input. Sector scaling is allowed only for a physically repeating assembly. No exporter implemented in this task."
+  },
+  "geometry_review": {
+    "table": "All station radii, printed ratios, chords and end angles visually cross-checked against both Table 1 copies. End angles do not determine a unique camber/thickness distribution.",
+    "tip_overlay": "Existing trace overlaid on native journal Figure 2 image; no points re-picked. It follows the isolated profile within the existing operator-selected pixel allowance on visual inspection. This does not calibrate drawing fidelity.",
+    "frame": "Exported local x runs LE to TE and positive y points to the image-upper contour; z=0. Endpoint and image-axis transformation checked independently. This does not determine rotor-axis stacking or spanwise sections.",
+    "figure5_correction": "Scaled mesh view supplies partial duct/axial-shape information. The earlier geometry record focused only on the perspective Figure 1. Neither figure supplies full source CAD or uniquely resolves the blade root, hidden sections and assembly.",
+    "partial_section_count": 1,
+    "complete_rotor_available": false,
+    "complete_duct_available": false,
+    "assembly_datums_available": false,
+    "uncertainty": "WIP pixel/endpoint allowances are chosen sensitivities, not confidence intervals. Printing precision is not manufacturing tolerance. Curve interpolation, image fidelity and three-dimensional reconstruction errors remain unquantified."
+  },
+  "periodicity": {
+    "stationary_sectors_in_source": 4,
+    "rotating_sectors_in_source": 8,
+    "interface": "stage, with circumferential averaging",
+    "source": "conference pp. 5-6",
+    "limitation": "Different sector pitches connected by a mixing interface do not demonstrate a single exact periodic repeat unit for transient seams. Retained supports, blades and seam geometry must all repeat."
+  },
+  "feasibility": {
+    "verdict": "BLOCKED_GEOMETRY",
+    "reason": "One isolated tip contour plus station scalars cannot define a faithful rotor/duct assembly. No source-backed complete mesh can be built from the inspected inputs.",
+    "solver_run": false,
+    "cells": null,
+    "RAM_bytes": null,
+    "wall_time_s": null,
+    "solver_version": null,
+    "convergence_target": null,
+    "compute_capacity_verdict": "not measured; no resource failure or aerodynamic null inferred"
+  },
+  "preservation": {
+    "commit": "c4f6b5268298fd18c2c0d3ae618a18338e3c1c93",
+    "export_sha256": {
+      "geometry-audit.json": "dd1923add9a9a719c89e09af988620098298c8b8dc8146f87acd2d7633170179",
+      "tip-section-mm.csv": "b808c29ee907b97e5c7ef7ead22c905d0b1a29faa4e9611d0ccddfdf8b214e7d",
+      "tip-section-mm.txt": "1fe8276de6a91d2f0dcc4dffd9f7c950ce9466c9d5b464569ab8d081519f246f",
+      "tip-section.svg": "07919372f0b902aaa0baed036ca6aba5b48e306852a00a5c3af4ee09bf35e0c9"
+    },
+    "formatting_commit_reviewed": "8e1f527da282c905b007588a1d205ca3847e52d3",
+    "formatting_disposition": "Original branch retained; revised README line wrapping reused as needed. Obsolete D4 wording replaced by the activated owner direction."
+  }
+}

@@ -26,8 +26,9 @@ one with seams or steps, compared at the same total thrust. The intended output
 is the shaft power each needs.
 
 The study uses rigid geometry only, so deployment mechanisms stay out of the
-model. The [source review](docs/day3-source-review.md) explains how prior work
-narrowed the question to this equal-mean-clearance comparison.
+model. The [prior-art boundary](docs/prior-art.md) distinguishes the specific
+seam comparison from established clearance and duct studies. Novelty remains
+unresolved; equal-mean comparison alone is not a contribution.
 
 ## Where it stands
 
@@ -43,9 +44,10 @@ A thrust stand remains a later extension.
 - Fluent Student starts on the CAD host
   ([readiness record](evidence/task-cad-ansys-2026-09-29/README.md)). No case
   has been solved there.
-- An earlier OpenFOAM check on a 2D NACA 0012 airfoil matches published
-  reference computations within 0.4%. Its full validation uncertainty is
-  incomplete ([A0.1 report](docs/cfd-validation-a01.md)).
+- An earlier OpenFOAM check on a 2D NACA 0012 airfoil agrees within 0.4%
+  with the CFL3D Spalart-Allmaras reference lift coefficient after the stated
+  incidence adjustment. Experimental and input uncertainty remain unquantified
+  ([A0.1 report](docs/cfd-validation-a01.md)).
 - The existing [analysis pipeline](scripts/analysis_pipeline.py) computes mean
   electrical input power as `mean(voltage × current)` and interpolates it to
   matched thrust. It is tested on synthetic data. CFD shaft-power extraction

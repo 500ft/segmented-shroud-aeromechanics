@@ -11,27 +11,29 @@ matter beyond the average tip gap: compare a smooth shroud and a seamed one
 with the same mean clearance, at the same total thrust, and see how much shaft
 power each needs.
 
-The owner chose to finish this as a computational study in CAD and ANSYS
-Fluent ([decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)).
-Fluent starts on the CAD host; no shroud case has been solved. An earlier
-OpenFOAM check on a 2D airfoil matches published reference computations within
-0.4%, but it does not qualify Fluent or predict anything about a shroud. The
-original plan to build a thrust stand is kept as a later extension.
+The current [roadmap](../ROADMAP.md) retains computational completion, with
+OpenFOAM preferred subject to measured compute cost. The
+[reference audit](../evidence/task-reference-feasibility-2026-10-04/README.md)
+returns `BLOCKED_GEOMETRY`: partial geometry and an exporter exist on main,
+but complete source blade sections and duct/assembly dimensions are missing.
+No shroud case has been solved. The earlier [airfoil check](cfd-validation-a01.md)
+provides a code comparison with `INCOMPLETE_UNCERTAINTY` for experimental
+validation. The thrust-stand programme remains deferred.
 
 ## Reading paths
 
 | If you have | Read |
 | --- | --- |
 | Five minutes | The [README](../README.md), then the [roadmap](../ROADMAP.md) |
-| Half an hour | The [scope decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study), the [ANSYS readiness record](../evidence/task-cad-ansys-2026-09-29/README.md) and the [A0.1 report](cfd-validation-a01.md) |
+| Half an hour | The [reference audit](../evidence/task-reference-feasibility-2026-10-04/README.md), [partial geometry](../data/reference/akturk-camci/README.md) and [A0.1 report](cfd-validation-a01.md) |
 | A review to do | The [review index](REVIEW_READY.md) |
-| A question about novelty | The [source review](day3-source-review.md), the [candidate triage](prior-art-search-2026-09-14-screening.md) and [prior art](prior-art.md). The claim is narrowed to the equal-mean-clearance seam comparison; 22 triaged papers are still unread |
+| A question about novelty | The [source review](day3-source-review.md), the [candidate triage](prior-art-search-2026-09-14-screening.md) and [prior art](prior-art.md). Novelty remains unresolved; use the dated access records linked there |
 | A question about a claim | The [claim ledger](claim-ledger.md) and the [research plan](research-plan.md) |
 
-## What the study will and won't say
+## What the study would establish
 
-It compares predicted shaft power for rigid shroud geometry, one rotor and one
-operating point. It says nothing about electrical efficiency, rubbing risk,
+The intended comparison is predicted shaft power for rigid shroud geometry,
+one rotor and one operating point. It says nothing about electrical efficiency, rubbing risk,
 deployment reliability or protection against impacts; those need hardware and
 their own tests. The [uncertainty decision](specs/research-programme/uncertainty-decision-record.md)
 sets how every CFD result is interpreted, and the

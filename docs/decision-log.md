@@ -1,5 +1,14 @@
 # Decision Log
 
+Current interpretation follows [ROADMAP.md](../ROADMAP.md). The entries below
+retain the decisions and rationale recorded at the time. The later
+[reference audit](../evidence/task-reference-feasibility-2026-10-04/README.md)
+corrects the reference rationale: measured assembled thrust and rotor-only
+thrust came from different configurations; the separately plotted rotor and
+duct components were computed. The recorded nominal speed is not a selected
+comparison point. Transient periodicity must include retained supports as well
+as blades and seams. These corrections do not change the chosen reference.
+
 ## 2026-09-30 — Reference rotor: the Akturk–Camci ducted fan
 
 **Decision:** the baseline rotor and duct for the computational study are the

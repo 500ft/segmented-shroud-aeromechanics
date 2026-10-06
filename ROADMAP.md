@@ -40,7 +40,8 @@ measurement uncertainty gaps. Caradonna-Tung remains an unducted solver check.
 - Fluent Student starts on the CAD host, with no solved case. Its licence
   limits remain in the [readiness record](evidence/task-cad-ansys-2026-09-29/README.md);
   they are not the compute ceiling for the OpenFOAM route.
-- The earlier OpenFOAM airfoil check has verdict `INCOMPLETE_UNCERTAINTY`
+- The earlier OpenFOAM airfoil check has verdict `INCOMPLETE_UNCERTAINTY`:
+  both experimental and input uncertainty remain unquantified
   ([A0.1 report](docs/cfd-validation-a01.md)). It provides no ducted-rotor validation.
 - The [analysis pipeline](scripts/analysis_pipeline.py) computes mean electrical
   input power from voltage/current pairs and compares it at matched thrust.
@@ -76,8 +77,11 @@ reliability or protection.
 
 ## Not in this version: the experimental programme
 
-The original hardware programme is kept as a future extension. None of it
-blocks the computational finish.
+The original hardware programme below is retained as deferred scope. Its
+historical numerical gates are not acceptance criteria for the current
+computational study. No bench switch, equipment approval, measurable rotor
+selection or practical-effect threshold has been adopted. The proposed
+replacement stays in the external owner handoff pending those decisions.
 
 - **Stage 1: Measurement qualification.** Clearance, thrust, voltage, current,
   RPM and temperature channels calibrated; stand drift and warm-up quantified.

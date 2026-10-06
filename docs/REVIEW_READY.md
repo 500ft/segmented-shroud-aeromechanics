@@ -1,5 +1,8 @@
 # Review index
 
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
 What to review, and where each piece of evidence lives. The plan is in the
 [roadmap](../ROADMAP.md) and the history in the [progress log](SPRINT_PROGRESS.md).
 The earlier, longer version of this index is kept at
@@ -7,7 +10,7 @@ The earlier, longer version of this index is kept at
 
 Nothing here has had an independent review.
 
-## Review now
+## Historical review queue
 
 1. **The computational scope decision** ([decision log](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study))
    and the [roadmap](../ROADMAP.md). Worth checking: whether a useful study

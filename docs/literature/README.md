@@ -7,7 +7,12 @@
 > not. No statement of universal novelty, and no claim that prior work is absent, may be introduced
 > anywhere in this repository.
 
-A catalogue of every source this project has identified, and a review of what the identified work does and does not settle. Built 2026-09-22.
+This catalogue is a dated search snapshot. Its counts and machine-readable
+states were not rebuilt by the later reading repairs. For current access and
+claim interpretation use [prior-art.md](../prior-art.md#current-interpretation),
+the [dated repair](../reading-records-2026-09-25.json) and the
+[reference audit](../../evidence/task-reference-feasibility-2026-10-04/README.md).
+They supersede stale catalogue labels for the named sources.
 
 **Read this first.** Of 1,736 distinct records, **11 have been read**, 24 carry a one-line disposition from an abstract, and 1,701 are records a logged query returned and nothing more. A record appearing below means it exists, its identifier resolves, and it looks relevant. It does not mean anyone has read it. Every entry carries its state, and the review says plainly where a claim rests on a title.
 
@@ -37,7 +42,7 @@ The strongest small-scale work sits in the Vertical Flight Society and AHS liter
 
 | record | year | contributes | state |
 | --- | --- | --- | --- |
-| `doi:10.4050/vfs-f60-000155` | 2004 | Hover performance of a small-scale shrouded rotor for MAVs. The retained abstract names diffuser divergence angle, inlet lip radius and **blade tip clearance** as design variables at Reynolds numbers of 20,000–30,000 — the regime this project works in, and far below the compressor literature. | identified |
+| `doi:10.4050/vfs-f60-000155` | 2004 | Hover performance of a small-scale shrouded rotor for MAVs. The retained abstract names diffuser divergence angle, inlet lip radius and **blade tip clearance** as design variables at Reynolds numbers of 20,000–30,000, a regime whose applicability requires comparison with the selected reference conditions. | identified |
 | `doi:10.1115/1.4023468`, `doi:10.1115/gt2011-46356` | 2013, 2011 | Ducted-fan VTOL UAV tip-clearance baseline, journal and conference versions of one study. | triaged |
 | `doi:10.1115/1.4023469` | 2013 | Part II: CFD-designed tip treatments varied in chordwise location and circumferential width, with experimental verification. | triaged |
 | `doi:10.4050/vfs-f66-000338` | 2010 | Tip clearance **and inlet flow distortion** together in a ducted fan. Verified to exist; not in the corpus, because no query reached it. | not in corpus |
@@ -57,7 +62,7 @@ The strongest small-scale work sits in the Vertical Flight Society and AHS liter
 | record | year | why it is first in the queue | state |
 | --- | --- | --- | --- |
 | `doi:10.1016/j.ast.2023.108162` | 2023 | *Effects of **circumferentially** non-uniform clearance on the spanwise flow characteristics in a transonic compressor rotor.* Circumferential, not axial. This is closer to the project's question than anything previously found, including the source that already narrowed the claim. **No abstract was retained; the judgement rests on the title.** | identified |
-| `doi:10.1115/97-gt-406` | 1997 | Non-axisymmetric tip clearance on compressor performance and stability; the abstract states stall-margin loss exceeded an average-clearance estimate and that the circumferential length scale mattered. Attempted 2026-09-21 and **not obtainable**. | triaged |
+| `doi:10.1115/97-gt-406` | 1997 conference version | Non-axisymmetric clearance is identified by metadata. The later access repair records no inspected abstract or full text; comparator and endpoints remain unresolved. | metadata only under repair |
 | `doi:10.1115/2000-gt-0416` | 2000 | Analytical flow redistribution from asymmetric tip clearance. Not obtainable. | triaged |
 | `doi:10.1016/j.ast.2026.111933` | 2026 | The day-1 source S3, nonuniform clearance layouts, paywalled since 2026-09-12 and still unread. | identified |
 
@@ -90,11 +95,11 @@ There is a coherent body of *Aerospace Science and Technology* papers on non-uni
 | `doi:10.1016/j.measurement.2024.115777`, `doi:10.2139/ssrn.4820937` | 2025, 2024 | Blade tip timing accounting for speed variation and blade-by-blade clearance. Journal and preprint of one study. | triaged |
 | `doi:10.1063/1.4964858` | 2016 | Magnetoresistive sensor; reviews optical, capacitive, eddy-current and microwave probes and notes that different instruments give different answers on the same test. | triaged |
 
-*Unknown:* none of these is at small-UAV scale or on a ducted fan. The scale gap between turbomachinery metrology and a 0.15 m-class rotor is unquantified and is a real risk to **IN-09**.
+*Unknown:* the identified metrology sources do not establish installed uncertainty on the selected rotor and fixture. Applicability to **IN-09** remains unqualified.
 
 ## 5. CFD validation and verification practice
 
-*Why it matters:* directly feeds A0 and Study A. [A0.1](../cfd-validation-a01.md) is already complete and its result constrains everything downstream.
+*Why it matters:* informs computational interpretation. [A0.1](../cfd-validation-a01.md) has numerical outputs, an incomplete SST arm and unresolved experimental validation uncertainty. It does not set a seam-effect threshold.
 
 | record | year | contributes | state |
 | --- | --- | --- | --- |
@@ -135,12 +140,15 @@ Honest result: **these two extension themes failed.** The queries pulled drone-a
 
 Both themes need re-querying with different terms before anything can be concluded. Nothing in this section should be cited as coverage. These feed **RQ3**, **RQ4** and the guard branch, all of which sit behind gates that are not open, so the gap is not currently blocking.
 
-## What the literature already settles against this project
+## Current claim boundary
 
-Two findings, both narrowing, both from work already done rather than from titles:
-
-1. **The equal-mean comparison method is not new.** Published work holds an equivalent clearance measure fixed while redistributing the gap. Distinctiveness now rests on the combination of discrete circumferential seams, a small-UAV ducted rotor, and measurement rather than simulation.
-2. **Circumferential nonuniformity at matched average clearance already has experimental precedent.** Graf et al., *J. Turbomach.* (issue date 1998-10-01, conference number 97-GT-406), study non-axisymmetric tip clearance directly, which bounds the broad novelty claim more tightly than the axial-clearance example does. **Access status corrected 2026-09-25:** bibliographic metadata is verified and a green open-access copy is indexed at DSpace@MIT, but automated retrieval is blocked by a human-verification interstitial that was not circumvented. No abstract or text has been inspected here, so the record is metadata only, it may not be cited as read, and **no absence claim about discrete seams follows from it**. See [the dated repair record](../reading-records-2026-09-25.json).
+The [current prior-art interpretation](../prior-art.md#current-interpretation)
+separates inspected comparisons from inaccessible claims. Equivalent-clearance
+methods and nonuniform-clearance effects are already studied. This does not
+establish novelty for a specific seam, or predict that its effect is negligible.
+Graf's matched-average-clearance experimental comparison remains unverified in
+the retained access record. The former claim that it had already been confirmed
+here is withdrawn.
 
 ## Reading queue
 
@@ -154,7 +162,11 @@ In priority order, with the route that would actually get each one.
 6. `doi:10.1115/1.4025575` and `doi:10.1115/gt2023-101077` — single circumferential groove, to decide whether casing-treatment literature must be addressed.
 7. `doi:10.17118/11143/20872` — Caradonna–Tung high-order simulation, before A0.2 runs.
 
-Items 1 to 4 need access the agent does not have. **This is the binding constraint on closing SSY-01**, not search coverage.
+This is the historical queue, not authorization for a new reading campaign.
+Akturk-Camci Part I now has inspected author copies and an executed geometry
+audit linked above. The blanket institutional-access requirement for that
+source is withdrawn. Access limitations for the other named records remain as
+recorded; the current computational blocker is incomplete geometry.
 
 ## Gaps in the corpus itself
 

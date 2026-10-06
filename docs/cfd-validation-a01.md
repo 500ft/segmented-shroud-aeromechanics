@@ -1,12 +1,17 @@
 # A0.1 validation report — 2D NACA 0012
 
-Status: Spalart–Allmaras arm complete, 2026-09-20. Work order: [plan](specs/research-programme/plan.md) task T06. Acceptance was frozen before any solution existed in [a01-acceptance.json](../evidence/task-a0-validation/a01-acceptance.json); the uncertainty treatment is the [uncertainty decision record](specs/research-programme/uncertainty-decision-record.md). Numbers below regenerate from [uncertainty.json](../results/generated/cfd/a0.1/uncertainty.json) and the per-case manifests beside it.
+Status: Spalart–Allmaras arm complete, 2026-09-20. Work order: [plan](specs/research-programme/plan.md) task T06. Acceptance was frozen before any solution existed in [a01-acceptance.json](../evidence/task-a0-validation/a01-acceptance.json); the uncertainty treatment is the [uncertainty decision record](specs/research-programme/uncertainty-decision-record.md). Original numerical outputs are in [uncertainty.json](../results/generated/cfd/a0.1/uncertainty.json) and the per-case manifests beside it. Current interpretation follows the [uncertainty revision](../results/generated/cfd/a0.1/uncertainty.revision-2026-09-25.json) and [status revision](../results/generated/cfd/a0.1/status-revision-2026-09-29.json). Those revisions preserve the original files.
 
 > **Correction, 2026-09-24.** An external review reproduced three errors in the interpretation below. They are corrected in place and the original calculations are preserved: no run, raw output or frozen acceptance record was changed. (1) The stated `U_val` combined only the known terms while a required component was unquantified, which treats an unknown as zero. (2) The spread across grit treatments was called repeatability; the grit sizes are different experimental conditions, not repeats of one. (3) The asymptotic-range ratio was presented as confirmation; it is algebraically `|phi_fine/phi_medium|` and confirms nothing. A fourth error, a universal "2 percent floor" for seam effects, is withdrawn in section 7.
 
-**Verdict, Spalart–Allmaras: `INCOMPLETE_UNCERTAINTY`.** A complete validation uncertainty is not available, because the input component was never quantified and an unquantified component cannot be dropped. The comparison error is +0.0238 in lift coefficient against a **partial combination of the known terms** of 0.0047. That ratio of about five is worth reporting and is not a validation verdict.
+**Verdict, Spalart-Allmaras: `INCOMPLETE_UNCERTAINTY`.** Both `U_input` and
+experimental `U_D` are unquantified in the revision. The grit-treatment spread
+cannot supply experimental standard uncertainty. Only `U_num` remains in the
+eligible partial combination; no complete `U_val` exists.
 
-Separately and more robustly: the same computation agrees with the published reference computations to within 0.4 percent. Those are different claims and are kept apart below.
+The separate code comparison is agreement with the CFL3D Spalart-Allmaras
+reference lift coefficient after the incidence adjustment in section 5. Other
+reference computations have different discrepancies.
 
 ## 1. What was run
 
@@ -46,8 +51,8 @@ Celik et al. (ASME J. Fluids Eng. 130(7), 2008), three grids, factor of safety 1
 | Richardson extrapolated Cl | 1.100180 |
 | grid-convergence index, fine | 0.153 % |
 
-**The safety factor is a sourced assumption whose condition was not checked.** Celik et al. prescribe 1.25 where the observed order is close to the formal order. The observed order here is 2.6697 against a formal order near 2, and the procedure does not limit it. Across the defensible combinations the fine-grid index is 0.153 % as reported, 0.368 % at a factor of 3.0, 0.274 % with the order limited to 2, and 0.658 % with both. The comparison error below is 2.22 % of the reference, between 3.4 and 14.5 times the largest of those, so **no combination changes the conclusion of this case**. Registered as [`GCI-SAFETY-FACTOR`](canonical-quantities.json); the arithmetic is in the [provenance audit](number-provenance-audit-2026-09-25.md) and is recomputed from the committed record by `tests/test_canonical_quantities.py`.
-| `U_num` | 0.001684 |
+**The safety factor is a sourced assumption whose condition was not checked.** Celik et al. prescribe 1.25 where the observed order is close to the formal order. The observed order here is 2.6697 against a formal order near 2, and the procedure does not limit it. Across the defensible combinations the fine-grid index is 0.153 % as reported, 0.368 % at a factor of 3.0, 0.274 % with the order limited to 2, and 0.658 % with both. The comparison error below is 2.22 % of the reference, between 3.4 and 14.5 times the index across those choices, so **no combination changes the conclusion of this case**. Registered as [`GCI-SAFETY-FACTOR`](canonical-quantities.json); the arithmetic is in the [provenance audit](number-provenance-audit-2026-09-25.md) and is recomputed from the committed record by `tests/test_canonical_quantities.py`.
+The numerical term is `U_num_absolute` in the linked result record.
 
 The apparent order sits slightly above the formal second order of the schemes, which is ordinary on a systematically refined structured family, and the convergence is monotonic.
 
@@ -57,23 +62,19 @@ The apparent order sits slightly above the formal second order of the schemes, w
 
 Reference: TMR's curated Ladson tripped data at Re 6 × 10⁶, M 0.15, the three grit conditions adjusted to 10.12° with the dataset's own lift-curve slope of 0.10077 per degree. Mean 1.07502, sample standard deviation 0.00441.
 
-```
-E                     = S − D = 1.098833 − 1.07502 = +0.023813     (+2.22 % of D)
-U_num                 = 0.001684                                    numerical, three-grid index
-U_input               = UNQUANTIFIED                                not zero
-U_D                   = 0.00441                                     see the reclassification below
-partial combination   = sqrt(U_num² + U_D²)         = 0.004721      KNOWN TERMS ONLY
-U_val                 = null                                        a required component is missing
-|E| / partial         = 5.04                        →  INCOMPLETE_UNCERTAINTY
-```
-
-The figure 0.004721 was previously reported as `U_val`. It is a partial combination of the terms that happen to be quantified, and it is now named as such. Dropping an unquantified component is equivalent to setting it to zero, which is the one value it is known not to have.
+The [current revision](../results/generated/cfd/a0.1/uncertainty.revision-2026-09-25.json)
+retains the comparison error `E = S - D` and numerical term. It records both
+`U_D` and `U_input` as null, so `U_val` and `abs_E_le_U_val` remain null. The
+previous combination of numerical uncertainty and grit-treatment spread is
+preserved under `partial_combination_of_known_terms_superseded`; it cannot
+serve as the comparison interval. The eligible partial combination is now
+`U_num` alone. An unquantified term cannot be assumed to be zero.
 
 **The 0.00441 term is reclassified.** It was described as trip repeatability. The 80, 120 and 180 grit conditions are *different boundary-layer trips*, that is different experimental conditions, not repeated measurements under identical conditions. Their spread is **treatment sensitivity**, and the individual comparator values are preserved rather than collapsed into one number. Whether it also bounds measurement repeatability is unknown, and any interpolation or incidence adjustment applied in reaching a common angle carries its own uncertainty that has not been quantified.
 
 The rule `|E| ≤ U_val` is this project's **consistency screen**, not a universal pass or fail. A wider band must never make a less informative computation look more accurate.
 
-`U_input` is unquantified, not zero. The geometry comes from an exact analytic formula and the conditions are specified, so it is expected to be small, but expectation is not estimation and the calculation no longer proceeds as though it were.
+`U_input` remains unquantified. Specified geometry and nominal conditions do not determine the uncertainty of comparing this computation with the experiment.
 
 ## 5. Cross-check against the published reference CFD
 
@@ -91,39 +92,44 @@ Values compared at 10.0°, this work adjusted with the same lift-curve slope.
 
 This work sits **0.38 percent below CFL3D** on the finest grid and 0.26 percent below it after Richardson extrapolation. Two declared differences account for part of that gap and both raise lift slightly in the reference: CFL3D ran the 897×257 grid, one level finer than the finest used here, and it applied the point-vortex farfield correction, which this work did not. Neither was adopted here after the fact.
 
-The code-to-code spread between the two reference Spalart–Allmaras results is 0.0074, itself 1.6 times `U_val`.
+The spread between the reference codes is a code/model sensitivity. It cannot be expressed as a multiple of `U_val`, which remains unknown.
 
 ## 5a. k-ω SST arm: incomplete, no verdict
 
-Two of three levels completed. The fine grid was stopped at iteration 117 of 6,000 because the host had 63 MB of free memory and was swapping; the container was using 97 MB of its 3 GB limit on one saturated core, and the case was running at roughly 0.15 iterations per second against 4.6 for the same mesh under Spalart–Allmaras. That is a thrashing signature, not the cost of two extra transport equations, so it is recorded as host resource exhaustion rather than a solver or setup failure. It is retained with status `UNCONVERGED` and excluded from every reported quantity.
+Two of three levels completed. The fine grid was stopped at iteration 117 of 6,000 because the host had 63 MB of free memory and was swapping; the container was using 97 MB of its 3 GB limit on one saturated core, and the case was running at roughly 0.15 iterations per second against 4.6 for the same mesh under Spalart–Allmaras. That is a thrashing signature, not the cost of two extra transport equations, so it is recorded as host resource exhaustion rather than a solver or setup failure. The original manifest records `UNCONVERGED`; the [status revision](../results/generated/cfd/a0.1/status-revision-2026-09-29.json) corrects this to `TERMINATED_BEFORE_ASSESSMENT`, because the run was shorter than the assessment window. It remains excluded from the convergence and validation comparison.
 
 | grid | cells | iterations | Cl | Cd | status |
 | --- | ---: | ---: | ---: | ---: | --- |
 | coarse | 3,584 | 3,000 | 1.133621 | 0.003532 | PASS |
 | medium | 14,336 | 4,000 | 1.105396 | 0.009416 | PASS |
-| fine | 57,344 | 117 | — | — | UNCONVERGED, excluded |
+| fine | 57,344 | 117 | — | — | TERMINATED_BEFORE_ASSESSMENT, excluded |
 
 **No grid-convergence index and no verdict are issued for SST**, because the procedure needs three converged levels and there are two.
 
-The two that exist are still informative. On the coarse grid SST gives a drag of 0.003532 against Spalart–Allmaras's 0.016192 on the identical mesh, a factor of 4.6, where the published values for the two models agree to within 0.4 percent. The medium grid moves most of the way back, to 0.009416. That is the signature of a grid outside the asymptotic range rather than a broken setup: the two-equation model needs more resolution than the one-equation model before its wall treatment behaves, and the coarsest TMR level does not provide it. The solver log confirms `kOmegaSST` was selected with standard coefficients and no warnings, and the eddy-viscosity ratio reaches 1,376 against 1,988 for Spalart–Allmaras, so turbulence is developing.
+The completed coarse and medium SST values differ substantially, particularly
+in drag. Under-resolution is a possible explanation, but these runs do not
+isolate grid, wall-treatment and setup effects. They provide no converged SST
+estimate or completed comparison of model sensitivity.
 
-Adjusted to 10.12°, the published CFL3D SST value is 1.0899; the medium grid here gives 1.105396, 1.4 percent high, which is the direction and magnitude an under-resolved two-equation model would give. Nothing further should be read into it.
-
-This arm is the first item for the next working session.
+No restart is authorized by this report. The [roadmap](../ROADMAP.md) sets current work.
 
 ## 6. What the verdict means
 
-Two things are true at once and must not be collapsed.
+The code comparison in section 5 supports the airfoil workflow at the stated
+conditions. Agreement with another code does not prove that setup errors are
+absent. The observed experimental discrepancy remains unresolved because the
+required experimental and input uncertainties are missing.
 
-**The workflow reproduces the published computation.** Agreement with CFL3D to 0.4 percent, on the same grid family, with a monotonic grid study and a sub-0.2 percent numerical uncertainty, is evidence that the mesh conversion, boundary conditions, freestream turbulence and solver settings are right. The independent check that the TMR freestream specification converts to an eddy-viscosity ratio of 0.009 pointed the same way before any case was run.
+The comparison table also rules out the earlier claim that every reference
+code misses the experiment by more than this work does. The SST reference
+results have smaller discrepancies. Neither that ranking nor the spread
+across codes identifies the cause of the disagreement.
 
-**The computation does not reproduce the experiment within the known terms.** It misses by 2.2 percent where the partial combination is 0.44 percent.
-
-An earlier version of this section said every published code misses this experiment by more than this work does. **That is false**, and the table above shows it: the SST reference results are 1.40 and 1.98 percent, both **below** this work's 2.24 percent. What the table does support is narrower: every code listed misses in the same direction, by between 1.4 and 3.3 percent, and this work sits inside that range rather than outside it.
-
-Agreement with another code is cross-code evidence, not proof that workflow errors are absent. Nor may tunnel uncertainty be declared the cause before geometry, Mach number, incidence adjustment, wall treatment, farfield placement and turbulence model have been separated. The likeliest single contributor remains that the comparison band is built from an incomplete uncertainty budget, which is now stated rather than assumed.
-
-The likeliest reading is that the comparison band is built from the wrong kind of quantity. It was derived from the spread across three trip conditions, which describes how the result responds to deliberately changing the trip. It is not repeatability, and it is neither an upper nor a lower bound on measurement uncertainty: that relationship is unknown and was never established. It also excludes wall interference, angle-of-attack calibration and model-support effects entirely. The acceptance record called it a lower bound at the time; that description is withdrawn, because a sensitivity to a changed condition bounds nothing about the measurement. This result is the consequence of that choice, and the conservative reading is that a comparison band built on one treatment contrast alone is too narrow to support a validation statement. Raising the band after seeing the result would be exactly the move the acceptance file forbids, so the band is left as committed and the reason is recorded instead. The verdict is `INCOMPLETE_UNCERTAINTY`, as section 3 sets out: with `U_input` unquantified there is no `U_val` for `|E|` to be judged against, so `NOT_VALIDATED` is not available here and the earlier text asserting it is withdrawn.
+The old experimental term describes changing the trip treatment. It is not a
+bound on measurement uncertainty and excludes tunnel, incidence and support
+effects. The existing revision withdraws its use as `U_D`; no acceptance band
+has been widened after seeing the result. No model-error floor for a shroud
+power difference follows from this airfoil comparison.
 
 ## 7. Consequence for the programme
 
@@ -138,10 +144,10 @@ What survives is a requirement, not a number: **Study A must estimate the numeri
 - A0.1 exercises a two-dimensional airfoil workflow at one condition. It supplies numerical evidence for that workflow and a comparison against published computations. The comparison against the experiment is unresolved, because a required uncertainty component is unquantified. It says nothing about rotating-frame loading, three-dimensional flow, ducts or tip gaps.
 - Drag is reported, not gated, for the reasons frozen in the acceptance file. On the finest grid Cd = 0.012031 against a tripped experimental 0.01201 at the 80-grit condition; the agreement is closer than lift, but the tripping and Reynolds systematics the source warns about are unquantified here, so no drag claim is made.
 - Skin friction was computed but cannot be validated: the source states no experimental data exist.
-- `U_input` is unquantified, so no complete validation uncertainty exists for this case.
+- Both `U_input` and experimental `U_D` are unquantified, so no complete validation uncertainty exists for this case.
 - The asymptotic-range ratio is a diagnostic with a known algebraic identity, not evidence.
 - The 0.00441 term is a sensitivity to the grit treatment, not `U_D`. It is neither an upper nor a lower bound on experimental uncertainty, and no experimental standard uncertainty is available for this case.
-- The k-ω SST arm is incomplete (two of three levels), so it carries no index and no verdict. The model-form sensitivity **for this work** is therefore unmeasured; only the published reference spread is available, and the SST numbers above must not be quoted as a result.
+- The k-ω SST arm is incomplete (two of three levels), so it carries no index and no verdict. The model-form sensitivity **for this work** is therefore unmeasured; only the published reference spread is available, and its individual computed values do not supply a completed model-sensitivity comparison.
 
 ## 9. Next gate
 

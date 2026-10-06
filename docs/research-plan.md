@@ -1,5 +1,8 @@
 # Research Plan
 
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
 ## Position
 
 Ducted-fan tip clearance, non-axisymmetric casing distortion, deployable structures, self-locking mechanisms, and rotor guards are established research areas. This project does not claim any of those ingredients as new.

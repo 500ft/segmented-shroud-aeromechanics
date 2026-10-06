@@ -1,6 +1,8 @@
 # Contributing
 
-Contributions should make the proposed research easier to audit, reproduce, or falsify.
+This project is closed and no longer accepting contributions. The rules below
+are retained for interpreting and reproducing its history. See the
+[closure record](ROADMAP.md).
 
 ## Evidence rules
 

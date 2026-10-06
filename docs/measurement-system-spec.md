@@ -1,9 +1,17 @@
 # Measurement-system requirements — draft
 
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
 Status: `planned` · `draft` · **requirements not frozen; installed qualification not performed.**
 Work order: [plan 2026-09-14](specs/day-2026-09-14/plan.md), decision D6. Drafted 2026-09-15. Backlog task: SSY-02 (requirements freeze), which stays open; SSY-12 is the separate installed qualification.
 
 This document says what must be measured, how well, and how that will be shown, for [Experiment 01](experiment-01-rigid-defect-duct.md). It contains no numerical operating point, no effect threshold and no sensor selection. Every such value is an input in the [open-input register](#5-open-input-register-and-release-criteria) with a responsible role and the evidence that closes it. Three events are kept separate throughout: this **draft** (delivered), the **SSY-02 requirements freeze** (needs the register's inputs and an accepted allocation), and **SSY-12 installed qualification** (needs measurements on the built rig). A passing software check is none of the three.
+
+This is the deferred hardware draft under the [current roadmap](../ROADMAP.md).
+It does not authorize equipment or establish an installed measurement result.
+Its electrical endpoint differs from the computational study's shaft power
+`mean(Q(t) · Omega(t))`. Converting between them needs measured drive losses.
 
 ## 1. Measurands and operating envelope
 
@@ -31,6 +39,12 @@ A seam opening has no duct wall over its angular extent. There is no finite radi
 
 The same rule governs probe dropout (§1.5): a dropped sample is reported as missing, not interpolated into c̄ or c_min.
 
+The mean requires an angular origin, weighting and operating state. Nominal CAD
+equality does not establish equality of the built gap distribution. Moving a
+rotor inside an unchanged duct can change the circumferential mean under a
+rotor-centred radial definition. Report the measured mean and observed minimum,
+including runout and repositioning uncertainty.
+
 ### 1.4 Physical displacement versus measurement uncertainty
 
 Runout, thermal growth and fixture deflection are physical displacements. They change the true clearance and are corrected for, or measured through, by the clearance channel. Their entries in the budget register are the **uncertainty of measuring or correcting** each one, not the displacement itself. A measured 30 µm runout with a 3 µm measurement uncertainty contributes 3 µm to the budget, unless the correction is not applied, in which case the whole uncorrected displacement is a bias and is treated in §4.4. The same effect is not counted twice: a contributor already inside the dynamic clearance sensor's calibrated reading (for example runout seen directly by an in-situ probe at speed) is not added again as a separate term. Which contributors are inside which reading is decided per installed method and is part of IN-09.
@@ -41,7 +55,12 @@ Vibration monitoring alone does not establish absence of rubbing. A run is valid
 
 ### 1.6 Sample unit
 
-Specimen → condition (insert set) → run (one operating-point sweep) → block (randomised order within a block). The unit of replication for the hypothesis is the condition-within-block; repeated runs of one condition estimate within-condition repeatability, not the effect. Registration of aggregation and weights happens before confirmation, as the experiment protocol already requires.
+Specimen → condition (insert set) → run (one operating-point sweep) → block
+(randomised order within a block). Repeated settings and runs estimate
+within-specimen variability. Generalization across printed parts requires
+independently made specimens; time samples and repeated runs do not add
+independent specimens. Register the intended inference, aggregation and weights
+before confirmation.
 
 ## 2. Channel requirements
 
@@ -108,7 +127,14 @@ Observed: a common-event test (a single edge seen by the clearance, RPM, V and I
 
 ### 4.6 Power endpoint at matched thrust and the uncertainty of a difference
 
-Endpoint: `ΔP(T*) = P_defect(T*) − P_reference(T*)` in W, at each matched-thrust set-point T\*. The minimum meaningful power difference is a separate, independently specified target (IN-03). If a relative endpoint is used instead, its denominator is named (the reference-condition power at T\*, not the small duct-minus-open-rotor difference, per the experiment protocol). Contributors to `u(ΔP)`: voltage and current calibration and their covariance; thrust measurement error mapped through the local slope dP/dT at T\*; interpolation to T\* (the interpolation method itself belongs to the analysis pipeline and is not chosen here); drift within a block; repeated-reference variability. Because both conditions share calibrations and the block's reference runs, the difference uncertainty is not the quadrature sum of two single-condition uncertainties: shared calibration terms cancel in the difference and are entered once through the covariance, while repeated-reference variability enters for both. The same reasoning applies to the equal-mean claim: `c̄_defect − c̄_reference` has its own uncertainty from two settings that share the gauge calibration, and "equal mean" means that difference is smaller than its expanded uncertainty and smaller than the fraction of IN-01 set for it. A single-condition budget establishes neither. Pass: `k · u(ΔP) < IN-03` at every T\*. Unset: IN-03, the set-points (IN-04), the window and rate (IN-11).
+Endpoint: `ΔP(T*) = P_defect(T*) − P_reference(T*)` in W, at each matched-total-thrust set-point T\*. The force boundary includes the same rotor/duct assembly in both conditions; rotor-only thrust is a different measurand. The minimum meaningful power difference is a separate, independently specified target (IN-03). If a relative endpoint is used instead, its denominator is named (the reference-condition power at T\*, not the small duct-minus-open-rotor difference, per the experiment protocol). Contributors to `u(ΔP)`: voltage and current calibration and their covariance; thrust measurement error mapped through the local slope dP/dT at T\*; interpolation to T\* (the interpolation method itself belongs to the analysis pipeline and is not chosen here); drift within a block; repeated-reference variability. Because both conditions share calibrations and the block's reference runs, the difference uncertainty is not the quadrature sum of two single-condition uncertainties: shared calibration terms can partly cancel according to their sensitivities and covariance; cancellation must be evaluated rather than assumed complete, while repeated-reference variability enters for both. The same reasoning applies to the equal-mean claim: `c̄_defect − c̄_reference` has its own uncertainty from two settings that share the gauge calibration, and an "equal mean" claim requires the interval for that difference to lie within a predeclared allowable gap mismatch tied to IN-01. Overlap with zero alone does not establish this. A single-condition budget establishes neither. Pass: `k · u(ΔP) < IN-03` at every T\*. Unset: IN-03, the set-points (IN-04), the window and rate (IN-11).
+
+A difference smaller than its uncertainty does not resolve a directional effect. Practical equivalence
+requires a comparison interval contained within a negligible-effect region
+justified by the intended design decision. No such region has been approved.
+Repeated reference runs and alternating conditions address drift; predictability
+requires an operating condition withheld from model development. A generated
+worksheet or a passing budget calculation supplies none of these observations.
 
 ### 4.7 Installed inlet and containment effects
 

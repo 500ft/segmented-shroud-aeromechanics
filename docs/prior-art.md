@@ -1,5 +1,51 @@
 # Prior-Art Boundary
 
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
+## Current interpretation
+
+The [roadmap](../ROADMAP.md) records project closure. The computational study
+stopped with incomplete reference geometry. The deployment-yield experiment
+and proposed bench replacement were not executed. The source distinctions
+below remain relevant to interpreting the retained work.
+
+Uniform and uneven tip-clearance effects are established topics. The
+[reference audit](../evidence/task-reference-feasibility-2026-10-04/README.md)
+records assembled thrust, shaft-power and clearance conventions for Akturk-Camci.
+Its rotor-only measurements use a different configuration; separate duct and
+rotor thrust curves are computed components. Ryu's
+[retained reading record](day3-reading-records.json) distinguishes measured
+baseline validation from the computed uniform-clearance sweep and identifies
+its motor-efficiency treatment of electrical input.
+
+The retained S4 abstract in that record describes axial spacing between duct
+sections. It does not establish a discrete circumferential seam experiment.
+The full text remains inaccessible in this pass, so detailed treatment and
+force/power comparisons remain unresolved.
+
+The publisher-indexed introduction and performance section of the
+[mixed-flow fan study](https://www.mdpi.com/2073-8994/15/1/201) describe experiments
+and simulations varying clearance and impeller eccentricity, with pressure
+efficiency as an endpoint. That supports an uneven-clearance precedent, not a
+matched-total-thrust electrical-power result for this rotor. Direct full-text
+retrieval was rate-limited during this check.
+
+Duct mass tradeoffs are also prior work: the publisher-indexed description of
+[equivalent ducted/open rotors](https://www.sciencedirect.com/science/article/abs/pii/S1270963821004946)
+explicitly includes duct weight and structural concerns. Its full text was
+inaccessible here. The small-UAV enclosure citation below still needs its
+original mass and force/power definitions checked before a quantitative
+comparison; no transferable benefit or penalty is assigned here.
+
+Equal-mean comparison alone is not new. The Heliyon reading reports a leakage
+area constraint, whose equivalence to this project's circumferential mean has
+not been established. Graf remains metadata-only under the
+[access repair](reading-records-2026-09-25.json); its equal-mean comparator and
+seam relevance are unresolved. No novelty or null-effect conclusion follows
+from inaccessible material. A specific seam or eccentricity comparison must
+be distinguished from other defects and from protection or deployment claims.
+
 ## 2026-09-08 source and metrology review
 
 [Dated first-pass review](prior-art-search-2026-09-08.md) records executed queries,
@@ -23,7 +69,7 @@ This source map defines what the repository must not overclaim. It is not an exh
 | Segmented duct acoustics | [Segmented-duct computational study](https://www.mdpi.com/2624-8921/8/7/165) | Segmentation and acoustic consequences have recent computational treatment; acoustics is not the first-paper focus. |
 | Small-UAV propeller enclosures | [Sub-250 g enclosure experiment](https://doi.org/10.3390/aerospace13020182) | Enclosures involve mass, power, and noise trade-offs; the comparison basis must be explicit. |
 
-## Candidate gap
+## Historical candidate gap (deferred deployment programme)
 
 The working gap is not “folding duct” or “self-locking ring.” It is:
 

@@ -2,8 +2,19 @@
 
 ## Current state
 
-There are no CAD, FEA, CFD, or measured results in this repository. The current visuals are an
-authored conceptual decision diagram and a source-reviewed dependency map; neither is a result.
+The repository contains executed [airfoil CFD results](cfd-validation-a01.md)
+and a [reference geometry audit](../evidence/task-reference-feasibility-2026-10-04/README.md).
+The airfoil comparison has incomplete experimental validation uncertainty.
+[Partial blade data and an exporter](../data/reference/akturk-camci/README.md)
+are on main; the original inputs remain on the
+[preservation branch](https://github.com/500ft/segmented-shroud-aeromechanics/tree/c4f6b5268298fd18c2c0d3ae618a18338e3c1c93/shutdown-preserved/geometry).
+There is no complete shroud assembly, shroud flow solution or project bench
+measurement. The decision diagrams describe proposed work.
+
+The [uncertainty revision](../results/generated/cfd/a0.1/uncertainty.revision-2026-09-25.json)
+and [status revision](../results/generated/cfd/a0.1/status-revision-2026-09-29.json)
+govern interpretation of the retained airfoil outputs. Original manifests,
+raw outputs and frozen acceptance files remain historical records.
 
 ## Planned data stages
 

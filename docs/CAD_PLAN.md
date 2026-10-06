@@ -1,6 +1,9 @@
 # Segmented Shroud Aeromechanics — revised CAD work orders
 
-## Current scope — computational CAD authorized
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
+## Former scope: computational CAD
 
 The [owner's CAD–ANSYS decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
 supersedes the blanket parking of generic reference and rigid-defect CAD for the

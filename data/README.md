@@ -1,5 +1,11 @@
 # Data
 
-No observations have been collected for this repository.
+The project is [closed](../ROADMAP.md). No project bench observations were
+collected. The [Akturk-Camci reference directory](reference/akturk-camci/README.md)
+contains published station values and a partial digitised tip contour, with
+source provenance and extraction allowances. Other study inputs and synthetic
+fixtures retain their original labels.
 
-Future raw measurements will be immutable and stored outside Git when large. Small processed tables may be committed only with source run IDs, units, calibration identifiers, processing provenance, and evidence state. See [`../docs/data-and-figures.md`](../docs/data-and-figures.md).
+See the [data and figure guide](../docs/data-and-figures.md) for interpretation.
+Retained source data and original records are preserved; public access to a
+paper does not establish a data reuse licence.

@@ -1,10 +1,13 @@
 # Segmented Shroud Yield — long-term research backlog
 
-**Current scope:** the [CAD–ANSYS owner decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
+**Former scope:** the [CAD–ANSYS owner decision](decision-log.md#2026-09-29--finish-as-a-cadansys-computational-study)
 sets a computational finish line. The backlog below retains the broader hardware
 programme and its original done-conditions; none is silently closed by this decision.
 Its floor/ceiling and physical prerequisites do not replace the computational release
-conditions. The [sprint ledger](SPRINT_TASKS.csv) owns active work status.
+conditions. The [sprint ledger](SPRINT_TASKS.csv) retains work status before closure.
 
 ## CAD decomposition of the research backlog
 

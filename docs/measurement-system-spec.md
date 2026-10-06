@@ -1,5 +1,8 @@
 # Measurement-system requirements — draft
 
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
 Status: `planned` · `draft` · **requirements not frozen; installed qualification not performed.**
 Work order: [plan 2026-09-14](specs/day-2026-09-14/plan.md), decision D6. Drafted 2026-09-15. Backlog task: SSY-02 (requirements freeze), which stays open; SSY-12 is the separate installed qualification.
 

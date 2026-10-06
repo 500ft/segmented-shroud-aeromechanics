@@ -1,11 +1,14 @@
 # Prior-Art Boundary
 
+> Project closed at owner request. The material below is retained history;
+> unfinished tasks and input requests are discontinued. See the [closure record](../ROADMAP.md).
+
 ## Current interpretation
 
-The [roadmap](../ROADMAP.md) retains a computational seam/step study, blocked
-on complete reference geometry. The deployment-yield experiment described in
-the dated review below is deferred scope. The proposed bench replacement has
-not been adopted.
+The [roadmap](../ROADMAP.md) records project closure. The computational study
+stopped with incomplete reference geometry. The deployment-yield experiment
+and proposed bench replacement were not executed. The source distinctions
+below remain relevant to interpreting the retained work.
 
 Uniform and uneven tip-clearance effects are established topics. The
 [reference audit](../evidence/task-reference-feasibility-2026-10-04/README.md)

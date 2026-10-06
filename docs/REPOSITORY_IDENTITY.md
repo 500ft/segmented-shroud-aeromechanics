@@ -36,12 +36,9 @@ does not replace the authoritative protocol or task ledger.
 ## Visual provenance
 
 The README leads with [`media/project-overview.svg`](media/project-overview.svg),
-an editable diagram of the three remaining steps in the [roadmap](../ROADMAP.md).
-It contains no results, because none exist yet. Each step has a text label, so
-the meaning doesn't depend on colour, and the SVG has a title and description
-for screen readers. Update it in the same PR as any change to the roadmap's
-steps. Once a baseline solution exists, a plot of it should replace the
-diagram as the lead image.
+an editable summary of the closed project and its retained evidence. The
+[roadmap](../ROADMAP.md) records the owner's closure decision. Text labels and
+accessible SVG metadata keep the status legible without relying on colour.
 
 ## Keeping navigation reproducible
 
